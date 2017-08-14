@@ -1,2 +1,3 @@
-# ESPD
-A modded version of Sprouted Pixel Dungeon
+# Easier Sprouted PD
+
+An easier version of sprouted pixel dungeon, with multi-language support.
