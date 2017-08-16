@@ -24,17 +24,9 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.items.Bomb;
 import com.github.epd.sprout.items.DewVial;
-import com.github.epd.sprout.items.EasterEgg;
-import com.github.epd.sprout.items.Egg;
-import com.github.epd.sprout.items.OtilukesJournal;
-import com.github.epd.sprout.items.Palantir;
-import com.github.epd.sprout.items.ShadowDragonEgg;
 import com.github.epd.sprout.items.TomeOfMastery;
-import com.github.epd.sprout.items.Whistle;
 import com.github.epd.sprout.items.armor.ClothArmor;
-import com.github.epd.sprout.items.armor.PlateArmor;
 import com.github.epd.sprout.items.artifacts.CloakOfShadows;
-import com.github.epd.sprout.items.artifacts.UnstableSpellbook;
 import com.github.epd.sprout.items.bags.AnkhChain;
 import com.github.epd.sprout.items.bags.KeyRing;
 import com.github.epd.sprout.items.bags.PotionBandolier;
@@ -42,36 +34,19 @@ import com.github.epd.sprout.items.bags.ScrollHolder;
 import com.github.epd.sprout.items.bags.SeedPouch;
 import com.github.epd.sprout.items.bags.WandHolster;
 import com.github.epd.sprout.items.food.Food;
-import com.github.epd.sprout.items.journalpages.JournalPage;
-import com.github.epd.sprout.items.journalpages.Sokoban1;
-import com.github.epd.sprout.items.journalpages.Sokoban2;
-import com.github.epd.sprout.items.journalpages.Sokoban3;
-import com.github.epd.sprout.items.journalpages.Sokoban4;
-import com.github.epd.sprout.items.journalpages.Town;
-import com.github.epd.sprout.items.journalpages.Vault;
-import com.github.epd.sprout.items.misc.Spectacles;
 import com.github.epd.sprout.items.potions.PotionOfMindVision;
 import com.github.epd.sprout.items.potions.PotionOfStrength;
 import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.items.scrolls.ScrollOfIdentify;
-import com.github.epd.sprout.items.scrolls.ScrollOfLullaby;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicMapping;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
-import com.github.epd.sprout.items.scrolls.ScrollOfMirrorImage;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
-import com.github.epd.sprout.items.scrolls.ScrollOfRage;
-import com.github.epd.sprout.items.scrolls.ScrollOfRecharging;
 import com.github.epd.sprout.items.scrolls.ScrollOfRemoveCurse;
-import com.github.epd.sprout.items.scrolls.ScrollOfTeleportation;
-import com.github.epd.sprout.items.scrolls.ScrollOfTerror;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
-import com.github.epd.sprout.items.wands.Wand;
-import com.github.epd.sprout.items.wands.WandOfFlock;
 import com.github.epd.sprout.items.wands.WandOfMagicMissile;
 import com.github.epd.sprout.items.weapon.melee.Dagger;
 import com.github.epd.sprout.items.weapon.melee.Knuckles;
 import com.github.epd.sprout.items.weapon.melee.ShortSword;
-import com.github.epd.sprout.items.weapon.melee.WarHammer;
 import com.github.epd.sprout.items.weapon.missiles.Boomerang;
 import com.github.epd.sprout.items.weapon.missiles.Dart;
 import com.github.epd.sprout.messages.Messages;
@@ -353,7 +328,6 @@ public enum HeroClass {
                 };
             case HUNTRESS:
                 return new String[]{
-                        Messages.get(HeroClass.class, "huntress_perk1"),
                         Messages.get(HeroClass.class, "huntress_perk2"),
                         Messages.get(HeroClass.class, "huntress_perk3"),
                         Messages.get(HeroClass.class, "huntress_perk4"),

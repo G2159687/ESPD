@@ -24,6 +24,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.mobs.npcs.NPC;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.items.scrolls.ScrollOfTeleportation;
+import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
@@ -38,9 +39,9 @@ public class WandOfTeleportation extends Wand {
 	}
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 
-		Char ch = Actor.findChar(cell);
+		Char ch = Actor.findChar(bolt.collisionPos);
 
 		if (ch == curUser) {
 			ScrollOfTeleportation.teleportHero(curUser);
@@ -77,9 +78,8 @@ public class WandOfTeleportation extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.coldLight(curUser.sprite.parent, curUser.pos, cell,
-				callback);
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.coldLight(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 

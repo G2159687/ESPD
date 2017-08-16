@@ -25,6 +25,7 @@ import com.github.epd.sprout.actors.buffs.Amok;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.effects.MagicMissile;
+import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
@@ -39,8 +40,8 @@ public class WandOfAmok extends Wand {
 	}
 
 	@Override
-	protected void onZap(int cell) {
-		Char ch = Actor.findChar(cell);
+	protected void onZap( Ballistica bolt) {
+		Char ch = Actor.findChar( bolt.collisionPos );
 		if (ch != null) {
 
 			if (ch == Dungeon.hero) {
@@ -57,10 +58,9 @@ public class WandOfAmok extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.purpleLight(curUser.sprite.parent, curUser.pos, cell,
-				callback);
-		Sample.INSTANCE.play(Assets.SND_ZAP);
+	protected void fx( Ballistica bolt, Callback callback ) {
+		MagicMissile.purpleLight( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
+		Sample.INSTANCE.play( Assets.SND_ZAP );
 	}
 
 	@Override

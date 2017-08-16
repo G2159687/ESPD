@@ -45,21 +45,19 @@ public class WandOfAvalanche extends Wand {
 
 	{
 		name = Messages.get(this,"name");
-		hitChars = false;
+		collisionProperties = Ballistica.STOP_TERRAIN;
 		image = ItemSpriteSheet.WAND_AVALANCHE;
 	}
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 
 		Sample.INSTANCE.play(Assets.SND_ROCKS);
 
 		int level = level();
 
-		Ballistica.distance = Math.min(Ballistica.distance, 8 + level);
-
 		int size = 1 + level / 3;
-		PathFinder.buildDistanceMap(cell, BArray.not(Level.solid, null), size);
+		PathFinder.buildDistanceMap(bolt.collisionPos, BArray.not(Level.solid, null), size);
 
 		for (int i = 0; i < Level.getLength(); i++) {
 
@@ -95,9 +93,9 @@ public class WandOfAvalanche extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.earth(curUser.sprite.parent, curUser.pos, cell, callback);
-		Sample.INSTANCE.play(Assets.SND_ZAP);
+	protected void fx( Ballistica bolt, Callback callback ) {
+		MagicMissile.earth( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
+		Sample.INSTANCE.play( Assets.SND_ZAP );
 	}
 
 	@Override

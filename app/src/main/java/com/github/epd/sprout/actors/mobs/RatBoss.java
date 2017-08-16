@@ -42,7 +42,7 @@ public class RatBoss extends Rat {
 		lootChance = 0.5f;
 		
 		lootOther = new ScrollOfRegrowth();
-		lootChanceOther = 0.1f;
+		lootChanceOther = 0.5f;
 	}
 
 	private boolean spawnedRats = false;

@@ -48,15 +48,13 @@ public class WandOfFlock extends Wand {
 	}
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 
 		int level = level();
 
 		int n = level + 2;
 
-		if (Actor.findChar(cell) != null && Ballistica.distance > 2) {
-			cell = Ballistica.trace[Ballistica.distance - 2];
-		}
+		int cell = bolt.collisionPos;
 
 		boolean[] passable = BArray.or(Level.passable, Level.avoid, null);
 		for (Actor actor : Actor.all()) {
@@ -108,8 +106,8 @@ public class WandOfFlock extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.wool(curUser.sprite.parent, curUser.pos, cell, callback);
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.wool(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 

@@ -29,6 +29,7 @@ import com.github.epd.sprout.effects.LightningLarge;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.traps.LightningTrap;
+import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
@@ -54,7 +55,7 @@ public class WandOfLightning extends Wand {
 	private int nPoints;
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 		// Everything is processed in fx() method
 		if (!curUser.isAlive()) {
 			Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
@@ -96,10 +97,12 @@ public class WandOfLightning extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
+	protected void fx(Ballistica bolt, Callback callback) {
 
 		nPoints = 0;
 		points[nPoints++] = Dungeon.hero.pos;
+
+		int cell = bolt.collisionPos;
 
 		Char ch = Actor.findChar(cell);
 		if (ch != null) {

@@ -25,6 +25,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.actors.buffs.Strength;
 import com.github.epd.sprout.effects.MagicMissile;
+import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
@@ -39,8 +40,8 @@ public class WandOfPoison extends Wand {
 	}
 
 	@Override
-	protected void onZap(int cell) {
-		Char ch = Actor.findChar(cell);
+	protected void onZap(Ballistica bolt) {
+		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null) {
             
 			int poisonbase=5;
@@ -58,8 +59,8 @@ public class WandOfPoison extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.poison(curUser.sprite.parent, curUser.pos, cell, callback);
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.poison( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 

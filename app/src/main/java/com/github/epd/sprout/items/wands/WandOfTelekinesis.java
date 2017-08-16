@@ -54,16 +54,16 @@ public class WandOfTelekinesis extends Wand {
 
 	{
 		name = Messages.get(this,"name");
-		hitChars = false;
+		collisionProperties = Ballistica.STOP_SOLID;
 		image = ItemSpriteSheet.WAND_TELEKINESIS;
 	}
 	
 	private static final String TXT_PREVENTING = Messages.get(WandOfTelekinesis.class,"prevent");
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 
-		boolean mapUpdated = false;
+	/*	boolean mapUpdated = false;
 
 		int maxDistance = level() + 4;
 		Ballistica.distance = Math.min(Ballistica.distance, maxDistance);
@@ -148,7 +148,7 @@ public class WandOfTelekinesis extends Wand {
 		if (mapUpdated) {
 			Dungeon.observe();
 			GameScene.updateFog();
-		}
+		}*/
 	}
 
 	private void transport(Heap heap) {
@@ -188,8 +188,8 @@ public class WandOfTelekinesis extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.force(curUser.sprite.parent, curUser.pos, cell, callback);
+	protected void fx(Ballistica bolt, Callback callback) {
+	//	MagicMissile.force(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 

@@ -41,45 +41,45 @@ public class WandOfDisintegration extends Wand {
 
 	{
 		name = Messages.get(this,"name");
-		hitChars = false;
+		collisionProperties = Ballistica.WONT_STOP;
 		image = ItemSpriteSheet.WAND_DISINTEGRATION;
 	}
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica beam) {
 
 		boolean terrainAffected = false;
 
 		int level = level();
 
-		int maxDistance = distance();
-		Ballistica.distance = Math.min(Ballistica.distance, maxDistance);
+		int maxDistance = Math.min(distance(), beam.dist);
 
 		ArrayList<Char> chars = new ArrayList<Char>();
 
-		for (int i = 1; i < Ballistica.distance; i++) {
+		int terrainPassed = 2, terrainBonus = 0;
 
-			int c = Ballistica.trace[i];
+		for (int c : beam.subPath(1, maxDistance)) {
+
+			//we don't want to count passed terrain after the last enemy hit. That would be a lot of bonus levels.
+			//terrainPassed starts at 2, equivalent of rounding up when /3 for integer arithmetic.
+			terrainBonus += terrainPassed/3;
+			terrainPassed = 1;
 
 			Char ch;
 			if ((ch = Actor.findChar(c)) != null) {
 				chars.add(ch);
 			}
 
-			int terr = Dungeon.level.map[c];
-			if (terr == Terrain.DOOR || terr == Terrain.BARRICADE) {
+			if (Level.flamable[c]) {
 
 				Level.set(c, Terrain.EMBERS);
 				GameScene.updateMap(c);
 				terrainAffected = true;
 
-			} else if (terr == Terrain.HIGH_GRASS) {
-
-				Level.set(c, Terrain.GRASS);
-				GameScene.updateMap(c);
-				terrainAffected = true;
-
 			}
+
+			if (!Level.passable[c])
+				terrainPassed++;
 
 			CellEmitter.center(c).burst(PurpleParticle.BURST,
 					Random.IntRange(1, 2));
@@ -89,7 +89,7 @@ public class WandOfDisintegration extends Wand {
 			Dungeon.observe();
 		}
 
-		int lvl = level + chars.size();
+		int lvl = level + chars.size() + terrainBonus;
 		int dmgMin = lvl;
 		int dmgMax = 8 + lvl * lvl / 3;
 		if (Dungeon.hero.buff(Strength.class) != null){ dmgMin *= (int) 4f; dmgMax *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
@@ -106,9 +106,9 @@ public class WandOfDisintegration extends Wand {
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
+	protected void fx(Ballistica beam, Callback callback) {
 
-		cell = Ballistica.trace[Math.min(Ballistica.distance, distance()) - 1];
+		int cell = beam.path.get(Math.min(beam.dist, distance()));
 		curUser.sprite.parent.add(new DeathRay(curUser.sprite.center(),
 				DungeonTilemap.tileCenterToWorld(cell)));
 		callback.call();

@@ -54,16 +54,17 @@ public class WandOfFirebolt extends Wand {
 	}
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 
 		int level = level();
 
-		for (int i = 1; i < Ballistica.distance - 1; i++) {
-			int c = Ballistica.trace[i];
+		for (int c : bolt.subPath(0, bolt.dist)) {
 			if (Level.flamable[c]) {
 				GameScene.add(Blob.seed(c, 1, Fire.class));
 			}
 		}
+
+		int cell = bolt.collisionPos;
 
 		GameScene.add(Blob.seed(cell, 1, Fire.class));
 
@@ -86,8 +87,8 @@ public class WandOfFirebolt extends Wand {
 	}
 	
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.fire(curUser.sprite.parent, curUser.pos, cell, callback);		
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.fire( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 

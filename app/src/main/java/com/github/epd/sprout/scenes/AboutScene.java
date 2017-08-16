@@ -190,16 +190,11 @@ public class AboutScene extends PixelScene {
 			btn2= new NewRedButton("制作者") {
 				@Override
 				protected void onClick() {
-					parent.add(new WndMessage("制作者联系方式：\n贴吧：_962247075_\nQQ：_3529858533_\nReddit：_g2159687_\n\n" +
-							"一段绕口的说明：\nESPD根据发芽的像素地牢0.4.1版本修改而成；发芽的像素地牢根据破碎的像素地牢0.2.4c版本修改而成；" +
-							"破碎的像素地牢根据像素地牢修改而成。" +
-							"\n\n用于翻译本mod的代码由_00-Evan_制作，并由我移植到此版本。" +
-							"\n_发芽_的像素地牢 作者：_dachhack_\n联系方式：_reddit.com/u/dachhack_" +
-							"\n_破碎_的像素地牢 作者：_00-Evan_\n联系方式：_ShatteredPixel.com_\n或_Evan@ShatteredPixel.com_" +
-							"\n_像素地牢_作者：_watabou_\n联系方式：_pixeldungeon@watabou.ru_" +
-							"\n\n感谢_@笑看LZ撸管_制作的新法杖图标以及_@youxia5325_提供的多方面支持。" +
-							"\n\n同时感谢以下百度贴吧吧友的支持（排名不分先后）：\n" +
-							"@雷暴jj怪，@as1169344561，@圣人川川摩羯，@zpjsunny，@远逝之光，@zhbom，@zhongzhengze，@屠城管，@fyf672，@如日飞仙"));
+					parent.add(new WndMessage("制作者联系方式：\nQQ：_3529858533_\nReddit：_g2159687_\n\n" +
+							"错误报告/反馈请发送至_3529858533@qq.com_，并提示我查收。\n" +
+							"与此mod相关的QQ群：\n" +
+							"1.发芽的像素地牢讨论群（584860323），可讨论各种与发芽的像素地牢及ESPD相关的问题；\n\n" +
+							"2.ESPD群（459684106），用于高级bug反馈、游戏建议等，但不解答与开发无关的问题，也不提供游戏攻略类信息。"));
 				}
 			};
 			btn2.setRect((colWidth - 80) / 2,title.y + title.height() + 12,80,18);
@@ -213,27 +208,30 @@ public class AboutScene extends PixelScene {
 			text.setPos((colWidth - text.width()) / 2, title.y + title.height() + 12);
 		//	align(text);
 
-			btn= new NewRedButton("通告") {
+			btn= new NewRedButton("鸣谢") {
 				@Override
 				protected void onClick() {
-					parent.add(new WndMessage(""));
+					parent.add(new WndMessage("\n\n用于翻译本mod的代码由_00-Evan_制作，并由我移植到此版本，同时此版本也使用了很多来自破碎的像素地牢的代码，在此一并表示感谢。" +
+							"\n_发芽_的像素地牢 作者：_dachhack_\n联系方式：_reddit.com/u/dachhack_" +
+							"\n_破碎_的像素地牢 作者：_00-Evan_\n联系方式：_Evan@ShatteredPixel.com_" +
+							"\n_像素地牢_作者：_watabou_\n联系方式：_pixeldungeon@watabou.ru_" +
+							"\n\n感谢_@笑看LZ撸管_制作的新法杖（如缓慢、狂乱等）贴图。" +
+							"\n\n同时感谢以下百度贴吧吧友的支持（排名不分先后）：\n" +
+							"@youxia5325，@雷暴jj怪，@as1169344561，@圣人川川摩羯，@zpjsunny，@远逝之光，@zhbom，@zhongzhengze，@屠城管，@fyf672，@如日飞仙"));
 				}
 			};
 			btn.setRect((colWidth - 80) / 2,title.y + title.height() + 32,80,18);
-		//	add (btn);
+			add (btn);
 
 			Badges.loadGlobal();
 			btn3= new NewRedButton("游戏须知") {
 				@Override
 				protected void onClick() {
 					if (!Badges.isUnlocked(Badges.Badge.SUPPORTER)) {Badges.validateSupporter();}
-					parent.add(new WndMessage("请仅从_可信_的渠道下载本游戏！对由于从错误的渠道下载游戏而导致的后果（包括游戏出现的错误，以及由于某些人植入恶意代码而造成的任何直接或间接财产损失）" +
-							"宝宝_概不负责_！！尤其是各种QQ群里来回转载的版本，出现任何错误和问题我都不会受理！！！\n\n" +
-							"_目前可用渠道：_\n\n" +
-							"1、像素地牢贴吧内由我（_962247075_）发布的ESPD贴；" +
-							"\n\n2、由我组建的ESPD讨论群\nQQ群号：_459684106_；" +
-							"\n\n3、我所在的PD制作交流扯淡群\nQQ群号：_300974591_；" +
-							"\n\n4、由我（QQ：_3529858533_或\nReddit：_g2159687_）直接发送。"));
+					parent.add(new WndMessage("本应用遵守GPLv3并开源，源代码地址：" +
+							"\n\nhttps://github.com/G2159687/ESPD" +
+							"\n\n但是，尽管该应用是开源的，我仍然推荐从可信的渠道（如酷安以及由我组建的QQ群）下载" +
+							"以避免出现安全问题。"));
 				}
 			};
 			btn3.setRect((colWidth - 80) / 2,title.y + title.height() + 52,80,18);
@@ -242,12 +240,11 @@ public class AboutScene extends PixelScene {
 			btn4= new NewRedButton("已知bug总览") {
 				@Override
 				protected void onClick() {
-					parent.add(new WndMessage("1、游戏中的药水描述可能有一点问题。" +
-							"正常情况下不会有任何影响，但是如果你已经开了一个档，" +
-							"请_不要切换语言_！否则，出现任何后果宝宝概不负责！！" +
-							"\n\n2、有一些_推羊_的关卡似乎还有闪退的情况。宝宝智商有限，不能通关推羊关卡，所以只靠宝宝自己的力量来修复比较困难。" +
+					parent.add(new WndMessage("1、请_不要切换语言_！否则出现任何后果概不负责！！" +
+							"\n\n2、有一些_推羊_的关卡似乎还有闪退的情况。我没有时间来通关推羊关卡，所以只靠我自己的力量来修复比较困难。" +
 							"如果你愿意对此mod做出一些贡献，请将推羊关卡里会导致闪退的_详细步骤_告诉我（有_错误报告_更好），我会尝试修复。" +
-							"\n\n3、对于其他的_!!!NO TEXT FOUND!!!_问题，请不要惊慌，只需将出现的时机告诉我即可。"));
+							"\n\n3、现已知在前5关内可能会有卡顿，造成此卡顿的原因是移动速度为2的怪物太多（如蝙蝠、螃蟹等），因此在行动时" +
+							"会出现缓慢的情况。若此时进行非行动类操作（如打开背包、缩放屏幕或拖动屏幕等）也十分缓慢，请通知我，我会尽量修复。" ));
 				}
 			};
 			btn4.setRect((colWidth - 80) / 2,title.y + title.height() + 72,80,18);

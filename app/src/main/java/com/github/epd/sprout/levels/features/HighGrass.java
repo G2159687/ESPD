@@ -53,10 +53,9 @@ import com.watabou.utils.Random;
 
 public class HighGrass {
 
-    public static int naturalismLevel = 0;
-
     public static void trample(Level level, int pos, Char ch) {
 
+        int naturalismLevel = 0;
         Level.set(pos, Terrain.GRASS);
         GameScene.updateMap(pos);
 
@@ -73,10 +72,10 @@ public class HighGrass {
             }
         }
 
-        createItems(level, pos);
+        createItems(level, pos, naturalismLevel);
 
         if (ch != null){
-            if (ch.buff(Barkskin.class) != null) createItemsExtra(level, pos);
+            if (ch.buff(Barkskin.class) != null) {createItemsExtra(level, pos);}
         }
 
         QuickSlotButton.refresh();
@@ -128,7 +127,7 @@ public class HighGrass {
         }
     }
 
-    public static void createItems(Level level, int pos) {
+    public static void createItems(Level level, int pos, int naturalismLevel) {
         if (naturalismLevel >= 0) {
             // Seed
             if (naturalismLevel < 5 ? (Random.Int(18 - ((int) (naturalismLevel * 3.34))) == 0) : (Random.Int(5) == 0)) {

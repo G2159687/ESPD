@@ -27,6 +27,7 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.quest.DarkGold;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -68,9 +69,9 @@ public class WandOfMagicMissile extends Wand {
 	}
 
 	@Override
-	protected void onZap(int cell) {
+	protected void onZap(Ballistica bolt) {
 
-		Char ch = Actor.findChar(cell);
+		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null) {
 
 			int level = level();

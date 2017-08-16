@@ -21,6 +21,7 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.actors.buffs.Barkskin;
 import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.effects.Speck;
@@ -41,31 +42,24 @@ public class WandOfBlink extends Wand {
 	}
 	private static final String TXT_PREVENTING = Messages.get(WandOfBlink.class,"prevent");
 	@Override
-	protected void onZap(int cell) {
-		
+	protected void onZap(Ballistica bolt) {
+
 		if (Dungeon.sokobanLevel(Dungeon.depth)){
 			GLog.w(TXT_PREVENTING);	
 			Invisibility.dispel();
 			return;
 		}
 
-		int level = level();
-
-		if (Ballistica.distance > level + 4) {
-			cell = Ballistica.trace[level + 3];
-		} else if (Actor.findChar(cell) != null && Ballistica.distance > 1) {
-			cell = Ballistica.trace[Ballistica.distance - 2];
-		}
-
 		curUser.sprite.visible = true;
-		appear(Dungeon.hero, cell);
+		appear(Dungeon.hero, bolt.collisionPos);
 		Dungeon.observe();
 		GameScene.updateFog();
+
 	}
 
 	@Override
-	protected void fx(int cell, Callback callback) {
-		MagicMissile.whiteLight(curUser.sprite.parent, curUser.pos, cell,
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.whiteLight(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos,
 				callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 		if (!Dungeon.sokobanLevel(Dungeon.depth)){

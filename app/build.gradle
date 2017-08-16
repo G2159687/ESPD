@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.github.epd.sprout.test"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 25
     }
 
     buildTypes {
