@@ -54,11 +54,12 @@ public class Speck extends Image {
 	public static final int RATTLE = 105;
 	public static final int JET = 106;
 	public static final int TOXIC = 107;
-	public static final int PARALYSIS = 108;
-	public static final int DUST = 109;
-	public static final int STENCH = 110;
-	public static final int FORGE = 111;
-	public static final int CONFUSION = 112;
+	public static final int VENOM		= 108;
+	public static final int PARALYSIS	= 109;
+	public static final int DUST		= 110;
+	public static final int STENCH      = 111;
+	public static final int FORGE		= 112;
+	public static final int CONFUSION	= 113;
 
 	private static final int SIZE = 7;
 
@@ -100,6 +101,7 @@ public class Speck extends Image {
 			break;
 		case JET:
 		case TOXIC:
+		case VENOM:
 		case PARALYSIS:
 		case STENCH:
 		case CONFUSION:
@@ -266,12 +268,19 @@ public class Speck extends Image {
 			lifespan = 0.5f;
 			break;
 
-		case TOXIC:
-			hardlight(0x50FF60);
-			angularSpeed = 30;
-			angle = Random.Float(360);
-			lifespan = Random.Float(1f, 3f);
-			break;
+			case TOXIC:
+				hardlight( 0x50FF60 );
+				angularSpeed = 30;
+				angle = Random.Float( 360 );
+				lifespan = Random.Float( 1f, 3f );
+				break;
+
+			case VENOM:
+				hardlight( 0x330033 );
+				angularSpeed = 30;
+				angle = Random.Float( 360 );
+				lifespan = Random.Float( 1f, 3f );
+				break;
 			
 		case CORRUPT:
 			hardlight(0xCCFFCC);
@@ -416,6 +425,7 @@ public class Speck extends Image {
 				scale.set( 1 + p );
 				break;
 
+			case VENOM:
 			case STENCH:
 				am = (float)Math.sqrt( (p < 0.5f ? p : 1 - p) * 0.5f );
 				scale.set( 1 + p );

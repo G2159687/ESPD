@@ -218,23 +218,18 @@ public class DewVial extends Item {
 
 		
 		
-		}else if (action.equals(AC_DRINK)) {
+		} else if (action.equals(AC_DRINK)) {
 
 			if (volume > 0) {
 
-				int value = 1 + (Dungeon.depth - 1) / 5;
-				if (hero.heroClass == HeroClass.HUNTRESS) {
-					value++;
-				}
-				value *= volume;
-				value = (int) Math.max(volume * volume * .01 * hero.HT, value);
-				int effect = Math.min(hero.HT - hero.HP, value);
+				int effect = Math.min(hero.HT - hero.HP, hero.HT);
 				if (effect > 0) {
 					hero.HP += effect;
 					hero.sprite.emitter().burst(Speck.factory(Speck.HEALING),
 							volume > 5 ? 2 : 1);
 					hero.sprite.showStatus(CharSprite.POSITIVE, TXT_VALUE,
 							effect);
+					
 				}
 
 				if (volume < 10) {

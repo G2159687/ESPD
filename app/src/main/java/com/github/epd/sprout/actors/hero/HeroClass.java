@@ -63,6 +63,9 @@ public enum HeroClass {
         this.title = title;
     }
 
+    private static void initDebug() {
+    }
+
     public void initHero(Hero hero) {
 
         hero.heroClass = this;
@@ -349,8 +352,5 @@ public enum HeroClass {
     public static HeroClass restoreInBundle(Bundle bundle) {
         String value = bundle.getString(CLASS);
         return value.length() > 0 ? valueOf(value) : ROGUE;
-    }
-
-    private static void initDebug() {
     }
 }

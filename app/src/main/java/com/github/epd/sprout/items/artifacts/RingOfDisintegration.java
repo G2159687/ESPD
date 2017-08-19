@@ -9,7 +9,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Strength;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.CellEmitter;
-import com.github.epd.sprout.effects.DeathRay;
+import com.github.epd.sprout.effects.Beam;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.effects.particles.PurpleParticle;
 import com.github.epd.sprout.items.Item;
@@ -200,7 +200,7 @@ public class RingOfDisintegration extends Artifact {
     protected void fx(int cell, Callback callback) {
 
         cell = Ballistica.trace[Math.min(Ballistica.distance, distance()) - 1];
-        curUser.sprite.parent.add(new DeathRay(curUser.sprite.center(),
+        curUser.sprite.parent.add(new Beam.DeathRay(curUser.sprite.center(),
                 DungeonTilemap.tileCenterToWorld(cell)));
         callback.call();
     }

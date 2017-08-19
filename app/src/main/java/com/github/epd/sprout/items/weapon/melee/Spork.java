@@ -24,6 +24,7 @@ import com.github.epd.sprout.actors.mobs.MineSentinel;
 import com.github.epd.sprout.actors.mobs.Otiluke;
 import com.github.epd.sprout.actors.mobs.Zot;
 import com.github.epd.sprout.actors.mobs.ZotPhase;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
@@ -40,6 +41,24 @@ public class Spork extends MeleeWeapon {
 		super(1, 1.2f, 0.25f);
 	}
 
+	@Override
+	public int min(){
+		return 3;
+	}
+
+	@Override
+	public int max(){
+		return 4;
+	}
+
+	@Override
+	public Item upgrade(boolean enchant){
+		STR--;
+		MIN++;
+		MAX += 3;
+
+		return super.upgrade(enchant);
+	}
 
 	@Override
 	public void proc(Char attacker, Char defender, int damage) {

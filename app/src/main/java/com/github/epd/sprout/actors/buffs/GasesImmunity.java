@@ -21,12 +21,13 @@ import com.github.epd.sprout.actors.blobs.ConfusionGas;
 import com.github.epd.sprout.actors.blobs.ParalyticGas;
 import com.github.epd.sprout.actors.blobs.StenchGas;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
+import com.github.epd.sprout.actors.blobs.VenomGas;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.BuffIndicator;
 
 public class GasesImmunity extends FlavourBuff {
 
-	public static final float DURATION = 10f;
+	public static final float DURATION = 15f;
 
 	@Override
 	public int icon() {
@@ -43,6 +44,7 @@ public class GasesImmunity extends FlavourBuff {
 		immunities.add(ToxicGas.class);
 		immunities.add(ConfusionGas.class);
 		immunities.add(StenchGas.class);
+		immunities.add( VenomGas.class );
 	}
 
 	@Override

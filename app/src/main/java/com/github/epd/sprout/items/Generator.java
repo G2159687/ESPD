@@ -114,10 +114,12 @@ import com.github.epd.sprout.items.wands.WandOfFlock;
 import com.github.epd.sprout.items.wands.WandOfLightning;
 import com.github.epd.sprout.items.wands.WandOfMagicMissile;
 import com.github.epd.sprout.items.wands.WandOfPoison;
+import com.github.epd.sprout.items.wands.WandOfPrismaticLight;
 import com.github.epd.sprout.items.wands.WandOfRegrowth;
 import com.github.epd.sprout.items.wands.WandOfSlowness;
 import com.github.epd.sprout.items.wands.WandOfTelekinesis;
 import com.github.epd.sprout.items.wands.WandOfTeleportation;
+import com.github.epd.sprout.items.wands.WandOfVenom;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.BattleAxe;
 import com.github.epd.sprout.items.weapon.melee.Dagger;
@@ -253,16 +255,16 @@ public class Generator {
 				WandOfSlowness.class, WandOfFirebolt.class,
 				WandOfRegrowth.class, WandOfPoison.class, WandOfBlink.class,
 				WandOfLightning.class, WandOfAmok.class,
-				WandOfTelekinesis.class, WandOfFlock.class,
-				WandOfMagicMissile.class, WandOfDisintegration.class,
-				WandOfAvalanche.class };
+				WandOfTelekinesis.class, WandOfFlock.class, WandOfMagicMissile.class,
+				WandOfDisintegration.class, WandOfAvalanche.class,
+				WandOfPrismaticLight.class, WandOfVenom.class};
 		Category.WAND.probs = new float[] { 10,
 				10, 10,
 				10, 10, 10,
 				10, 10,
-				0, 8,
-				0, 10,
-				10 };
+				10, 8, 0,
+				10, 10,
+				10, 10};
 
 		Category.WEAPON.classes = new Class<?>[] { Dagger.class,
 				Knuckles.class, Quarterstaff.class, Spear.class, Mace.class,

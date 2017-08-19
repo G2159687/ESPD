@@ -24,7 +24,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Strength;
 import com.github.epd.sprout.effects.CellEmitter;
-import com.github.epd.sprout.effects.DeathRay;
+import com.github.epd.sprout.effects.Beam;
 import com.github.epd.sprout.effects.particles.PurpleParticle;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
@@ -106,7 +106,7 @@ public class WandOfDisintegration2 extends Wand {
 	protected void fx(Ballistica beam, Callback callback) {
 
 		int cell = beam.path.get(Math.min(beam.dist, distance()));
-		curUser.sprite.parent.add(new DeathRay(curUser.sprite.center(),
+		curUser.sprite.parent.add(new Beam.DeathRay(curUser.sprite.center(),
 				DungeonTilemap.tileCenterToWorld(cell)));
 		callback.call();
 	}

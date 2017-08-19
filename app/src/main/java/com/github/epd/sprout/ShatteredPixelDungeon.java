@@ -43,16 +43,6 @@ public class ShatteredPixelDungeon extends Game {
 	public ShatteredPixelDungeon() {
 		super(TitleScene.class);
 
-		// 0.2.4
-		com.watabou.utils.Bundle
-				.addAlias(
-						com.github.epd.sprout.items.weapon.enchantments.Shock.class,
-						"com.github.epd.sprout.items.weapon.enchantments.Piercing");
-		com.watabou.utils.Bundle
-				.addAlias(
-						com.github.epd.sprout.items.weapon.enchantments.Shock.class,
-						"com.github.epd.sprout.items.weapon.enchantments.Swing");
-
 		com.watabou.utils.Bundle
 				.addAlias(
 						com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion.class,
@@ -252,7 +242,7 @@ public class ShatteredPixelDungeon extends Game {
 	}
 
 	public static boolean music() {
-		return Preferences.INSTANCE.getBoolean(Preferences.KEY_MUSIC, true);
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_MUSIC, false);
 	}
 
 	public static void autocollect(boolean value) {
@@ -269,7 +259,7 @@ public class ShatteredPixelDungeon extends Game {
 	}
 
 	public static boolean soundFx() {
-		return Preferences.INSTANCE.getBoolean(Preferences.KEY_SOUND_FX, true);
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_SOUND_FX, false);
 	}
 
 	public static void brightness(int value) {

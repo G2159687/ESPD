@@ -37,11 +37,11 @@ public class Ballistica {
 	public static final int STOP_TARGET = 1; //ballistica will stop at the target cell
 	public static final int STOP_CHARS = 2; //ballistica will stop on first char hit
 	public static final int STOP_TERRAIN = 4; //ballistica will stop on terrain(LOS blocking, impassable, etc.)
-	public static final int STOP_SOLID = 8; //ballistica will stop on walls(impassable)
 
 	public static final int PROJECTILE =  	STOP_TARGET	| STOP_CHARS	| STOP_TERRAIN;
 	public static final int MAGIC_BOLT =    STOP_CHARS  | STOP_TERRAIN;
 	public static final int WONT_STOP =     0;
+	public static final int STOP_SOLID = 8; //ballistica will stop on walls(impassable)
 
 	public Ballistica( int from, int to, int params ){
 		sourcePos = from;

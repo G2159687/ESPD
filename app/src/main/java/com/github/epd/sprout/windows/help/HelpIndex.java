@@ -24,7 +24,7 @@ public class HelpIndex extends Window{
                 }
         });
 
-        addButton(new NewRedButton(Messages.get(HelpIndex.class,"mechanics")) {
+        addButton(new NewRedButton(Messages.get(HelpIndex.class,"faq")) {
             @Override
             protected void onClick() {
                 hide();

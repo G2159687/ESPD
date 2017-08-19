@@ -48,10 +48,8 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
-import com.github.epd.sprout.actors.mobs.Bestiary;
-import com.github.epd.sprout.actors.mobs.Yog;
 import com.github.epd.sprout.effects.CellEmitter;
-import com.github.epd.sprout.effects.DeathRay;
+import com.github.epd.sprout.effects.Beam;
 import com.github.epd.sprout.effects.particles.PoisonParticle;
 import com.github.epd.sprout.items.artifacts.CloakOfShadows;
 import com.github.epd.sprout.items.artifacts.RingOfDisintegration;
@@ -184,7 +182,7 @@ public abstract class Char extends Actor {
 			if (buff(RingOfDisintegration.ringRecharge.class) != null && enemy.isAlive()){
 				if (buff(RingOfDisintegration.ringRecharge.class).level() > 10){
 					if (Random.Float() < (float)(buff(RingOfDisintegration.ringRecharge.class).level()) / 150f){
-						this.sprite.parent.add(new DeathRay(this.sprite.center(), DungeonTilemap.tileCenterToWorld(enemy.pos)));
+						this.sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.tileCenterToWorld(enemy.pos)));
 						enemy.damage(Random.NormalIntRange(2 * (buff(RingOfDisintegration.ringRecharge.class).level()), 4 * (buff(RingOfDisintegration.ringRecharge.class).level())), this);
 					}
 				}

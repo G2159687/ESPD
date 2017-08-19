@@ -20,7 +20,7 @@ package com.github.epd.sprout.sprites;
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
-import com.github.epd.sprout.effects.DeathRay;
+import com.github.epd.sprout.effects.Beam;
 import com.watabou.noosa.TextureFilm;
 
 public class OrbOfZotSprite extends MobSprite {
@@ -62,7 +62,7 @@ public class OrbOfZotSprite extends MobSprite {
 
 		if (anim == attack) {
 			if (Dungeon.visible[ch.pos] || Dungeon.visible[attackPos]) {
-				parent.add(new DeathRay(center(), DungeonTilemap
+				parent.add(new Beam.DeathRay(center(), DungeonTilemap
 						.tileCenterToWorld(attackPos)));
 			}
 		}

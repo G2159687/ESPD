@@ -1,5 +1,6 @@
 package com.github.epd.sprout.windows.help;
 
+import com.github.epd.sprout.items.help.mechanics.DemonFloors;
 import com.github.epd.sprout.items.help.mechanics.GameProgress;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.NewRedButton;
@@ -21,6 +22,14 @@ public class WndHlpCatMec extends Window{
             protected void onClick() {
                 hide();
                 Game.scene().add(new WndHelp(new GameProgress()));
+            }
+        });
+
+        addButton(new NewRedButton(Messages.get(WndHlpCatMec.class,"2")) {
+            @Override
+            protected void onClick() {
+                hide();
+                Game.scene().add(new WndHelp(new DemonFloors()));
             }
         });
 
