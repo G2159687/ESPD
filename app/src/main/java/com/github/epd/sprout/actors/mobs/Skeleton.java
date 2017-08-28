@@ -53,12 +53,12 @@ public class Skeleton extends Mob {
 
 		loot = Generator.Category.WEAPON;
 //		lootChance= (Dungeon.isChallenged(Challenges.NO_HERBALISM))?0.99f:0.2f;
-		lootChance = 1f;
+		lootChance = 0.2f;
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(10+adj(0), 20+adj(0));
+		return Random.NormalIntRange(8+adj(0), 16+adj(0));
 	}
 
 		

@@ -48,7 +48,7 @@ public class Shaman extends Mob implements Callback {
 		name = Messages.get(this,"name");
 		spriteClass = ShamanSprite.class;
 
-		HP = HT = 18+(adj(0)*Random.NormalIntRange(2, 5));
+		HP = HT = 22+(adj(0)*Random.NormalIntRange(2, 5));
 		defenseSkill = 8+adj(1);
 
 		EXP = 6;

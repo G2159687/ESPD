@@ -33,9 +33,8 @@ public class Crab extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = CrabSprite.class;
 
-		HP = HT = 15+(adj(0)*Random.NormalIntRange(1, 3));
+		HP = HT = 18 + (adj(0)*Random.NormalIntRange(1, 3));
 		defenseSkill = 5+adj(1);
-		baseSpeed = 2f;
 
 		EXP = 3;
 		maxLvl = 9;

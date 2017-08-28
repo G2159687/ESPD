@@ -43,7 +43,7 @@ public class Gullin extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = GullinSprite.class;
 
-		HP = HT = 750+(adj(0)*Random.NormalIntRange(8, 12));
+		HP = HT = 700+(adj(0)*Random.NormalIntRange(8, 12));
 		defenseSkill = 20+adj(1);
 
 		EXP = 20;

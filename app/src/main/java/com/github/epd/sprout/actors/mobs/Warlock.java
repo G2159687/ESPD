@@ -49,8 +49,8 @@ public class Warlock extends Mob implements Callback {
 		name = Messages.get(this,"name");
 		spriteClass = WarlockSprite.class;
 
-		HP = HT = 70+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 18+adj(0);
+		HP = HT = 80+(adj(0)*Random.NormalIntRange(5, 7));
+		defenseSkill = 20+adj(0);
 
 		EXP = 11;
 		maxLvl = 21;

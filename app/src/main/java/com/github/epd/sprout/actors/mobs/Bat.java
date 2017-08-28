@@ -36,7 +36,7 @@ public class Bat extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = BatSprite.class;
 
-		HP = HT = 40+(adj(0)*Random.NormalIntRange(2, 5));
+		HP = HT = 50+(adj(0)*Random.NormalIntRange(2, 5));
 		defenseSkill = 15+adj(0);
 		baseSpeed = 2f;
 

@@ -48,17 +48,16 @@ public class Shock extends Weapon.Enchantment {
 		// lvl 2 - 50%
 		int level = Math.max(0, weapon.level);
 
-		if (Random.Int(level + 4) >= 3) {
-
-			points[0] = attacker.pos;
-			nPoints = 1;
+		if (Random.Int( level + 4 ) >= 3) {
 
 			affected.clear();
 			affected.add(attacker);
 
+			arcs.clear();
+			arcs.add(new Lightning.Arc(attacker.pos, defender.pos));
 			hit(defender, Random.Int(1, damage / 2));
 
-			attacker.sprite.parent.add(new Lightning(points, nPoints, null));
+			attacker.sprite.parent.add( new Lightning( arcs, null ) );
 
 			return true;
 
@@ -76,34 +75,27 @@ public class Shock extends Weapon.Enchantment {
 
 	private ArrayList<Char> affected = new ArrayList<Char>();
 
-	private int[] points = new int[20];
-	private int nPoints;
+	private ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 
-	private void hit(Char ch, int damage) {
+	private void hit( Char ch, int damage ) {
 
 		if (damage < 1) {
 			return;
 		}
 
 		affected.add(ch);
-		ch.damage(Level.water[ch.pos] && !ch.flying ? damage * 2
-				: damage, LightningTrap.LIGHTNING);
+		ch.damage(Level.water[ch.pos] && !ch.flying ? (int) (damage * 2) : damage, LightningTrap.LIGHTNING);
 
 		ch.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 		ch.sprite.flash();
 
-		points[nPoints++] = ch.pos;
-
 		HashSet<Char> ns = new HashSet<Char>();
-		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-			Char n = Actor.findChar(ch.pos + PathFinder.NEIGHBOURS8[i]);
-			if (n != null && !affected.contains(n)) {
-				ns.add(n);
+		for (int i=0; i < PathFinder.NEIGHBOURS8.length; i++) {
+			Char n = Actor.findChar( ch.pos + PathFinder.NEIGHBOURS8[i] );
+			if (n != null && !affected.contains( n )) {
+				arcs.add(new Lightning.Arc(ch.pos, n.pos));
+				hit(n, Random.Int(damage / 2, damage));
 			}
-		}
-
-		if (ns.size() > 0) {
-			hit(Random.element(ns), Random.Int(damage / 2, damage));
 		}
 	}
 }

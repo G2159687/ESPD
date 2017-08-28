@@ -24,9 +24,7 @@ import com.watabou.noosa.TextureFilm;
 
 public class FairySprite extends MobSprite {
 	
-	//Frames 0,2 are idle, 0,1,2 are moving, 0,3,4,1 are attack and 5,6,7 are for death 
-	
-	private int[] points = new int[2];
+	//Frames 0,2 are idle, 0,1,2 are moving, 0,3,4,1 are attack and 5,6,7 are for death
 
 	public FairySprite() {
 		super();
@@ -55,9 +53,7 @@ public class FairySprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		points[0] = ch.pos;
-		points[1] = pos;
-		parent.add(new Lightning(points, 2, (Fairy) ch));
+		parent.add( new Lightning( ch.pos, pos, (Fairy)ch ) );
 
 		turnTo(ch.pos, pos);
 		play(zap);

@@ -96,15 +96,16 @@ public class TitleScene extends PixelScene {
 		signs.x = title.x + (title.width() - signs.width())/2f;
 		signs.y = title.y;
 
-	//	if (Badges.isUnlocked(Badges.Badge.SUPPORTER) && Badges.isUnlocked(Badges.Badge.SUPPORTER2))
+		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2)){
 			add(title);
 			add(signs);
 			placeTorch(title.x + 22, title.y + 46);
 			placeTorch(title.x + title.width - 22, title.y + 46);
+		}
 
-		RenderedTextMultiline hint = renderMultiline("请先查看关于界面\n以及设定->帮助之后\n再开始游戏！\n\n感谢你的理解和支持！", 9);
+		RenderedTextMultiline hint = renderMultiline("请先查看设定->帮助后再开始游戏！\n前面加星号的为推荐阅读项目。", 7);
 		hint.hardlight(0xFFFF00);
-	//	if (!(Badges.isUnlocked(Badges.Badge.SUPPORTER) && Badges.isUnlocked(Badges.Badge.SUPPORTER2))) add(hint);
+		if (!Badges.isUnlocked(Badges.Badge.SUPPORTER2)) add(hint);
 
 		hint.setPos((topRegion - title.height()) / 2f, 16 + (topRegion - title.height() - 16) / 2f);
 		align(hint);
@@ -131,6 +132,7 @@ public class TitleScene extends PixelScene {
 				ShatteredPixelDungeon.switchNoFade( StartScene.class );
 			}
 		};
+		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2))
 		add( btnPlay );
 
 		DashboardItem btnRankings = new DashboardItem( Messages.get(this, "rankings"), 2 ) {

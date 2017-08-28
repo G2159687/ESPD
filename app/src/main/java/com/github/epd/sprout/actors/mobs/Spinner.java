@@ -38,8 +38,8 @@ public class Spinner extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = SpinnerSprite.class;
 
-		HP = HT = 50+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 14+adj(1);
+		HP = HT = 55+(adj(0)*Random.NormalIntRange(5, 7));
+		defenseSkill = 15+adj(1);
 
 		EXP = 9;
 		maxLvl = 16;

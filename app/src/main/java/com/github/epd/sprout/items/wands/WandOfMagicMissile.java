@@ -79,7 +79,7 @@ public class WandOfMagicMissile extends Wand {
             if (Dungeon.hero.buff(Strength.class) != null){ damage *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
 			ch.damage(damage, this);
 
-			ch.sprite.burst(0xFF99CCFF, level / 2 + 2);
+			ch.sprite.burst(0xFFFFFFFF, level < 7 ? level / 2 + 2 : 5);
 
 			/*if (ch == curUser && !ch.isAlive()) {
 				Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));

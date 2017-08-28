@@ -39,7 +39,7 @@ public class Kupua extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = KupuaSprite.class;
 
-		HP = HT = 550+(adj(0)*Random.NormalIntRange(3, 7));
+		HP = HT = 525+(adj(0)*Random.NormalIntRange(3, 7));
 		defenseSkill = 15+adj(1);
 		baseSpeed = 2f;
 

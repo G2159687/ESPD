@@ -25,8 +25,6 @@ import com.watabou.noosa.TextureFilm;
 public class GreenDragonSprite extends MobSprite {
 	
 	//Frames 1-4 are idle, 5-8 are moving, 9-12 are attack and the last are for death RBVG
-	
-	private int[] points = new int[2];
 
 	public GreenDragonSprite() {
 		super();
@@ -55,9 +53,7 @@ public class GreenDragonSprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		points[0] = ch.pos;
-		points[1] = pos;
-		parent.add(new Lightning(points, 2, (GreenDragon) ch));
+		parent.add( new Lightning( ch.pos, pos, (GreenDragon)ch ) );
 
 		turnTo(ch.pos, pos);
 		play(zap);

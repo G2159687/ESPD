@@ -608,7 +608,7 @@ public class Ghost extends NPC {
             name = Messages.get(Ghost.class, "archername");
             spriteClass = GnollArcherSprite.class;
 
-            HP = HT = 20;
+            HP = HT = 30;
             defenseSkill = 5;
 
             EXP = 1;

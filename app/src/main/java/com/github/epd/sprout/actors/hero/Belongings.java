@@ -35,7 +35,7 @@ import java.util.Iterator;
 
 public class Belongings implements Iterable<Item> {
 
-	public static final int BACKPACK_SIZE = 23;
+	public static final int BACKPACK_SIZE = 29;
 
 	private Hero owner;
 

@@ -38,7 +38,7 @@ public class BlueWraith extends Wraith  {
 
 		HP = HT = 195;
 		defenseSkill = 24;
-		baseSpeed = 4f;
+		baseSpeed = 2f;
 
 		EXP = 11;
 		

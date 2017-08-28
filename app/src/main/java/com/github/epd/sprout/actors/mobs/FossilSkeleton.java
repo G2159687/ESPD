@@ -46,7 +46,7 @@ public class FossilSkeleton extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = FossilSkeletonSprite.class;
 
-		HP = HT = 25+(adj(0)*Random.NormalIntRange(3, 7));
+		HP = HT = 30+(adj(0)*Random.NormalIntRange(3, 7));
 		defenseSkill = 9+adj(1);
 
 		EXP = 5;
@@ -58,7 +58,7 @@ public class FossilSkeleton extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(12+adj(0), 20+adj(3));
+		return Random.NormalIntRange(10+adj(0), 16+adj(3));
 	}
 
 	@Override

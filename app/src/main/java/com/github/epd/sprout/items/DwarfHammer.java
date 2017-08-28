@@ -80,7 +80,7 @@ public class DwarfHammer extends Item {
 
 		if (action == AC_BREAK) {
            
-		  if (hero.pos != Dungeon.level.exit)	{
+		  if (hero.pos != Dungeon.level.exit && Dungeon.depth != 24){
 			  detach(Dungeon.hero.belongings.backpack);			  
 			  		 
 			  Dungeon.level.sealedlevel=false;
@@ -101,6 +101,11 @@ public class DwarfHammer extends Item {
 			GLog.w(TXT_PREVENTING);
 			super.execute(hero, action);
 		}
+	}
+
+	@Override
+	public int price() {
+		return 10 * quantity;
 	}
 	
 	@Override

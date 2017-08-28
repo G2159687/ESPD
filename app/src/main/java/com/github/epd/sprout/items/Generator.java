@@ -111,6 +111,7 @@ import com.github.epd.sprout.items.wands.WandOfBlink;
 import com.github.epd.sprout.items.wands.WandOfDisintegration;
 import com.github.epd.sprout.items.wands.WandOfFirebolt;
 import com.github.epd.sprout.items.wands.WandOfFlock;
+import com.github.epd.sprout.items.wands.WandOfFrost;
 import com.github.epd.sprout.items.wands.WandOfLightning;
 import com.github.epd.sprout.items.wands.WandOfMagicMissile;
 import com.github.epd.sprout.items.wands.WandOfPoison;
@@ -166,8 +167,8 @@ public class Generator {
 
 	public enum Category {
 		WEAPON(150, Weapon.class), ARMOR(100, Armor.class), POTION(500, Potion.class),
-		SCROLL(400, Scroll.class), WAND(40, Wand.class), RING(15, Ring.class),
-		ARTIFACT(20, Artifact.class), SEED(0, Plant.Seed.class),
+		SCROLL(400, Scroll.class), WAND(60, Wand.class), RING(30, Ring.class),
+		ARTIFACT(40, Artifact.class), SEED(0, Plant.Seed.class),
 		SEED2(0,	Plant.Seed.class), SEEDRICH(0,	Plant.Seed.class),
 		FOOD(0, Food.class), GOLD(500, Gold.class), BERRY(50, Food.class), MUSHROOM(0, Food.class),
 		NORNSTONE(0,NornStone.class), NORNSTONE2(0,NornStone.class), SCROLL2(0, Scroll.class);
@@ -257,14 +258,16 @@ public class Generator {
 				WandOfLightning.class, WandOfAmok.class,
 				WandOfTelekinesis.class, WandOfFlock.class, WandOfMagicMissile.class,
 				WandOfDisintegration.class, WandOfAvalanche.class,
-				WandOfPrismaticLight.class, WandOfVenom.class};
+				WandOfPrismaticLight.class, WandOfVenom.class,
+				WandOfFrost.class};
 		Category.WAND.probs = new float[] { 10,
 				10, 10,
 				10, 10, 10,
 				10, 10,
 				10, 8, 0,
 				10, 10,
-				10, 10};
+				10, 10,
+				10};
 
 		Category.WEAPON.classes = new Class<?>[] { Dagger.class,
 				Knuckles.class, Quarterstaff.class, Spear.class, Mace.class,

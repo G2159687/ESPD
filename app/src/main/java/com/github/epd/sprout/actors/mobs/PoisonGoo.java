@@ -109,9 +109,6 @@ private static final String GOOGENERATION = "gooGeneration";
 
 	@Override
 	public void move(int step) {
-		if (state == FLEEING) {
-			GameScene.add(Blob.seed(pos, Random.Int(7, 10), Web.class));
-		}
 		super.move(step);
 	}
 	

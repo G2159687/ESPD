@@ -36,11 +36,10 @@ public class Rat extends Mob {
 	private static final float SPAWN_DELAY = 2f;
 
 	{
-		//name = "rat";
 		name = Messages.get(this, "name");
 		spriteClass = RatSprite.class;
 
-		HP = HT = 8+(Dungeon.depth*Random.NormalIntRange(1, 3));
+		HP = HT = 10 + Dungeon.depth*Random.NormalIntRange(1, 3);
 		defenseSkill = 3+(Math.round((Dungeon.depth)/2));
 
 		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))

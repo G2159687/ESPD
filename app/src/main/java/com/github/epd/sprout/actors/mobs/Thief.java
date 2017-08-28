@@ -48,8 +48,8 @@ public class Thief extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = ThiefSprite.class;
 
-		HP = HT = 20+(adj(0)*Random.NormalIntRange(3, 5));
-		defenseSkill = 8+adj(0);
+		HP = HT = 25+(adj(0)*Random.NormalIntRange(3, 5));
+		defenseSkill = 9+adj(0);
 
 		EXP = 5;
 		

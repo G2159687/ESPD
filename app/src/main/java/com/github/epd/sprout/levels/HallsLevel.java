@@ -117,9 +117,11 @@ public class HallsLevel extends RegularLevel {
 		
          for (int i = 0; i < getLength(); i++) {
 			
-			if (map[i]==Terrain.EXIT){map[i] = Terrain.PEDESTAL; 
-			     sealedlevel=true;
+			if (map[i]==Terrain.EXIT){
+				map[i] = Terrain.PEDESTAL;
+				sealedlevel=true;
 			    if(Dungeon.depth==24){
+					map[i] = Terrain.EMBERS;
 			    	Sentinel sentinel = new Sentinel();
 				    sentinel.pos = i;
 				    mobs.add(sentinel);}

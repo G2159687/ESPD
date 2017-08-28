@@ -51,8 +51,8 @@ public class GraveProtector extends Mob implements Callback {
 		state = HUNTING;
 		flying = true;
 		
-		HP = HT = 55;
-		defenseSkill = 15;
+		HP = HT = 70;
+		defenseSkill = 17;
 		
 		loot = new VioletDewdrop();
 		lootChance = 1f;

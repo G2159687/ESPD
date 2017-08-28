@@ -261,6 +261,10 @@ public abstract class Wand extends KindOfWeapon {
 		return 2;
 	}
 
+	protected int chargesPerCast() {
+		return 1;
+	}
+
 	private void calculateDamage() {
 		int tier = 1 + level / 3;
 		MIN = tier;
@@ -268,13 +272,14 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	protected void fx( Ballistica bolt, Callback callback ) {
-		MagicMissile.blueLight( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
+		MagicMissile.whiteLight( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
 		Sample.INSTANCE.play( Assets.SND_ZAP );
 	}
 
 	protected void wandUsed() {
-		curCharges--;
-		if (!isIdentified() && --usagesToKnow <= 0) {
+		usagesToKnow -= chargesPerCast();
+		curCharges -= chargesPerCast();
+		if (!isIdentified() && usagesToKnow <= 0) {
 			identify();
 			GLog.w(TXT_IDENTIFY, name());
 		} else {
@@ -378,7 +383,7 @@ public abstract class Wand extends KindOfWeapon {
 				else
 					QuickSlotButton.target(Actor.findChar(cell));
 
-				if (curWand.curCharges > 0) {
+				if (curWand.curCharges >= curWand.chargesPerCast()) {
 
 					curUser.busy();
 
@@ -395,9 +400,7 @@ public abstract class Wand extends KindOfWeapon {
 
 					curUser.spendAndNext(TIME_TO_ZAP);
 					GLog.w(TXT_FIZZLES);
-					curWand.levelKnown = true;
-
-					curWand.updateQuickslot();
+					
 				}
 
 			}

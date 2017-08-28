@@ -27,6 +27,7 @@ import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.Splash;
 import com.github.epd.sprout.effects.TorchHalo;
 import com.github.epd.sprout.effects.particles.FlameParticle;
+import com.github.epd.sprout.effects.particles.SnowParticle;
 import com.github.epd.sprout.items.potions.PotionOfInvisibility;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.scenes.GameScene;
@@ -56,7 +57,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 	private static final float FLASH_INTERVAL = 0.05f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED
 	}
 
 	protected Animation idle;
@@ -71,6 +72,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 	protected Tweener motion;
 
 	protected Emitter burning;
+	protected Emitter chilled;
 	protected Emitter levitation;
 
 	protected IceBlock iceBlock;
@@ -101,8 +103,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 		place(ch.pos);
 		turnTo(ch.pos, Random.Int(Level.getLength()));
 
-		if (parent != null)
-			ch.updateSpriteState();
+		ch.updateSpriteState();
 	}
 
 	public PointF worldToCamera(int cell) {
@@ -276,6 +277,10 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 		case ILLUMINATED:
 			GameScene.effect(halo = new TorchHalo(this));
 			break;
+		case CHILLED:
+			chilled = emitter();
+			chilled.pour(SnowParticle.FACTORY, 0.1f);
+			break;
 		}
 	}
 
@@ -311,6 +316,11 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 				halo.putOut();
 			}
 			break;
+		case CHILLED:
+			if (chilled != null){
+				chilled.on = false;
+				chilled = null;
+			}
 		}
 	}
 
@@ -335,6 +345,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 		}
 		if (iceBlock != null) {
 			iceBlock.visible = visible;
+		}
+		if (chilled != null) {
+			chilled.visible = visible;
 		}
 		if (sleeping) {
 			showSleep();

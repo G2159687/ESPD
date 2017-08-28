@@ -27,6 +27,7 @@ import com.github.epd.sprout.items.Bomb;
 import com.github.epd.sprout.items.BookOfDead;
 import com.github.epd.sprout.items.BookOfLife;
 import com.github.epd.sprout.items.BookOfTranscendence;
+import com.github.epd.sprout.items.DwarfHammer;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Honeypot;
@@ -157,6 +158,8 @@ public class ShopPainter extends Painter {
 			itemsToSpawn.add(new BookOfDead());
 			itemsToSpawn.add(new BookOfLife());
 			itemsToSpawn.add(new BookOfTranscendence());
+			itemsToSpawn.add(new DwarfHammer());
+			itemsToSpawn.add(new DwarfHammer());
 			break;
 		}
 

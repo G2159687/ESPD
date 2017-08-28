@@ -50,7 +50,7 @@ public class VaultProtector extends Mob implements Callback {
 		state = HUNTING;
 		flying = true;
 		
-		HP = HT = 35;
+		HP = HT = 50;
 		defenseSkill = 10;
 		
 		loot = new VioletDewdrop();

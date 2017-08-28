@@ -47,8 +47,8 @@ public class MossySkeleton extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = MossySkeletonSprite.class;
 
-		HP = HT = 35+(10*Random.NormalIntRange(7, 10));
-		defenseSkill = 15;
+		HP = HT = 40+(10*Random.NormalIntRange(7, 10));
+		defenseSkill = 17;
 
 		EXP = 1;
 		maxLvl = 10;
@@ -70,7 +70,7 @@ public class MossySkeleton extends Mob {
 
 	@Override
 	protected float attackDelay() {
-		return 2f-(Math.min(1.75f, Statistics.skeletonsKilled/50));
+		return 2f-(Math.min(1.5f, Statistics.skeletonsKilled/50));
 	}
 	
 	@Override

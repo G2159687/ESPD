@@ -32,6 +32,8 @@ import com.github.epd.sprout.utils.Utils;
 import com.watabou.noosa.Camera;
 import com.watabou.utils.Random;
 
+import java.util.ArrayList;
+
 public class LightningTrap {
 
 	private static final String name = Messages.get(LightningTrap.class,"name");
@@ -55,15 +57,11 @@ public class LightningTrap {
 				}
 			}
 
-			int[] points = new int[2];
+			ArrayList<Lightning.Arc> arcs = new ArrayList<>();
+			arcs.add(new Lightning.Arc(pos - Level.WIDTH, pos + Level.WIDTH));
+			arcs.add(new Lightning.Arc(pos - 1, pos + 1));
 
-			points[0] = pos - Level.getWidth();
-			points[1] = pos + Level.getWidth();
-			ch.sprite.parent.add(new Lightning(points, 2, null));
-
-			points[0] = pos - 1;
-			points[1] = pos + 1;
-			ch.sprite.parent.add(new Lightning(points, 2, null));
+			ch.sprite.parent.add( new Lightning( arcs, null ) );
 		}
 
 		CellEmitter.center(pos).burst(SparkParticle.FACTORY,

@@ -34,7 +34,7 @@ public class Golem extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = GolemSprite.class;
 
-		HP = HT = 85+(adj(0)*Random.NormalIntRange(4, 7));
+		HP = HT = 100+(adj(0)*Random.NormalIntRange(4, 7));
 		defenseSkill = 18+adj(1);
 
 		EXP = 12;

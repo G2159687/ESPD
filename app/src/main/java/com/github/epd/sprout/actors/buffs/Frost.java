@@ -26,6 +26,7 @@ import com.github.epd.sprout.items.food.FrozenCarpaccio;
 import com.github.epd.sprout.items.food.MysteryMeat;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.rings.RingOfElements.Resistance;
+import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.BuffIndicator;
 import com.github.epd.sprout.utils.GLog;
@@ -39,7 +40,8 @@ public class Frost extends FlavourBuff {
 		if (super.attachTo(target)) {
 
 			target.paralysed++;
-			Buff.detach(target, Burning.class);
+			Buff.detach( target, Burning.class );
+			Buff.detach( target, Chill.class );
 
 			if (target instanceof Hero) {
 
@@ -80,6 +82,9 @@ public class Frost extends FlavourBuff {
 		super.detach();
 		if (target.paralysed > 0)
 			target.paralysed--;
+		if (Level.water[target.pos]){
+			Buff.prolong(target, Chill.class, 6f);
+		}
 	}
 
 	@Override

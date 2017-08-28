@@ -27,6 +27,7 @@ import com.github.epd.sprout.actors.buffs.Bleeding;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Burning;
 import com.github.epd.sprout.actors.buffs.Charm;
+import com.github.epd.sprout.actors.buffs.Chill;
 import com.github.epd.sprout.actors.buffs.Cripple;
 import com.github.epd.sprout.actors.buffs.EarthImbue;
 import com.github.epd.sprout.actors.buffs.FireImbue;
@@ -275,9 +276,6 @@ public abstract class Char extends Actor {
 		}
 		if (this.buff(Frost.class) != null) {
 			Buff.detach(this, Frost.class);
-			if (Level.water[this.pos]) {
-				Buff.prolong(this, Paralysis.class, 1f);
-			}
 		}
 		if (this.buff(MagicalSleep.class) != null) {
 			Buff.detach(this, MagicalSleep.class);
@@ -338,6 +336,8 @@ public abstract class Char extends Actor {
 		float timeScale = 1f;
 		if (buff(Slow.class) != null) {
 			timeScale *= 0.5f;
+		} else if (buff( Chill.class ) != null) {
+			timeScale *= buff( Chill.class ).speedFactor();
 		}
 		if (buff(Speed.class) != null) {
 			timeScale *= 2.0f;
@@ -403,7 +403,12 @@ public abstract class Char extends Actor {
 
 				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Slow.class,"name"));
 
-			} else if (buff instanceof MindVision) {
+			} else if (buff instanceof Chill) {
+
+				sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Chill.class, "name") );
+				sprite.add( CharSprite.State.CHILLED );
+
+			}else if (buff instanceof MindVision) {
 
 				sprite.showStatus(CharSprite.POSITIVE, Messages.get(MindVision.class,"name"));
 
@@ -472,6 +477,8 @@ public abstract class Char extends Actor {
 			sprite.remove(CharSprite.State.PARALYSED);
 		} else if (buff instanceof Frost) {
 			sprite.remove(CharSprite.State.FROZEN);
+		} else if (buff instanceof Chill) {
+			sprite.remove( CharSprite.State.CHILLED );
 		}
 	}
 
@@ -503,6 +510,8 @@ public abstract class Char extends Actor {
 				sprite.add(CharSprite.State.FROZEN);
 			} else if (buff instanceof Light) {
 				sprite.add(CharSprite.State.ILLUMINATED);
+			} else if (buff instanceof Chill) {
+				sprite.add( CharSprite.State.CHILLED );
 			}
 		}
 	}

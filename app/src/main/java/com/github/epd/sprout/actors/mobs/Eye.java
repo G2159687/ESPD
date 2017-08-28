@@ -53,7 +53,7 @@ public class Eye extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = EyeSprite.class;
 
-		HP = HT = 100+(adj(0)*Random.NormalIntRange(4, 7));
+		HP = HT = 130+(adj(0)*Random.NormalIntRange(4, 7));
 		defenseSkill = 20+adj(1);
 		viewDistance = Light.DISTANCE;
 
@@ -71,7 +71,7 @@ public class Eye extends Mob {
 
 	@Override
 	public int dr() {
-		return 20+adj(1);
+		return 25+adj(1);
 	}
 
 	private Ballistica beam;

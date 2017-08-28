@@ -92,7 +92,7 @@ public class Ballistica {
 		int cell = from;
 
 		int err = dA / 2;
-		while (Dungeon.level.insideMap(cell)) {
+		while (Dungeon.level.insideMapPermissive(cell)) {
 
 			//if we're in a wall, collide with the previous cell along the path.
 			if (stopTerrain && cell != sourcePos && !Level.passable[cell] && !Level.avoid[cell]) {

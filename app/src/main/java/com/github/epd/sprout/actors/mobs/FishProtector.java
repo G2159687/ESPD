@@ -51,7 +51,7 @@ public class FishProtector extends Mob implements Callback {
 		state = HUNTING;
 		flying = true;
 		
-		HP = HT = 75;
+		HP = HT = 90;
 		defenseSkill = 25;
 		
 		loot = new VioletDewdrop();

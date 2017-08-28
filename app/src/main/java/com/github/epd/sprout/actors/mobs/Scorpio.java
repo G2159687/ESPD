@@ -41,7 +41,7 @@ public class Scorpio extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = ScorpioSprite.class;
 
-		HP = HT = 95+(adj(0)*Random.NormalIntRange(1, 3));
+		HP = HT = 100+(adj(0)*Random.NormalIntRange(1, 3));
 		defenseSkill = 24+adj(1);
 		viewDistance = Light.DISTANCE;
 

@@ -54,8 +54,7 @@ public class Potential extends Glyph {
 				Camera.main.shake(2, 0.3f);
 			}
 
-			int[] points = { attacker.pos, defender.pos };
-			attacker.sprite.parent.add(new Lightning(points, 2, null));
+			attacker.sprite.parent.add( new Lightning( attacker.pos, defender.pos, null ) );
 
 		}
 

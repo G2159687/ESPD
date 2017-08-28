@@ -45,8 +45,8 @@ public class Swarm extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = SwarmSprite.class;
 
-		HP = HT = 80;
-		defenseSkill = 5;
+		HP = HT = 100;
+		defenseSkill = 8;
 
 		maxLvl = 10;
 
@@ -78,7 +78,7 @@ public class Swarm extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(2, 4);
+		return Random.NormalIntRange(3, 5);
 	}
 
 	@Override

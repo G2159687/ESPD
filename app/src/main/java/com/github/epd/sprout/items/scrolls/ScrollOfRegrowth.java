@@ -54,7 +54,7 @@ public class ScrollOfRegrowth extends Scroll {
 
 		for (int i = 0; i < length; i++) {
 			
-			GameScene.add(Blob.seed(i, (2) * 20, Water.class));
+			GameScene.add(Blob.seed(i, (2) * 10, Water.class));
 		
 			int terr = map[i];
 

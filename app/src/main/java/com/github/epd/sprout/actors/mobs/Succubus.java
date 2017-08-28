@@ -48,8 +48,8 @@ public class Succubus extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = SuccubusSprite.class;
 
-		HP = HT = 80+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 25+adj(1);
+		HP = HT = 100+(adj(0)*Random.NormalIntRange(5, 7));
+		defenseSkill = 27+adj(1);
 		viewDistance = Light.DISTANCE;
 
 		EXP = 12;

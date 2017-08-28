@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.github.epd.sprout.test"
-	android:versionCode="1708191"
-	android:versionName="170819"
+	android:versionCode="1708281"
+	android:versionName="170828"
 	android:installLocation="auto">
 	
 	<uses-feature 

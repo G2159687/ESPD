@@ -35,14 +35,14 @@ public class RatBoss extends Rat {
 		name = Messages.get(this,"name");
 		spriteClass = RatBossSprite.class;
 
-		HP = HT = 12+(Dungeon.depth*Random.NormalIntRange(2, 5));
+		HP = HT = 12 + Random.NormalIntRange(2, 5);
 		defenseSkill = 5+(Dungeon.depth/4);
 		
 		loot = Generator.Category.BERRY;
 		lootChance = 0.5f;
 		
 		lootOther = new ScrollOfRegrowth();
-		lootChanceOther = 0.5f;
+		lootChanceOther = 1f;
 	}
 
 	private boolean spawnedRats = false;

@@ -35,9 +35,8 @@ public class BrownBat extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = BrownBatSprite.class;
 
-		HP = HT = 4;
-		defenseSkill = 1;
-		baseSpeed = 2f;
+		HP = HT = 6;
+		defenseSkill = 2;
 
 		EXP = 1;
 		maxLvl = 15;

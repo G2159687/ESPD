@@ -21,11 +21,8 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
-import com.github.epd.sprout.actors.buffs.Buff;
-import com.github.epd.sprout.actors.buffs.Strength;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Lightning;
-import com.github.epd.sprout.effects.LightningLarge;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.traps.LightningTrap;
@@ -40,7 +37,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class WandOfLightning extends Wand {
 
@@ -49,79 +45,82 @@ public class WandOfLightning extends Wand {
 		image = ItemSpriteSheet.WAND_LIGHTNING;
 	}
 
-	private ArrayList<Char> affected = new ArrayList<Char>();
+	private ArrayList<Char> affected = new ArrayList<>();
 
-	private int[] points = new int[20];
-	private int nPoints;
+	ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 
 	@Override
-	protected void onZap(Ballistica bolt) {
-		// Everything is processed in fx() method
+	protected void onZap( Ballistica bolt ) {
+
+		//lightning deals less damage per-target, the more targets that are hit.
+		float multipler = (0.6f + 0.4f*affected.size())/affected.size();
+		if (Level.water[bolt.collisionPos]) multipler *= 1.5f;
+
+		int min = 5+level;
+		int max = Math.round(10 + (level * level / 4f));
+
+		for (Char ch : affected){
+			ch.damage(Math.round(Random.NormalIntRange(min, max) * multipler), LightningTrap.LIGHTNING);
+
+			if (ch == Dungeon.hero) Camera.main.shake( 2, 0.3f );
+			ch.sprite.centerEmitter().burst( SparkParticle.FACTORY, 3 );
+			ch.sprite.flash();
+		}
+
 		if (!curUser.isAlive()) {
-			Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
+			Dungeon.fail( Utils.format( ResultDescriptions.ITEM, name ) );
 			GLog.n(Messages.get(this,"kill"));
 		}
 	}
 
-	private void hit(Char ch, int damage) {
+	private void arc( Char ch ) {
 
-		if (damage < 1) {
-			return;
-		}
+		affected.add( ch );
 
-		if (ch == Dungeon.hero) {
-			Camera.main.shake(2, 0.3f);
-		}
+		for (int i : PathFinder.NEIGHBOURS8) {
+			int cell = ch.pos + i;
 
-		affected.add(ch);
-		if (Dungeon.hero.buff(Strength.class) != null){ damage *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
-		ch.damage(Level.water[ch.pos] && !ch.flying ? damage * 2
-				: damage, LightningTrap.LIGHTNING);
-
-		ch.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
-		ch.sprite.flash();
-
-		points[nPoints++] = ch.pos;
-
-		HashSet<Char> ns = new HashSet<Char>();
-		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-			Char n = Actor.findChar(ch.pos + PathFinder.NEIGHBOURS8[i]);
-			if (n != null && !affected.contains(n)) {
-				ns.add(n);
+			Char n = Actor.findChar( cell );
+			if (n != null && !affected.contains( n )) {
+				arcs.add(new Lightning.Arc(ch.pos, n.pos));
+				arc(n);
 			}
 		}
 
-		if (ns.size() > 0) {
-			hit(Random.element(ns), Random.Int(damage / 2, damage));
+		if (Level.water[ch.pos] && !ch.flying){
+			for (int i : PathFinder.NEIGHBOURS8DIST2) {
+				int cell = ch.pos + i;
+				//player can only be hit by lightning from an adjacent enemy.
+				if (!Dungeon.level.insideMap(cell) || Actor.findChar(cell) == Dungeon.hero) continue;
+
+				Char n = Actor.findChar( ch.pos + i );
+				if (n != null && !affected.contains( n )) {
+					arcs.add(new Lightning.Arc(ch.pos, n.pos));
+					arc(n);
+				}
+			}
 		}
 	}
 
 	@Override
-	protected void fx(Ballistica bolt, Callback callback) {
+	protected void fx( Ballistica bolt, Callback callback ) {
 
-		nPoints = 0;
-		points[nPoints++] = Dungeon.hero.pos;
+		affected.clear();
+		arcs.clear();
+		arcs.add( new Lightning.Arc(bolt.sourcePos, bolt.collisionPos));
 
 		int cell = bolt.collisionPos;
 
-		Char ch = Actor.findChar(cell);
+		Char ch = Actor.findChar( cell );
 		if (ch != null) {
-
-			affected.clear();
-			int lvl = level();
-			hit(ch, Random.Int(5 + lvl / 2, 10 + lvl));
-
+			arc(ch);
 		} else {
-
-			points[nPoints++] = cell;
-			CellEmitter.center(cell).burst(SparkParticle.FACTORY, 3);
-
+			CellEmitter.center( cell ).burst( SparkParticle.FACTORY, 3 );
 		}
-		if(Random.Int(10)<5){
-		curUser.sprite.parent.add(new Lightning(points, nPoints, callback));
-		} else {
-			curUser.sprite.parent.add(new LightningLarge(points, nPoints, callback));	
-		}
+
+		//don't want to wait for the effect before processing damage.
+		curUser.sprite.parent.add( new Lightning( arcs, null ) );
+		callback.call();
 	}
 
 	@Override

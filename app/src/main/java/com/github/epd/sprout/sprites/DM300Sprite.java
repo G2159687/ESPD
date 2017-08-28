@@ -24,8 +24,6 @@ import com.github.epd.sprout.effects.Speck;
 import com.watabou.noosa.TextureFilm;
 
 public class DM300Sprite extends MobSprite {
-	
-	private int[] points = new int[2];
 
 	public DM300Sprite() {
 		super();
@@ -52,9 +50,7 @@ public class DM300Sprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		points[0] = ch.pos;
-		points[1] = pos;
-		parent.add(new Lightning(points, 2, (DM300) ch));
+		parent.add( new Lightning( ch.pos, pos, (DM300)ch ) );
 
 		turnTo(ch.pos, pos);
 		play(zap);

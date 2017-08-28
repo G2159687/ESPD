@@ -110,8 +110,8 @@ public class WndBag extends WndTabbed {
 		lastBag = bag;
 
 		nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
-		nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
-				+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
+		nRows = (Belongings.BACKPACK_SIZE - 6 + 4 + 1) / nCols
+				+ ((Belongings.BACKPACK_SIZE - 6 + 4 + 1) % nCols > 0 ? 1 : 0);
 
 		int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
 		int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
@@ -190,12 +190,19 @@ public class WndBag extends WndTabbed {
 
 		// Items in the bag
 		for (Item item : container.items) {
+			if (!(item instanceof Bag))
 			placeItem(item);
 		}
 
 		// Free Space
-		while (count - (backpack ? 4 : nCols) < container.size) {
-			placeItem(null);
+		if (container == Dungeon.hero.belongings.backpack) {
+			while (count - (backpack ? 4 : nCols) < container.size - 6) {
+				placeItem(null);
+			}
+		} else {
+			while (count - (backpack ? 4 : nCols) < container.size) {
+				placeItem(null);
+			}
 		}
 
 		// Gold

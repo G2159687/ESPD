@@ -34,7 +34,6 @@ import com.watabou.utils.Random;
 public class NeptuneShock extends Weapon.Enchantment {
 
 	private static final String TXT_SHOCKING = Messages.get(NeptuneShock.class,"name");
-	private int[] points = new int[10];
 	private int cost = 10;
 
 	@Override
@@ -66,10 +65,8 @@ public class NeptuneShock extends Weapon.Enchantment {
 		
 		if (Level.distance(attacker.pos, mob.pos) < distance && mob.isAlive() && !mob.isPassive() && Random.Int(10)<5){
 								
-			// int dmg = 20;
-			     	points[0] = attacker.pos;
-					points[1] = mob.pos;
-					attacker.sprite.parent.add(new Lightning(points, 2, null));				
+				// int dmg = 20;
+				attacker.sprite.parent.add(new Lightning(mob.pos, attacker.pos, null));
 					  
 				mob.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 				mob.sprite.flash();

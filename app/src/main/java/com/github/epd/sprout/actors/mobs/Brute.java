@@ -39,7 +39,7 @@ public class Brute extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = BruteSprite.class;
 
-		HP = HT = 50+(adj(0)*Random.NormalIntRange(4, 8));
+		HP = HT = 60+(adj(0)*Random.NormalIntRange(4, 8));
 		defenseSkill = 15+adj(0);
 
 		EXP = 8;

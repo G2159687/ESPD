@@ -51,7 +51,7 @@ public class GreyRat extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = GreyRatSprite.class;
 
-		HP = HT = 9+(Dungeon.depth*Random.NormalIntRange(1, 3));
+		HP = HT = 12 + (Dungeon.depth*Random.NormalIntRange(1, 3));
 		defenseSkill = 3+(Math.round((Dungeon.depth)/2));
 
 		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))

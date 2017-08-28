@@ -19,6 +19,7 @@ package com.github.epd.sprout.items.weapon.enchantments;
 
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
+import com.github.epd.sprout.actors.buffs.Chill;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.messages.Messages;
@@ -46,10 +47,8 @@ public class Slow extends Weapon.Enchantment {
 
 		if (Random.Int(level + 4) >= 3) {
 
-			Buff.prolong(
-					defender,
-					com.github.epd.sprout.actors.buffs.Slow.class,
-					Random.Float(1, 1.5f + level));
+			Buff.affect( defender, Chill.class,
+					Random.Float( 1, 3f ) );
 
 			return true;
 		} else {

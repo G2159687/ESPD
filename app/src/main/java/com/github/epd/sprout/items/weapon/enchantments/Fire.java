@@ -53,7 +53,7 @@ public class Fire extends Weapon.Enchantment {
 			}
 			defender.damage(Random.Int(1, level + 2), this);
 
-			defender.sprite.emitter().burst(FlameParticle.FACTORY, level + 1);
+			defender.sprite.emitter().burst(FlameParticle.FACTORY, level < 10 ? level + 1 : 10);
 
 			return true;
 

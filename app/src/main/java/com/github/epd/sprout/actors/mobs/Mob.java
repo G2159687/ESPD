@@ -842,7 +842,7 @@ public void explodeDewHigh(int cell) {
 	}
 
 	public void yell(String str) {
-		GLog.n("%s: \"%s\" ", name, str);
+		GLog.h("%s: \"%s\" ", name, str);
 	}
 
 	// returns true when a mob sees the hero, and is currently targeting them.

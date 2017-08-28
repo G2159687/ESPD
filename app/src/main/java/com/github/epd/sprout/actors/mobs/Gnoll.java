@@ -33,7 +33,7 @@ public class Gnoll extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = GnollSprite.class;
 
-		HP = HT = 12+(Dungeon.depth*Random.NormalIntRange(1, 3));
+		HP = HT = 14 + (Dungeon.depth*Random.NormalIntRange(1, 3));
 		defenseSkill = 4+(Math.round((Dungeon.depth)/2));
 
 		EXP = 2;

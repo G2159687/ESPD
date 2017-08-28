@@ -215,6 +215,7 @@ public abstract class Level implements Bundlable {
 
 		if (!Dungeon.bossLevel()) {
 			addItemToSpawn(Generator.random(Generator.Category.FOOD));
+			addItemToSpawn(Generator.random(Generator.Category.FOOD));
 			if (Dungeon.posNeeded()) {
 				addItemToSpawn(new PotionOfStrength());
 				Dungeon.limitedDrops.strengthPotions.count++;
@@ -1475,6 +1476,11 @@ public abstract class Level implements Bundlable {
 				//left and right column
 				(tile % WIDTH == 0 || tile % WIDTH == WIDTH-1));
 	}
+
+    public boolean insideMapPermissive( int tile ){
+        //top and bottom row and beyond
+        return !(tile < 0 || tile >= LENGTH);
+    }
 
 	public String tileName(int tile) {
 

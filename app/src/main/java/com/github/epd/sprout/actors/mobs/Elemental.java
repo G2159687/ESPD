@@ -20,6 +20,7 @@ package com.github.epd.sprout.actors.mobs;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Burning;
+import com.github.epd.sprout.actors.buffs.Chill;
 import com.github.epd.sprout.actors.buffs.Frost;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.food.ChargrilledMeat;
@@ -39,8 +40,8 @@ public class Elemental extends Mob {
 		name = Messages.get(this,"name");
 		spriteClass = ElementalSprite.class;
 
-		HP = HT = 65+(adj(0)*Random.NormalIntRange(4, 7));
-		defenseSkill = 20+adj(0);
+		HP = HT = 80+(adj(0)*Random.NormalIntRange(4, 7));
+		defenseSkill = 21+adj(0);
 
 		EXP = 10;
 		maxLvl = 20;
@@ -85,7 +86,7 @@ public class Elemental extends Mob {
 				HP++;
 				sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			}
-		} else if (buff instanceof Frost) {
+		} else if (buff instanceof Frost || buff instanceof Chill) {
 			if (Level.water[this.pos])
 				damage(Random.NormalIntRange(HT / 2, HT), buff);
 			else

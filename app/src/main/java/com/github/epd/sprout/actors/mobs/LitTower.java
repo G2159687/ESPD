@@ -26,6 +26,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.particles.SparkParticle;
+import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.RedDewdrop;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -95,7 +96,19 @@ public class LitTower extends Mob implements Callback {
 		if(Level.distance(pos, Dungeon.hero.pos)<5 && Dungeon.hero.isAlive() && checkOtiluke()){
 			zapAll(Dungeon.hero.pos);
 		}
+		throwItem();
 		return super.act();
+	}
+
+	protected void throwItem() {
+		Heap heap = Dungeon.level.heaps.get(pos);
+		if (heap != null) {
+			int n;
+			do {
+				n = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			} while (!Level.passable[n] && !Level.avoid[n]);
+			Dungeon.level.drop(heap.pickUp(), n).sprite.drop(pos);
+		}
 	}
 	
 	@Override

@@ -83,7 +83,7 @@ public class WandOfTelekinesis extends Wand {
                     if ((ch instanceof SheepSokoban || ch instanceof SheepSokobanCorner || ch instanceof SheepSokobanStop || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanBlack)
                             && (Dungeon.level.map[next] == Terrain.FLEECING_TRAP || Dungeon.level.map[next] == Terrain.CHANGE_SHEEP_TRAP)) {
                     } else {
-                        Actor.add(new Pushing(ch, ch.pos, next));
+                        Actor.addDelayed(new Pushing(ch, ch.pos, next), -1f);
                     }
 
                     ch.pos = next;
