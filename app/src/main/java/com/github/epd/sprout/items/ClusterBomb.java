@@ -143,8 +143,8 @@ public class ClusterBomb extends Item {
 				if (ch != null) {
 					// those not at the center of the blast take damage less
 					// consistently.
-					int minDamage = c == cell ? Dungeon.depth + 5 : 1;
-					int maxDamage = 10 + Dungeon.depth * 2;
+					int minDamage = c == cell ? Dungeon.depth * 9 : Dungeon.depth * 5;
+					int maxDamage = 5 + Dungeon.depth * 20;
 
 					int dmg = Random.NormalIntRange(minDamage, maxDamage)
 							- Random.Int(ch.dr());

@@ -153,6 +153,17 @@ public abstract class PET extends Mob {
     }
 
     @Override
+    public int defenseProc(Char enemy, int damage) {
+        //if attacked by something else than current target, and that thing is closer, switch targets
+        if (this.enemy == null
+                || (enemy != this.enemy && (Level.distance(pos, enemy.pos) < Level.distance(pos, this.enemy.pos)))) {
+            aggro(enemy);
+            target = enemy.pos;
+        }
+        return damage;
+    }
+
+    @Override
     public void die(Object cause) {
 
         Dungeon.hero.haspet = false;
@@ -188,31 +199,40 @@ public abstract class PET extends Mob {
         CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
     }
 
-    @Override
-    protected Char chooseEnemy() {
+    public void earnExp(int exp){
+        kills++;
+        experience += exp;
 
-
-        if (enemy != null && !enemy.isAlive() && enemy instanceof Mob) {
-            kills++;
-            experience += ((Mob) enemy).getExp();
-        }
-
-        if (experience >= level * (level + level) && level < 20) {
+        if (experience >= (5 + level * 5) && level < 100) {
             level++;
             GLog.p(Messages.get(PET.class, "levelup", name));
             adjustStats(level);
             experience = 0;
         }
+    }
+
+    @Override
+    protected Char chooseEnemy() {
 
         if (enemy == null || !enemy.isAlive()) {
             HashSet<Mob> enemies = new HashSet<Mob>();
             for (Mob mob : Dungeon.level.mobs) {
-                if (mob.hostile && Level.fieldOfView[mob.pos]) {
+                if (mob.hostile
+                        && Level.fieldOfView[mob.pos]
+                        && mob.state != mob.PASSIVE) {
                     enemies.add(mob);
                 }
             }
 
-            enemy = enemies.size() > 0 ? Random.element(enemies) : null;
+            //go for closest enemy
+            Char closest = null;
+            for (Char curr : enemies){
+                if (closest == null
+                        || Level.distance(pos, curr.pos) < Level.distance(pos, closest.pos)){
+                    closest = curr;
+                }
+            }
+            return closest;
         }
 
         return enemy;
@@ -263,6 +283,8 @@ public abstract class PET extends Mob {
 
     @Override
     public void aggro(Char ch) {
+        if (ch != Dungeon.hero)
+        enemy = ch;
     }
 
     @Override

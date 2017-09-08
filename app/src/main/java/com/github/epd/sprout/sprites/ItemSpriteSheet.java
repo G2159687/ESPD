@@ -153,6 +153,8 @@ public class ItemSpriteSheet {
 	public static final int WAND_DISINTEGRATION	= ROW6 + 11;
 	public static final int WAND_FLOCK			= ROW6 + 12;
 	public static final int WAND_ADAMANT 		= ROW6 + 13;
+	public static final int WAND_PRISMATIC 		= ROW6 + 14;
+	public static final int WAND_FROST   		= ROW6 + 15;
 
 	// Row Seven: Rings
 	public static final int RING_GARNET = ROW7 + 0;

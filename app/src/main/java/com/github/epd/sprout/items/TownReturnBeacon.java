@@ -96,7 +96,7 @@ public class TownReturnBeacon extends Item {
 		
 		if (action == AC_RETURNTOWN) {
 		
-		   if (Dungeon.bossLevel() || Dungeon.level.locked || hero.petfollow) {
+		   if (Dungeon.bossLevel() || (Dungeon.level.locked && Dungeon.depth != 66) || hero.petfollow) {
 		     	hero.spend(TIME_TO_USE);
 			    GLog.w(FAIL);
 			    return;

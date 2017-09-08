@@ -49,12 +49,16 @@ public class Spider extends PET {
     protected int regen = 1;
     protected float regenChance = 0.1f;
 
+    @Override
+    public int dr(){
+        return level * 3;
+    }
 
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (2 + level) * 5;
-        defenseSkill = 1 + level;
+        HT = (3 + level) * 7;
+        defenseSkill = 1 + level * 2;
     }
 
 

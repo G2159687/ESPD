@@ -67,7 +67,7 @@ public class ShadowDragon extends PET implements Callback {
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (5 + level) * 14;
+        HT = (5 + level) * 15;
         defenseSkill = 1 + level * level;
     }
 

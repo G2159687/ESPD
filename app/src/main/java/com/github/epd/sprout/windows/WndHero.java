@@ -79,7 +79,6 @@ public class WndHero extends WndTabbed {
 
 	private static final String TXT_EXP = Messages.get(WndHero.class,"exp");
 	private static final String TXT_STR = Messages.get(WndHero.class,"str");
-	private static final String TXT_KILLS = Messages.get(WndHero.class,"kills");
 	private static final String TXT_BREATH = Messages.get(WndHero.class,"breath");
 	private static final String TXT_SPIN = Messages.get(WndHero.class,"spin");
 	private static final String TXT_STING = Messages.get(WndHero.class,"sting");
@@ -88,18 +87,14 @@ public class WndHero extends WndTabbed {
 	private static final String TXT_FANGS = Messages.get(WndHero.class,"fangs");
 	private static final String TXT_ATTACK = Messages.get(WndHero.class,"attack");
 	private static final String TXT_HEALTH = Messages.get(WndHero.class,"health");
-	private static final String TXT_GOLD = Messages.get(WndHero.class,"gold");
-	private static final String TXT_DEPTH = Messages.get(WndHero.class,"depth");
-	private static final String TXT_MOVES = Messages.get(WndHero.class,"moves");
 	private static final String TXT_MOVES2 = Messages.get(WndHero.class,"moves2");
 	private static final String TXT_MOVES3 = Messages.get(WndHero.class,"moves3");
 	private static final String TXT_MOVES4 = Messages.get(WndHero.class,"moves4");
 	private static final String TXT_HUNGER = Messages.get(WndHero.class,"hunger");
 	private static final String TXT_MOVES_DEW = Messages.get(WndHero.class,"moves_dew");
-	private static final String TXT_PETS = Messages.get(WndHero.class,"pets");
+	private static final String TXT_ATTACKSKILL = Messages.get(WndHero.class,"attackskill");
 
 	private static final int WIDTH = 100;
-	private static final int TAB_WIDTH = 40;
 
 	private StatsTab stats;
 	private LevelStatsTab levelstats;
@@ -246,21 +241,11 @@ public class WndHero extends WndTabbed {
 			statSlot(TXT_STR, hero.STR());
 			statSlot(TXT_HEALTH, ( hero.HP + hero.SHLD ) + "/" + hero.HT);
 			statSlot(TXT_EXP, hero.exp + "/" + hero.maxExp());
-
-			pos += GAP;
-
-			statSlot(TXT_DEPTH, Statistics.deepestFloor);
-
-			pos += GAP;
-
-			statSlot(TXT_MOVES, Statistics.moves);
-
-
-			statSlot(TXT_PETS, Dungeon.hero.petCount);
-
+			statSlot(TXT_ATTACKSKILL, hero.attackSkill + "/" + hero.defenseSkill);
 
 			if(Dungeon.hero.buff(Hunger.class) != null){
-				statSlot(TXT_HUNGER, Dungeon.hero.buff(Hunger.class).hungerLevel());
+				statSlot(TXT_HUNGER,
+						(100 - Math.round(((float) Dungeon.hero.buff(Hunger.class).hungerLevel()) / 7f)) + "%");
 			}
 
 
@@ -542,8 +527,7 @@ public class WndHero extends WndTabbed {
 			statSlot(TXT_ATTACK, heropet.attackSkill(null));
             statSlot(TXT_SPEED, Dungeon.petHasteLevel);
 			statSlot(TXT_HEALTH, heropet.HP + "/" + heropet.HT);
-			statSlot(TXT_KILLS, heropet.kills);
-			statSlot(TXT_EXP, heropet.level<20 ? heropet.experience + "/" + (heropet.level*(heropet.level+heropet.level)) : Messages.get(WndHero.class,"max"));
+			statSlot(TXT_EXP, heropet.level<100 ? heropet.experience + "/" + (5 + heropet.level * 5) : Messages.get(WndHero.class,"max"));
 			if (heropet.type==4 || heropet.type==5 || heropet.type==6 || heropet.type==7 || heropet.type==12){
 			  statSlot(TXT_BREATH, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") : (Math.round((1000-heropet.cooldown)/10) + "%"));
 			} else if (heropet.type==1){

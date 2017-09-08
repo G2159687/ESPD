@@ -136,7 +136,6 @@ public class HallsLevel extends RegularLevel {
 	
 	@Override
 	protected void createItems() {
-		if (Dungeon.depth!=24){addItemToSpawn(new DwarfHammer());}
 		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(1) == 0){addItemToSpawn(new Bomb());}
 		super.createItems();
 	}

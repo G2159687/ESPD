@@ -660,7 +660,7 @@ public class Ghost extends NPC {
             }
 
             Statistics.archersKilled++;
-            GLog.w(TXT_KILLCOUNT, Statistics.archersKilled);
+            GLog.h(TXT_KILLCOUNT, Statistics.archersKilled);
 
             super.die(cause);
             if (!Dungeon.limitedDrops.sewerkey.dropped() && Dungeon.depth < 27) {

@@ -78,8 +78,8 @@ public class GreenDragon extends PET implements Callback {
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (level) * 10;
-        defenseSkill = 5 + level * level;
+        HT = (3 + level) * 8;
+        defenseSkill = 5 + (level * level) / 2;
     }
 
 

@@ -18,9 +18,16 @@
 package com.github.epd.sprout.sprites;
 
 import com.github.epd.sprout.Assets;
+import com.github.epd.sprout.ShatteredPixelDungeon;
+import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.actors.mobs.pets.Spider;
+import com.github.epd.sprout.scenes.GameScene;
+import com.github.epd.sprout.ui.HealthBar;
 import com.watabou.noosa.TextureFilm;
 
 public class SpiderSprite extends MobSprite {
+
+	private HealthBar hpBar;
 
 	public SpiderSprite() {
 		super();
@@ -42,6 +49,24 @@ public class SpiderSprite extends MobSprite {
 		die.frames(frames, 22, 23, 24, 25);
 
 		play(idle);
+	}
+
+	@Override
+	public void link(Char ch) {
+		super.link(ch);
+		if (ch instanceof Spider){
+			final Char finalCH = ch;
+			hpBar = new HealthBar(){
+				@Override
+				public synchronized void update() {
+					super.update();
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
+					hpBar.level( finalCH );
+					visible = finalCH.sprite.visible;
+				}
+			};
+			((GameScene) ShatteredPixelDungeon.scene()).ghostHP.add(hpBar);
+		}
 	}
 
 	@Override

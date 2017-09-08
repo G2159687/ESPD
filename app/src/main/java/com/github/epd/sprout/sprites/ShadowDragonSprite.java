@@ -18,13 +18,19 @@
 package com.github.epd.sprout.sprites;
 
 import com.github.epd.sprout.Assets;
+import com.github.epd.sprout.ShatteredPixelDungeon;
+import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.mobs.pets.ShadowDragon;
 import com.github.epd.sprout.effects.MagicMissile;
+import com.github.epd.sprout.scenes.GameScene;
+import com.github.epd.sprout.ui.HealthBar;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
 public class ShadowDragonSprite extends MobSprite {
+
+	private HealthBar hpBar;
 	
 	//Frames 1-4 are idle, 5-8 are moving, 9-12 are attack and the last are for death RBVG
 	
@@ -67,6 +73,24 @@ public class ShadowDragonSprite extends MobSprite {
 			}
 		});
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void link(Char ch) {
+		super.link(ch);
+		if (ch instanceof ShadowDragon){
+			final Char finalCH = ch;
+			hpBar = new HealthBar(){
+				@Override
+				public synchronized void update() {
+					super.update();
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
+					hpBar.level( finalCH );
+					visible = finalCH.sprite.visible;
+				}
+			};
+			((GameScene) ShatteredPixelDungeon.scene()).ghostHP.add(hpBar);
+		}
 	}
 	
 	@Override

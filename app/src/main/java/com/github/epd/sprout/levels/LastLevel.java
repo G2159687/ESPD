@@ -19,6 +19,7 @@ package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.items.Amulet;
+import com.github.epd.sprout.items.PuddingCup;
 import com.github.epd.sprout.levels.painters.Painter;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Scene;
@@ -119,7 +120,7 @@ public class LastLevel extends Level {
 
 	@Override
 	protected void createItems() {
-		drop(new Amulet(), pedestal);
+		drop(new PuddingCup(), pedestal);
 	}
 
 	@Override

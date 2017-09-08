@@ -31,6 +31,7 @@ import com.github.epd.sprout.actors.buffs.Sleep;
 import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
+import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.effects.Surprise;
 import com.github.epd.sprout.effects.Wound;
 import com.github.epd.sprout.items.DewVial;
@@ -254,8 +255,16 @@ public abstract class Mob extends Char {
 				// and add the hero to the list of targets.
 				enemies.add(Dungeon.hero);
 
-				// target one at random.
-				return Random.element(enemies);
+				//go after the closest enemy, preferring the hero if two are equidistant
+				Char closest = null;
+				for (Char curr : enemies){
+					if (closest == null
+							|| Level.distance(pos, curr.pos) < Level.distance(pos, closest.pos)
+							|| Level.distance(pos, curr.pos) == Level.distance(pos, closest.pos) && curr == Dungeon.hero){
+						closest = curr;
+					}
+				}
+				return closest;
 
 			}
 
@@ -313,7 +322,7 @@ public abstract class Mob extends Char {
 
 		int step = -1;
 
-		if (Dungeon.level.adjacent( pos, target )) {
+		if (Level.adjacent( pos, target )) {
 
 			path = null;
 
@@ -324,19 +333,21 @@ public abstract class Mob extends Char {
 		} else {
 
 			boolean newPath = false;
-			if (path == null || path.isEmpty() || !Dungeon.level.adjacent(pos, path.getFirst()))
+			if (path == null || path.isEmpty()
+					|| !Level.adjacent(pos, path.getFirst())
+					|| path.size() > 2*Level.distance(pos, target))
 				newPath = true;
 			else if (path.getLast() != target) {
 				//if the new target is adjacent to the end of the path, adjust for that
 				//rather than scrapping the whole path. Unless the path is very long,
 				//in which case re-checking will likely result in a much better path
-				if (Dungeon.level.adjacent(target, path.getLast()) && path.size() < Dungeon.level.distance(pos, target)) {
+				if (Level.adjacent(target, path.getLast()) && path.size() < Level.distance(pos, target)) {
 					int last = path.removeLast();
 
 					if (path.isEmpty()) {
 
 						//shorten for a closer one
-						if (Dungeon.level.adjacent(target, pos)) {
+						if (Level.adjacent(target, pos)) {
 							path.add(target);
 							//extend the path for a further target
 						} else {
@@ -349,7 +360,7 @@ public abstract class Mob extends Char {
 						if (path.getLast() == target) {
 
 							//if the new target is closer/same, need to modify end of path
-						} else if (Dungeon.level.adjacent(target, path.getLast())) {
+						} else if (Level.adjacent(target, path.getLast())) {
 							path.add(target);
 
 							//if the new target is further away, need to extend the path
@@ -384,8 +395,10 @@ public abstract class Mob extends Char {
 						Level.fieldOfView);
 			}
 
-			if (path == null)
+			if (path == null ||
+					(state == HUNTING && path.size() > Math.max(9, 2*Level.distance(pos, target)))) {
 				return false;
+			}
 
 			step = path.removeFirst();
 		}
@@ -475,6 +488,13 @@ public abstract class Mob extends Char {
 				Surprise.hit(this);
 			}
 		}
+
+		//if attacked by something else than current target, and that thing is closer, switch targets
+		if (this.enemy == null
+				|| (enemy != this.enemy && (Level.distance(pos, enemy.pos) < Level.distance(pos, this.enemy.pos)))) {
+			aggro(enemy);
+			target = enemy.pos;
+		}
 			return damage;
 	}
 
@@ -534,9 +554,14 @@ public abstract class Mob extends Char {
 			}
 
 			//if (Dungeon.hero.lvl <= maxLvl && EXP > 0) {
-				if (EXP > 0) {
+			if (EXP > 0) {
 				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, TXT_EXP, EXP);
 				Dungeon.hero.earnExp(EXP);
+
+				if (Dungeon.hero.checkpet() != null){
+					Dungeon.hero.checkpet().sprite.showStatus(CharSprite.POSITIVE, TXT_EXP, EXP);
+					Dungeon.hero.checkpet().earnExp(EXP);
+				}
 			}
 		}
 	}

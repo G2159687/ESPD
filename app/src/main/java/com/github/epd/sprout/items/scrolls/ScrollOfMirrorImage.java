@@ -33,6 +33,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.github.epd.sprout.Dungeon.hero;
+
 public class ScrollOfMirrorImage extends Scroll {
 
 	private static final int NIMAGES = 3;
@@ -74,7 +76,7 @@ public class ScrollOfMirrorImage extends Scroll {
 			int index = Random.index(respawnPoints);
 
 			MirrorImage mob = new MirrorImage();
-			mob.duplicate(curUser);
+			mob.duplicate( hero );
 			GameScene.add(mob);
 			WandOfBlink.appear(mob, respawnPoints.get(index));
 

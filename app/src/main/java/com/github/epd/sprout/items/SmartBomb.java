@@ -145,8 +145,8 @@ public class SmartBomb extends Item {
 				if (ch != null && ch != Dungeon.hero) {
 					// those not at the center of the blast take damage less
 					// consistently.
-					int minDamage = c == cell ? Dungeon.depth + 10 : 10;
-					int maxDamage = 20 + Dungeon.depth * 2 ;
+					int minDamage = c == cell ? Dungeon.depth * 8 : Dungeon.depth * 4;
+					int maxDamage = 5 + Dungeon.depth * 18;
 
 					int dmg = Random.NormalIntRange(minDamage, maxDamage)
 							- Random.Int(ch.dr());

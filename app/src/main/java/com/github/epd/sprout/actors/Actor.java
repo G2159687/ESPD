@@ -100,7 +100,6 @@ public abstract class Actor implements Bundlable {
 
 	private static HashSet<Actor> all = new HashSet<Actor>();
 	private static volatile Actor current;
-	private static volatile boolean processing;
 
 	private static SparseArray<Actor> ids = new SparseArray<Actor>();
 
@@ -108,7 +107,7 @@ public abstract class Actor implements Bundlable {
 
 	private static Char[] chars = new Char[Level.getLength()];
 
-	public static void clear() {
+	public static synchronized void clear() {
 
 		now = 0;
 
@@ -118,7 +117,7 @@ public abstract class Actor implements Bundlable {
 		ids.clear();
 	}
 
-	public static void fixTime() {
+	public static synchronized void fixTime() {
 
 		if (Dungeon.hero != null && all.contains(Dungeon.hero)) {
 			Statistics.duration += now;
@@ -249,13 +248,20 @@ public abstract class Actor implements Bundlable {
 			}
 
 			if (!doNext){
-				interrupted = false;
-
 				synchronized (Thread.currentThread()) {
+
+					interrupted = interrupted || Thread.interrupted();
+
+					if (interrupted){
+						current = null;
+						interrupted = false;
+					}
+
 					synchronized (GameScene.class){
 						//signals to the gamescene that actor processing is finished for now
 						GameScene.class.notify();
 					}
+
 					try {
 						Thread.currentThread().wait();
 					} catch (InterruptedException e) {
@@ -275,7 +281,7 @@ public abstract class Actor implements Bundlable {
 		add(actor, now + delay);
 	}
 
-	private static void add(Actor actor, float time) {
+	private static synchronized void add(Actor actor, float time) {
 
 		if (all.contains(actor)) {
 			return;
@@ -297,7 +303,7 @@ public abstract class Actor implements Bundlable {
 		}
 	}
 
-	public static void remove(Actor actor) {
+	public static synchronized void remove(Actor actor) {
 
 		if (actor != null) {
 			all.remove(actor);
@@ -309,15 +315,15 @@ public abstract class Actor implements Bundlable {
 		}
 	}
 
-	public static Char findChar(int pos) {
+	public static synchronized Char findChar(int pos) {
 		return chars[pos];
 	}
 
-	public static Actor findById(int id) {
+	public static synchronized Actor findById(int id) {
 		return ids.get(id);
 	}
 
-	public static HashSet<Actor> all() {
-		return all;
+	public static synchronized HashSet<Actor> all() {
+		return new HashSet<Actor>(all);
 	}
 }

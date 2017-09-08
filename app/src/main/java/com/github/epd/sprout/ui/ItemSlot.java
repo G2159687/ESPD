@@ -18,6 +18,7 @@
 package com.github.epd.sprout.ui;
 
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.items.DewVial;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.armor.Armor;
 import com.github.epd.sprout.items.journalpages.JournalPage;
@@ -132,6 +133,12 @@ public class ItemSlot extends Button {
 		icon.y = y + (height - icon.height) / 2;
 
 		if (topLeft != null) {
+			topLeft.measure();
+			if (topLeft.width > width){
+				topLeft.scale.set(PixelScene.align(0.8f));
+			} else {
+				topLeft.scale.set(1f);
+			}
 			topLeft.x = x;
 			topLeft.y = y;
 		}
@@ -195,6 +202,13 @@ public class ItemSlot extends Button {
 				bottomRight.hardlight(level > 0 ? UPGRADED : DEGRADED);
 			} else {
 				bottomRight.text(null);
+			}
+
+			if (item instanceof DewVial){
+				if (DewVial.MAX_VOLUME() < 5000) {
+					bottomRight.text(Utils.format("%d", DewVial.MAX_VOLUME()));
+					bottomRight.measure();
+				}
 			}
 			layout();
 		}

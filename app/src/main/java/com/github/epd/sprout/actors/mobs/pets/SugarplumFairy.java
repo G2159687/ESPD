@@ -64,7 +64,7 @@ public class SugarplumFairy extends PET implements Callback {
 
     @Override
     public int dr() {
-        return level * 5;
+        return level * 2;
     }
 
     protected int regen = 1;

@@ -82,6 +82,17 @@ public class Fire extends Blob {
 							}
 						}
 
+                    /*
+					if (shelf && Random.Float()<.02 && Dungeon.hero.buff(MagicSight.class) != null){
+
+							if (Dungeon.limitedDrops.vaultpage.dropped()) {
+								Dungeon.level.drop(new RoyalSpork(), pos);
+							}
+
+					}
+					*/
+
+
 						observe = true;
 						GameScene.updateMap(cell);
 						if (Dungeon.visible[cell]) {

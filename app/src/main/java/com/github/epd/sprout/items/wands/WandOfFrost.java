@@ -19,7 +19,7 @@ public class WandOfFrost extends Wand {
 
     {
         name = Messages.get(this,"name");
-        image = ItemSpriteSheet.WAND_ADAMANT;
+        image = ItemSpriteSheet.WAND_FROST;
     }
 
     @Override

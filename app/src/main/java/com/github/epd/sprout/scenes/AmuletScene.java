@@ -69,7 +69,7 @@ public class AmuletScene extends PixelScene {
 			}
 		};
 		btnExit.setSize(WIDTH, BTN_HEIGHT);
-		if (noText) {add(btnExit);}
+		add(btnExit);
 
 		NewRedButton btnStay = new NewRedButton(TXT_STAY) {
 			@Override

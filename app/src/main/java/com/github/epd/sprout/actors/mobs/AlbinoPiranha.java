@@ -139,7 +139,7 @@ public class AlbinoPiranha extends Mob {
 		super.die(cause);
 
 		Statistics.albinoPiranhasKilled++;
-		GLog.w(TXT_KILLCOUNT, Statistics.albinoPiranhasKilled);
+		GLog.h(TXT_KILLCOUNT, Statistics.albinoPiranhasKilled);
 	}
 
 	@Override

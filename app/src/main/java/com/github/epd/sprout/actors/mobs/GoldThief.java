@@ -113,7 +113,7 @@ public class GoldThief extends Mob {
 		}
 
 		Statistics.goldThievesKilled++;
-		GLog.w(TXT_KILLCOUNT, Statistics.goldThievesKilled);
+		GLog.h(TXT_KILLCOUNT, Statistics.goldThievesKilled);
 		super.die(cause);
 
 		if (item != null) {

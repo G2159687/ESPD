@@ -105,14 +105,14 @@ enum Preferences {
 	}
 
 	void put(String key, int value) {
-		get().edit().putInt(key, value).commit();
+		get().edit().putInt(key, value).apply();
 	}
 
 	void put(String key, boolean value) {
-		get().edit().putBoolean(key, value).commit();
+		get().edit().putBoolean(key, value).apply();
 	}
 
 	void put(String key, String value) {
-		get().edit().putString(key, value).commit();
+		get().edit().putString(key, value).apply();
 	}
 }

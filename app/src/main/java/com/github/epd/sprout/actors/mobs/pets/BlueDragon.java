@@ -58,7 +58,7 @@ public class BlueDragon extends PET implements Callback {
 
     @Override
     public int dr() {
-        return level * 4;
+        return level * 3;
     }
 
     protected int regen = 1;
@@ -68,8 +68,8 @@ public class BlueDragon extends PET implements Callback {
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (3 + level) * 12;
-        defenseSkill = 1 + level * level;
+        HT = (3 + level) * 8;
+        defenseSkill = 1 + (level * level) / 2;
     }
 
 

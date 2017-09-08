@@ -54,17 +54,6 @@ public class EasterEgg extends Item {
 
 	public static final String AC_BREAK = Messages.get(EasterEgg.class,"ac_break");
 	public static final String AC_SHAKE = Messages.get(EasterEgg.class,"ac_shake");
-	
-	public static final int RED_DRAGON = 30;
-	public static final int GREEN_DRAGON = 5;
-	public static final int BLUE_DRAGON = Dungeon.getMonth()==11 ? 1 : 5;
-	public static final int VIOLET_DRAGON = 5;
-	public static final int SPIDER = 2000;
-	public static final int SCORPION = 4000;
-	public static final int VELOCIROOSTER = 1;
-	public static final int FAIRY = 10;
-	public static final int BUNNY = 1;
-	
 
 		{
 		name = Messages.get(this,"name");
@@ -161,27 +150,17 @@ public class EasterEgg extends Item {
 	@Override
 	public void execute(Hero hero, String action) {
 
-		/*
-		if (action == AC_BREAK) {
-
-			if (Dungeon.depth>26) {
-				hero.spend(EasterEgg.TIME_TO_USE);
-				GLog.w(TXT_PREVENTING);
-				return;
-			}			
-		}
-		*/
-
 		if (action == AC_BREAK) {	
 			
 			boolean hatch = false;
 			
-			 if (checkMoves()>=FAIRY) {
+			 if (checkSummons() >= 2 && checkFreezes() >= 2 &&
+					 checkPoisons() >= 2 && checkLits() >= 2 && checkBurns() >= 5 && checkMoves() >= 200) {
 				  SugarplumFairy pet = new SugarplumFairy();
 				  eggHatch(pet);
 				  hatch=true;
 				  //spawn fairy
-			  }	else if (checkMoves()>=BUNNY) {
+			  }	else if (checkMoves()>=10) {
 				 Bunny pet = new Bunny();
 				 eggHatch(pet);
 				 hatch = true;
@@ -200,14 +179,15 @@ public class EasterEgg extends Item {
 						            
 			 boolean alive = false;
 
-			if (checkMoves()>=FAIRY) {
+			if (checkSummons() >= 2 && checkFreezes() >= 2 &&
+					checkPoisons() >= 2 && checkLits() >= 2 && checkBurns() >= 5 && checkMoves() >= 200) {
 				GLog.w(TXT_ZAP);
 				Dungeon.hero.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 				Dungeon.hero.sprite.flash();
 				Dungeon.hero.damage(1, LightningTrap.LIGHTNING);
 				alive = true;
 				//spawn fairy
-			} else if (checkMoves()>=BUNNY) {
+			} else if (checkMoves()>=10) {
 				  GLog.w(TXT_KICKS);
 				  alive = true;
 				  //spawn bunny
@@ -304,7 +284,8 @@ public class EasterEgg extends Item {
 		
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this,"desc") +
+				Messages.get(this, "desc_stats", checkSummons(), checkFreezes(), checkPoisons(),checkLits(), checkBurns(), checkMoves());
 	}
 
 }

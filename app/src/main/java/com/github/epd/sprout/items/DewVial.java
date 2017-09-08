@@ -74,16 +74,13 @@ public class DewVial extends Item {
 	protected static final float TIME_TO_BLESS = 1f;
 
 	private static final String TXT_VALUE = Messages.get(DewVial.class,"value");
-	private static final String TXT_STATUS = "%d/%d";
-	private static final String TXT_STATUSMOD = "%d";
+	private static final String TXT_STATUS = "%d";
 
-	//private static final String TXT_AUTO_DRINK = "The dew vial was emptied to heal your wounds.";
 	private static final String TXT_COLLECTED = Messages.get(DewVial.class,"collected");
 	private static final String TXT_WATERED = Messages.get(DewVial.class,"watered");
 	private static final String TXT_REFRESHED = Messages.get(DewVial.class,"refreshed");
 	private static final String TXT_BLESSED = Messages.get(DewVial.class,"blessed");
 	private static final String TXT_PROCEED = Messages.get(DewVial.class,"proceed");
-	private static final String TXT_NOT_PROCCED = Messages.get(DewVial.class,"not_proceed");
 	private static final String TXT_FULL = Messages.get(DewVial.class,"full");
 	private static final String TXT_EMPTY = Messages.get(DewVial.class,"empty");
 	private static final String TXT_LOOKS_BETTER = Messages.get(DewVial.class,"better");
@@ -329,8 +326,6 @@ public class DewVial extends Item {
 			
 			if (procced) {
 				GLog.p(TXT_PROCEED);
-			} else {
-				GLog.i(TXT_NOT_PROCCED);
 			}
 													
 			volume = volume - 50;
@@ -546,21 +541,9 @@ public class DewVial extends Item {
 		updateQuickslot();
 	}
 
-	// removed as people need a bigger distinction to realize the dew vial
-	// doesn't revive.
-	/*
-	 * private static final Glowing WHITE = new Glowing( 0xFFFFCC );
-	 * 
-	 * @Override public Glowing glowing() { return isFull() ? WHITE : null; }
-	 */
-
 	@Override
 	public String status() {
-		if (!Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE)) {
-			return Utils.format(TXT_STATUS, volume, MAX_VOLUME());
-		} else {
-			return Utils.format(TXT_STATUSMOD, volume);
-		}
+		return Utils.format(TXT_STATUS, volume);
 	}
 
 	@Override
@@ -570,6 +553,6 @@ public class DewVial extends Item {
 
 	@Override
 	public String toString() {
-		return super.toString() + " (" + status() + ")";
+		return super.toString() + " (" + status() + (MAX_VOLUME() > 1000 ? "" : Utils.format("/%d", MAX_VOLUME())) + ")";
 	}
 }

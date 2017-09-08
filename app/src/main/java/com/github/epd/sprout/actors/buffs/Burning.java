@@ -107,12 +107,10 @@ public class Burning extends Buff implements Hero.Doom {
 		}
 
 		if (Level.flamable[target.pos]) {
-			GameScene.add(Blob.seed(target.pos, 2, Fire.class));
+			GameScene.add(Blob.seed(target.pos, 4, Fire.class));
 		}
 
 		spend(TICK);
-		if (left > 5)
-			left = 5;
 		left -= TICK;
 
 		if (left <= 0

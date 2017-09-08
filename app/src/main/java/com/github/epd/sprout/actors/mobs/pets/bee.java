@@ -46,7 +46,7 @@ public class bee extends PET {
 
     @Override
     public int dr() {
-        return level * 4;
+        return level * 3;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class bee extends PET {
     public void adjustStats(int level) {
         this.level = level;
         defenseSkill = 1 + level * 2;
-        HT = (2 + level) * 8;
+        HT = (2 + level) * 6;
     }
 
 

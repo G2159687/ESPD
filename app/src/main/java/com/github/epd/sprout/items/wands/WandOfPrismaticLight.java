@@ -34,8 +34,7 @@ public class WandOfPrismaticLight extends Wand {
 
     {
         name = Messages.get(this,"name");
-        //TODO:Sprite
-        image = ItemSpriteSheet.WAND_ADAMANT;
+        image = ItemSpriteSheet.WAND_PRISMATIC;
 
         collisionProperties = Ballistica.MAGIC_BOLT;
     }

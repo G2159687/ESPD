@@ -133,6 +133,8 @@ public class GameScene extends PixelScene {
 	private ActionIndicator action;
 	private ResumeIndicator resume;
 
+	public Group ghostHP;
+
 	@Override
 	public void create() {
 
@@ -197,6 +199,8 @@ public class GameScene extends PixelScene {
 		mobs = new Group();
 		add(mobs);
 
+		ghostHP = new Group();
+
 		for (Mob mob : Dungeon.level.mobs) {
 			addMobSprite(mob);
 		}
@@ -229,6 +233,8 @@ public class GameScene extends PixelScene {
 		mobs.add(hero);
 
 		add(new HealthIndicator());
+
+		add( ghostHP );
 
 		add(cellSelector = new CellSelector(tiles));
 
@@ -443,8 +449,10 @@ public class GameScene extends PixelScene {
 
 		if (!Actor.processing() && Dungeon.hero.isAlive()) {
 			if (!actorThread.isAlive()) {
-				//if cpu time is limited, game should prefer drawing the current frame
-				actorThread.setPriority(Thread.NORM_PRIORITY - 1);
+				//if cpu cores are limited, game should prefer drawing the current frame
+				if (Runtime.getRuntime().availableProcessors() == 1) {
+					actorThread.setPriority(Thread.NORM_PRIORITY - 1);
+				}
 				actorThread.start();
 			} else {
 				synchronized (actorThread) {

@@ -47,8 +47,8 @@ public class Velocirooster extends PET {
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (2 + level) * 5;
-        defenseSkill = 1 + level;
+        HT = (2 + level) * 7;
+        defenseSkill = 1 + level * 2;
     }
 
 

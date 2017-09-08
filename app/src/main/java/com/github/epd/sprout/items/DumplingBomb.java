@@ -141,7 +141,11 @@ public class DumplingBomb extends Item {
 					heap.dumpexplode();
 				
 				Char ch = Actor.findChar(c);
-				if (ch != null && !(ch instanceof NPC) && !(ch instanceof BlueWraith) && !(ch instanceof Wraith) && !(ch instanceof RedWraith) && !(ch instanceof Sentinel) && !(ch instanceof FlyingProtector) && !(ch instanceof Golem) && !(ch instanceof Skeleton) && !(ch instanceof DwarfLich) && !(ch instanceof Statue) && !(ch instanceof Yog) && !(ch instanceof ShadowYog) && !(ch instanceof SpectralRat) && ch != Dungeon.hero) {
+				if (ch != null && !(ch instanceof NPC) && !(ch instanceof BlueWraith) &&
+						!(ch instanceof Wraith) && !(ch instanceof RedWraith) && !(ch instanceof Sentinel) &&
+						!(ch instanceof FlyingProtector) && !(ch instanceof Golem) && !(ch instanceof Skeleton) &&
+						!(ch instanceof DwarfLich) && !(ch instanceof Statue) && !(ch instanceof Yog) &&
+						!(ch instanceof ShadowYog) && !(ch instanceof SpectralRat) && ch != Dungeon.hero) {
 
 					Buff.affect(ch, Drowsy.class);
 					ch.sprite.centerEmitter().start(Speck.factory(Speck.NOTE), 0.3f, 5);

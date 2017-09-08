@@ -79,7 +79,7 @@ public class MossySkeleton extends Mob {
 		super.die(cause);
 		
 		Statistics.skeletonsKilled++;
-		GLog.w(TXT_KILLCOUNT, Statistics.skeletonsKilled);
+		GLog.h(TXT_KILLCOUNT, Statistics.skeletonsKilled);
 		
 		if (!Dungeon.limitedDrops.prisonkey.dropped() && Dungeon.depth<27) {
 			Dungeon.limitedDrops.prisonkey.drop();

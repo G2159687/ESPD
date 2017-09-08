@@ -82,7 +82,7 @@ private static final String TXT_PREVENTING = Messages.get(Palantir.class,"preven
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if((!used || Dungeon.depth==99) && !Dungeon.level.locked && !hero.petfollow){actions.add(AC_PORT);}		
+		if((!used || Dungeon.depth==99) && (!Dungeon.level.locked || Dungeon.depth == 66) && !hero.petfollow){actions.add(AC_PORT);}
 		return actions;
 	}
 

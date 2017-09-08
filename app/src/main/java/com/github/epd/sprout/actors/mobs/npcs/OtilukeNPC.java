@@ -22,7 +22,7 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
-import com.github.epd.sprout.items.PuddingCup;
+import com.github.epd.sprout.items.Amulet;
 import com.github.epd.sprout.items.TownReturnBeacon;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
@@ -46,7 +46,6 @@ public class OtilukeNPC extends NPC {
 
     private static final String TXT_DUNGEON2 = Messages.get(OtilukeNPC.class, "two");
 
-    private static final String TXT_DUNGEON3 = Messages.get(OtilukeNPC.class, "three");
     private static final String TXT_DUNGEON4 = Messages.get(OtilukeNPC.class, "four");
 
 
@@ -118,20 +117,18 @@ public class OtilukeNPC extends NPC {
         TownReturnBeacon beacon = Dungeon.hero.belongings.getItem(TownReturnBeacon.class);
 
         if (Badges.checkOtilukeRescued()) {
-            if (Random.Int(100) < 5) {
                 tell(TXT_DUNGEON4);
-                Dungeon.level.drop(new PuddingCup(), Dungeon.hero.pos).sprite.drop();
-            } else {
-                tell(TXT_DUNGEON3);
-            }
+                Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
         } else if (first && beacon == null) {
             Badges.validateOtilukeRescued();
             first = false;
             tell(TXT_DUNGEON2);
             Dungeon.level.drop(new TownReturnBeacon(), Dungeon.hero.pos).sprite.drop();
+            Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
         } else {
             Badges.validateOtilukeRescued();
             tell(TXT_DUNGEON);
+            Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
         }
         return false;
     }

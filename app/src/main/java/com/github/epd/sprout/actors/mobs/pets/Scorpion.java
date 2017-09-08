@@ -48,13 +48,13 @@ public class Scorpion extends PET {
 
     @Override
     public int dr() {
-        return level * 2;
+        return level * 4;
     }
 
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (2 + level) * 8;
+        HT = (3 + level) * 10;
         defenseSkill = 1 + level * 2;
     }
 

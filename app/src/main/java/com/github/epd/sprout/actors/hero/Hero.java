@@ -25,6 +25,7 @@ import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.actors.buffs.Awareness;
 import com.github.epd.sprout.actors.buffs.Barkskin;
 import com.github.epd.sprout.actors.buffs.Bleeding;
 import com.github.epd.sprout.actors.buffs.Blindness;
@@ -40,6 +41,7 @@ import com.github.epd.sprout.actors.buffs.Hunger;
 import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.actors.buffs.LichenDrop;
 import com.github.epd.sprout.actors.buffs.Light;
+import com.github.epd.sprout.actors.buffs.MindVision;
 import com.github.epd.sprout.actors.buffs.Ooze;
 import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.actors.buffs.Poison;
@@ -528,6 +530,9 @@ public class Hero extends Char {
 		*/
 
 		checkVisibleMobs();
+		if (!resting || buff(MindVision.class) != null || buff(Awareness.class) != null) {
+			Dungeon.observe();
+		}
 
 		if (curAction == null) {
 
@@ -1392,6 +1397,8 @@ public class Hero extends Char {
 			move(step);
 			spend( 1 / speed() );
 
+			search(false);
+
 			return true;
 
 		} else {
@@ -1747,12 +1754,6 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public void onMotionComplete() {
-		Dungeon.observe();
-		search(false);
-	}
-
-	@Override
 	public void onAttackComplete() {
 
 		AttackIndicator.target(enemy);
@@ -1850,7 +1851,7 @@ public class Hero extends Char {
 		for (int y = ay; y <= by; y++) {
 			for (int x = ax, p = ax + y * Level.getWidth(); x <= bx; x++, p++) {
 
-				if (Dungeon.visible[p]) {
+				if (Dungeon.visible[p] && p != pos) {
 
 					if (intentional) {
 						sprite.parent.addToBack(new CheckedCell(p));

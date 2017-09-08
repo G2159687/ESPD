@@ -104,7 +104,8 @@ public class Ballistica {
 			if ((stopTerrain && cell != sourcePos && Level.losBlocking[cell])
 					|| (cell != sourcePos && stopChars && Actor.findChar( cell ) != null)
 					|| (cell == to && stopTarget)
-					|| (stopSolid && cell != sourcePos && Level.solid[cell])){
+					|| (stopSolid && cell != sourcePos && Level.solid[cell])
+					|| (cell % Level.WIDTH == 0 || cell % Level.WIDTH == Level.WIDTH-1)){
 				collide(cell);
 			}
 

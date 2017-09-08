@@ -1081,7 +1081,7 @@ public static Level newJournalLevel(int page, Boolean first){
 	}
 
 	public static void saveAll() throws IOException {
-		if (hero.isAlive()) {
+		if (hero != null && hero.isAlive()) {
 
 			Actor.fixTime();
 			saveGame(gameFile(hero.heroClass));
@@ -1244,7 +1244,13 @@ public static Level newJournalLevel(int page, Boolean first){
 		Bundle bundle = Bundle.read(input);
 		input.close();
 
-		return (Level) bundle.get("level");
+		Level level = (Level) bundle.get("level");
+
+		if (level == null){
+			throw new IOException();
+		} else {
+			return level;
+		}
 	}
 
 	public static void deleteGame(HeroClass cl, boolean deleteLevels) {
@@ -1420,7 +1426,8 @@ public static Level newJournalLevel(int page, Boolean first){
 	   int hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 	   return (hour > 19 || hour < 7);
     }
-    
+
+    //TODO: Remove this
     public static int getMonth(){
  	   int month=Calendar.getInstance().get(Calendar.MONTH);
  	   return month;

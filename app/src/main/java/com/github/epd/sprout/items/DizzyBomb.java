@@ -148,8 +148,8 @@ public class DizzyBomb extends Item {
 				if (ch != null) {
 					// those not at the center of the blast take damage less
 					// consistently.
-					int minDamage = c == cell ? Dungeon.depth + 2 : 1;
-					int maxDamage = 10 + Dungeon.depth ;
+					int minDamage = c == cell ? Dungeon.depth * 4 : Dungeon.depth * 2;
+					int maxDamage = 5 + Dungeon.depth * 10;
 
 					int dmg = Random.NormalIntRange(minDamage, maxDamage)
 							- Random.Int(ch.dr());

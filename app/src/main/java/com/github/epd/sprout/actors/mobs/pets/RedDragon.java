@@ -71,8 +71,8 @@ public class RedDragon extends PET implements Callback {
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (2 + level) * 15;
-        defenseSkill = 1 + level * level;
+        HT = (3 + level) * 8;
+        defenseSkill = 1 + (level * level) / 2;
     }
 
 

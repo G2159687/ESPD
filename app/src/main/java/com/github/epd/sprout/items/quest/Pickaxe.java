@@ -43,6 +43,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+//TODO: Optimize this
+
 public class Pickaxe extends Weapon {
 
 	public static final String AC_MINE = Messages.get(Pickaxe.class,"ac_mine");
@@ -82,7 +84,7 @@ public class Pickaxe extends Weapon {
 
 		if (action == AC_MINE) {
 
-			if ((Dungeon.depth < 11 || Dungeon.depth > 15) && !(Dungeon.depth==32)) {
+			if ((Dungeon.depth < 11 || Dungeon.depth > 15) && !(Dungeon.depth==32) && !(Dungeon.depth > 55 || Dungeon.depth < 66)) {
 				GLog.w(TXT_NO_VEIN);
 				return;
 			}

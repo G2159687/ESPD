@@ -103,12 +103,22 @@ public class MirrorImage extends NPC {
         if (enemy == null || !enemy.isAlive()) {
             HashSet<Mob> enemies = new HashSet<Mob>();
             for (Mob mob : Dungeon.level.mobs) {
-                if (mob.hostile && Level.fieldOfView[mob.pos]) {
+                if (mob.hostile
+                        && Level.fieldOfView[mob.pos]
+                        && mob.state != mob.PASSIVE) {
                     enemies.add(mob);
                 }
             }
 
-            enemy = enemies.size() > 0 ? Random.element(enemies) : null;
+            //go for closest enemy
+            Char closest = null;
+            for (Char curr : enemies){
+                if (closest == null
+                        || Level.distance(pos, curr.pos) < Level.distance(pos, closest.pos)){
+                    closest = curr;
+                }
+            }
+            return closest;
         }
 
         return enemy;

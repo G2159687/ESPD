@@ -45,14 +45,14 @@ public class Bunny extends PET {
     @Override
     public void adjustStats(int level) {
         this.level = level;
-        HT = (2 + level) * 10;
+        HT = (3 + level) * 7;
         defenseSkill = 1 + level * 4;
     }
 
 
     @Override
     public int dr() {
-        return level * 5;
+        return level * 3;
     }
 
     @Override

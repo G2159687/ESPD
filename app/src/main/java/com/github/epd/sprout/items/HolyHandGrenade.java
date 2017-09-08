@@ -140,30 +140,19 @@ public class HolyHandGrenade extends Item {
 
 				Heap heap = Dungeon.level.heaps.get(c);
 				if (heap != null){heap.holyexplode();}
-				
-				 
-				
+
 				Char ch = Actor.findChar(c);
-				if (ch instanceof MossySkeleton
-					|| 	ch instanceof Skeleton
-					||  ch instanceof RedWraith
-					||  ch instanceof BlueWraith
-					||  ch instanceof Wraith
-					||  ch instanceof DwarfLich
-					||  ch instanceof SpectralRat
-					||  ch instanceof RedWraith
-					||  ch instanceof DwarfKingTomb
-					||  ch instanceof King
-					||  ch instanceof Warlock	
-					||  ch instanceof Undead
-						) {
+				if (ch instanceof MossySkeleton || 	ch instanceof Skeleton ||  ch instanceof RedWraith
+					||  ch instanceof BlueWraith ||  ch instanceof Wraith ||  ch instanceof DwarfLich
+					||  ch instanceof SpectralRat ||  ch instanceof RedWraith ||  ch instanceof DwarfKingTomb
+					||  ch instanceof King ||  ch instanceof Warlock ||  ch instanceof Undead) {
                    if(Random.Int(2)==0){
 					Buff.affect(ch, Terror.class, Terror.DURATION).object = curUser.id();
-					int dmg = Random.NormalIntRange(75, 155 - Random.Int(ch.dr()));
+					int dmg = Random.NormalIntRange(75, 300 - Random.Int(ch.dr()));
 					if (dmg > 0) {ch.damage(dmg, this);}
                    } else {
                 	 Buff.affect(ch, Terror.class, Terror.DURATION).object = curUser.id();
-                	 int dmg = Random.NormalIntRange(75, 155);
+                	 int dmg = Random.NormalIntRange(75, 300);
  					if (dmg > 0) {ch.damage(dmg, this);}
                    }
 					

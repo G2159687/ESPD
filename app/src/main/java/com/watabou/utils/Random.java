@@ -83,6 +83,10 @@ public class Random {
 			probs[i] = chances.get( values[i] );
 			sum += probs[i];
 		}
+
+		if (sum <= 0) {
+			return null;
+		}
 		
 		float value = Float( sum );
 		

@@ -107,6 +107,7 @@ import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.wands.WandOfAmok;
 import com.github.epd.sprout.items.wands.WandOfAvalanche;
+import com.github.epd.sprout.items.wands.WandOfBlastWave;
 import com.github.epd.sprout.items.wands.WandOfBlink;
 import com.github.epd.sprout.items.wands.WandOfDisintegration;
 import com.github.epd.sprout.items.wands.WandOfFirebolt;
@@ -259,7 +260,7 @@ public class Generator {
 				WandOfTelekinesis.class, WandOfFlock.class, WandOfMagicMissile.class,
 				WandOfDisintegration.class, WandOfAvalanche.class,
 				WandOfPrismaticLight.class, WandOfVenom.class,
-				WandOfFrost.class};
+				WandOfFrost.class, WandOfBlastWave.class};
 		Category.WAND.probs = new float[] { 10,
 				10, 10,
 				10, 10, 10,
@@ -267,7 +268,7 @@ public class Generator {
 				10, 8, 0,
 				10, 10,
 				10, 10,
-				10};
+				10, 10};
 
 		Category.WEAPON.classes = new Class<?>[] { Dagger.class,
 				Knuckles.class, Quarterstaff.class, Spear.class, Mace.class,

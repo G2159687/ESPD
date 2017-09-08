@@ -61,16 +61,6 @@ public class Egg extends Item {
 
 	public static final String AC_BREAK = Messages.get(Egg.class,"ac_break");
 	public static final String AC_SHAKE = Messages.get(Egg.class,"ac_shake");
-	
-	public static final int RED_DRAGON = 30;
-	public static final int GREEN_DRAGON = 5;
-	public static final int BLUE_DRAGON = Dungeon.getMonth()==11 ? 1 : 5;
-	public static final int VIOLET_DRAGON = 5;
-	public static final int SPIDER = 2000;
-	public static final int SCORPION = 10000;
-	public static final int VELOCIROOSTER = 1;
-	public static final int FAIRY = 10;
-	
 
 		{
 		name = Messages.get(this,"name");
@@ -167,22 +157,13 @@ public class Egg extends Item {
 	@Override
 	public void execute(Hero hero, String action) {
 
-		/*
+//TODO: Change this
+
 		if (action == AC_BREAK) {
-
-			if (Dungeon.depth>26) {
-				hero.spend(Egg.TIME_TO_USE);
-				GLog.w(TXT_PREVENTING);
-				return;
-			}			
-		}
-		*/
-
-		if (action == AC_BREAK) {	
 			
 			boolean hatch = false;
 			
-			 if (checkSummons()>=FAIRY) {
+			 if (checkSummons()>=10) {
 				 if (Dungeon.getMonth()==11){
 				   SugarplumFairy pet = new SugarplumFairy();
 				   eggHatch(pet);
@@ -193,37 +174,37 @@ public class Egg extends Item {
 				  hatch=true;
 				 }				 
 				//spawn fairy	
-			  } else if (checkFreezes()>=BLUE_DRAGON) {
+			  } else if (checkFreezes()>=5) {
 				  BlueDragon pet = new BlueDragon();
 				  eggHatch(pet);
 				  hatch=true;
 				  //spawn ice dragon			
-			  } else if (checkPoisons()>=VIOLET_DRAGON) {
+			  } else if (checkPoisons()>=5) {
 				  VioletDragon pet = new VioletDragon();
 				  eggHatch(pet);
 				  hatch=true;
 				  //spawn green dragon
-			  } else if (checkLits()>=GREEN_DRAGON) {
+			  } else if (checkLits()>=5) {
 				  GreenDragon pet = new GreenDragon();
 				  eggHatch(pet);
 				  hatch=true;
 				  //spawn lit dragon
-			  } else if (checkBurns()>=RED_DRAGON) {			
+			  } else if (checkBurns()>=30) {
 				  RedDragon pet = new RedDragon();
 				  eggHatch(pet);
 				  hatch=true;
 				 //spawn red dragon	
-			  } else if (checkBurns()>=VELOCIROOSTER) {
+			  } else if (checkBurns()>=1) {
 				  Velocirooster pet = new Velocirooster();
 				  eggHatch(pet);
 				  hatch=true;
 				  //spawn velocirooster
-			  } else if (checkMoves()>=SCORPION) {
+			  } else if (checkMoves()>=10000) {
 				  Scorpion pet = new Scorpion();
 				  eggHatch(pet);
 				  hatch=true;
 				  //spawn spider
-			  } else if (checkMoves()>=SPIDER) {
+			  } else if (checkMoves()>=2000) {
 				  Spider pet = new Spider();
 				  eggHatch(pet);
 				  hatch=true;
@@ -243,38 +224,38 @@ public class Egg extends Item {
 						            
 			 boolean alive = false;
 			  
-			  if (checkSummons()>=FAIRY) {
+			  if (checkSummons()>=10) {
 				   GLog.w(TXT_ZAP);
 				   Dungeon.hero.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 				   Dungeon.hero.sprite.flash();
 				   Dungeon.hero.damage(1, LightningTrap.LIGHTNING);	
 				   alive = true;
 				  //spawn fairy
-			  } else if (checkFreezes()>=BLUE_DRAGON) {
+			  } else if (checkFreezes()>=5) {
 				 GLog.w(TXT_KICKS);
 				 alive = true;
 				  //spawn ice dragon
-			  } else if (checkPoisons()>=VIOLET_DRAGON) {
+			  } else if (checkPoisons()>=5) {
 				   GLog.w(TXT_KICKS);
 				   alive = true;
 				  //spawn green dragon
-			  } else if (checkLits()>=GREEN_DRAGON) {
+			  } else if (checkLits()>=5) {
 				  GLog.w(TXT_KICKS);
 				  alive = true;
 				  //spawn lit dragon
-			  } else if (checkBurns()>=RED_DRAGON) {
+			  } else if (checkBurns()>=30) {
 				  GLog.w(TXT_KICKS);
 				  alive = true;
 				  //spawn dragon
-			  } else if (checkBurns()>=VELOCIROOSTER) {
+			  } else if (checkBurns()>=1) {
 				  GLog.w(TXT_SCRATCH);
 				  alive = true;
 				  //spawn velocirooster
-			  } else if (checkMoves()>=SCORPION) {
+			  } else if (checkMoves()>=10000) {
 				  GLog.w(TXT_SLITHERS);
 				  alive = true;
 				  //spawn spider
-			  } else if (checkMoves()>=SPIDER) {
+			  } else if (checkMoves()>=2000) {
 				  GLog.w(TXT_SLITHERS);
 				  alive = true;
 				  //spawn scorpion
@@ -373,7 +354,8 @@ public class Egg extends Item {
 		
 	@Override
 	public String info() {
-		return Messages.get(Egg.class,"desc");
+		return Messages.get(Egg.class,"desc") +
+				Messages.get(Egg.class, "desc_stats", checkSummons(), checkFreezes(), checkPoisons(),checkLits(), checkBurns(), checkMoves());
 	}
 
 }

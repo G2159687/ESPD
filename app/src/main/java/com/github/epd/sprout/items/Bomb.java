@@ -248,8 +248,8 @@ public class Bomb extends Item {
 				if (ch != null) {
 					// those not at the center of the blast take damage less
 					// consistently.
-					int minDamage = c == cell ? Dungeon.depth + 5 : 1;
-					int maxDamage = 10 + Dungeon.depth * 2;
+					int minDamage = c == cell ? Dungeon.depth * 6 : Dungeon.depth * 3;
+					int maxDamage = 5 + Dungeon.depth * 15;
 
 					int dmg = Random.NormalIntRange(minDamage, maxDamage)
 							- Random.Int(ch.dr());

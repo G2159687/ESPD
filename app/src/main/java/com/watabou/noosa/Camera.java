@@ -127,7 +127,6 @@ public class Camera extends Gizmo {
 	@Override
 	public void destroy() {
 		target = null;
-		matrix = null;
 	}
 	
 	public void zoom( float value ) {

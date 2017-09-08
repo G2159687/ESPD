@@ -19,6 +19,7 @@ package com.github.epd.sprout.levels.painters;
 
 import com.github.epd.sprout.actors.mobs.npcs.RatKingDen;
 import com.github.epd.sprout.items.ActiveMrDestructo;
+import com.github.epd.sprout.items.AdamantWand;
 import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
@@ -66,6 +67,7 @@ public class RatKingPainter2 extends Painter {
 		RatKingDen king = new RatKingDen();
 		king.pos = room.random(1);
 		level.mobs.add(king);
+		level.drop(new AdamantWand(), king.pos).type = Heap.Type.CHEST;
 	}
 
 	private static void addChest(Level level, int pos, int door) {

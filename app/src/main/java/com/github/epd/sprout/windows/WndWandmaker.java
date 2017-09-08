@@ -25,6 +25,7 @@ import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.npcs.Wandmaker;
 import com.github.epd.sprout.items.AdamantWand;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.quest.CorpseDust;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.PixelScene;
@@ -91,7 +92,22 @@ public class WndWandmaker extends Window {
 
 		hide();
 
+		if (item != null && item == Dungeon.hero.belongings.getItem(CorpseDust.class)){
+			if (!item.cursed){
+				wandmaker.yell(Messages.get(this,"uncursed"));
+				Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
+			}
+		} else if (item != null && item == Dungeon.hero.belongings.getItem(Wandmaker.Rotberry.Seed.class)){
+			if (item.quantity() > 1){
+				wandmaker.yell("good");
+				Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
+			}
+		}
+
 		item.detach(Dungeon.hero.belongings.backpack);
+
+		if ( item!=null )
+		item.detachAll(Dungeon.hero.belongings.backpack);
 
 		reward.identify();
 		if (reward.doPickUp(Dungeon.hero)) {
@@ -100,12 +116,7 @@ public class WndWandmaker extends Window {
 			Dungeon.level.drop(reward, wandmaker.pos).sprite.drop();
 		}
 
-		if(Dungeon.hero.heroClass!=HeroClass.MAGE && Statistics.sewerKills== Statistics.enemiesSlain && !(Dungeon.isChallenged(Challenges.NO_SCROLLS))){
-			Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
-			wandmaker.yell(TXT_WOW);
-		}
-
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS) || Dungeon.hero.heroClass== HeroClass.MAGE)
+		if (Dungeon.isChallenged(Challenges.NO_SCROLLS))
 		{Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();}
 		
 		wandmaker.yell(Utils.format(TXT_FARAWELL, Dungeon.hero.givenName()));

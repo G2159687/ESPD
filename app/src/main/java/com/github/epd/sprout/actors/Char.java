@@ -349,8 +349,8 @@ public abstract class Char extends Actor {
 		super.spend(time / timeScale);
 	}
 
-	public HashSet<Buff> buffs() {
-		return buffs;
+	public synchronized HashSet<Buff> buffs() {
+		return new HashSet<>(buffs);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -374,7 +374,7 @@ public abstract class Char extends Actor {
 		return null;
 	}
 
-	public boolean isCharmedBy(Char ch) {
+	public synchronized boolean isCharmedBy(Char ch) {
 		int chID = ch.id();
 		for (Buff b : buffs) {
 			if (b instanceof Charm && ((Charm) b).object == chID) {
@@ -384,7 +384,7 @@ public abstract class Char extends Actor {
 		return false;
 	}
 
-	public void add(Buff buff) {
+	public synchronized void add(Buff buff) {
 
 		buffs.add(buff);
 		Actor.add(buff);
@@ -461,7 +461,7 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public void remove(Buff buff) {
+	public synchronized void remove(Buff buff) {
 
 		buffs.remove(buff);
 		Actor.remove(buff);
@@ -482,20 +482,20 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public void remove(Class<? extends Buff> buffClass) {
+	public synchronized void remove(Class<? extends Buff> buffClass) {
 		for (Buff buff : buffs(buffClass)) {
 			remove(buff);
 		}
 	}
 
 	@Override
-	protected void onRemove() {
+	protected synchronized void onRemove() {
 		for (Buff buff : buffs.toArray(new Buff[0])) {
 			buff.detach();
 		}
 	}
 
-	public void updateSpriteState() {
+	public synchronized void updateSpriteState() {
 		for (Buff buff : buffs) {
 			if (buff instanceof Burning) {
 				sprite.add(CharSprite.State.BURNING);

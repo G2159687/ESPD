@@ -17,9 +17,7 @@
  */
 package com.github.epd.sprout.items;
 
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.AmuletScene;
@@ -63,14 +61,7 @@ public class Amulet extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (super.doPickUp(hero)) {
-
-			if (!Statistics.amuletObtained) {
-				Statistics.amuletObtained = true;
-				Badges.validateVictory();
-
-				showAmuletScene(true);
-			}
-
+			showAmuletScene(true);
 			return true;
 		} else {
 			return false;
