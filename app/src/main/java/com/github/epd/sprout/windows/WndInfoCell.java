@@ -28,13 +28,13 @@ import com.github.epd.sprout.ui.RenderedTextMultiline;
 import com.github.epd.sprout.ui.Window;
 import com.watabou.noosa.Image;
 
-public class       WndInfoCell extends Window {
+public class WndInfoCell extends Window {
 
 	private static final float GAP = 2;
 
 	private static final int WIDTH = 120;
 
-	private static final String TXT_NOTHING = Messages.get(WndInfoCell.class,"nothing");
+	private static final String TXT_NOTHING = Messages.get(WndInfoCell.class, "nothing");
 
 	public WndInfoCell(int cell) {
 
@@ -77,6 +77,6 @@ public class       WndInfoCell extends Window {
 		info.maxWidth(WIDTH);
 		info.setPos(titlebar.left(), titlebar.bottom() + GAP);
 
-		resize( WIDTH, (int)(info.top() + info.height()) );
+		resize(WIDTH, (int) (info.top() + info.height()));
 	}
 }

@@ -49,7 +49,7 @@ public class WaterOfHealth extends WellWater {
 
 		Dungeon.hero.interrupt();
 
-		GLog.p(Messages.get(this,"proc"));
+		GLog.p(Messages.get(this, "proc"));
 
 		Journal.remove(Feature.WELL_OF_HEALTH);
 
@@ -60,7 +60,7 @@ public class WaterOfHealth extends WellWater {
 	protected Item affectItem(Item item) {
 		if (item instanceof DewVial && !((DewVial) item).isFull()) {
 			((DewVial) item).fill();
-			Journal.remove( Feature.WELL_OF_HEALTH );
+			Journal.remove(Feature.WELL_OF_HEALTH);
 			return item;
 		}
 
@@ -75,6 +75,6 @@ public class WaterOfHealth extends WellWater {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

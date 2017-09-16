@@ -23,7 +23,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class BattleAxe extends MeleeWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.BATTLE_AXE;
 	}
 
@@ -33,6 +33,6 @@ public class BattleAxe extends MeleeWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

@@ -18,9 +18,7 @@
 package com.github.epd.sprout.items;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.OrbOfZotMob;
@@ -40,18 +38,18 @@ public class OrbOfZot extends Item {
 	//private static final String AC_END = "END THE GAME";
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ORBOFZOT;
 		defaultAction = AC_ACTIVATETHROW;
 		unique = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	private static boolean activate = false;
 
-	private static final String AC_ACTIVATETHROW = Messages.get(OrbOfZot.class,"ac1");
-	private static final String AC_BREAK = Messages.get(OrbOfZot.class,"ac2");
-	
+	private static final String AC_ACTIVATETHROW = Messages.get(OrbOfZot.class, "ac1");
+	private static final String AC_BREAK = Messages.get(OrbOfZot.class, "ac2");
+
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
@@ -62,27 +60,27 @@ public class OrbOfZot extends Item {
 
 	@Override
 	public void execute(Hero hero, String action) {
-		
+
 		if (action.equals(AC_ACTIVATETHROW)) {
 			activate = true;
 			action = AC_THROW;
 		} else {
 			activate = false;
 		}
-		
-		if (action.equals(AC_BREAK)){
+
+		if (action.equals(AC_BREAK)) {
 			Dungeon.level.drop(new Town(), Dungeon.hero.pos).sprite.drop(Dungeon.hero.pos);
 			this.detachAll(Dungeon.hero.belongings.backpack);
 			Sample.INSTANCE.play(Assets.SND_BLAST);
 			hero.sprite.emitter().burst(ElmoParticle.FACTORY, 12);
 		}
-		
+
 		super.execute(hero, action);
 	}
 
 	@Override
 	protected void onThrow(int cell) {
-		
+
 		if (Actor.findChar(cell) != null) {
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8)
@@ -90,49 +88,33 @@ public class OrbOfZot extends Item {
 					candidates.add(cell + i);
 			int newCell = candidates.isEmpty() ? cell : Random
 					.element(candidates);
-			
-			   if (!Level.pit[newCell] && activate) {
-				   OrbOfZotMob.spawnAt(newCell);
-			   } else {
-			   Dungeon.level.drop(this, newCell).sprite.drop(cell);
-			   }
-			   
+
+			if (!Level.pit[newCell] && activate) {
+				OrbOfZotMob.spawnAt(newCell);
+			} else {
+				Dungeon.level.drop(this, newCell).sprite.drop(cell);
+			}
+
 		} else if (!Level.pit[cell] && activate) {
-			  OrbOfZotMob.spawnAt(cell);
+			OrbOfZotMob.spawnAt(cell);
 		} else {
-			
+
 			super.onThrow(cell);
 		}
 
 	}
-	
+
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (super.doPickUp(hero)) {
-
-			if (!Statistics.orbObtained) {
-				Statistics.orbObtained = true;
-				Badges.validateOrbObtained();
-				//showAmuletScene(true);
-			}
 
 			return true;
 		} else {
 			return false;
 		}
 	}
-/*
-	private void showAmuletScene(boolean showText) {
-		try {
-			Dungeon.saveAll();
-			AmuletScene.noText = !showText;
-			Game.switchScene(AmuletScene.class);
-		} catch (IOException e) {
-		}
-	}
-*/
 
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
@@ -145,6 +127,6 @@ public class OrbOfZot extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

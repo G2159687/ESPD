@@ -104,15 +104,15 @@ public class StartScene extends PixelScene {
 		buttonX = left;
 		buttonY = bottom - BUTTON_HEIGHT;
 
-		btnNewGame = new GameButton( Messages.get(this, "new") ) {
+		btnNewGame = new GameButton(Messages.get(this, "new")) {
 			@Override
 			protected void onClick() {
-				if (GamesInProgress.check( curClass ) != null) {
-					StartScene.this.add( new WndOptions(
+				if (GamesInProgress.check(curClass) != null) {
+					StartScene.this.add(new WndOptions(
 							Messages.get(StartScene.class, "really"),
 							Messages.get(StartScene.class, "warning"),
 							Messages.get(StartScene.class, "yes"),
-							Messages.get(StartScene.class, "no") ) {
+							Messages.get(StartScene.class, "no")) {
 						@Override
 						protected void onSelect(int index) {
 							if (index == 0) {
@@ -128,7 +128,7 @@ public class StartScene extends PixelScene {
 		};
 		add(btnNewGame);
 
-		btnLoad = new GameButton( Messages.get(this, "load") ) {
+		btnLoad = new GameButton(Messages.get(this, "load")) {
 			@Override
 			protected void onClick() {
 				InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
@@ -139,7 +139,7 @@ public class StartScene extends PixelScene {
 
 		float centralHeight = buttonY - title.y - title.height();
 
-		HeroClass[] classes = { HeroClass.WARRIOR, HeroClass.MAGE, HeroClass.ROGUE, HeroClass.HUNTRESS };
+		HeroClass[] classes = {HeroClass.WARRIOR, HeroClass.MAGE, HeroClass.ROGUE, HeroClass.HUNTRESS};
 		for (HeroClass cl : classes) {
 			ClassShield shield = new ClassShield(cl);
 			shields.put(cl, shield);
@@ -211,30 +211,30 @@ public class StartScene extends PixelScene {
 		}
 		shields.get(curClass = cl).highlight(true);
 
-			unlock.visible = false;
+		unlock.visible = false;
 
-			GamesInProgress.Info info = GamesInProgress.check(curClass);
-			if (info != null) {
+		GamesInProgress.Info info = GamesInProgress.check(curClass);
+		if (info != null) {
 
-				btnLoad.visible = true;
-				btnLoad.secondary( Messages.format( Messages.get(this, "depth_level"), info.depth, info.level ), info.challenges );
-				btnNewGame.visible = true;
-				btnNewGame.secondary( Messages.get(this, "erase"), false );
+			btnLoad.visible = true;
+			btnLoad.secondary(Messages.format(Messages.get(this, "depth_level"), info.depth, info.level), info.challenges);
+			btnNewGame.visible = true;
+			btnNewGame.secondary(Messages.get(this, "erase"), false);
 
-				float w = (Camera.main.width - GAP) / 2 - buttonX;
+			float w = (Camera.main.width - GAP) / 2 - buttonX;
 
-				btnLoad.setRect(
-						buttonX, buttonY, w, BUTTON_HEIGHT );
-				btnNewGame.setRect(
-						btnLoad.right() + GAP, buttonY, w, BUTTON_HEIGHT );
+			btnLoad.setRect(
+					buttonX, buttonY, w, BUTTON_HEIGHT);
+			btnNewGame.setRect(
+					btnLoad.right() + GAP, buttonY, w, BUTTON_HEIGHT);
 
-			} else {
-				btnLoad.visible = false;
+		} else {
+			btnLoad.visible = false;
 
-				btnNewGame.visible = true;
-				btnNewGame.secondary( null, false );
-				btnNewGame.setRect( buttonX, buttonY, Camera.main.width - buttonX * 2, BUTTON_HEIGHT );
-			}
+			btnNewGame.visible = true;
+			btnNewGame.secondary(null, false);
+			btnNewGame.setRect(buttonX, buttonY, Camera.main.width - buttonX * 2, BUTTON_HEIGHT);
+		}
 
 	}
 
@@ -294,7 +294,7 @@ public class StartScene extends PixelScene {
 
 		public void secondary(String text, boolean highlighted) {
 			secondary.text(text);
-			secondary.hardlight( highlighted ? SECONDARY_COLOR_H : SECONDARY_COLOR_N );
+			secondary.hardlight(highlighted ? SECONDARY_COLOR_H : SECONDARY_COLOR_N);
 		}
 	}
 

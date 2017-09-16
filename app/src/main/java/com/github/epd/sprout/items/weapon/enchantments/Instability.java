@@ -24,13 +24,13 @@ import com.github.epd.sprout.messages.Messages;
 
 public class Instability extends Weapon.Enchantment {
 
-	private static final String TXT_UNSTABLE = Messages.get(Instability.class,"name");
+	private static final String TXT_UNSTABLE = Messages.get(Instability.class, "name");
 
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		return random().proc(weapon, attacker, defender, damage);

@@ -33,11 +33,11 @@ import java.util.HashSet;
 public class Bat extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BatSprite.class;
 
-		HP = HT = 50+(adj(0)*Random.NormalIntRange(2, 5));
-		defenseSkill = 15+adj(0);
+		HP = HT = 50 + (adj(0) * Random.NormalIntRange(2, 5));
+		defenseSkill = 15 + adj(0);
 		baseSpeed = 2f;
 
 		EXP = 7;
@@ -54,22 +54,22 @@ public class Bat extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(15, 22+adj(0));
+		return Random.NormalIntRange(15, 22 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 16+adj(0);
+		return 16 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 4+adj(0);
+		return 4 + adj(0);
 	}
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
@@ -100,10 +100,11 @@ public class Bat extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Leech.class);
 	}

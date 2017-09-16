@@ -38,9 +38,9 @@ public class LokisFlail extends RelicMeleeWeapon {
 
 	}
 
-	
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.LOKISFLAIL;
 
 		level = 0;
@@ -54,12 +54,12 @@ public class LokisFlail extends RelicMeleeWeapon {
 		bones = false;
 
 		defaultAction = AC_STEALTH;
-		
-  }
-	
-	private static final String TXT_PREVENTING = Messages.get(LokisFlail.class,"prevent");
-		
-	public static final String AC_STEALTH = Messages.get(LokisFlail.class,"ac_stealth");
+
+	}
+
+	private static final String TXT_PREVENTING = Messages.get(LokisFlail.class, "prevent");
+
+	public static final String AC_STEALTH = Messages.get(LokisFlail.class, "ac_stealth");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -72,42 +72,42 @@ public class LokisFlail extends RelicMeleeWeapon {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_STEALTH)) {
-			
-			  if (Dungeon.depth==29) {
-					GLog.w(TXT_PREVENTING);
-					return;
-			
-			   } 
-			GLog.p(Messages.get(this,"ready"));
+
+			if (Dungeon.depth == 29) {
+				GLog.w(TXT_PREVENTING);
+				return;
+
+			}
+			GLog.p(Messages.get(this, "ready"));
 			charge = 0;
 			Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
-			GLog.i(Messages.get(PotionOfInvisibility.class,"invisible"));
+			GLog.i(Messages.get(PotionOfInvisibility.class, "invisible"));
 			Sample.INSTANCE.play(Assets.SND_MELD);
 
 		} else
 			super.execute(hero, action);
 	}
 
-	
+
 	public class StealthCounter extends WeaponBuff {
 
 		@Override
 		public boolean act() {
 			if (charge < chargeCap) {
-				charge+=level;
+				charge += level;
 				if (charge >= chargeCap) {
 					charge = chargeCap;
-					GLog.p(Messages.get(LokisFlail.class,"buffdesc"));
+					GLog.p(Messages.get(LokisFlail.class, "buffdesc"));
 				}
 				updateQuickslot();
 			}
 			spend(TICK);
 			return true;
 		}
-		
+
 		@Override
 		public String toString() {
-			return Messages.get(LokisFlail.class,"buffname");
+			return Messages.get(LokisFlail.class, "buffname");
 		}
 
 		@Override
@@ -126,15 +126,13 @@ public class LokisFlail extends RelicMeleeWeapon {
 		}
 
 	}
-	
-	
-	
-	
+
+
 	@Override
 	protected WeaponBuff passiveBuff() {
 		return new StealthCounter();
 	}
-	
+
 }
 
 

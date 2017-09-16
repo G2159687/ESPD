@@ -28,17 +28,17 @@ public class WndMessage extends Window {
 	private static final int WIDTH_L = 144;
 	private static final int MARGIN = 4;
 
-	public WndMessage( String text ) {
+	public WndMessage(String text) {
 
 		super();
 
-		RenderedTextMultiline info = PixelScene.renderMultiline( text, 6 );
+		RenderedTextMultiline info = PixelScene.renderMultiline(text, 6);
 		info.maxWidth((ShatteredPixelDungeon.landscape() ? WIDTH_L : WIDTH_P) - MARGIN * 2);
 		info.setPos(MARGIN, MARGIN);
-		add( info );
+		add(info);
 
 		resize(
-				(int)info.width() + MARGIN * 2,
-				(int)info.height() + MARGIN * 2 );
+				(int) info.width() + MARGIN * 2,
+				(int) info.height() + MARGIN * 2);
 	}
 }

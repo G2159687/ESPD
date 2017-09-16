@@ -25,7 +25,7 @@ public class Mushroom extends Item {
 	//private static final String AC_END = "END THE GAME";
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MUSHROOM;
 
 		unique = true;
@@ -51,7 +51,7 @@ public class Mushroom extends Item {
 
 		}
 	}
-  
+
 /*
 	private void showAmuletScene(boolean showText) {
 		try {
@@ -74,6 +74,6 @@ public class Mushroom extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

@@ -33,8 +33,8 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndImp extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndImp.class,"msg");
-	private static final String TXT_REWARD = Messages.get(WndImp.class,"ok");
+	private static final String TXT_MESSAGE = Messages.get(WndImp.class, "msg");
+	private static final String TXT_REWARD = Messages.get(WndImp.class, "ok");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -53,7 +53,7 @@ public class WndImp extends Window {
 		RenderedTextMultiline message = PixelScene
 				.renderMultiline(TXT_MESSAGE, 6);
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
 		NewRedButton btnReward = new NewRedButton(TXT_REWARD) {

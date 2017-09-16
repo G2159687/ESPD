@@ -22,7 +22,6 @@ import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.effects.BlobEmitter;
 import com.github.epd.sprout.levels.Level;
-import com.github.epd.sprout.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Rect;
 
@@ -142,10 +141,10 @@ public class Blob extends Actor {
 		return true;
 	}
 
-	public void setupArea(){
-		for (int cell=0; cell < cur.length; cell++) {
-			if (cur[cell] != 0){
-				area.union(cell%Level.WIDTH, cell/Level.WIDTH);
+	public void setupArea() {
+		for (int cell = 0; cell < cur.length; cell++) {
+			if (cur[cell] != 0) {
+				area.union(cell % Level.WIDTH, cell / Level.WIDTH);
 			}
 		}
 	}
@@ -211,7 +210,7 @@ public class Blob extends Actor {
 		cur[cell] += amount;
 		volume += amount;
 
-		area.union(cell%WIDTH, cell/WIDTH);
+		area.union(cell % WIDTH, cell / WIDTH);
 	}
 
 	public void clear(int cell) {
@@ -240,6 +239,15 @@ public class Blob extends Actor {
 		} catch (Exception e) {
 			ShatteredPixelDungeon.reportException(e);
 			return null;
+		}
+	}
+
+	public static int volumeAt( int cell, Class<? extends Blob> type){
+		Blob gas = Dungeon.level.blobs.get( type );
+		if (gas == null) {
+			return 0;
+		} else {
+			return gas.cur[cell];
 		}
 	}
 }

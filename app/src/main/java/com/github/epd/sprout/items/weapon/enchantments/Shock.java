@@ -34,13 +34,13 @@ import java.util.HashSet;
 
 public class Shock extends Weapon.Enchantment {
 
-	private static final String TXT_SHOCKING = Messages.get(Shock.class,"name");
+	private static final String TXT_SHOCKING = Messages.get(Shock.class, "name");
 
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		// lvl 0 - 25%
@@ -48,7 +48,7 @@ public class Shock extends Weapon.Enchantment {
 		// lvl 2 - 50%
 		int level = Math.max(0, weapon.level);
 
-		if (Random.Int( level + 4 ) >= 3) {
+		if (Random.Int(level + 4) >= 3) {
 
 			affected.clear();
 			affected.add(attacker);
@@ -57,7 +57,7 @@ public class Shock extends Weapon.Enchantment {
 			arcs.add(new Lightning.Arc(attacker.pos, defender.pos));
 			hit(defender, Random.Int(1, damage / 2));
 
-			attacker.sprite.parent.add( new Lightning( arcs, null ) );
+			attacker.sprite.parent.add(new Lightning(arcs, null));
 
 			return true;
 
@@ -77,7 +77,7 @@ public class Shock extends Weapon.Enchantment {
 
 	private ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 
-	private void hit( Char ch, int damage ) {
+	private void hit(Char ch, int damage) {
 
 		if (damage < 1) {
 			return;
@@ -90,9 +90,9 @@ public class Shock extends Weapon.Enchantment {
 		ch.sprite.flash();
 
 		HashSet<Char> ns = new HashSet<Char>();
-		for (int i=0; i < PathFinder.NEIGHBOURS8.length; i++) {
-			Char n = Actor.findChar( ch.pos + PathFinder.NEIGHBOURS8[i] );
-			if (n != null && !affected.contains( n )) {
+		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
+			Char n = Actor.findChar(ch.pos + PathFinder.NEIGHBOURS8[i]);
+			if (n != null && !affected.contains(n)) {
 				arcs.add(new Lightning.Arc(ch.pos, n.pos));
 				hit(n, Random.Int(damage / 2, damage));
 			}

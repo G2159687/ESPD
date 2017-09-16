@@ -39,13 +39,13 @@ public class WaterOfUpgradeEating extends WellWater {
 		if (item.isUpgradable()) {
 			item = eatUpgradable(item);
 		} else if (item instanceof Scroll
-				    || item instanceof Potion
-				    || item instanceof Stylus) {
+				|| item instanceof Potion
+				|| item instanceof Stylus) {
 			item = eatStandard(item);
 		} else {
 			item = null;
 		}
-		
+
 		return item;
 
 	}
@@ -59,44 +59,44 @@ public class WaterOfUpgradeEating extends WellWater {
 	private Item eatUpgradable(Item w) {
 
 		int ups = w.level;
-		
+
 		Item n = null;
 
-		if (Random.Float()<(ups/10)){
-			
+		if (Random.Float() < (ups / 10)) {
+
 			n = new UpgradeBlobViolet();
-			
-		} else if (Random.Float()<(ups/5)) {
-			
-			n =  new UpgradeBlobRed();
-			
-        } else if (Random.Float()<(ups/3)) {
-			
-			n =  new UpgradeBlobYellow();
-		
+
+		} else if (Random.Float() < (ups / 5)) {
+
+			n = new UpgradeBlobRed();
+
+		} else if (Random.Float() < (ups / 3)) {
+
+			n = new UpgradeBlobYellow();
+
 		} else {
-			
+
 			n = Generator.random(Category.SEEDRICH);
 		}
-		
+
 		return n;
 	}
-	
+
 	private Item eatStandard(Item w) {
 
 		Item n = null;
-        
-		if (Random.Float()<0.1f){
+
+		if (Random.Float() < 0.1f) {
 			n = new UpgradeBlobYellow();
 		} else {
 			n = Generator.random(Category.SEEDRICH);
 		}
-		
+
 		return n;
 	}
-	
+
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

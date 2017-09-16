@@ -44,14 +44,14 @@ import com.watabou.utils.Random;
 
 import java.util.HashSet;
 
-public class ShadowYog extends Mob  {
-	
+public class ShadowYog extends Mob {
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ShadowYogSprite.class;
 
-		HP = HT = 50*Dungeon.hero.lvl;
-		
+		HP = HT = 50 * Dungeon.hero.lvl;
+
 		baseSpeed = 2f;
 		defenseSkill = 32;
 
@@ -59,10 +59,10 @@ public class ShadowYog extends Mob  {
 
 		state = PASSIVE;
 	}
-	
+
 	private int yogsAlive = 0;
-	
-	private static final String TXT_DESC =  Messages.get(ShadowYog.class,"desc");
+
+	private static final String TXT_DESC = Messages.get(ShadowYog.class, "desc");
 
 	@Override
 	public int damageRoll() {
@@ -82,57 +82,56 @@ public class ShadowYog extends Mob  {
 	public int dr() {
 		return (Dungeon.level.mobs.size());
 	}
-	
+
 	@Override
 	public void damage(int dmg, Object src) {
 
-			//for (Mob mob : Dungeon.level.mobs) {
-			 //	mob.beckon(pos);
-			//	}
-			
-			for (int i = 0; i < 4; i++) {
-				int trapPos;
-				do {
-					trapPos = Random.Int(Level.getLength());
-				} while (!Level.fieldOfView[trapPos] || !Level.passable[trapPos]);
+		//for (Mob mob : Dungeon.level.mobs) {
+		//	mob.beckon(pos);
+		//	}
 
-				if (Dungeon.level.map[trapPos] == Terrain.INACTIVE_TRAP) {
-					Level.set(trapPos, Terrain.SECRET_SUMMONING_TRAP);
-					GameScene.updateMap(trapPos);
-				}
+		for (int i = 0; i < 4; i++) {
+			int trapPos;
+			do {
+				trapPos = Random.Int(Level.getLength());
+			} while (!Level.fieldOfView[trapPos] || !Level.passable[trapPos]);
+
+			if (Dungeon.level.map[trapPos] == Terrain.INACTIVE_TRAP) {
+				Level.set(trapPos, Terrain.SECRET_SUMMONING_TRAP);
+				GameScene.updateMap(trapPos);
 			}
-			
-			if (HP<(HT/8) && Random.Float() < 0.5f){
-				int newPos = -1;
-					for (int i = 0; i < 20; i++) {
-					newPos = Dungeon.level.randomRespawnCellMob();
-					if (newPos != -1) {
-						break;
-					}
-				}
+		}
+
+		if (HP < (HT / 8) && Random.Float() < 0.5f) {
+			int newPos = -1;
+			for (int i = 0; i < 20; i++) {
+				newPos = Dungeon.level.randomRespawnCellMob();
 				if (newPos != -1) {
-					Actor.freeCell(pos);
-					CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-					pos = newPos;
-					sprite.place(pos);
-					sprite.visible = Dungeon.visible[pos];
-					GLog.n(Messages.get(this,"vanish"));
-				}		
-				if (Dungeon.level.mobs.size()<Dungeon.hero.lvl*2){
-				SpectralRat.spawnAroundChance(newPos);
+					break;
 				}
 			}
-			
-			super.damage(dmg, src);
+			if (newPos != -1) {
+				Actor.freeCell(pos);
+				CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+				pos = newPos;
+				sprite.place(pos);
+				sprite.visible = Dungeon.visible[pos];
+				GLog.n(Messages.get(this, "vanish"));
+			}
+			if (Dungeon.level.mobs.size() < Dungeon.hero.lvl * 2) {
+				SpectralRat.spawnAroundChance(newPos);
+			}
+		}
+
+		super.damage(dmg, src);
 	}
 
 	@Override
 	public int defenseProc(Char enemy, int damage) {
-                return super.defenseProc(enemy, damage);
+		return super.defenseProc(enemy, damage);
 	}
-	
 
-	
+
 	@Override
 	public void beckon(int cell) {
 	}
@@ -142,39 +141,39 @@ public class ShadowYog extends Mob  {
 	public void die(Object cause) {
 		super.die(cause);
 
-        if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-            Dungeon.level.drop(new OrbOfZot(), pos).sprite.drop();
-        }
-		
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			Dungeon.level.drop(new OrbOfZot(), pos).sprite.drop();
+		}
+
 		Statistics.shadowYogsKilled++;
 
-      for (Mob mob : Dungeon.level.mobs) {
-			
-			if (mob instanceof ShadowYog){
-				   yogsAlive++;
-				 }
+		for (Mob mob : Dungeon.level.mobs) {
+
+			if (mob instanceof ShadowYog) {
+				yogsAlive++;
 			}
-			
-		 if(yogsAlive==0){
+		}
+
+		if (yogsAlive == 0) {
 			GameScene.bossSlain();
-			Dungeon.shadowyogkilled=true;
-			
+			Dungeon.shadowyogkilled = true;
+
 			Dungeon.level.drop(new OrbOfZot(), pos).sprite.drop();
-			
+
 			for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
 				if (mob instanceof Rat || mob instanceof GreyOni || mob instanceof SpectralRat || mob instanceof Eye) {
 					mob.die(cause);
 				}
 			}
-			
-			yell(Messages.get(this,"die"));
-		 }
+
+			yell(Messages.get(this, "die"));
+		}
 	}
 
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(this,"notice"));
+		yell(Messages.get(this, "notice"));
 	}
 
 	@Override
@@ -182,9 +181,10 @@ public class ShadowYog extends Mob  {
 		return TXT_DESC;
 
 	}
-	
+
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 
 		IMMUNITIES.add(Death.class);
@@ -203,4 +203,4 @@ public class ShadowYog extends Mob  {
 		return IMMUNITIES;
 	}
 
-	}
+}

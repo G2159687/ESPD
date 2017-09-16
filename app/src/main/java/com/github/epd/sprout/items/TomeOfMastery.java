@@ -38,15 +38,15 @@ import java.util.ArrayList;
 
 public class TomeOfMastery extends Item {
 
-	private static final String TXT_BLINDED = Messages.get(TomeOfMastery.class,"blinded");
+	private static final String TXT_BLINDED = Messages.get(TomeOfMastery.class, "blinded");
 
 	public static final float TIME_TO_READ = 10;
 
-	public static final String AC_READ = Messages.get(TomeOfMastery.class,"ac_read");
+	public static final String AC_READ = Messages.get(TomeOfMastery.class, "ac_read");
 
 	{
 		stackable = false;
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MASTERY;
 
 		unique = true;
@@ -73,22 +73,22 @@ public class TomeOfMastery extends Item {
 			HeroSubClass way1 = null;
 			HeroSubClass way2 = null;
 			switch (hero.heroClass) {
-			case WARRIOR:
-				way1 = HeroSubClass.GLADIATOR;
-				way2 = HeroSubClass.BERSERKER;
-				break;
-			case MAGE:
-				way1 = HeroSubClass.BATTLEMAGE;
-				way2 = HeroSubClass.WARLOCK;
-				break;
-			case ROGUE:
-				way1 = HeroSubClass.FREERUNNER;
-				way2 = HeroSubClass.ASSASSIN;
-				break;
-			case HUNTRESS:
-				way1 = HeroSubClass.SNIPER;
-				way2 = HeroSubClass.WARDEN;
-				break;
+				case WARRIOR:
+					way1 = HeroSubClass.GLADIATOR;
+					way2 = HeroSubClass.BERSERKER;
+					break;
+				case MAGE:
+					way1 = HeroSubClass.BATTLEMAGE;
+					way2 = HeroSubClass.WARLOCK;
+					break;
+				case ROGUE:
+					way1 = HeroSubClass.FREERUNNER;
+					way2 = HeroSubClass.ASSASSIN;
+					break;
+				case HUNTRESS:
+					way1 = HeroSubClass.SNIPER;
+					way2 = HeroSubClass.WARDEN;
+					break;
 			}
 			GameScene.show(new WndChooseWay(this, way1, way2));
 
@@ -117,7 +117,7 @@ public class TomeOfMastery extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public void choose(HeroSubClass way) {
@@ -134,7 +134,7 @@ public class TomeOfMastery extends Item {
 
 		SpellSprite.show(curUser, SpellSprite.MASTERY);
 		curUser.sprite.emitter().burst(Speck.factory(Speck.MASTERY), 12);
-		GLog.w(Messages.get(this,"way"),
+		GLog.w(Messages.get(this, "way"),
 				Utils.capitalize(way.title()));
 
 		if (way == HeroSubClass.BERSERKER

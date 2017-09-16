@@ -35,13 +35,13 @@ import com.watabou.utils.Callback;
 public class WandOfAmok extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_AMOK;
 	}
 
 	@Override
-	protected void onZap( Ballistica bolt) {
-		Char ch = Actor.findChar( bolt.collisionPos );
+	protected void onZap(Ballistica bolt) {
+		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null) {
 
 			if (ch == Dungeon.hero) {
@@ -52,19 +52,19 @@ public class WandOfAmok extends Wand {
 
 		} else {
 
-			GLog.i(Messages.get(this,"effect"));
+			GLog.i(Messages.get(this, "effect"));
 
 		}
 	}
 
 	@Override
-	protected void fx( Ballistica bolt, Callback callback ) {
-		MagicMissile.purpleLight( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.purpleLight(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

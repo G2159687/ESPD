@@ -73,16 +73,18 @@ public class PrisonLevel extends RegularLevel {
 
 		return true;
 	}
-	
+
 	@Override
-	protected void setPar(){
-		Dungeon.pars[Dungeon.depth] = 500+(Dungeon.depth*50)+(secretDoors*20);
+	protected void setPar() {
+		Dungeon.pars[Dungeon.depth] = 500 + (Dungeon.depth * 50) + (secretDoors * 20);
 	}
 
 	@Override
 	protected void createItems() {
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(1) == 0){addItemToSpawn(new Bomb());}
-		
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(1) == 0) {
+			addItemToSpawn(new Bomb());
+		}
+
 		super.createItems();
 
 		Wandmaker.Quest.spawn(this, roomEntrance);
@@ -90,7 +92,7 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	public static void spawnSkeleton(PrisonLevel level) {
-		if (Dungeon.depth == 9 && !Dungeon.skeletonspawned){
+		if (Dungeon.depth == 9 && !Dungeon.skeletonspawned) {
 
 			MossySkeleton skeleton = new MossySkeleton();
 			do {
@@ -98,12 +100,12 @@ public class PrisonLevel extends RegularLevel {
 			} while (skeleton.pos == -1);
 			level.mobs.add(skeleton);
 			Actor.occupyCell(skeleton);
-           
+
 			Dungeon.skeletonspawned = true;
 		}
 	}
 
-	
+
 	@Override
 	protected void decorate() {
 
@@ -160,29 +162,29 @@ public class PrisonLevel extends RegularLevel {
 				break;
 			}
 		}
-		
+
 		setPar();
 	}
 
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(PrisonLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(PrisonLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(PrisonLevel.class,"empty_deco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(PrisonLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(PrisonLevel.class, "empty_deco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(PrisonLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

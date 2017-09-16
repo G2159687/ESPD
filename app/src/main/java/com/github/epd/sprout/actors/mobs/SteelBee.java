@@ -32,7 +32,7 @@ import java.util.HashSet;
 public class SteelBee extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SteelBeeSprite.class;
 
 		viewDistance = 8;
@@ -70,9 +70,9 @@ public class SteelBee extends Mob {
 
 	public void spawn(int level) {
 		this.level = level;
-        
+
 		HT = (10 + level) * 10;
-		defenseSkill = 9 + level*2;
+		defenseSkill = 9 + level * 2;
 	}
 
 	public void setPotInfo(int potPos, Char potHolder) {
@@ -103,23 +103,22 @@ public class SteelBee extends Mob {
 
 	@Override
 	protected Char chooseEnemy() {
-					
-			if (enemy == null || !enemy.isAlive()) {
-				HashSet<Mob> enemies = new HashSet<Mob>();
-				for (Mob mob : Dungeon.level.mobs) {
-					if (!(mob instanceof Bee) && mob.hostile && Level.fieldOfView[mob.pos]) {
-						enemies.add(mob);
-					}
-				}
 
-				enemy = enemies.size() > 0 ? Random.element(enemies) : null;
+		if (enemy == null || !enemy.isAlive()) {
+			HashSet<Mob> enemies = new HashSet<Mob>();
+			for (Mob mob : Dungeon.level.mobs) {
+				if (!(mob instanceof Bee) && mob.hostile && Level.fieldOfView[mob.pos]) {
+					enemies.add(mob);
+				}
 			}
 
-			return enemy;
+			enemy = enemies.size() > 0 ? Random.element(enemies) : null;
+		}
+
+		return enemy;
 	}
 
 
-	
 	@Override
 	protected boolean getCloser(int target) {
 		if (enemy != null) {
@@ -129,14 +128,15 @@ public class SteelBee extends Mob {
 		}
 		return super.getCloser(target);
 	}
-	
+
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Poison.class);
 		IMMUNITIES.add(Amok.class);

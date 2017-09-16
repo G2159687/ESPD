@@ -39,14 +39,14 @@ import com.watabou.utils.Random;
 public class ForestDart extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.DART;
 
 		MIN = 4;
 		MAX = 10;
 
 		bones = false; // Finding them in bones would be semi-frequent and
-						// disappointing.
+		// disappointing.
 	}
 
 	public ForestDart() {
@@ -57,35 +57,35 @@ public class ForestDart extends MissileWeapon {
 		super();
 		quantity = number;
 	}
-	
+
 	@Override
 	public void proc(Char attacker, Char defender, int damage) {
-		
-		
-       if (    defender instanceof Gnoll 
-    		|| defender instanceof GnollArcher  
-    		|| defender instanceof Shaman  
-    		|| defender instanceof Brute
-    		|| defender instanceof Bat
-    		|| defender instanceof Rat
-    		|| defender instanceof RatBoss
-    		|| defender instanceof Assassin 
-    		|| defender instanceof Thief 
-    		|| defender instanceof GoldThief 
-    		|| defender instanceof PoisonGoo 
-    		|| defender instanceof SpectralRat 
-    		){
-    	   defender.damage(Random.Int(damage*2,damage*5), this);
-       } else {
-    	   defender.damage(Random.Int(damage,damage*2), this); 
-       }
+
+
+		if (defender instanceof Gnoll
+				|| defender instanceof GnollArcher
+				|| defender instanceof Shaman
+				|| defender instanceof Brute
+				|| defender instanceof Bat
+				|| defender instanceof Rat
+				|| defender instanceof RatBoss
+				|| defender instanceof Assassin
+				|| defender instanceof Thief
+				|| defender instanceof GoldThief
+				|| defender instanceof PoisonGoo
+				|| defender instanceof SpectralRat
+				) {
+			defender.damage(Random.Int(damage * 2, damage * 5), this);
+		} else {
+			defender.damage(Random.Int(damage, damage * 2), this);
+		}
 
 
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
@@ -98,9 +98,9 @@ public class ForestDart extends MissileWeapon {
 	public int price() {
 		return quantity * 2;
 	}
-	
+
 	private static final Glowing GREEN = new Glowing(0x00FF00);
-	
+
 	@Override
 	public Glowing glowing() {
 		return GREEN;

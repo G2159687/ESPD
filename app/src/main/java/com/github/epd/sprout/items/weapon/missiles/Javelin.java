@@ -28,7 +28,7 @@ import com.watabou.utils.Random;
 public class Javelin extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.JAVELIN;
 
 		STR = 15;
@@ -54,7 +54,7 @@ public class Javelin extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

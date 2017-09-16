@@ -36,33 +36,33 @@ import java.util.HashSet;
 
 public class Monk extends Mob {
 
-	public static final String TXT_DISARM = Messages.get(Monk.class,"arm");
+	public static final String TXT_DISARM = Messages.get(Monk.class, "arm");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MonkSprite.class;
 
-		HP = HT = 100+(adj(0)*Random.NormalIntRange(3, 5));
-		defenseSkill = 30+adj(1);
+		HP = HT = 100 + (adj(0) * Random.NormalIntRange(3, 5));
+		defenseSkill = 30 + adj(1);
 
 		EXP = 11;
 		maxLvl = 21;
 
 		loot = new Food();
 		lootChance = 0.1f;
-		
+
 		lootOther = new Meat();
 		lootChanceOther = 0.1f; // by default, see die()
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(22, 36+adj(0));
+		return Random.NormalIntRange(22, 36 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 30+adj(01);
+		return 30 + adj(01);
 	}
 
 	@Override
@@ -72,12 +72,12 @@ public class Monk extends Mob {
 
 	@Override
 	public int dr() {
-		return 2+adj(0);
+		return 2 + adj(0);
 	}
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class Monk extends Mob {
 			if (weapon != null && !(weapon instanceof Knuckles)
 					&& !weapon.cursed) {
 				hero.belongings.weapon = null;
-				Dungeon.quickslot.clearItem( weapon );
+				Dungeon.quickslot.clearItem(weapon);
 				Dungeon.level.drop(weapon, hero.pos).sprite.drop();
 				GLog.w(TXT_DISARM, name, weapon.name());
 				weapon.updateQuickslot();
@@ -110,10 +110,11 @@ public class Monk extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Amok.class);
 		IMMUNITIES.add(Terror.class);

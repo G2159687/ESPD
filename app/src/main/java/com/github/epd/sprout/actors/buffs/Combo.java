@@ -24,7 +24,7 @@ import com.github.epd.sprout.utils.GLog;
 
 public class Combo extends Buff {
 
-	private static String TXT_COMBO = Messages.get(Combo.class,"combo");
+	private static String TXT_COMBO = Messages.get(Combo.class, "combo");
 
 	public int count = 0;
 
@@ -35,11 +35,13 @@ public class Combo extends Buff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
-	public String desc() { return Messages.get(this,"desc"); }
+	public String desc() {
+		return Messages.get(this, "desc");
+	}
 
 	public int hit(Char enemy, int damage) {
 

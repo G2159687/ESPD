@@ -22,8 +22,8 @@ import com.github.epd.sprout.effects.Splash;
 import com.watabou.noosa.TextureFilm;
 
 public class ShadowYogSprite extends MobSprite {
-	
-	
+
+
 	public ShadowYogSprite() {
 		super();
 
@@ -41,14 +41,14 @@ public class ShadowYogSprite extends MobSprite {
 		attack.frames(frames, 0);
 
 		zap = attack.clone();
-		
+
 		die = new Animation(10, false);
 		die.frames(frames, 0, 7, 8, 9);
 
 		play(idle);
 	}
 
-		
+
 	@Override
 	public void die() {
 		super.die();

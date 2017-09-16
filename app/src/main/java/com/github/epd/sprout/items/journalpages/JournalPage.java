@@ -17,18 +17,16 @@
  */
 package com.github.epd.sprout.items.journalpages;
 
-import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
-import com.github.epd.sprout.utils.GLog;
 
 public class JournalPage extends Item {
 
 	public int room;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.JOURNAL_PAGE;
 
 		stackable = false;
@@ -44,9 +42,9 @@ public class JournalPage extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

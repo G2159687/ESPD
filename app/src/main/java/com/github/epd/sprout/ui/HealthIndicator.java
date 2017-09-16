@@ -44,14 +44,14 @@ public class HealthIndicator extends HealthBar {
 			width = sprite.width;
 			x = sprite.x;
 			y = sprite.y - 3;
-			level( target );
+			level(target);
 			visible = true;
 		} else {
 			visible = false;
 		}
 	}
 
-	public void target( Char ch ) {
+	public void target(Char ch) {
 		if (ch != null && ch.isAlive()) {
 			target = ch;
 		} else {

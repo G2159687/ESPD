@@ -72,22 +72,22 @@ public class IconTitle extends Component {
 	@Override
 	protected void layout() {
 
-		health.visible = !Float.isNaN( healthLvl );
+		health.visible = !Float.isNaN(healthLvl);
 
 		imIcon.x = x;
 		imIcon.y = y;
 
-		tfLabel.maxWidth((int)(width - (imIcon.x + imIcon.width() + GAP)));
+		tfLabel.maxWidth((int) (width - (imIcon.x + imIcon.width() + GAP)));
 		tfLabel.setPos(imIcon.x + imIcon.width() + GAP, imIcon.height > tfLabel.height() ?
 				imIcon.y + (imIcon.height() - tfLabel.height()) / 2 :
 				imIcon.y);
 		PixelScene.align(tfLabel);
 
 		if (health.visible) {
-			health.setRect( tfLabel.left(), Math.max( tfLabel.top() + tfLabel.height(), imIcon.y + imIcon.height() - health.height() ), tfLabel.maxWidth(), 0 );
+			health.setRect(tfLabel.left(), Math.max(tfLabel.top() + tfLabel.height(), imIcon.y + imIcon.height() - health.height()), tfLabel.maxWidth(), 0);
 			height = health.bottom();
 		} else {
-			height = Math.max( imIcon.height(), tfLabel.height() );
+			height = Math.max(imIcon.height(), tfLabel.height());
 		}
 	}
 

@@ -91,14 +91,14 @@ import java.util.ArrayList;
 
 public class GameScene extends PixelScene {
 
-	private static final String TXT_WELCOME = Messages.get(GameScene.class,"welcome");
-	private static final String TXT_WELCOME_BACK = Messages.get(GameScene.class,"welcome_back");
+	private static final String TXT_WELCOME = Messages.get(GameScene.class, "welcome");
+	private static final String TXT_WELCOME_BACK = Messages.get(GameScene.class, "welcome_back");
 
-	private static final String TXT_CHASM = Messages.get(GameScene.class,"chasm");
-	private static final String TXT_WATER = Messages.get(GameScene.class,"water");
-	private static final String TXT_GRASS = Messages.get(GameScene.class,"grass");
-	private static final String TXT_DARK = Messages.get(GameScene.class,"dark");
-	private static final String TXT_SECRETS = Messages.get(GameScene.class,"secrets");
+	private static final String TXT_CHASM = Messages.get(GameScene.class, "chasm");
+	private static final String TXT_WATER = Messages.get(GameScene.class, "water");
+	private static final String TXT_GRASS = Messages.get(GameScene.class, "grass");
+	private static final String TXT_DARK = Messages.get(GameScene.class, "dark");
+	private static final String TXT_SECRETS = Messages.get(GameScene.class, "secrets");
 
 	static GameScene scene;
 
@@ -144,7 +144,7 @@ public class GameScene extends PixelScene {
 		ShatteredPixelDungeon.lastClass(Dungeon.hero.heroClass.ordinal());
 
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + ShatteredPixelDungeon.zoom(), maxZoom));
+		Camera.main.zoom(GameMath.gate(minZoom, defaultZoom + ShatteredPixelDungeon.zoom(), maxZoom));
 
 		scene = this;
 
@@ -152,7 +152,7 @@ public class GameScene extends PixelScene {
 		add(terrain);
 
 		water = new SkinnedBlock(Level.getWidth() * DungeonTilemap.SIZE,
-				Level.HEIGHT * DungeonTilemap.SIZE, Dungeon.level.waterTex()){
+				Level.HEIGHT * DungeonTilemap.SIZE, Dungeon.level.waterTex()) {
 			@Override
 			protected NoosaScript script() {
 				return NoosaScriptNoLighting.get();
@@ -161,9 +161,9 @@ public class GameScene extends PixelScene {
 			@Override
 			public void draw() {
 				//water has no alpha component, this improves performance
-				GLES20.glBlendFunc( GLES20.GL_ONE, GLES20.GL_ZERO );
+				GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ZERO);
 				super.draw();
-				GLES20.glBlendFunc( GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA );
+				GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 			}
 		};
 		terrain.add(water);
@@ -172,7 +172,7 @@ public class GameScene extends PixelScene {
 		terrain.add(tiles);
 
 		ripples = new Group();
-		terrain.add( ripples );
+		terrain.add(ripples);
 
 		Dungeon.level.addVisuals(this);
 
@@ -225,7 +225,7 @@ public class GameScene extends PixelScene {
 		statuses = new Group();
 		add(statuses);
 
-        add( emoicons );
+		add(emoicons);
 
 		hero = new HeroSprite();
 		hero.place(Dungeon.hero.pos);
@@ -234,7 +234,7 @@ public class GameScene extends PixelScene {
 
 		add(new HealthIndicator());
 
-		add( ghostHP );
+		add(ghostHP);
 
 		add(cellSelector = new CellSelector(tiles));
 
@@ -251,8 +251,6 @@ public class GameScene extends PixelScene {
 
 		attack = new AttackIndicator();
 		attack.camera = uiCamera;
-		attack.setPos(uiCamera.width - attack.width(),
-				toolbar.top() - attack.height());
 		add(attack);
 
 		loot = new LootIndicator();
@@ -261,18 +259,17 @@ public class GameScene extends PixelScene {
 
 		action = new ActionIndicator();
 		action.camera = uiCamera;
-		add( action );
+		add(action);
 
 		resume = new ResumeIndicator();
 		resume.camera = uiCamera;
 		add(resume);
 
-		layoutTags();
-
 		log = new GameLog();
 		log.camera = uiCamera;
-		log.setRect(0, toolbar.top(), attack.left(), 0);
 		add(log);
+
+		layoutTags();
 
 		if (Dungeon.depth < Statistics.deepestFloor)
 			GLog.i(TXT_WELCOME_BACK, Dungeon.depth);
@@ -280,23 +277,23 @@ public class GameScene extends PixelScene {
 			GLog.i(TXT_WELCOME, Dungeon.depth);
 		Sample.INSTANCE.play(Assets.SND_DESCEND);
 		switch (Dungeon.level.feeling) {
-		case CHASM:
-			GLog.w(TXT_CHASM);
-			break;
-		case WATER:
-			GLog.w(TXT_WATER);
-			break;
-		case GRASS:
-			GLog.w(TXT_GRASS);
-			break;
-		case DARK:
-			GLog.w(TXT_DARK);
-			break;
-		default:
+			case CHASM:
+				GLog.w(TXT_CHASM);
+				break;
+			case WATER:
+				GLog.w(TXT_WATER);
+				break;
+			case GRASS:
+				GLog.w(TXT_GRASS);
+				break;
+			case DARK:
+				GLog.w(TXT_DARK);
+				break;
+			default:
 		}
 		if (Dungeon.level instanceof RegularLevel
 				&& ((RegularLevel) Dungeon.level).secretDoors > Random
-						.IntRange(3, 4)) {
+				.IntRange(3, 4)) {
 			GLog.w(TXT_SECRETS);
 		}
 
@@ -307,62 +304,58 @@ public class GameScene extends PixelScene {
 		add(busy);
 
 		switch (InterlevelScene.mode) {
-		case RESURRECT:
-			WandOfBlink.appear(Dungeon.hero, Dungeon.level.entrance);
-			new Flare(8, 32).color(0xFFFF66, true).show(hero, 2f);
-			break;
-		case RETURN:
-			WandOfBlink.appear(Dungeon.hero, Dungeon.hero.pos);
-			break;
-		case FALL:
-			Chasm.heroLand();
-			break;
-		case PALANTIR:
-			WndStory.showChapter(WndStory.ID_ZOT);
-			break;
-		case DESCEND:
-			switch (Dungeon.depth) {
-			case 1:
-				WndStory.showChapter(WndStory.ID_SEWERS);
+			case RESURRECT:
+				WandOfBlink.appear(Dungeon.hero, Dungeon.level.entrance);
+				new Flare(8, 32).color(0xFFFF66, true).show(hero, 2f);
 				break;
-			case 6:
-				WndStory.showChapter(WndStory.ID_PRISON);
+			case RETURN:
+				WandOfBlink.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
-			case 11:
-				WndStory.showChapter(WndStory.ID_CAVES);
+			case FALL:
+				Chasm.heroLand();
 				break;
-			case 16:
-				WndStory.showChapter(WndStory.ID_METROPOLIS);
+			case PALANTIR:
+				WndStory.showChapter(WndStory.ID_ZOT);
 				break;
-			}
-			
-		case JOURNAL:
-			switch (Dungeon.depth) {
-			case 50:
-				WndStory.showChapter(WndStory.ID_SAFELEVEL);
+			case DESCEND:
+				switch (Dungeon.depth) {
+					case 1:
+						WndStory.showChapter(WndStory.ID_SEWERS);
+						break;
+					case 6:
+						WndStory.showChapter(WndStory.ID_PRISON);
+						break;
+					case 11:
+						WndStory.showChapter(WndStory.ID_CAVES);
+						break;
+					case 16:
+						WndStory.showChapter(WndStory.ID_METROPOLIS);
+						break;
+				}
+
+			case JOURNAL:
+				switch (Dungeon.depth) {
+					case 50:
+						WndStory.showChapter(WndStory.ID_SAFELEVEL);
+						break;
+					case 51:
+						WndStory.showChapter(WndStory.ID_SOKOBAN1);
+						break;
+					case 52:
+						WndStory.showChapter(WndStory.ID_SOKOBAN2);
+						break;
+					case 53:
+						WndStory.showChapter(WndStory.ID_SOKOBAN3);
+						break;
+					case 54:
+						WndStory.showChapter(WndStory.ID_SOKOBAN4);
+						break;
+					case 55:
+						WndStory.showChapter(WndStory.ID_TOWN);
+						break;
+				}
 				break;
-			case 51:
-				WndStory.showChapter(WndStory.ID_SOKOBAN1);
-				break;
-			case 52:
-				WndStory.showChapter(WndStory.ID_SOKOBAN2);
-				break;
-			case 53:
-				WndStory.showChapter(WndStory.ID_SOKOBAN3);
-				break;
-			case 54:
-				WndStory.showChapter(WndStory.ID_SOKOBAN4);
-				break;
-			case 55:
-				WndStory.showChapter(WndStory.ID_TOWN);
-				break;
-			}
-			
-			if (Dungeon.hero.isAlive() && Dungeon.depth != 22) {
-				Badges.validateNoKilling();
-			}
-			break;
-		default:
+			default:
 		}
 
 		ArrayList<Item> dropped = Dungeon.droppedItems.get(Dungeon.depth);
@@ -383,6 +376,8 @@ public class GameScene extends PixelScene {
 			Dungeon.droppedItems.remove(Dungeon.depth);
 		}
 
+		Dungeon.hero.next();
+
 		Camera.main.target = hero;
 		fadeIn();
 	}
@@ -391,8 +386,8 @@ public class GameScene extends PixelScene {
 	public void destroy() {
 
 		//tell the actor thread to finish, then wait for it to complete any actions it may be doing.
-		if (actorThread.isAlive()){
-			synchronized (GameScene.class){
+		if (actorThread.isAlive()) {
+			synchronized (GameScene.class) {
 				synchronized (actorThread) {
 					actorThread.interrupt();
 				}
@@ -489,27 +484,36 @@ public class GameScene extends PixelScene {
 
 	private boolean tagAttack = false;
 	private boolean tagLoot = false;
-	private boolean tagAction    = false;
+	private boolean tagAction = false;
 	private boolean tagResume = false;
 
-	private void layoutTags() {
+	public static void layoutTags() {
 
-        if (scene == null) return;
+		float tagLeft = ShatteredPixelDungeon.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		float pos = tagAttack ? attack.top() : toolbar.top();
-
-		if (tagLoot) {
-			loot.setPos(uiCamera.width - loot.width(), pos - loot.height());
-			pos = loot.top();
+		if (ShatteredPixelDungeon.flipTags()) {
+			scene.log.setRect(scene.attack.width(), scene.toolbar.top(), uiCamera.width - scene.attack.width(), 0);
+		} else {
+			scene.log.setRect(0, scene.toolbar.top(), uiCamera.width - scene.attack.width(), 0);
 		}
 
-		if (tagAction) {
-			action.setPos( uiCamera.width - action.width(), pos - action.height() );
-			pos = action.top();
+		float pos = scene.toolbar.top();
+
+		if (scene.tagAttack) {
+			scene.attack.setPos(tagLeft, pos - scene.attack.height());
+			scene.attack.flip(tagLeft == 0);
+			pos = scene.attack.top();
 		}
 
-		if (tagResume) {
-			resume.setPos(uiCamera.width - resume.width(), pos - resume.height());
+		if (scene.tagLoot) {
+			scene.loot.setPos(tagLeft, pos - scene.loot.height());
+			scene.loot.flip(tagLeft == 0);
+			pos = scene.loot.top();
+		}
+
+		if (scene.tagResume) {
+			scene.resume.setPos(tagLeft, pos - scene.resume.height());
+			scene.resume.flip(tagLeft == 0);
 		}
 	}
 
@@ -675,7 +679,7 @@ public class GameScene extends PixelScene {
 
 	public static void updateMap(int cell) {
 		if (scene != null) {
-			scene.tiles.updateMapCell( cell );
+			scene.tiles.updateMapCell(cell);
 		}
 	}
 
@@ -690,12 +694,12 @@ public class GameScene extends PixelScene {
 		scene.add(wnd);
 	}
 
-	public static void updateFog(){
+	public static void updateFog() {
 		if (scene != null)
 			scene.fog.updateFog();
 	}
 
-	public static void updateFog(int x, int y, int w, int h){
+	public static void updateFog(int x, int y, int w, int h) {
 		if (scene != null) {
 			scene.fog.updateFogArea(x, y, w, h);
 		}
@@ -733,7 +737,7 @@ public class GameScene extends PixelScene {
 			Sample.INSTANCE.play(Assets.SND_BOSS);
 		}
 	}
-	
+
 	public static void levelCleared() {
 		if (Dungeon.hero.isAlive()) {
 			Banner levelCleared = new Banner(
@@ -750,7 +754,7 @@ public class GameScene extends PixelScene {
 	public static void selectCell(CellSelector.Listener listener) {
 		cellSelector.listener = listener;
 		if (scene != null)
-			scene.prompt( listener.prompt() );
+			scene.prompt(listener.prompt());
 	}
 
 	private static boolean cancelCellSelector() {
@@ -764,16 +768,16 @@ public class GameScene extends PixelScene {
 	}
 
 	public static WndBag selectItem(WndBag.Listener listener, WndBag.Mode mode,
-			String title) {
+	                                String title) {
 		cancelCellSelector();
 
 		WndBag wnd = mode == Mode.SEED ? WndBag.getBag(SeedPouch.class,
 				listener, mode, title) : mode == Mode.SCROLL ? WndBag.getBag(
 				ScrollHolder.class, listener, mode, title)
 				: mode == Mode.POTION ? WndBag.getBag(PotionBandolier.class,
-						listener, mode, title) : mode == Mode.WAND ? WndBag
-						.getBag(WandHolster.class, listener, mode, title)
-						: WndBag.lastBag(listener, mode, title);
+				listener, mode, title) : mode == Mode.WAND ? WndBag
+				.getBag(WandHolster.class, listener, mode, title)
+				: WndBag.lastBag(listener, mode, title);
 
 		scene.add(wnd);
 

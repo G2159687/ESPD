@@ -51,7 +51,7 @@ public class ShamanSprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (Shaman)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (Shaman) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);

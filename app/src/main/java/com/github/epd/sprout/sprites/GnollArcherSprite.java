@@ -25,7 +25,7 @@ public class GnollArcherSprite extends MobSprite {
 
 		attack = new Animation(12, false);
 		attack.frames(frames, 2, 3, 0);
-		
+
 		cast = attack.clone();
 
 		die = new Animation(12, false);

@@ -66,7 +66,7 @@ import java.util.HashSet;
 public class Yog extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = YogSprite.class;
 
 		HP = HT = 2000;
@@ -74,11 +74,12 @@ public class Yog extends Mob {
 		EXP = 50;
 
 		state = PASSIVE;
+		properties.add(Property.IMMOVABLE);
 	}
-	
+
 	private static final int REGENERATION = 200;
 
-	private static final String TXT_DESC = Messages.get(Yog.class,"desc");
+	private static final String TXT_DESC = Messages.get(Yog.class, "desc");
 
 	private static int fistsCount = 0;
 
@@ -92,12 +93,12 @@ public class Yog extends Mob {
 		PinningFist fist3 = new PinningFist();
 		InfectingFist fist4 = new InfectingFist();
 
-		
-			fist1.pos = Dungeon.level.randomRespawnCellMob();
-			fist2.pos = Dungeon.level.randomRespawnCellMob();
-			fist3.pos = Dungeon.level.randomRespawnCellMob();
-			fist4.pos = Dungeon.level.randomRespawnCellMob();
-	
+
+		fist1.pos = Dungeon.level.randomRespawnCellMob();
+		fist2.pos = Dungeon.level.randomRespawnCellMob();
+		fist3.pos = Dungeon.level.randomRespawnCellMob();
+		fist4.pos = Dungeon.level.randomRespawnCellMob();
+
 		GameScene.add(fist1);
 		GameScene.add(fist2);
 		GameScene.add(fist3);
@@ -108,30 +109,30 @@ public class Yog extends Mob {
 
 	@Override
 	public int dr() {
-		
+
 		int checkFists = 0;
-		
+
 		for (Mob mob : Dungeon.level.mobs) {
 			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof PinningFist || mob instanceof InfectingFist) {
-			checkFists++;	
+				checkFists++;
 			}
 		}
-		
-		return 10+(30*checkFists);
+
+		return 10 + (30 * checkFists);
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(54, 96);
 	}
-	
+
 	@Override
 	public void damage(int dmg, Object src) {
 
-				
-		if (HP<(HT/8) && Random.Float() < 0.50f && dmg<HP){
+
+		if (HP < (HT / 8) && Random.Float() < 0.50f && dmg < HP) {
 			int newPos = -1;
-				for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 20; i++) {
 				newPos = Dungeon.level.randomRespawnCellMob();
 				if (newPos != -1) {
 					break;
@@ -143,14 +144,14 @@ public class Yog extends Mob {
 				pos = newPos;
 				sprite.place(pos);
 				sprite.visible = Dungeon.visible[pos];
-				GLog.n(Messages.get(this,"vanish"));
-			}		
-					
-			if (Dungeon.level.mobs.size()<5){
-			Eye.spawnAroundChance(newPos);
+				GLog.n(Messages.get(this, "vanish"));
 			}
-			
-			if (fistsCount==0){
+
+			if (Dungeon.level.mobs.size() < 5) {
+				Eye.spawnAroundChance(newPos);
+			}
+
+			if (fistsCount == 0) {
 				spawnFists();
 				sprite.emitter().burst(ShadowParticle.UP, 2);
 				HP += REGENERATION;
@@ -204,29 +205,29 @@ public class Yog extends Mob {
 				mob.die(cause);
 			}
 		}
-		
-		if (!Dungeon.limitedDrops.journal.dropped()){ 
-			  Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-			  Dungeon.limitedDrops.journal.drop();
-			}
+
+		if (!Dungeon.limitedDrops.journal.dropped()) {
+			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
+			Dungeon.limitedDrops.journal.drop();
+		}
 
 		GameScene.bossSlain();
 		Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
 		//Dungeon.level.drop(new Gold(Random.Int(6000, 8000)), pos).sprite.drop();
 		super.die(cause);
 
-		yell(Messages.get(this,"die"));
+		yell(Messages.get(this, "die"));
 	}
 
 	@Override
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice"));
+		yell(Messages.get(this, "notice"));
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}
@@ -238,6 +239,7 @@ public class Yog extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 
 		IMMUNITIES.add(Death.class);
@@ -261,7 +263,7 @@ public class Yog extends Mob {
 		private static final int REGENERATION = 50;
 
 		{
-			name = Messages.get(Yog.class,"name1");
+			name = Messages.get(Yog.class, "name1");
 			spriteClass = RottingFistSprite.class;
 
 			HP = HT = 2000;
@@ -326,6 +328,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 		static {
 			RESISTANCES.add(ToxicGas.class);
 			RESISTANCES.add(Death.class);
@@ -338,6 +341,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 		static {
 			IMMUNITIES.add(Amok.class);
 			IMMUNITIES.add(Sleep.class);
@@ -356,7 +360,7 @@ public class Yog extends Mob {
 	public static class BurningFist extends Mob {
 
 		{
-			name = Messages.get(Yog.class,"name2");
+			name = Messages.get(Yog.class, "name2");
 			spriteClass = BurningFistSprite.class;
 
 			HP = HT = 1000;
@@ -395,7 +399,7 @@ public class Yog extends Mob {
 
 		@Override
 		protected boolean canAttack(Char enemy) {
-			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+			return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		}
 
 		@Override
@@ -415,7 +419,7 @@ public class Yog extends Mob {
 					if (!enemy.isAlive() && enemy == Dungeon.hero) {
 						Dungeon.fail(Utils.format(ResultDescriptions.MOB,
 								name));
-						GLog.n(Messages.get(Char.class,"kill"), name);
+						GLog.n(Messages.get(Char.class, "kill"), name);
 					}
 					return true;
 
@@ -448,6 +452,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 		static {
 			RESISTANCES.add(ToxicGas.class);
 			RESISTANCES.add(Death.class);
@@ -460,6 +465,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 		static {
 			IMMUNITIES.add(Amok.class);
 			IMMUNITIES.add(Sleep.class);
@@ -475,13 +481,12 @@ public class Yog extends Mob {
 			return IMMUNITIES;
 		}
 	}
-	
+
 	public static class InfectingFist extends Mob {
 
-		
 
 		{
-			name = Messages.get(Yog.class,"name4");
+			name = Messages.get(Yog.class, "name4");
 			spriteClass = InfectingFistSprite.class;
 
 			HP = HT = 2000;
@@ -523,14 +528,14 @@ public class Yog extends Mob {
 			if (Random.Int(2) == 0) {
 				Buff.affect(enemy, Poison.class).set(Random.Int(7, 9) * Poison.durationFactor(enemy));
 				state = FLEEING;
-			}		
+			}
 
 			return damage;
 		}
 
 		@Override
 		public boolean act() {
-					
+
 			GameScene.add(Blob.seed(pos, 30, ToxicGas.class));
 
 			return super.act();
@@ -543,6 +548,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 		static {
 			RESISTANCES.add(ToxicGas.class);
 			RESISTANCES.add(Death.class);
@@ -555,6 +561,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 		static {
 			IMMUNITIES.add(Amok.class);
 			IMMUNITIES.add(Sleep.class);
@@ -570,11 +577,11 @@ public class Yog extends Mob {
 		}
 	}
 
-	
+
 	public static class PinningFist extends Mob {
 
 		{
-			name = Messages.get(Yog.class,"name5");
+			name = Messages.get(Yog.class, "name5");
 			spriteClass = PinningFistSprite.class;
 
 			HP = HT = 1000;
@@ -613,9 +620,9 @@ public class Yog extends Mob {
 
 		@Override
 		protected boolean canAttack(Char enemy) {
-			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+			return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		}
-		
+
 		@Override
 		protected boolean getCloser(int target) {
 			if (state == HUNTING) {
@@ -635,10 +642,10 @@ public class Yog extends Mob {
 
 					int dmg = damageRoll();
 					enemy.damage(dmg, this);
-					
-					if(Random.Int(10)==0){
+
+					if (Random.Int(10) == 0) {
 						Buff.prolong(enemy, Roots.class, 20);
-			  		}
+					}
 
 					enemy.sprite.bloodBurstA(sprite.center(), dmg);
 					enemy.sprite.flash();
@@ -646,7 +653,7 @@ public class Yog extends Mob {
 					if (!enemy.isAlive() && enemy == Dungeon.hero) {
 						Dungeon.fail(Utils.format(ResultDescriptions.MOB,
 								name));
-						GLog.n(Messages.get(Char.class,"kill"), name);
+						GLog.n(Messages.get(Char.class, "kill"), name);
 					}
 					return true;
 
@@ -668,6 +675,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 		static {
 			RESISTANCES.add(ToxicGas.class);
 			RESISTANCES.add(Death.class);
@@ -680,6 +688,7 @@ public class Yog extends Mob {
 		}
 
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 		static {
 			IMMUNITIES.add(Amok.class);
 			IMMUNITIES.add(Sleep.class);
@@ -698,7 +707,7 @@ public class Yog extends Mob {
 	public static class Larva extends Mob {
 
 		{
-			name = Messages.get(Yog.class,"name3");
+			name = Messages.get(Yog.class, "name3");
 			spriteClass = LarvaSprite.class;
 
 			HP = HT = 25;

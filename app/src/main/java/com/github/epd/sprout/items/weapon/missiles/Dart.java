@@ -25,14 +25,14 @@ import com.watabou.utils.Random;
 public class Dart extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.DART;
 
 		MIN = 1;
 		MAX = 4;
 
 		bones = false; // Finding them in bones would be semi-frequent and
-						// disappointing.
+		// disappointing.
 	}
 
 	public Dart() {
@@ -46,7 +46,7 @@ public class Dart extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

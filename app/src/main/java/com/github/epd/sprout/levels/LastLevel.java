@@ -18,7 +18,6 @@
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.items.Amulet;
 import com.github.epd.sprout.items.PuddingCup;
 import com.github.epd.sprout.levels.painters.Painter;
 import com.github.epd.sprout.messages.Messages;
@@ -131,30 +130,30 @@ public class LastLevel extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(HallsLevel.class,"water_name");
-		case Terrain.GRASS:
-			return Messages.get(HallsLevel.class,"grass_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(HallsLevel.class,"high_grass_name");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(HallsLevel.class,"statue_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(HallsLevel.class, "water_name");
+			case Terrain.GRASS:
+				return Messages.get(HallsLevel.class, "grass_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(HallsLevel.class, "high_grass_name");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(HallsLevel.class, "statue_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(HallsLevel.class,"water_desc");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(HallsLevel.class,"statue_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.WATER:
+				return Messages.get(HallsLevel.class, "water_desc");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(HallsLevel.class, "statue_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

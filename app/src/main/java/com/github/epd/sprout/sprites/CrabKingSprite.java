@@ -44,7 +44,7 @@ public class CrabKingSprite extends MobSprite {
 
 		attack = new Animation(15, false);
 		attack.frames(frames, 7, 8, 9);
-		
+
 		cast = attack.clone();
 
 		die = new Animation(8, false);
@@ -74,15 +74,15 @@ public class CrabKingSprite extends MobSprite {
 	public void attack(int cell) {
 		if (!Level.adjacent(cell, ch.pos)) {
 			//Char enemy = Actor.findChar(cell);
-				  ((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
+			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new Wave(), new Callback() {
 						@Override
 						public void call() {
 							ch.onAttackComplete();
 						}
-				});
-		 	  
-		  			  		
+					});
+
+
 			play(cast);
 			turnTo(ch.pos, cell);
 
@@ -96,7 +96,7 @@ public class CrabKingSprite extends MobSprite {
 	@Override
 	public void onComplete(Animation anim) {
 		if (anim == run) {
-			synchronized (this){
+			synchronized (this) {
 				isMoving = false;
 				idle();
 				notifyAll();

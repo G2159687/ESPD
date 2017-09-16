@@ -20,6 +20,7 @@ package com.github.epd.sprout.levels.features;
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ResultDescriptions;
+import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Cripple;
 import com.github.epd.sprout.actors.hero.Hero;
@@ -43,10 +44,10 @@ import com.watabou.utils.Random;
 
 public class Chasm {
 
-	private static final String TXT_CHASM = Messages.get(Chasm.class,"chasm");
-	private static final String TXT_YES = Messages.get(Chasm.class,"yes");
-	private static final String TXT_NO = Messages.get(Chasm.class,"no");
-	private static final String TXT_JUMP = Messages.get(Chasm.class,"jump");
+	private static final String TXT_CHASM = Messages.get(Chasm.class, "chasm");
+	private static final String TXT_YES = Messages.get(Chasm.class, "yes");
+	private static final String TXT_NO = Messages.get(Chasm.class, "no");
+	private static final String TXT_JUMP = Messages.get(Chasm.class, "jump");
 
 	public static boolean jumpConfirmed = false;
 
@@ -61,8 +62,8 @@ public class Chasm {
 			}
 		});
 	}
-	
-	
+
+
 	public static void heroFall(int pos) {
 
 		jumpConfirmed = false;
@@ -72,29 +73,35 @@ public class Chasm {
 		Buff buff = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
 		if (buff != null)
 			buff.detach();
-		
+
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 			if (mob instanceof DriedRose.GhostHero)
 				mob.destroy();
 
+		if (Dungeon.depth > 0 && Dungeon.depth < 25){
+			if (!Dungeon.level.cleared){
+				Statistics.prevfloormoves = 0;
+			}
+		}
+
 		PET pet = Dungeon.hero.checkpet();
-		if(pet!=null && Dungeon.depth==33 ){
-			Dungeon.hero.petType=pet.type;
-			Dungeon.hero.petLevel=pet.level;
-			Dungeon.hero.petKills=pet.kills;
-			Dungeon.hero.petHP=pet.HP;
-			Dungeon.hero.petExperience=pet.experience;
-			Dungeon.hero.petCooldown=pet.cooldown;
+		if (pet != null && Dungeon.depth == 33) {
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
 			pet.destroy();
-			Dungeon.hero.petfollow=true;
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
 
 		SanChikarahTranscend san = Dungeon.hero.belongings.getItem(SanChikarahTranscend.class);
-		if (Dungeon.depth==33 && san != null) {
+		if (Dungeon.depth == 33 && san != null) {
 			san.detachAll(Dungeon.hero.belongings.backpack);
 			Dungeon.sanchikarahtranscend = false;
 		}
-		
+
 		/*if(Dungeon.depth==33){
 		  for (Mob mob : Dungeon.level.mobs) {
 			if(mob instanceof PET) {				 
@@ -120,7 +127,7 @@ public class Chasm {
 			Dungeon.hero.sprite.visible = false;
 		}
 	}
-	
+
 
 	public static void heroLand() {
 
@@ -130,13 +137,13 @@ public class Chasm {
 		Camera.main.shake(4, 0.2f);
 
 		Buff.prolong(hero, Cripple.class, Cripple.DURATION);
-			
-				
+
+
 		hero.damage(Random.IntRange(hero.HT / 3, hero.HT / 2), new Hero.Doom() {
 			@Override
 			public void onDeath() {
 				Dungeon.fail(ResultDescriptions.FALL);
-				GLog.n(Messages.get(Chasm.class,"ondeath"));
+				GLog.n(Messages.get(Chasm.class, "ondeath"));
 			}
 		});
 	}

@@ -54,45 +54,45 @@ public class Otiluke extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 1f;
 
-	private static final String TXT_SHADOWBOLT_KILLED = Messages.get(Otiluke.class,"kill");
+	private static final String TXT_SHADOWBOLT_KILLED = Messages.get(Otiluke.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = OtilukeSprite.class;
 
-		HP = HT = 7000+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 50+adj(0);
-		
-		state=PASSIVE;
+		HP = HT = 7000 + (adj(0) * Random.NormalIntRange(5, 7));
+		defenseSkill = 50 + adj(0);
+
+		state = PASSIVE;
 
 		EXP = 101;
-		
+
 		loot = Generator.Category.POTION;
 		lootChance = 0.83f;
-		
-	}	
-	
+
+	}
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(250, 250+adj(0));
+		return Random.NormalIntRange(250, 250 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 250+adj(0);
+		return 250 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 8+adj(1);
+		return 8 + adj(1);
 	}
-	
+
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(this,"summon"));
+		yell(Messages.get(this, "summon"));
 	}
-	
+
 	@Override
 	public void damage(int dmg, Object src) {
 
@@ -100,37 +100,37 @@ public class Otiluke extends Mob implements Callback {
 			state = HUNTING;
 			BossHealthBar.assignBoss(this);
 		}
-		
-		if(state==HUNTING){
-			
+
+		if (state == HUNTING) {
+
 			for (Mob mob : Dungeon.level.mobs) {
-				if (mob != null && mob instanceof MineSentinel &&  Random.Int(20)<2) {
-					if (mob.state==PASSIVE){
+				if (mob != null && mob instanceof MineSentinel && Random.Int(20) < 2) {
+					if (mob.state == PASSIVE) {
 						mob.damage(1, this);
 						mob.state = HUNTING;
 					}
 					break;
-			}			
-		  }
+				}
+			}
 		}
-		
-		if(!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)){
-			int max = Math.round(dmg*.25f);
-			dmg = Random.Int(1,max);
+
+		if (!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)) {
+			int max = Math.round(dmg * .25f);
+			dmg = Random.Int(1, max);
 		}
 
 		super.damage(dmg, src);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		if (state!=PASSIVE) BossHealthBar.assignBoss(this);
+		if (state != PASSIVE) BossHealthBar.assignBoss(this);
 	}
-	
+
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class Otiluke extends Mob implements Callback {
 				Buff.prolong(enemy, Weakness.class, Weakness.duration(enemy));
 			}
 
-			int dmg = Random.Int(100, 160+adj(0));
+			int dmg = Random.Int(100, 160 + adj(0));
 			enemy.damage(dmg, this);
 
 			if (!enemy.isAlive() && enemy == Dungeon.hero) {
@@ -184,21 +184,22 @@ public class Otiluke extends Mob implements Callback {
 	public void call() {
 		next();
 	}
-	
+
 
 	@Override
 	public void die(Object cause) {
-		Dungeon.level.locked=false;
+		Dungeon.level.locked = false;
 		super.die(cause);
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);
@@ -223,4 +224,5 @@ public class Otiluke extends Mob implements Callback {
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
-	}}
+	}
+}

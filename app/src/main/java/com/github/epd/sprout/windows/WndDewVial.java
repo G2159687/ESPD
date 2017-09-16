@@ -27,12 +27,12 @@ import com.github.epd.sprout.ui.Window;
 import com.github.epd.sprout.utils.Utils;
 
 public class WndDewVial extends Window {
-	
+
 	//if people don't get it after this, I quit. I just quit.
 
-	private static final String TXT_MESSAGE = Messages.get(WndDewVial.class,"msg");
-	
-	private static final String TXT_WATER = Messages.get(WndDewVial.class,"ok");
+	private static final String TXT_MESSAGE = Messages.get(WndDewVial.class, "msg");
+
+	private static final String TXT_WATER = Messages.get(WndDewVial.class, "ok");
 
 
 	private static final int WIDTH = 120;
@@ -52,7 +52,7 @@ public class WndDewVial extends Window {
 		RenderedTextMultiline message = PixelScene
 				.renderMultiline(TXT_MESSAGE, 6);
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
 		NewRedButton btnBattle = new NewRedButton(TXT_WATER) {
@@ -65,10 +65,9 @@ public class WndDewVial extends Window {
 				BTN_HEIGHT);
 		add(btnBattle);
 
-		
 
 		resize(WIDTH, (int) btnBattle.bottom());
 	}
 
-	
+
 }

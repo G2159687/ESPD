@@ -35,7 +35,7 @@ import com.watabou.utils.Callback;
 public class WandOfPoison extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_POISON;
 	}
 
@@ -43,29 +43,32 @@ public class WandOfPoison extends Wand {
 	protected void onZap(Ballistica bolt) {
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null) {
-            
-			int poisonbase=5;
-			
-			if (Dungeon.hero.buff(Strength.class) != null){ poisonbase *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
-			
+
+			int poisonbase = 5;
+
+			if (Dungeon.hero.buff(Strength.class) != null) {
+				poisonbase *= (int) 4f;
+				Buff.detach(Dungeon.hero, Strength.class);
+			}
+
 			Buff.affect(ch, Poison.class).set(
-					Poison.durationFactor(ch) * (poisonbase + level()*2));
+					Poison.durationFactor(ch) * (poisonbase + level() * 2));
 
 		} else {
 
-			GLog.i(Messages.get(this,"nothing"));
+			GLog.i(Messages.get(this, "nothing"));
 
 		}
 	}
 
 	@Override
 	protected void fx(Ballistica bolt, Callback callback) {
-		MagicMissile.poison( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
+		MagicMissile.poison(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc", 5 + level() * 2);
 	}
 }

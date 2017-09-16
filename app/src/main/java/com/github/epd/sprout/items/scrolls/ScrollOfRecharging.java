@@ -29,8 +29,8 @@ import com.watabou.noosa.audio.Sample;
 public class ScrollOfRecharging extends Scroll {
 
 	{
-		initials=7;
-		name = Messages.get(this,"name");
+		initials = 7;
+		name = Messages.get(this, "name");
 		consumedValue = 10;
 	}
 
@@ -44,10 +44,10 @@ public class ScrollOfRecharging extends Scroll {
 		Invisibility.dispel();
 
 		if (count > 0) {
-			GLog.i(Messages.get(this,"surge"));
+			GLog.i(Messages.get(this, "surge"));
 			SpellSprite.show(curUser, SpellSprite.CHARGE);
 		} else {
-			GLog.i(Messages.get(this,"surge"));
+			GLog.i(Messages.get(this, "surge"));
 		}
 		setKnown();
 
@@ -56,7 +56,7 @@ public class ScrollOfRecharging extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static void charge(Hero hero) {

@@ -39,21 +39,23 @@ public class BanditKing extends Thief {
 	public Item item;
 
 	{
-		name = Messages.get(BanditKing.class,"name");
+		name = Messages.get(BanditKing.class, "name");
 		spriteClass = BanditKingSprite.class;
 		HP = HT = 200; //200
 
 		EXP = 10;
 		maxLvl = 25;
 		flying = true;
-		
+
 		// 1 in 30 chance to be a crazy bandit, equates to overall 1/90 chance.
 		lootChance = 0.333f;
 		defenseSkill = 20; //20
-		if (Dungeon.depth<25){Dungeon.sporkAvail = false;}
-		
+		if (Dungeon.depth < 25) {
+			Dungeon.sporkAvail = false;
+		}
+
 	}
-	
+
 	@Override
 	public int dr() {
 		return 20; //20
@@ -62,12 +64,12 @@ public class BanditKing extends Thief {
 	@Override
 	public float speed() {
 		return 2f;
-   	}
-	
+	}
+
 	@Override
 	public int attackProc(Char enemy, int damage) {
-		if(enemy.buff(CountDown.class) == null){
-			Buff.affect(enemy, CountDown.class);	
+		if (enemy.buff(CountDown.class) == null) {
+			Buff.affect(enemy, CountDown.class);
 			state = FLEEING;
 		}
 
@@ -75,25 +77,25 @@ public class BanditKing extends Thief {
 	}
 
 	@Override
-	public void notice(){
+	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
 	}
-	
+
 	@Override
 	protected boolean steal(Hero hero) {
 		if (super.steal(hero)) {
 
-			
-			if (Dungeon.depth<25){
-			Buff.prolong(hero, Blindness.class, Random.Int(5, 12));
-			Buff.affect(hero, Poison.class).set(
-					Random.Int(5, 7) * Poison.durationFactor(enemy));
-			Buff.prolong(hero, Cripple.class, Cripple.DURATION);
-			Dungeon.observe();
-			} else if(hero.buff(CountDown.class) == null){
-				Buff.affect(enemy, CountDown.class);			
-		    }	
+
+			if (Dungeon.depth < 25) {
+				Buff.prolong(hero, Blindness.class, Random.Int(5, 12));
+				Buff.affect(hero, Poison.class).set(
+						Random.Int(5, 7) * Poison.durationFactor(enemy));
+				Buff.prolong(hero, Cripple.class, Cripple.DURATION);
+				Dungeon.observe();
+			} else if (hero.buff(CountDown.class) == null) {
+				Buff.affect(enemy, CountDown.class);
+			}
 
 			return true;
 		} else {
@@ -104,7 +106,7 @@ public class BanditKing extends Thief {
 	@Override
 	public void die(Object cause) {
 		super.die(cause);
-		if (Dungeon.depth<25) {
+		if (Dungeon.depth < 25) {
 			yell(Messages.get(BanditKing.class, "die"));
 			GLog.n(Messages.get(BanditKing.class, "dis"));
 			if (!Dungeon.limitedDrops.spork.dropped()) {
@@ -117,7 +119,7 @@ public class BanditKing extends Thief {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}

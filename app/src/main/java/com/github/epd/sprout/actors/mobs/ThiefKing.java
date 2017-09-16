@@ -36,9 +36,9 @@ import java.util.HashSet;
 
 public class ThiefKing extends Mob implements Callback {
 
-	
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ThiefKingSprite.class;
 
 		HP = HT = 500;
@@ -49,7 +49,7 @@ public class ThiefKing extends Mob implements Callback {
 		flying = true;
 
 		loot = Generator.Category.SCROLL;
-		lootChance = 0.33f;		
+		lootChance = 0.33f;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ThiefKing extends Mob implements Callback {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -79,14 +79,14 @@ public class ThiefKing extends Mob implements Callback {
 		Dungeon.level.drop(new AdamantRing(), pos).sprite.drop();
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
 		super.die(cause);
-		
-		Dungeon.banditkingkilled=true;
 
-		yell(Messages.get(this,"die"));
-						
+		Dungeon.banditkingkilled = true;
+
+		yell(Messages.get(this, "die"));
+
 	}
-	
-	
+
+
 	@Override
 	public void call() {
 		next();
@@ -96,21 +96,22 @@ public class ThiefKing extends Mob implements Callback {
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice", Dungeon.hero.givenName()));
+		yell(Messages.get(this, "notice", Dungeon.hero.givenName()));
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}

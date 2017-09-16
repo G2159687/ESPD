@@ -24,7 +24,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class CorpseDust extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.DUST;
 
 		cursed = true;
@@ -45,6 +45,6 @@ public class CorpseDust extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

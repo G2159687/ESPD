@@ -43,7 +43,7 @@ import com.watabou.utils.Random;
 public class WandOfFlock extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_FLOCK;
 	}
 
@@ -73,7 +73,8 @@ public class WandOfFlock extends Wand {
 
 		float lifespan = (level <= 17) ? level + 3 : 20;
 
-		sheepLabel: for (int i = 0; i < n; i++) {
+		sheepLabel:
+		for (int i = 0; i < n; i++) {
 			do {
 				for (int j = 0; j < Level.getLength(); j++) {
 					if (PathFinder.distance[j] == dist) {
@@ -94,13 +95,13 @@ public class WandOfFlock extends Wand {
 				dist++;
 			} while (dist < n);
 		}
-		
-		if (Dungeon.depth>50 && Dungeon.depth<55){
+
+		if (Dungeon.depth > 50 && Dungeon.depth < 55) {
 			int spawnCell = Dungeon.level.randomRespawnCellMob();
-			if (spawnCell>0){
-			   FlyingProtector.spawnAt(spawnCell);
-			   GLog.w(Messages.get(this,"s1"));
-			   GLog.w(Messages.get(this,"s2"));
+			if (spawnCell > 0) {
+				FlyingProtector.spawnAt(spawnCell);
+				GLog.w(Messages.get(this, "s1"));
+				GLog.w(Messages.get(this, "s2"));
 			}
 		}
 	}
@@ -113,16 +114,16 @@ public class WandOfFlock extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static class Sheep extends NPC {
 
-		private static final String[] QUOTES = {Messages.get(WandOfFlock.class,"1"), Messages.get(WandOfFlock.class,"2"), Messages.get(WandOfFlock.class,"3"),
-				Messages.get(WandOfFlock.class,"4") };
+		private static final String[] QUOTES = {Messages.get(WandOfFlock.class, "1"), Messages.get(WandOfFlock.class, "2"), Messages.get(WandOfFlock.class, "3"),
+				Messages.get(WandOfFlock.class, "4")};
 
 		{
-			name = Messages.get(WandOfFlock.class,"sname");
+			name = Messages.get(WandOfFlock.class, "sname");
 			spriteClass = SheepSprite.class;
 		}
 
@@ -150,12 +151,12 @@ public class WandOfFlock extends Wand {
 		}
 
 		@Override
-		public void add( Buff buff ) {
+		public void add(Buff buff) {
 		}
 
 		@Override
 		public String description() {
-			return Messages.get(WandOfFlock.class,"sdesc");
+			return Messages.get(WandOfFlock.class, "sdesc");
 		}
 
 		@Override

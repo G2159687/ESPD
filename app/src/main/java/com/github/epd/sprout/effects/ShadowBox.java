@@ -29,7 +29,7 @@ public class ShadowBox extends NinePatch {
 		super(Assets.SHADOW, 1);
 
 		if (texture.id == -1)
-		texture.filter(Texture.LINEAR, Texture.LINEAR);
+			texture.filter(Texture.LINEAR, Texture.LINEAR);
 
 		scale.set(SIZE, SIZE);
 	}

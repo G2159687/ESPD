@@ -78,12 +78,12 @@ public class CorruptGas extends Blob implements Hero.Doom {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public void onDeath() {
 		Dungeon.fail(ResultDescriptions.GAS);
-		GLog.n(Messages.get(this,"die"));
+		GLog.n(Messages.get(this, "die"));
 	}
 }

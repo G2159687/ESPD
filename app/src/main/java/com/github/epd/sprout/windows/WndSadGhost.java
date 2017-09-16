@@ -33,12 +33,12 @@ import com.github.epd.sprout.utils.GLog;
 
 public class WndSadGhost extends Window {
 
-	private static final String TXT_RAT = Messages.get(WndSadGhost.class,"rat");
-	private static final String TXT_GNOLL = Messages.get(WndSadGhost.class,"gnoll");
-	private static final String TXT_CRAB = Messages.get(WndSadGhost.class,"crab");
-	private static final String TXT_GIVEITEM = Messages.get(WndSadGhost.class,"giveitem");
-	private static final String TXT_WEAPON = Messages.get(WndSadGhost.class,"weapon");
-	private static final String TXT_ARMOR = Messages.get(WndSadGhost.class,"armor");
+	private static final String TXT_RAT = Messages.get(WndSadGhost.class, "rat");
+	private static final String TXT_GNOLL = Messages.get(WndSadGhost.class, "gnoll");
+	private static final String TXT_CRAB = Messages.get(WndSadGhost.class, "crab");
+	private static final String TXT_GIVEITEM = Messages.get(WndSadGhost.class, "giveitem");
+	private static final String TXT_WEAPON = Messages.get(WndSadGhost.class, "weapon");
+	private static final String TXT_ARMOR = Messages.get(WndSadGhost.class, "armor");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -51,22 +51,22 @@ public class WndSadGhost extends Window {
 		IconTitle titlebar = new IconTitle();
 		RenderedTextMultiline message;
 		switch (type) {
-		case 1:
-		default:
-			titlebar.icon(new FetidRatSprite());
-			titlebar.label(Messages.get(WndSadGhost.class,"dr"));
-			message = PixelScene.renderMultiline(TXT_RAT + TXT_GIVEITEM, 6);
-			break;
-		case 2:
-			titlebar.icon(new GnollTricksterSprite());
-			titlebar.label(Messages.get(WndSadGhost.class,"dt"));
-			message = PixelScene.renderMultiline(TXT_GNOLL + TXT_GIVEITEM, 6);
-			break;
-		case 3:
-			titlebar.icon(new GreatCrabSprite());
-			titlebar.label(Messages.get(WndSadGhost.class,"dc"));
-			message = PixelScene.renderMultiline(TXT_CRAB + TXT_GIVEITEM, 6);
-			break;
+			case 1:
+			default:
+				titlebar.icon(new FetidRatSprite());
+				titlebar.label(Messages.get(WndSadGhost.class, "dr"));
+				message = PixelScene.renderMultiline(TXT_RAT + TXT_GIVEITEM, 6);
+				break;
+			case 2:
+				titlebar.icon(new GnollTricksterSprite());
+				titlebar.label(Messages.get(WndSadGhost.class, "dt"));
+				message = PixelScene.renderMultiline(TXT_GNOLL + TXT_GIVEITEM, 6);
+				break;
+			case 3:
+				titlebar.icon(new GreatCrabSprite());
+				titlebar.label(Messages.get(WndSadGhost.class, "dc"));
+				message = PixelScene.renderMultiline(TXT_CRAB + TXT_GIVEITEM, 6);
+				break;
 
 		}
 
@@ -74,7 +74,7 @@ public class WndSadGhost extends Window {
 		add(titlebar);
 
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
 		NewRedButton btnWeapon = new NewRedButton(TXT_WEAPON) {
@@ -88,16 +88,16 @@ public class WndSadGhost extends Window {
 		add(btnWeapon);
 
 
-			NewRedButton btnArmor = new NewRedButton(TXT_ARMOR) {
-				@Override
-				protected void onClick() {
-					selectReward(ghost, Ghost.Quest.armor);
-				}
-			};
-			btnArmor.setRect(0, btnWeapon.bottom() + GAP, WIDTH, BTN_HEIGHT);
-			add(btnArmor);
+		NewRedButton btnArmor = new NewRedButton(TXT_ARMOR) {
+			@Override
+			protected void onClick() {
+				selectReward(ghost, Ghost.Quest.armor);
+			}
+		};
+		btnArmor.setRect(0, btnWeapon.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		add(btnArmor);
 
-			resize(WIDTH, (int) btnArmor.bottom());
+		resize(WIDTH, (int) btnArmor.bottom());
 
 	}
 
@@ -111,7 +111,7 @@ public class WndSadGhost extends Window {
 			Dungeon.level.drop(reward, ghost.pos).sprite.drop();
 		}
 
-		ghost.yell(Messages.get(WndSadGhost.class,"farewell"));
+		ghost.yell(Messages.get(WndSadGhost.class, "farewell"));
 		ghost.die(null);
 
 		Ghost.Quest.complete();

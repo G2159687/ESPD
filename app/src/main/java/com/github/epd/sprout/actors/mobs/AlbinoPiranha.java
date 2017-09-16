@@ -38,20 +38,20 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class AlbinoPiranha extends Mob {
-	
-	private static final String TXT_KILLCOUNT = Messages.get(AlbinoPiranha.class,"count");
+
+	private static final String TXT_KILLCOUNT = Messages.get(AlbinoPiranha.class, "count");
 
 	{
-		name = Messages.get(AlbinoPiranha.class,"name");
+		name = Messages.get(AlbinoPiranha.class, "name");
 		spriteClass = AlbinoPiranhaSprite.class;
 
 		baseSpeed = 2f;
 
 		EXP = 0;
-		
+
 		loot = new Meat();
 		lootChance = 0.1f;
-		
+
 	}
 
 	public AlbinoPiranha() {
@@ -61,25 +61,25 @@ public class AlbinoPiranha extends Mob {
 		defenseSkill = 10 + Dungeon.depth * 2;
 	}
 
-	protected boolean checkwater(int cell){
-		return Level.water[cell];		
+	protected boolean checkwater(int cell) {
+		return Level.water[cell];
 	}
-	
-		
+
+
 	@Override
 	protected boolean act() {
-		
+
 		if (!Level.water[pos]) {
 			damage(HT, this);
 			//die(null);
 			return true;
-					
-				
+
+
 		} else {
 			// this causes pirahna to move away when a door is closed on them.
-			Dungeon.level.updateFieldOfView( this, Level.fieldOfView );
+			Dungeon.level.updateFieldOfView(this, Level.fieldOfView);
 			enemy = chooseEnemy();
-			    if (state == this.HUNTING && !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && Level.water[enemy.pos])) {
+			if (state == this.HUNTING && !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && Level.water[enemy.pos])) {
 				state = this.WANDERING;
 				int oldPos = pos;
 				int i = 0;
@@ -92,17 +92,17 @@ public class AlbinoPiranha extends Mob {
 				moveSprite(oldPos, pos);
 				return true;
 			}
-			if (!Level.water[enemy.pos] || enemy.flying){
+			if (!Level.water[enemy.pos] || enemy.flying) {
 				enemy.invisible = 1;
-			}	else {enemy.invisible = 0;}	
-						
+			} else {
+				enemy.invisible = 0;
+			}
+
 			return super.act();
 		}
 	}
 
-	
-	
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(Dungeon.depth, 4 + Dungeon.depth * 2);
@@ -121,21 +121,21 @@ public class AlbinoPiranha extends Mob {
 	@Override
 	public void die(Object cause) {
 		explodeDew(pos);
-		if(Random.Int(105-Math.min(Statistics.albinoPiranhasKilled,100))==0){
-		  Item mushroom = Generator.random(Generator.Category.MUSHROOM);
-		  Dungeon.level.drop(mushroom, pos).sprite.drop();	
+		if (Random.Int(105 - Math.min(Statistics.albinoPiranhasKilled, 100)) == 0) {
+			Item mushroom = Generator.random(Generator.Category.MUSHROOM);
+			Dungeon.level.drop(mushroom, pos).sprite.drop();
 		}
-		
-		if(!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 50 && Random.Int(10)==0) {
+
+		if (!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 50 && Random.Int(10) == 0) {
 			Dungeon.limitedDrops.conchshell.drop();
 			Dungeon.level.drop(new ConchShell(), pos).sprite.drop();
 		}
-		
-		if(!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 100) {
+
+		if (!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 100) {
 			Dungeon.limitedDrops.conchshell.drop();
 			Dungeon.level.drop(new ConchShell(), pos).sprite.drop();
 		}
-		
+
 		super.die(cause);
 
 		Statistics.albinoPiranhasKilled++;
@@ -154,9 +154,9 @@ public class AlbinoPiranha extends Mob {
 			return false;
 		}
 
-		int step = Dungeon.findStep( this, pos, target,
+		int step = Dungeon.findStep(this, pos, target,
 				Level.water,
-				Level.fieldOfView );
+				Level.fieldOfView);
 		if (step != -1) {
 			move(step);
 			return true;
@@ -179,10 +179,11 @@ public class AlbinoPiranha extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(AlbinoPiranha.class,"desc");
+		return Messages.get(AlbinoPiranha.class, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Burning.class);
 		IMMUNITIES.add(Paralysis.class);

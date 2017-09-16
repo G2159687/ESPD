@@ -56,11 +56,11 @@ import java.util.ArrayList;
 public class DumplingBomb extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.RICEBOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Fuse fuse;
@@ -68,7 +68,7 @@ public class DumplingBomb extends Item {
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(DumplingBomb.class,"ac");
+	private static final String AC_LIGHTTHROW = Messages.get(DumplingBomb.class, "ac");
 
 	@Override
 	public boolean isSimilar(Item item) {
@@ -114,7 +114,7 @@ public class DumplingBomb extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(DumplingBomb.class,"sniff"));
+			GLog.w(Messages.get(DumplingBomb.class, "sniff"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -123,13 +123,13 @@ public class DumplingBomb extends Item {
 	public void explode(int cell) {
 		// We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
-	    Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
 		//if (Dungeon.visible[cell]) {
 		//	CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
 		//}
 
-	     	for (int n: PathFinder.NEIGHBOURS9) {
+		for (int n : PathFinder.NEIGHBOURS9) {
 			int c = cell + n;
 			if (c >= 0 && c < Level.getLength()) {
 				if (Dungeon.visible[c]) {
@@ -139,7 +139,7 @@ public class DumplingBomb extends Item {
 				Heap heap = Dungeon.level.heaps.get(c);
 				if (heap != null)
 					heap.dumpexplode();
-				
+
 				Char ch = Actor.findChar(c);
 				if (ch != null && !(ch instanceof NPC) && !(ch instanceof BlueWraith) &&
 						!(ch instanceof Wraith) && !(ch instanceof RedWraith) && !(ch instanceof Sentinel) &&
@@ -169,7 +169,7 @@ public class DumplingBomb extends Item {
 							ch.pos = pos;
 							ch.sprite.place(ch.pos);
 							ch.sprite.visible = Dungeon.visible[pos];
-							GLog.i(Messages.get(DumplingBomb.class,"tele", curUser.name, ch.name));
+							GLog.i(Messages.get(DumplingBomb.class, "tele", curUser.name, ch.name));
 
 						}
 
@@ -203,7 +203,7 @@ public class DumplingBomb extends Item {
 
 	@Override
 	public String info() {
-		return fuse != null ? Messages.get(this,"desc1") : Messages.get(this,"desc2");
+		return fuse != null ? Messages.get(this, "desc1") : Messages.get(this, "desc2");
 	}
 
 	private static final String FUSE = "fuse";
@@ -256,11 +256,10 @@ public class DumplingBomb extends Item {
 				}
 			}
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}
-	
 
-	
+
 }

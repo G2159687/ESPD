@@ -52,15 +52,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class MineSentinel extends Mob {
-	
+
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SentinelSprite.class;
 
 		EXP = 25;
 		state = PASSIVE;
 	}
+
 	private static final int REGENERATION = 100;
 
 	private Weapon weapon;
@@ -75,11 +76,11 @@ public class MineSentinel extends Mob {
 		weapon.identify();
 		weapon.enchant(Enchantment.randomLow());
 		weapon.upgrade(10);
-		
+
 
 		HP = HT = 500 + Dungeon.depth * 20;
 		//HP = HT = 5;
-		defenseSkill = 20+adj(1);
+		defenseSkill = 20 + adj(1);
 		//defenseSkill = 2;
 	}
 
@@ -99,27 +100,27 @@ public class MineSentinel extends Mob {
 
 	@Override
 	protected boolean act() {
-		
+
 		Hero hero = Dungeon.hero;
 		ArrayList<Integer> spawnPoints = new ArrayList<Integer>();
-		
-		
-		if(state==HUNTING){
+
+
+		if (state == HUNTING) {
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 				int p = pos + PathFinder.NEIGHBOURS8[i];
 				Char ch = Actor.findChar(p);
-				if (ch != null && ch instanceof MineSentinel &&  Random.Int(10)<2) {
+				if (ch != null && ch instanceof MineSentinel && Random.Int(10) < 2) {
 					ch.damage(1, this);
-					if (((Mob)ch).state==PASSIVE){
-						((Mob)ch).state = HUNTING;
+					if (((Mob) ch).state == PASSIVE) {
+						((Mob) ch).state = HUNTING;
 					}
-				 break;
+					break;
 				}
 			}
-			
+
 		}
-		
-		if (!heroNear() && Random.Float() < 0.50f && state==HUNTING){
+
+		if (!heroNear() && Random.Float() < 0.50f && state == HUNTING) {
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 				int p = hero.pos + PathFinder.NEIGHBOURS8[i];
 				if (Actor.findChar(p) == null
@@ -127,62 +128,62 @@ public class MineSentinel extends Mob {
 					spawnPoints.add(p);
 				}
 			}
-			
+
 			if (spawnPoints.size() > 0) {
 				int newPos;
-				newPos=Random.element(spawnPoints);
+				newPos = Random.element(spawnPoints);
 				Actor.freeCell(pos);
 				CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 				pos = newPos;
 				sprite.place(pos);
 				sprite.visible = Dungeon.visible[pos];
 			}
-			
+
 		} else {
-		
-		 if (HP<(HT/4) && Random.Float() < 0.50f && state!=PASSIVE){
-			int newPos = -1;
+
+			if (HP < (HT / 4) && Random.Float() < 0.50f && state != PASSIVE) {
+				int newPos = -1;
 				for (int i = 0; i < 20; i++) {
-				newPos = Dungeon.level.randomRespawnCellMob();
-				if (newPos != -1) {
-					break;
+					newPos = Dungeon.level.randomRespawnCellMob();
+					if (newPos != -1) {
+						break;
+					}
 				}
+				if (newPos != -1) {
+					Actor.freeCell(pos);
+					CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+					pos = newPos;
+					sprite.place(pos);
+					sprite.visible = Dungeon.visible[pos];
+					HP += REGENERATION;
+				}
+
 			}
-			if (newPos != -1) {
-				Actor.freeCell(pos);
-				CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-				pos = newPos;
-				sprite.place(pos);
-				sprite.visible = Dungeon.visible[pos];
-				HP += REGENERATION;
-			}					
-			
-		 }
 		}
 		return super.act();
 	}
-	
-	protected boolean heroNear (){
-		boolean check=false;
-		for (int i : PathFinder.NEIGHBOURS9DIST2){
-			int cell=pos+i;
-			if (Actor.findChar(cell) != null	
-				&& (Actor.findChar(cell) instanceof Hero)
-				){
-				check=true;
-			}			
-		}		
+
+	protected boolean heroNear() {
+		boolean check = false;
+		for (int i : PathFinder.NEIGHBOURS9DIST2) {
+			int cell = pos + i;
+			if (Actor.findChar(cell) != null
+					&& (Actor.findChar(cell) instanceof Hero)
+					) {
+				check = true;
+			}
+		}
 		return check;
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(weapon.MIN*2, weapon.MAX*2);
+		return Random.NormalIntRange(weapon.MIN * 2, weapon.MAX * 2);
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return (int) ((30 + Dungeon.depth*2) * weapon.ACU);
+		return (int) ((30 + Dungeon.depth * 2) * weapon.ACU);
 	}
 
 	@Override
@@ -202,15 +203,15 @@ public class MineSentinel extends Mob {
 		if (state == PASSIVE) {
 			state = HUNTING;
 		}
-		
-		if(!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)){
-			int max = Math.round(dmg*.25f);
-			dmg = Random.Int(1,max);
+
+		if (!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)) {
+			int max = Math.round(dmg * .25f);
+			dmg = Random.Int(1, max);
 		}
 
 		super.damage(dmg, src);
 	}
-	
+
 
 	@Override
 	public int attackProc(Char enemy, int damage) {
@@ -226,15 +227,15 @@ public class MineSentinel extends Mob {
 	@Override
 	public void die(Object cause) {
 		Dungeon.level.drop(weapon, pos).sprite.drop();
-		if (!Dungeon.limitedDrops.hallskey.dropped() && Dungeon.depth==24) {
+		if (!Dungeon.limitedDrops.hallskey.dropped() && Dungeon.depth == 24) {
 			Dungeon.limitedDrops.hallskey.drop();
 			Dungeon.level.drop(new HallsKey(), pos).sprite.drop();
-			explodeDew(pos);				
-		} 
+			explodeDew(pos);
+		}
 		super.die(cause);
 	}
 
-		@Override
+	@Override
 	public boolean reset() {
 		state = PASSIVE;
 		return true;
@@ -242,11 +243,12 @@ public class MineSentinel extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc", weapon.name());
+		return Messages.get(this, "desc", weapon.name());
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

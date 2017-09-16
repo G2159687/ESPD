@@ -25,12 +25,12 @@ import com.github.epd.sprout.utils.Utils;
 
 public class IronKey extends Key {
 
-	private static final String TXT_FROM_DEPTH = Messages.get(IronKey.class,"depth");
+	private static final String TXT_FROM_DEPTH = Messages.get(IronKey.class, "depth");
 
 	public static int curDepthQuantity = 0;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.IRON_KEY;
 	}
 
@@ -66,6 +66,6 @@ public class IronKey extends Key {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

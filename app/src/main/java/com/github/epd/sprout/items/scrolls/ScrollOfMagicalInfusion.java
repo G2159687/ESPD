@@ -28,12 +28,12 @@ import com.github.epd.sprout.windows.WndBag;
 
 public class ScrollOfMagicalInfusion extends InventoryScroll {
 
-	private static final String TXT_INFUSE = Messages.get(ScrollOfMagicalInfusion.class,"infuse");
+	private static final String TXT_INFUSE = Messages.get(ScrollOfMagicalInfusion.class, "infuse");
 
 	{
-		initials=2;
-		name = Messages.get(this,"name");
-		inventoryTitle = Messages.get(this,"inv_title");
+		initials = 2;
+		name = Messages.get(this, "name");
+		inventoryTitle = Messages.get(this, "inv_title");
 		mode = WndBag.Mode.ENCHANTABLE;
 		consumedValue = 15;
 
@@ -56,6 +56,6 @@ public class ScrollOfMagicalInfusion extends InventoryScroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

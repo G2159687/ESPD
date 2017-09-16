@@ -130,27 +130,19 @@ public class WaterOfTransmutation extends WellWater {
 			n = new RoyalSpork();
 		} else if (w instanceof RoyalSpork) {
 			n = new Spork();
-		}
-
-		else if (w instanceof Spear) {
+		} else if (w instanceof Spear) {
 			n = new Quarterstaff();
 		} else if (w instanceof Quarterstaff) {
 			n = new Spear();
-		}
-
-		else if (w instanceof Sword) {
+		} else if (w instanceof Sword) {
 			n = new Mace();
 		} else if (w instanceof Mace) {
 			n = new Sword();
-		}
-
-		else if (w instanceof Longsword) {
+		} else if (w instanceof Longsword) {
 			n = new BattleAxe();
 		} else if (w instanceof BattleAxe) {
 			n = new Longsword();
-		}
-
-		else if (w instanceof Glaive) {
+		} else if (w instanceof Glaive) {
 			n = new WarHammer();
 		} else if (w instanceof WarHammer) {
 			n = new Glaive();
@@ -276,9 +268,9 @@ public class WaterOfTransmutation extends WellWater {
 		} else if (p instanceof PotionOfMight) {
 
 			return new PotionOfStrength();
-		
-		} else if (p instanceof PotionOfMending){
-		
+
+		} else if (p instanceof PotionOfMending) {
+
 			return new PotionOfHealing();
 
 		} else {
@@ -291,19 +283,19 @@ public class WaterOfTransmutation extends WellWater {
 		}
 	}
 
-	
+
 	private Potion changeAnkh(Ankh a) {
 		return new PotionOfOverHealing();
 	}
-	
+
 	private Food changeHoneypot(ShatteredPot s) {
 		return new PotionOfConstitution();
 	}
-	
+
 	private Item changeHoneypot(SteelShatteredPot s) {
 		return new SteelHoneypot();
 	}
-	
+
 	private Item changeHoneypot(Honeypot d) {
 		return new SteelHoneypot();
 	}
@@ -315,19 +307,18 @@ public class WaterOfTransmutation extends WellWater {
 	private Item rechargeDestructo(InactiveMrDestructo d) {
 		return new ActiveMrDestructo();
 	}
-	
+
 	private Item upgradeDestructo(ActiveMrDestructo d) {
 		return new ActiveMrDestructo2();
 	}
-	
+
 	private Item rechargeDestructo2(InactiveMrDestructo2 d) {
 		return new ActiveMrDestructo2();
 	}
-	
-	
-	
+
+
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

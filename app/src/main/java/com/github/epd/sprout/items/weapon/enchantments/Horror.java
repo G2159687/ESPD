@@ -31,7 +31,7 @@ import com.watabou.utils.Random;
 
 public class Horror extends Weapon.Enchantment {
 
-	private static final String TXT_ELDRITCH = Messages.get(Horror.class,"name");
+	private static final String TXT_ELDRITCH = Messages.get(Horror.class, "name");
 
 	private static ItemSprite.Glowing GREY = new ItemSprite.Glowing(0x222222);
 
@@ -39,7 +39,7 @@ public class Horror extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		// lvl 0 - 20%

@@ -36,7 +36,7 @@ public class GasesImmunity extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	{
@@ -44,7 +44,7 @@ public class GasesImmunity extends FlavourBuff {
 		immunities.add(ToxicGas.class);
 		immunities.add(ConfusionGas.class);
 		immunities.add(StenchGas.class);
-		immunities.add( VenomGas.class );
+		immunities.add(VenomGas.class);
 	}
 
 	@Override

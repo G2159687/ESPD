@@ -26,11 +26,11 @@ import com.watabou.noosa.ui.Component;
 
 public class HealthBar extends Component {
 
-	private static final int COLOR_BG	= 0xFFCC0000;
-	private static final int COLOR_HP	= 0xFF00EE00;
+	private static final int COLOR_BG = 0xFFCC0000;
+	private static final int COLOR_HP = 0xFF00EE00;
 	private static final int COLOR_SHLD = 0xFFBBEEBB;
 
-	private static final int HEIGHT	= 2;
+	private static final int HEIGHT = 2;
 
 	private ColorBlock Bg;
 	private ColorBlock Shld;
@@ -41,14 +41,14 @@ public class HealthBar extends Component {
 
 	@Override
 	protected void createChildren() {
-		Bg = new ColorBlock( 1, 1, COLOR_BG );
-		add( Bg );
+		Bg = new ColorBlock(1, 1, COLOR_BG);
+		add(Bg);
 
-		Shld = new ColorBlock( 1, 1, COLOR_SHLD );
-	//	add( Shld );
+		Shld = new ColorBlock(1, 1, COLOR_SHLD);
+		//	add( Shld );
 
-		Hp = new ColorBlock( 1, 1, COLOR_HP );
-		add( Hp );
+		Hp = new ColorBlock(1, 1, COLOR_HP);
+		add(Hp);
 
 		height = HEIGHT;
 	}
@@ -59,28 +59,28 @@ public class HealthBar extends Component {
 		Bg.x = Hp.x = x; // = Shld.x
 		Bg.y = Hp.y = y; // = Shld.y
 
-		Bg.size( width, HEIGHT );
-	//	Shld.size( width * shield, HEIGHT );
-		Hp.size( width * health, HEIGHT );
+		Bg.size(width, HEIGHT);
+		//	Shld.size( width * shield, HEIGHT );
+		Hp.size(width * health, HEIGHT);
 
 		height = HEIGHT;
 	}
 
-	public void level( float value ) {
-		level( value, 0f );
+	public void level(float value) {
+		level(value, 0f);
 	}
 
-	public void level( float health, float shield ){
+	public void level(float health, float shield) {
 		this.health = health;
 		this.shield = shield;
 		layout();
 	}
 
-	public void level(Char c){
+	public void level(Char c) {
 		float health = c.HP;
 		float shield = c.SHLD;
-		float max = Math.max(health+shield, c.HT);
+		float max = Math.max(health + shield, c.HT);
 
-		level(health/max, (health+shield)/max);
+		level(health / max, (health + shield) / max);
 	}
 }

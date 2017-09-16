@@ -32,7 +32,7 @@ import java.util.Iterator;
 
 public class Bag extends Item implements Iterable<Item> {
 
-	public static final String AC_OPEN = Messages.get(Bag.class,"ac_open");
+	public static final String AC_OPEN = Messages.get(Bag.class, "ac_open");
 
 	{
 		image = 11;
@@ -81,9 +81,9 @@ public class Bag extends Item implements Iterable<Item> {
 	@Override
 	public void onDetach() {
 		this.owner = null;
-		 for (Item item : items)
-			    Dungeon.quickslot.clearItem(item);
-			updateQuickslot();
+		for (Item item : items)
+			Dungeon.quickslot.clearItem(item);
+		updateQuickslot();
 	}
 
 	@Override

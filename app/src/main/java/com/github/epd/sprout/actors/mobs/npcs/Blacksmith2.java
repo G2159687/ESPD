@@ -41,142 +41,144 @@ import com.github.epd.sprout.windows.WndQuest;
 
 public class Blacksmith2 extends NPC {
 
-    {
-        name = Messages.get(Blacksmith2.class, "name");
-        spriteClass = BlacksmithSprite.class;
-    }
+	{
+		name = Messages.get(Blacksmith2.class, "name");
+		spriteClass = BlacksmithSprite.class;
+
+		properties.add(Property.IMMOVABLE);
+	}
 
 
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean interact() {
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
-
-
-        DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-        if (!checkAdamant()) {
-            tell(Messages.get(Blacksmith2.class, "two"));
-        } else if (gold == null || gold.quantity() < (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 50)) {
-            tell(Messages.get(Blacksmith2.class, "three"));
-        } else if (checkAdamant() && gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {
-            GameScene.show(new WndBlacksmith2(this, Dungeon.hero));
-        } else {
-            tell(Messages.get(Blacksmith2.class, "two"));
-        }
-        return false;
-    }
-
-    public static String verify(Item item1, Item item2) {
-
-        if (item1 == item2) {
-            return Messages.get(Blacksmith.class, "sametwice");
-        }
-
-        if (!item1.isIdentified()) {
-            return Messages.get(Blacksmith.class, "identify");
-        }
-
-        if (item1.cursed) {
-            return Messages.get(Blacksmith.class, "cursed");
-        }
-
-        if (item1.reinforced) {
-            return Messages.get(Blacksmith2.class, "reinforced");
-        }
-
-        if (item1.level < 0) {
-            return Messages.get(Blacksmith.class, "junk");
-        }
-
-        if (!item1.isUpgradable()) {
-            return Messages.get(Blacksmith2.class, "cant");
-        }
-
-        if (item1 instanceof Armor && item2 instanceof AdamantArmor) {
-            return null;
-        }
-
-        if (item1 instanceof MeleeWeapon && item2 instanceof AdamantWeapon) {
-            return null;
-        }
-
-        if (item1 instanceof Boomerang && item2 instanceof AdamantWeapon) {
-            return null;
-        }
-
-        if (item1 instanceof Wand && item2 instanceof AdamantWand) {
-            return null;
-        }
-
-        if (item1 instanceof Ring && item2 instanceof AdamantRing) {
-            return null;
-        }
-
-        return Messages.get(Blacksmith2.class, "nowork");
-
-    }
-
-    public static void upgrade(Item item1, Item item2) {
-
-        item1.reinforced = true;
-        if (!Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
-            item2.detach(Dungeon.hero.belongings.backpack);
-        }
-        DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-        if (gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {
-            gold.detach(Dungeon.hero.belongings.backpack, (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 50));
-            if (!(Dungeon.hero.belongings.getItem(DarkGold.class).quantity() > 0)) {
-                gold.detachAll(Dungeon.hero.belongings.backpack);
-            }
-        }
-        GLog.p(Messages.get(Blacksmith2.class, "better"), item1.name());
-        Dungeon.hero.spendAndNext(2f);
-    }
+		sprite.turnTo(pos, Dungeon.hero.pos);
 
 
-    private void tell(String text) {
-        GameScene.show(new WndQuest(this, text));
-    }
+		DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
+		if (!checkAdamant()) {
+			tell(Messages.get(Blacksmith2.class, "two"));
+		} else if (gold == null || gold.quantity() < (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 50)) {
+			tell(Messages.get(Blacksmith2.class, "three"));
+		} else if (checkAdamant() && gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {
+			GameScene.show(new WndBlacksmith2(this, Dungeon.hero));
+		} else {
+			tell(Messages.get(Blacksmith2.class, "two"));
+		}
+		return false;
+	}
+
+	public static String verify(Item item1, Item item2) {
+
+		if (item1 == item2) {
+			return Messages.get(Blacksmith.class, "sametwice");
+		}
+
+		if (!item1.isIdentified()) {
+			return Messages.get(Blacksmith.class, "identify");
+		}
+
+		if (item1.cursed) {
+			return Messages.get(Blacksmith.class, "cursed");
+		}
+
+		if (item1.reinforced) {
+			return Messages.get(Blacksmith2.class, "reinforced");
+		}
+
+		if (item1.level < 0) {
+			return Messages.get(Blacksmith.class, "junk");
+		}
+
+		if (!item1.isUpgradable()) {
+			return Messages.get(Blacksmith2.class, "cant");
+		}
+
+		if (item1 instanceof Armor && item2 instanceof AdamantArmor) {
+			return null;
+		}
+
+		if (item1 instanceof MeleeWeapon && item2 instanceof AdamantWeapon) {
+			return null;
+		}
+
+		if (item1 instanceof Boomerang && item2 instanceof AdamantWeapon) {
+			return null;
+		}
+
+		if (item1 instanceof Wand && item2 instanceof AdamantWand) {
+			return null;
+		}
+
+		if (item1 instanceof Ring && item2 instanceof AdamantRing) {
+			return null;
+		}
+
+		return Messages.get(Blacksmith2.class, "nowork");
+
+	}
+
+	public static void upgrade(Item item1, Item item2) {
+
+		item1.reinforced = true;
+		if (!Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+			item2.detach(Dungeon.hero.belongings.backpack);
+		}
+		DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
+		if (gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {
+			gold.detach(Dungeon.hero.belongings.backpack, (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 50));
+			if (!(Dungeon.hero.belongings.getItem(DarkGold.class).quantity() > 0)) {
+				gold.detachAll(Dungeon.hero.belongings.backpack);
+			}
+		}
+		GLog.p(Messages.get(Blacksmith2.class, "better"), item1.name());
+		Dungeon.hero.spendAndNext(2f);
+	}
 
 
-    public static boolean checkAdamant() {
-        AdamantArmor armor1 = Dungeon.hero.belongings.getItem(AdamantArmor.class);
-        AdamantWeapon weapon1 = Dungeon.hero.belongings.getItem(AdamantWeapon.class);
-        AdamantRing ring1 = Dungeon.hero.belongings.getItem(AdamantRing.class);
-        AdamantWand wand1 = Dungeon.hero.belongings.getItem(AdamantWand.class);
-
-        return armor1 != null || weapon1 != null || ring1 != null || wand1 != null;
-    }
+	private void tell(String text) {
+		GameScene.show(new WndQuest(this, text));
+	}
 
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
+	public static boolean checkAdamant() {
+		AdamantArmor armor1 = Dungeon.hero.belongings.getItem(AdamantArmor.class);
+		AdamantWeapon weapon1 = Dungeon.hero.belongings.getItem(AdamantWeapon.class);
+		AdamantRing ring1 = Dungeon.hero.belongings.getItem(AdamantRing.class);
+		AdamantWand wand1 = Dungeon.hero.belongings.getItem(AdamantWand.class);
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+		return armor1 != null || weapon1 != null || ring1 != null || wand1 != null;
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
 
-    @Override
-    public boolean reset() {
-        return true;
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(Blacksmith.class, "desc");
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
+
+	@Override
+	public void add(Buff buff) {
+	}
+
+	@Override
+	public boolean reset() {
+		return true;
+	}
+
+	@Override
+	public String description() {
+		return Messages.get(Blacksmith.class, "desc");
+	}
 
 
 }

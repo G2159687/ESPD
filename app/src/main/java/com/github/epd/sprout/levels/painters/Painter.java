@@ -59,13 +59,13 @@ public class Painter {
 	}
 
 	public static void fill(Level level, Rect rect, int l, int t, int r, int b,
-			int value) {
+	                        int value) {
 		fill(level, rect.left + l, rect.top + t, rect.width() + 1 - (l + r),
 				rect.height() + 1 - (t + b), value);
 	}
 
 	public static Point drawInside(Level level, Room room, Point from, int n,
-			int value) {
+	                               int value) {
 
 		Point step = new Point();
 		if (from.x == room.left) {

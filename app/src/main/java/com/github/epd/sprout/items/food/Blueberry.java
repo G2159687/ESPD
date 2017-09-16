@@ -39,25 +39,25 @@ import com.watabou.utils.Random;
 public class Blueberry extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEED_BLUEBERRY;
-		energy = (Hunger.STARVING - Hunger.HUNGRY)/10;
-		message = Messages.get(Blackberry.class,"eat");
+		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
+		message = Messages.get(Blackberry.class, "eat");
 		hornValue = 6;
 		bones = false;
 	}
 
-	
-	private static final String TXT_PREVENTING = Messages.get(Blueberry.class,"prevent");
-	
+
+	private static final String TXT_PREVENTING = Messages.get(Blueberry.class, "prevent");
+
 	@Override
 	public void execute(Hero hero, String action) {
 
 		super.execute(hero, action);
-		
-         if (action.equals(AC_EAT)) {
-			
-			if (Dungeon.depth>50 && Dungeon.hero.buff(MagicSight.class) == null ){
+
+		if (action.equals(AC_EAT)) {
+
+			if (Dungeon.depth > 50 && Dungeon.hero.buff(MagicSight.class) == null) {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
@@ -66,8 +66,8 @@ public class Blueberry extends Food {
 
 		if (action.equals(AC_EAT)) {
 
-			if (Random.Float()<0.75f) {
-			
+			if (Random.Float() < 0.75f) {
+
 				int length = Level.getLength();
 				int[] map = Dungeon.level.map;
 				boolean[] mapped = Dungeon.level.mapped;
@@ -97,22 +97,22 @@ public class Blueberry extends Food {
 					}
 				}
 				GameScene.updateFog();
-				
+
 				if (noticed) {
 					Sample.INSTANCE.play(Assets.SND_SECRET);
 				}
 
-				GLog.p(Messages.get(this,"eat"));
-				
+				GLog.p(Messages.get(this, "eat"));
+
 				Buff.affect(hero, Awareness.class, 10f);
 				Dungeon.observe();
 
-					
+
 			} else {
-			
-				GLog.p(Messages.get(Blackberry.class,"eat3"));
-				Buff.affect(hero, BerryRegeneration.class).level(hero.HT+hero.HT);
-				
+
+				GLog.p(Messages.get(Blackberry.class, "eat3"));
+				Buff.affect(hero, BerryRegeneration.class).level(hero.HT + hero.HT);
+
 				int length = Level.getLength();
 				int[] map = Dungeon.level.map;
 				boolean[] mapped = Dungeon.level.mapped;
@@ -142,35 +142,35 @@ public class Blueberry extends Food {
 					}
 				}
 				Dungeon.observe();
-				
+
 				if (noticed) {
 					Sample.INSTANCE.play(Assets.SND_SECRET);
 				}
 
-				GLog.p(Messages.get(this,"eat"));
-				
+				GLog.p(Messages.get(this, "eat"));
+
 				Buff.affect(hero, Awareness.class, 10f);
 				Dungeon.observe();
-							
-				
+
+
 			}
 		}
-	}	
-	
+	}
+
 	public static void discover(int cell) {
 		CellEmitter.get(cell).start(Speck.factory(Speck.DISCOVER), 0.1f, 4);
 	}
-	
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc") ;
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
-	
+
 	public Blueberry() {
 		this(1);
 	}
@@ -178,5 +178,5 @@ public class Blueberry extends Food {
 	public Blueberry(int value) {
 		this.quantity = value;
 	}
-	
+
 }

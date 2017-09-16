@@ -26,7 +26,7 @@ import com.github.epd.sprout.sprites.ItemSprite.Glowing;
 
 public class Luck extends Weapon.Enchantment {
 
-	private static final String TXT_LUCKY = Messages.get(Luck.class,"name");
+	private static final String TXT_LUCKY = Messages.get(Luck.class, "name");
 
 	private static ItemSprite.Glowing GREEN = new ItemSprite.Glowing(0x00FF00);
 
@@ -34,7 +34,7 @@ public class Luck extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		int level = Math.max(0, weapon.level);

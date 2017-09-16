@@ -77,8 +77,8 @@ public class Room extends Rect implements Graph.Node, Bundlable {
 				MagicWellPainter.class), GARDEN(GardenPainter.class), CRYPT(
 				CryptPainter.class), STATUE(StatuePainter.class), POOL(
 				PoolPainter.class), RAT_KING(RatKingPainter.class), WEAK_FLOOR(
-				WeakFloorPainter.class), PIT(PitPainter.class), 
-				RAT_KING2(RatKingPainter2.class);
+				WeakFloorPainter.class), PIT(PitPainter.class),
+		RAT_KING2(RatKingPainter2.class);
 
 		private Method paint;
 
@@ -104,17 +104,17 @@ public class Room extends Rect implements Graph.Node, Bundlable {
 					Type.POOL, Type.GARDEN, Type.LIBRARY, Type.ARMORY,
 					Type.TREASURY, Type.TRAPS, Type.STORAGE, Type.STATUE,
 					Type.LABORATORY, Type.VAULT));
-	
+
 	public static final ArrayList<Type> SPECIALSFORT = new ArrayList<Type>(
 			Arrays.asList(Type.GARDEN, Type.GARDEN, Type.GARDEN, Type.GARDEN,
-					      Type.GARDEN, Type.GARDEN, Type.GARDEN, Type.GARDEN,
-					      Type.GARDEN, Type.GARDEN));
-	
+					Type.GARDEN, Type.GARDEN, Type.GARDEN, Type.GARDEN,
+					Type.GARDEN, Type.GARDEN));
+
 	public static final ArrayList<Type> SPECIALSTRANSCEND = new ArrayList<Type>(
 			Arrays.asList(Type.MAGIC_WELL, Type.MAGIC_WELL, Type.MAGIC_WELL, Type.MAGIC_WELL,
-					      Type.MAGIC_WELL, Type.MAGIC_WELL, Type.MAGIC_WELL, Type.MAGIC_WELL,
-					       Type.MAGIC_WELL,  Type.MAGIC_WELL));
-	
+					Type.MAGIC_WELL, Type.MAGIC_WELL, Type.MAGIC_WELL, Type.MAGIC_WELL,
+					Type.MAGIC_WELL, Type.MAGIC_WELL));
+
 	public Type type = Type.NULL;
 
 	public int random() {

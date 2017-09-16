@@ -31,8 +31,8 @@ import com.github.epd.sprout.utils.GLog;
 public class PotionOfOverHealing extends Potion {
 
 	{
-		name = Messages.get(this,"name");
-		initials=13;
+		name = Messages.get(this, "name");
+		initials = 13;
 		bones = true;
 	}
 
@@ -45,10 +45,10 @@ public class PotionOfOverHealing extends Potion {
 
 	public static void heal(Hero hero) {
 
-		if (Dungeon.hero.HP < hero.HT+(hero.lvl*2)) {
+		if (Dungeon.hero.HP < hero.HT + (hero.lvl * 2)) {
 			hero.HP = hero.HT + (hero.lvl * 2);
-			GLog.p(Messages.get(PotionOfOverHealing.class,"effect"));
-			GLog.p(Messages.get(PotionOfOverHealing.class,"fill",hero.HP-hero.HT));
+			GLog.p(Messages.get(PotionOfOverHealing.class, "effect"));
+			GLog.p(Messages.get(PotionOfOverHealing.class, "fill", hero.HP - hero.HT));
 
 			hero.sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 4);
 		}
@@ -57,13 +57,13 @@ public class PotionOfOverHealing extends Potion {
 		Buff.detach(hero, Cripple.class);
 		Buff.detach(hero, Weakness.class);
 		Buff.detach(hero, Bleeding.class);
-		
+
 
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

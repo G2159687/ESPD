@@ -32,11 +32,11 @@ import com.watabou.utils.Bundle;
 
 public class Earthroot extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Earthroot.class,"desc");
+	private static final String TXT_DESC = Messages.get(Earthroot.class, "desc");
 
 	{
 		image = 5;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class Earthroot extends Plant {
 		super.activate(ch);
 
 		if (ch == Dungeon.hero) {
-			Buff.affect( ch, Armor.class ).level(ch.HT);
+			Buff.affect(ch, Armor.class).level(ch.HT);
 		}
 
 		if (Dungeon.visible[pos]) {
@@ -60,9 +60,9 @@ public class Earthroot extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Earthroot.class,"name");
+			plantName = Messages.get(Earthroot.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_EARTHROOT;
 
 			plantClass = Earthroot.class;
@@ -73,7 +73,7 @@ public class Earthroot extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
+			return Messages.get(Plant.class, "seeddesc", plantName);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class Earthroot extends Plant {
 
 		private int pos;
 		private int level;
-		
+
 		@Override
 		public boolean attachTo(Char target) {
 			pos = target.pos;
@@ -123,11 +123,13 @@ public class Earthroot extends Plant {
 
 		@Override
 		public String toString() {
-			return Utils.format(Messages.get(Earthroot.class,"armorname", level));
+			return Utils.format(Messages.get(Earthroot.class, "armorname", level));
 		}
 
 		@Override
-		public String desc() { return Messages.get(Earthroot.class,"b1desc", level); }
+		public String desc() {
+			return Messages.get(Earthroot.class, "b1desc", level);
+		}
 
 		private static final String POS = "pos";
 		private static final String LEVEL = "level";
@@ -146,13 +148,13 @@ public class Earthroot extends Plant {
 			level = bundle.getInt(LEVEL);
 		}
 	}
-	
+
 	public static class NutArmor extends Buff {
 
 		private int pos;
 		private int level;
 		public static final float DURATION = 10f;
-		
+
 		@Override
 		public boolean attachTo(Char target) {
 			pos = target.pos;
@@ -188,7 +190,7 @@ public class Earthroot extends Plant {
 
 		@Override
 		public String toString() {
-			return Utils.format(Messages.get(Earthroot.class,"armorname",level));
+			return Utils.format(Messages.get(Earthroot.class, "armorname", level));
 		}
 
 		private static final String POS = "pos";

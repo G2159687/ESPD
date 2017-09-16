@@ -36,11 +36,11 @@ public class MagicalSleep extends Buff {
 
 			if (target instanceof Hero)
 				if (target.HP >= target.HT) {
-					GLog.i(Messages.get(this,"nosleep"));
+					GLog.i(Messages.get(this, "nosleep"));
 					detach();
 					return true;
 				} else {
-					GLog.i(Messages.get(this,"sleep"));
+					GLog.i(Messages.get(this, "sleep"));
 				}
 			else if (target instanceof Mob)
 				((Mob) target).state = ((Mob) target).SLEEPING;
@@ -59,7 +59,7 @@ public class MagicalSleep extends Buff {
 			target.HP = Math.min(target.HP + 1, target.HT);
 			((Hero) target).resting = true;
 			if (target.HP == target.HT) {
-				GLog.p(Messages.get(this,"wakeup"));
+				GLog.p(Messages.get(this, "wakeup"));
 				detach();
 			}
 		}
@@ -83,7 +83,7 @@ public class MagicalSleep extends Buff {
 
 	@Override
 	public String toString() {
-		return  Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import com.github.epd.sprout.messages.Messages;
 public class RingOfAccuracy extends Ring {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class RingOfAccuracy extends Ring {
 
 	@Override
 	public String desc() {
-		return isKnown() ? Messages.get(this,"desc")	: super.desc();
+		return isKnown() ? Messages.get(this, "desc") : super.desc();
 	}
 
 	public class Accuracy extends RingBuff {

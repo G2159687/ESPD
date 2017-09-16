@@ -78,16 +78,16 @@ public class DeadEndLevel extends Level {
 			}
 		}
 	}
-	
+
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 

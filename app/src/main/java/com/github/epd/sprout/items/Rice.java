@@ -34,14 +34,14 @@ import java.util.ArrayList;
 
 public class Rice extends Item {
 
-	public static final String AC_COOK = Messages.get(Rice.class,"ac1");
-	public static final String AC_COOKBOMB = Messages.get(Rice.class,"ac2");
+	public static final String AC_COOK = Messages.get(Rice.class, "ac1");
+	public static final String AC_COOKBOMB = Messages.get(Rice.class, "ac2");
 
 	public static final float TIME_TO_COOK = 1;
 	public static final float TIME_TO_COOK_BOMB = 4;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEED_RICE;
 
 		stackable = false;
@@ -49,8 +49,8 @@ public class Rice extends Item {
 		defaultAction = AC_COOK;
 	}
 
-	private int bombcost=5;
-	
+	private int bombcost = 5;
+
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
@@ -68,7 +68,7 @@ public class Rice extends Item {
 			hero.busy();
 
 			hero.sprite.operate(hero.pos);
-			
+
 			RiceBall riceball = new RiceBall();
 			if (riceball.doPickUp(Dungeon.hero)) {
 				GLog.i(Messages.get(Hero.class, "have"), riceball.name());
@@ -77,60 +77,60 @@ public class Rice extends Item {
 				Dungeon.level.drop(riceball, Dungeon.hero.pos).sprite.drop();
 				Statistics.ballsCooked++;
 			}
-			
-				
-			if (Statistics.ballsCooked>200){
+
+
+			if (Statistics.ballsCooked > 200) {
 				detach(Dungeon.hero.belongings.backpack);
-				GLog.n(Messages.get(Rice.class,"b1"));
-			} else if (Statistics.ballsCooked>175){
-				GLog.n(Messages.get(Rice.class,"b2"));
-			} else if (Statistics.ballsCooked>150){
-				GLog.n(Messages.get(Rice.class,"b3"));
+				GLog.n(Messages.get(Rice.class, "b1"));
+			} else if (Statistics.ballsCooked > 175) {
+				GLog.n(Messages.get(Rice.class, "b2"));
+			} else if (Statistics.ballsCooked > 150) {
+				GLog.n(Messages.get(Rice.class, "b3"));
 			}
-				
+
 		} else if (action.equals(AC_COOKBOMB)) {
 
 			hero.spend(TIME_TO_COOK_BOMB);
 			hero.busy();
 
 			hero.sprite.operate(hero.pos);
-			
+
 			DumplingBomb bomb = new DumplingBomb();
 			if (bomb.doPickUp(Dungeon.hero)) {
 				GLog.i(Messages.get(Hero.class, "have"), bomb.name());
-				Statistics.ballsCooked+=bombcost;
+				Statistics.ballsCooked += bombcost;
 			} else {
 				Dungeon.level.drop(bomb, Dungeon.hero.pos).sprite.drop();
-				Statistics.ballsCooked+=bombcost;
+				Statistics.ballsCooked += bombcost;
 			}
-			
-				
-			if (Statistics.ballsCooked>200){
+
+
+			if (Statistics.ballsCooked > 200) {
 				detach(Dungeon.hero.belongings.backpack);
-				GLog.n(Messages.get(Rice.class,"b1"));
-			} else if (Statistics.ballsCooked>175){
-				GLog.n(Messages.get(Rice.class,"b2"));
-			} else if (Statistics.ballsCooked>150){
-				GLog.n(Messages.get(Rice.class,"b3"));
+				GLog.n(Messages.get(Rice.class, "b1"));
+			} else if (Statistics.ballsCooked > 175) {
+				GLog.n(Messages.get(Rice.class, "b2"));
+			} else if (Statistics.ballsCooked > 150) {
+				GLog.n(Messages.get(Rice.class, "b3"));
 			}
-					
+
 
 		} else {
 			super.execute(hero, action);
 
 		}
 	}
-	
+
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (super.doPickUp(hero)) {
 
-			if (Dungeon.level != null && Dungeon.depth==32) {
+			if (Dungeon.level != null && Dungeon.depth == 32) {
 				for (Mob mob : Dungeon.level.mobs) {
 					mob.beckon(Dungeon.hero.pos);
 				}
 
-				GLog.w(Messages.get(Rice.class,"enrage"));
+				GLog.w(Messages.get(Rice.class, "enrage"));
 				CellEmitter.center(Dungeon.hero.pos).start(
 						Speck.factory(Speck.SCREAM), 0.3f, 3);
 				Sample.INSTANCE.play(Assets.SND_CHALLENGE);
@@ -159,6 +159,6 @@ public class Rice extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

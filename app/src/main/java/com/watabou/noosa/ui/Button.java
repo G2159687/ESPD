@@ -24,17 +24,17 @@ import com.watabou.noosa.TouchArea;
 public class Button extends Component {
 
 	public static float longClick = 1f;
-	
+
 	protected TouchArea hotArea;
-	
+
 	protected boolean pressed;
 	protected float pressTime;
-	
+
 	protected boolean processed;
-	
+
 	@Override
 	protected void createChildren() {
-		hotArea = new TouchArea( 0, 0, 0, 0 ) {
+		hotArea = new TouchArea(0, 0, 0, 0) {
 			@Override
 			protected void onTouchDown(Touch touch) {
 				pressed = true;
@@ -50,21 +50,21 @@ public class Button extends Component {
 			}
 
 			@Override
-			protected void onClick( Touch touch ) {
+			protected void onClick(Touch touch) {
 				if (!processed) {
 					Button.this.onClick();
 				}
 			}
 		};
-		add( hotArea );
+		add(hotArea);
 	}
-	
+
 	@Override
 	public void update() {
 		super.update();
-		
+
 		hotArea.active = visible;
-		
+
 		if (pressed) {
 			if ((pressTime += Game.elapsed) >= longClick) {
 				pressed = false;
@@ -77,12 +77,15 @@ public class Button extends Component {
 			}
 		}
 	}
-	
-	protected void onTouchDown() {}
 
-	protected void onTouchUp() {}
+	protected void onTouchDown() {
+	}
 
-	protected void onClick() {}
+	protected void onTouchUp() {
+	}
+
+	protected void onClick() {
+	}
 
 	protected boolean onLongClick() {
 		return false;

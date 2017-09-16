@@ -20,7 +20,6 @@ package com.github.epd.sprout.actors;
 import android.util.SparseArray;
 
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.buffs.Buff;
@@ -172,13 +171,14 @@ public abstract class Actor implements Bundlable {
 		chars[pos] = null;
 	}
 
-	/* protected */public void next() {
+	/* protected */
+	public void next() {
 		if (current == this) {
 			current = null;
 		}
 	}
 
-	public static boolean processing(){
+	public static boolean processing() {
 		return current != null;
 	}
 
@@ -213,7 +213,7 @@ public abstract class Actor implements Bundlable {
 				}
 			}
 
-			if  (current != null) {
+			if (current != null) {
 
 				Actor acting = current;
 
@@ -221,8 +221,8 @@ public abstract class Actor implements Bundlable {
 					// If it's character's turn to act, but its sprite
 					// is moving, wait till the movement is over
 					try {
-						synchronized (((Char)acting).sprite) {
-							if (((Char)acting).sprite.isMoving) {
+						synchronized (((Char) acting).sprite) {
+							if (((Char) acting).sprite.isMoving) {
 								((Char) acting).sprite.wait();
 							}
 						}
@@ -233,7 +233,7 @@ public abstract class Actor implements Bundlable {
 
 				interrupted = interrupted || Thread.interrupted();
 
-				if (interrupted){
+				if (interrupted) {
 					doNext = false;
 					current = null;
 				} else {
@@ -247,17 +247,17 @@ public abstract class Actor implements Bundlable {
 				doNext = false;
 			}
 
-			if (!doNext){
+			if (!doNext) {
 				synchronized (Thread.currentThread()) {
 
 					interrupted = interrupted || Thread.interrupted();
 
-					if (interrupted){
+					if (interrupted) {
 						current = null;
 						interrupted = false;
 					}
 
-					synchronized (GameScene.class){
+					synchronized (GameScene.class) {
 						//signals to the gamescene that actor processing is finished for now
 						GameScene.class.notify();
 					}

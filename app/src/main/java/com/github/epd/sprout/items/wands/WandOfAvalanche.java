@@ -44,7 +44,7 @@ import com.watabou.utils.Random;
 public class WandOfAvalanche extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		collisionProperties = Ballistica.STOP_TERRAIN;
 		image = ItemSpriteSheet.WAND_AVALANCHE;
 	}
@@ -69,37 +69,39 @@ public class WandOfAvalanche extends Wand {
 				if (ch != null) {
 
 					ch.sprite.flash();
-					
-					 int damage= Random.Int(2, 6 + (size - d) * 2);
-			         if (Dungeon.hero.buff(Strength.class) != null){ damage *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
-					 ch.damage(damage, this);
-	
 
-					if (ch.isAlive() && Random.Int(2 + d) == 0) {
+					int damage = Random.Int(2, 6 + (size - d) * 2);
+					if (Dungeon.hero.buff(Strength.class) != null) {
+						damage *= (int) 4f;
+						Buff.detach(Dungeon.hero, Strength.class);
+					}
+					ch.damage(damage, this);
+
+
+					if (ch.isAlive() && Random.Int(1 + d) == 0) {
 						Buff.prolong(ch, Paralysis.class, Random.IntRange(2, 6));
 					}
 				}
 
-				CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.07f,
-						3 + (size - d));
-				Camera.main.shake(3, 0.07f * (3 + (size - d)));
+				CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.07f, 3);
+				Camera.main.shake(3, 0.07f * 3);
 			}
 		}
 
 		if (!curUser.isAlive()) {
 			Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
-			GLog.n(Messages.get(this,"kill"));
+			GLog.n(Messages.get(this, "kill"));
 		}
 	}
 
 	@Override
-	protected void fx( Ballistica bolt, Callback callback ) {
-		MagicMissile.earth( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.earth(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc", 2, 7 + level() / 3);
 	}
 }

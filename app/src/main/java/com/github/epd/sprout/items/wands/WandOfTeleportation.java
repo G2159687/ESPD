@@ -34,7 +34,7 @@ import com.watabou.utils.Callback;
 public class WandOfTeleportation extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_TELEPORTATION;
 	}
 
@@ -66,13 +66,13 @@ public class WandOfTeleportation extends Wand {
 				ch.pos = pos;
 				ch.sprite.place(ch.pos);
 				ch.sprite.visible = Dungeon.visible[pos];
-				GLog.i(Messages.get(this,"tele", curUser.name, ch.name));
+				GLog.i(Messages.get(this, "tele", curUser.name, ch.name));
 
 			}
 
 		} else {
 
-			GLog.i(Messages.get(WandOfPoison.class,"nothing"));
+			GLog.i(Messages.get(WandOfPoison.class, "nothing"));
 
 		}
 	}
@@ -85,6 +85,6 @@ public class WandOfTeleportation extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

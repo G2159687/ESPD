@@ -29,26 +29,26 @@ import java.util.ArrayList;
 
 public class DwarfHammer extends Item {
 
-	private static final String TXT_PREVENTING = Messages.get(DwarfHammer.class,"prevent");
-	private static final String TXT_UNSEAL = Messages.get(DwarfHammer.class,"unseal");
-	
+	private static final String TXT_PREVENTING = Messages.get(DwarfHammer.class, "prevent");
+	private static final String TXT_UNSEAL = Messages.get(DwarfHammer.class, "unseal");
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_BREAK = Messages.get(DwarfHammer.class,"ac");
+	public static final String AC_BREAK = Messages.get(DwarfHammer.class, "ac");
 
-		{
-		name = Messages.get(this,"name");
+	{
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.DWARFHAMMER;
 		unique = true;
 
-		}
+	}
 
-	
+
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_BREAK);
-		
+
 		return actions;
 	}
 
@@ -62,13 +62,13 @@ public class DwarfHammer extends Item {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			
-		//	if (Dungeon.depth > 24 || Dungeon.depth < 22) {
-		//		hero.spend(DwarfHammer.TIME_TO_USE);
-		//		GLog.w(TXT_PREVENTING);
-		//		return;
-		//	}
-			
+
+			//	if (Dungeon.depth > 24 || Dungeon.depth < 22) {
+			//		hero.spend(DwarfHammer.TIME_TO_USE);
+			//		GLog.w(TXT_PREVENTING);
+			//		return;
+			//	}
+
 			if (!Dungeon.visible[Dungeon.level.exit]) {
 				hero.spend(DwarfHammer.TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
@@ -79,24 +79,24 @@ public class DwarfHammer extends Item {
 		}
 
 		if (action == AC_BREAK) {
-           
-		  if (hero.pos != Dungeon.level.exit && Dungeon.depth != 24){
-			  detach(Dungeon.hero.belongings.backpack);			  
-			  		 
-			  Dungeon.level.sealedlevel=false;
-			  
-			  Dungeon.level.map[Dungeon.level.exit]=Terrain.EMPTY;
-			  GameScene.updateMap(Dungeon.level.exit);
-			  Dungeon.observe();
 
-			  Dungeon.level.map[Dungeon.level.exit]=Terrain.EXIT;
-			  GameScene.updateMap(Dungeon.level.exit);
-			  Dungeon.observe();
-			  
-			  GLog.w(TXT_UNSEAL);  	
-				  
-		  }
-			
+			if (hero.pos != Dungeon.level.exit && Dungeon.depth != 24) {
+				detach(Dungeon.hero.belongings.backpack);
+
+				Dungeon.level.sealedlevel = false;
+
+				Dungeon.level.map[Dungeon.level.exit] = Terrain.EMPTY;
+				GameScene.updateMap(Dungeon.level.exit);
+				Dungeon.observe();
+
+				Dungeon.level.map[Dungeon.level.exit] = Terrain.EXIT;
+				GameScene.updateMap(Dungeon.level.exit);
+				Dungeon.observe();
+
+				GLog.w(TXT_UNSEAL);
+
+			}
+
 		} else {
 			GLog.w(TXT_PREVENTING);
 			super.execute(hero, action);
@@ -107,7 +107,7 @@ public class DwarfHammer extends Item {
 	public int price() {
 		return 10 * quantity;
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -118,10 +118,10 @@ public class DwarfHammer extends Item {
 		return true;
 	}
 
-		
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 }

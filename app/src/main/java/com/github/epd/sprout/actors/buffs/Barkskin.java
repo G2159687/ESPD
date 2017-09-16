@@ -24,7 +24,7 @@ import com.watabou.utils.Bundle;
 public class Barkskin extends Buff {
 
 	private int barkleft = 0;
-	
+
 	private static final String BARKLEFT = "barkleft";
 
 	@Override
@@ -74,7 +74,7 @@ public class Barkskin extends Buff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override

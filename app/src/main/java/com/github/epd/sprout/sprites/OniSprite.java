@@ -22,7 +22,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Random;
 
 public class OniSprite extends MobSprite {
-	
+
 	private Animation kick;
 
 	public OniSprite() {

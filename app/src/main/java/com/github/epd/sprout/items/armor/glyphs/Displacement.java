@@ -34,7 +34,7 @@ import com.watabou.utils.Random;
 
 public class Displacement extends Glyph {
 
-	private static final String TXT_DISPLACEMENT = Messages.get(Displacement.class,"name");
+	private static final String TXT_DISPLACEMENT = Messages.get(Displacement.class, "name");
 
 	private static ItemSprite.Glowing BLUE = new ItemSprite.Glowing(0x66AAFF);
 
@@ -44,8 +44,8 @@ public class Displacement extends Glyph {
 		if (Dungeon.bossLevel()) {
 			return damage;
 		}
-		
-	    float LEVEL = 0.333f;
+
+		float LEVEL = 0.333f;
 		if (defender.HP > defender.HT * LEVEL) {
 			return damage;
 		}

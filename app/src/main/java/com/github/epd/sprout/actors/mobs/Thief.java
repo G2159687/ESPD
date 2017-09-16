@@ -37,29 +37,35 @@ import com.watabou.utils.Random;
 
 public class Thief extends Mob {
 
-	protected static final String TXT_STOLE = Messages.get(Thief.class,"stole");
-	protected static final String TXT_CARRIES = Messages.get(Thief.class,"carries");
+	protected static final String TXT_STOLE = Messages.get(Thief.class, "stole");
+	protected static final String TXT_CARRIES = Messages.get(Thief.class, "carries");
 	protected static final String TXT_RATCHECK1 = "Spork is avail";
 	protected static final String TXT_RATCHECK2 = "Spork is not avail";
 
 	public Item item;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ThiefSprite.class;
 
-		HP = HT = 25+(adj(0)*Random.NormalIntRange(3, 5));
-		defenseSkill = 9+adj(0);
+		HP = HT = 25 + (adj(0) * Random.NormalIntRange(3, 5));
+		defenseSkill = 9 + adj(0);
 
 		EXP = 5;
-		
+
 		loot = new MasterThievesArmband().identify();
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {lootChance = 0.01f;}
-		else {lootChance=0.5f;}
-		
+		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			lootChance = 0.01f;
+		} else {
+			lootChance = 0.5f;
+		}
+
 		lootOther = Generator.Category.BERRY;
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)){lootChanceOther = 0.1f;}
-		else {lootChanceOther = 1f;}
+		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			lootChanceOther = 0.1f;
+		} else {
+			lootChanceOther = 1f;
+		}
 
 		FLEEING = new Fleeing();
 	}
@@ -80,13 +86,13 @@ public class Thief extends Mob {
 
 	@Override
 	public float speed() {
-		if (item != null) return (5*super.speed())/6;
+		if (item != null) return (5 * super.speed()) / 6;
 		else return super.speed();
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(1, 7+adj(0));
+		return Random.NormalIntRange(1, 7 + adj(0));
 	}
 
 	@Override
@@ -96,7 +102,7 @@ public class Thief extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		
+
 		super.die(cause);
 
 		if (item != null) {
@@ -109,9 +115,12 @@ public class Thief extends Mob {
 		if (!Dungeon.limitedDrops.armband.dropped()) {
 			Dungeon.limitedDrops.armband.drop();
 			return super.createLoot();
-		} else{
-			if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {return new Gold(Random.NormalIntRange(100, 250));}
-			else {return new Gold(Random.NormalIntRange(1000,2000));}
+		} else {
+			if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+				return new Gold(Random.NormalIntRange(100, 250));
+			} else {
+				return new Gold(Random.NormalIntRange(1000, 2000));
+			}
 		}
 	}
 
@@ -146,10 +155,10 @@ public class Thief extends Mob {
 	protected boolean steal(Hero hero) {
 
 		Item item = hero.belongings.randomUnequipped();
-		if (item != null && !item.unique && item.level < 1 ) {
+		if (item != null && !item.unique && item.level < 1) {
 
 			GLog.w(TXT_STOLE, this.name, item.name());
-			Dungeon.quickslot.clearItem( item );
+			Dungeon.quickslot.clearItem(item);
 			item.updateQuickslot();
 
 			if (item instanceof Honeypot) {
@@ -170,7 +179,7 @@ public class Thief extends Mob {
 
 	@Override
 	public String description() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 
 		if (item != null) {
 			desc += String.format(TXT_CARRIES, Utils.capitalize(this.name),

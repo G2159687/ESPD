@@ -332,7 +332,7 @@ public class PrisonBossLevel extends RegularLevel {
 			set(arenaDoor, Terrain.LOCKED_DOOR);
 			GameScene.updateMap(arenaDoor);
 
-			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])){
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 				if (mob instanceof PET) {
 					if (!((PET) mob).stay) {
 						((PET) mob).pos = arenaDoor;
@@ -374,20 +374,20 @@ public class PrisonBossLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(PrisonLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(PrisonLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(PrisonLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(PrisonLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

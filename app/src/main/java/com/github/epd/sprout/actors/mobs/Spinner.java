@@ -35,11 +35,11 @@ import java.util.HashSet;
 public class Spinner extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SpinnerSprite.class;
 
-		HP = HT = 55+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 15+adj(1);
+		HP = HT = 55 + (adj(0) * Random.NormalIntRange(5, 7));
+		defenseSkill = 15 + adj(1);
 
 		EXP = 9;
 		maxLvl = 16;
@@ -52,17 +52,17 @@ public class Spinner extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(12, 26+adj(0));
+		return Random.NormalIntRange(12, 26 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 20+adj(0);
+		return 20 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 6+adj(0);
+		return 6 + adj(0);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class Spinner extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();

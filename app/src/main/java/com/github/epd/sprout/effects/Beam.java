@@ -36,7 +36,7 @@ public class Beam extends Image {
 	private float timeLeft;
 
 	private Beam(PointF s, PointF e, Effects.Type asset, float duration) {
-		super( Effects.get( asset ) );
+		super(Effects.get(asset));
 
 		origin.set(0, height / 2);
 
@@ -53,14 +53,14 @@ public class Beam extends Image {
 		timeLeft = this.duration = duration;
 	}
 
-	public static class DeathRay extends Beam{
-		public DeathRay(PointF s, PointF e){
+	public static class DeathRay extends Beam {
+		public DeathRay(PointF s, PointF e) {
 			super(s, e, Effects.Type.DEATH_RAY, 0.5f);
 		}
 	}
 
-	public static class LightRay extends Beam{
-		public LightRay(PointF s, PointF e){
+	public static class LightRay extends Beam {
+		public LightRay(PointF s, PointF e) {
 			super(s, e, Effects.Type.LIGHT_RAY, 1f);
 		}
 	}

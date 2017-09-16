@@ -8,7 +8,7 @@ import com.watabou.utils.Random;
 public class MasterThievesArmband extends Artifact {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_ARMBAND;
 
 		level = 0;
@@ -26,10 +26,10 @@ public class MasterThievesArmband extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 
 		if (isEquipped(Dungeon.hero))
-			desc += Messages.get(this,"desc_worn");
+			desc += Messages.get(this, "desc_worn");
 
 		return desc;
 	}

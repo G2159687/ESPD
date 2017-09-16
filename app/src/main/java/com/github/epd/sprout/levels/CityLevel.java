@@ -59,10 +59,10 @@ public class CityLevel extends RegularLevel {
 	protected boolean[] grass() {
 		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 3);
 	}
-	
+
 	@Override
-	protected void setPar(){
-		Dungeon.pars[Dungeon.depth] = 200+(Dungeon.depth*50)+(secretDoors*20);
+	protected void setPar() {
+		Dungeon.pars[Dungeon.depth] = 200 + (Dungeon.depth * 50) + (secretDoors * 20);
 	}
 
 	@Override
@@ -96,21 +96,23 @@ public class CityLevel extends RegularLevel {
 				break;
 			}
 		}
-		
+
 		setPar();
 	}
 
 	@Override
 	protected void createItems() {
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(1) == 0){addItemToSpawn(new Bomb());}
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(1) == 0) {
+			addItemToSpawn(new Bomb());
+		}
 		super.createItems();
 
 		Imp.Quest.spawn(this);
 		spawnGoldThief(this);
 	}
-	
+
 	public static void spawnGoldThief(CityLevel level) {
-		if (Dungeon.depth == 19 && !Dungeon.goldthiefspawned){
+		if (Dungeon.depth == 19 && !Dungeon.goldthiefspawned) {
 
 			GoldThief thief = new GoldThief();
 			do {
@@ -118,7 +120,7 @@ public class CityLevel extends RegularLevel {
 			} while (thief.pos == -1);
 			level.mobs.add(thief);
 			Actor.occupyCell(thief);
-           
+
 			Dungeon.goldthiefspawned = true;
 		}
 	}
@@ -126,34 +128,34 @@ public class CityLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return Messages.get(CityLevel.class,"entrance_desc");
-		case Terrain.EXIT:
-			return Messages.get(CityLevel.class,"exit_desc");
-		case Terrain.WALL_DECO:
-		case Terrain.EMPTY_DECO:
-			return Messages.get(CityLevel.class,"deco_desc");
-		case Terrain.EMPTY_SP:
-			return Messages.get(CityLevel.class,"sp_desc");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(CityLevel.class,"statue_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(CityLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return Messages.get(CityLevel.class, "entrance_desc");
+			case Terrain.EXIT:
+				return Messages.get(CityLevel.class, "exit_desc");
+			case Terrain.WALL_DECO:
+			case Terrain.EMPTY_DECO:
+				return Messages.get(CityLevel.class, "deco_desc");
+			case Terrain.EMPTY_SP:
+				return Messages.get(CityLevel.class, "sp_desc");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(CityLevel.class, "statue_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(CityLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

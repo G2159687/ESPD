@@ -41,26 +41,26 @@ public class GraveProtector extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(GraveProtector.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(GraveProtector.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = GraveProtectorSprite.class;
 
 		EXP = 10;
 		state = HUNTING;
 		flying = true;
-		
+
 		HP = HT = 70;
 		defenseSkill = 17;
-		
+
 		loot = new VioletDewdrop();
 		lootChance = 1f;
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(8+Math.round(Statistics.skeletonsKilled/10), 15+Math.round(Statistics.skeletonsKilled/5));
+		return Random.NormalIntRange(8 + Math.round(Statistics.skeletonsKilled / 10), 15 + Math.round(Statistics.skeletonsKilled / 5));
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class GraveProtector extends Mob implements Callback {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class GraveProtector extends Mob implements Callback {
 			spend(TIME_TO_ZAP);
 
 			if (hit(this, enemy, true)) {
-				int dmg = Random.Int(10+Math.round(Statistics.skeletonsKilled/10), 25+Math.round(Statistics.skeletonsKilled/5));
+				int dmg = Random.Int(10 + Math.round(Statistics.skeletonsKilled / 10), 25 + Math.round(Statistics.skeletonsKilled / 5));
 				if (Level.water[enemy.pos] && !enemy.flying) {
 					dmg *= 1.5f;
 				}
@@ -132,15 +132,16 @@ public class GraveProtector extends Mob implements Callback {
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(this,"notice"));
+		yell(Messages.get(this, "notice"));
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}

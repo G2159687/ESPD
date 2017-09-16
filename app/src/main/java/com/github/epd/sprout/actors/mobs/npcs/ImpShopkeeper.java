@@ -29,51 +29,51 @@ import com.github.epd.sprout.utils.Utils;
 
 public class ImpShopkeeper extends Shopkeeper {
 
-    private static final String TXT_GREETINGS = Messages.get(ImpShopkeeper.class, "greetings", Dungeon.hero.givenName());
-    private static final String TXT_GREETINGS2 = Messages.get(ImpShopkeeper.class, "greetingstwo");
-    public static final String TXT_THIEF = Messages.get(ImpShopkeeper.class, "thief");
+	private static final String TXT_GREETINGS = Messages.get(ImpShopkeeper.class, "greetings", Dungeon.hero.givenName());
+	private static final String TXT_GREETINGS2 = Messages.get(ImpShopkeeper.class, "greetingstwo");
+	public static final String TXT_THIEF = Messages.get(ImpShopkeeper.class, "thief");
 
-    {
-        name = Messages.get(Imp.class, "name");
-        spriteClass = ImpSprite.class;
-    }
+	{
+		name = Messages.get(Imp.class, "name");
+		spriteClass = ImpSprite.class;
+	}
 
-    private boolean seenBefore = false;
-    private boolean killedYog = false;
+	private boolean seenBefore = false;
+	private boolean killedYog = false;
 
-    @Override
-    protected boolean act() {
+	@Override
+	protected boolean act() {
 
-        if (!seenBefore && Dungeon.visible[pos]) {
-            yell(Utils.format(TXT_GREETINGS, Dungeon.hero.givenName()));
-            seenBefore = true;
-        }
+		if (!seenBefore && Dungeon.visible[pos]) {
+			yell(Utils.format(TXT_GREETINGS, Dungeon.hero.givenName()));
+			seenBefore = true;
+		}
 
-        if (Statistics.amuletObtained && !killedYog && Dungeon.visible[pos]) {
-            yell(Utils.format(TXT_GREETINGS2, Dungeon.hero.givenName()));
-            killedYog = true;
-        }
+		if (Statistics.amuletObtained && !killedYog && Dungeon.visible[pos]) {
+			yell(Utils.format(TXT_GREETINGS2, Dungeon.hero.givenName()));
+			killedYog = true;
+		}
 
-        return super.act();
-    }
+		return super.act();
+	}
 
-    @Override
-    public void flee() {
-        for (Heap heap : Dungeon.level.heaps.values()) {
-            if (heap.type == Heap.Type.FOR_SALE) {
-                CellEmitter.get(heap.pos).burst(ElmoParticle.FACTORY, 4);
-                heap.destroy();
-            }
-        }
+	@Override
+	public void flee() {
+		for (Heap heap : Dungeon.level.heaps.values()) {
+			if (heap.type == Heap.Type.FOR_SALE) {
+				CellEmitter.get(heap.pos).burst(ElmoParticle.FACTORY, 4);
+				heap.destroy();
+			}
+		}
 
-        destroy();
+		destroy();
 
-        sprite.emitter().burst(Speck.factory(Speck.WOOL), 15);
-        sprite.killAndErase();
-    }
+		sprite.emitter().burst(Speck.factory(Speck.WOOL), 15);
+		sprite.killAndErase();
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(Imp.class, "desc");
-    }
+	@Override
+	public String description() {
+		return Messages.get(Imp.class, "desc");
+	}
 }

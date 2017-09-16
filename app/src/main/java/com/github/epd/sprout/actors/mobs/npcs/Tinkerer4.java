@@ -29,83 +29,85 @@ import com.watabou.utils.Bundle;
 
 public class Tinkerer4 extends NPC {
 
-    {
-        name = Messages.get(Tinkerer1.class, "vname");
-        spriteClass = VillagerSprite.class;
-    }
+	{
+		name = Messages.get(Tinkerer1.class, "vname");
+		spriteClass = VillagerSprite.class;
 
-    private static final String TXT_DUNGEON = Messages.get(Tinkerer1.class, "vd1");
+		properties.add(Property.IMMOVABLE);
+	}
+
+	private static final String TXT_DUNGEON = Messages.get(Tinkerer1.class, "vd1");
 
 
-    private static final String TXT_DUNGEON2 = Messages.get(Tinkerer1.class, "vd2");
+	private static final String TXT_DUNGEON2 = Messages.get(Tinkerer1.class, "vd2");
 
 
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-    private boolean first = true;
+	private boolean first = true;
 
-    private static final String FIRST = "first";
+	private static final String FIRST = "first";
 
-    @Override
-    public void storeInBundle(Bundle bundle) {
-        super.storeInBundle(bundle);
-        bundle.put(FIRST, first);
-    }
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(FIRST, first);
+	}
 
-    @Override
-    public void restoreFromBundle(Bundle bundle) {
-        super.restoreFromBundle(bundle);
-        first = bundle.getBoolean(FIRST);
-    }
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		first = bundle.getBoolean(FIRST);
+	}
 
-    @Override
-    protected Char chooseEnemy() {
-        return null;
-    }
+	@Override
+	protected Char chooseEnemy() {
+		return null;
+	}
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
 
-    @Override
-    public String defenseVerb() {
-        return Messages.get(Tinkerer1.class, "def");
-    }
+	@Override
+	public String defenseVerb() {
+		return Messages.get(Tinkerer1.class, "def");
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean interact() {
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
+		sprite.turnTo(pos, Dungeon.hero.pos);
 
-        if (first) {
-            tell(TXT_DUNGEON);
-            first = false;
-        } else {
-            tell(TXT_DUNGEON2);
-        }
-        return false;
-    }
+		if (first) {
+			tell(TXT_DUNGEON);
+			first = false;
+		} else {
+			tell(TXT_DUNGEON2);
+		}
+		return false;
+	}
 
-    private void tell(String format, Object... args) {
-        GameScene.show(new WndQuest(this, Utils.format(format, args)));
-    }
+	private void tell(String format, Object... args) {
+		GameScene.show(new WndQuest(this, Utils.format(format, args)));
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(Tinkerer1.class, "vdesc");
-    }
+	@Override
+	public String description() {
+		return Messages.get(Tinkerer1.class, "vdesc");
+	}
 
 }

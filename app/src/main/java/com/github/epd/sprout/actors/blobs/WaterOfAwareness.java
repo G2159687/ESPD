@@ -66,7 +66,7 @@ public class WaterOfAwareness extends WellWater {
 
 		Dungeon.hero.interrupt();
 
-		GLog.p(Messages.get(this,"proc"));
+		GLog.p(Messages.get(this, "proc"));
 
 		Journal.remove(Feature.WELL_OF_AWARENESS);
 
@@ -96,6 +96,6 @@ public class WaterOfAwareness extends WellWater {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

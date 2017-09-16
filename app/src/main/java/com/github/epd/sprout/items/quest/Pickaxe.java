@@ -24,8 +24,11 @@ import com.github.epd.sprout.actors.buffs.Hunger;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.Bat;
 import com.github.epd.sprout.actors.mobs.DwarfKingTomb;
+import com.github.epd.sprout.actors.mobs.Wraith;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.Heap;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
@@ -35,6 +38,7 @@ import com.github.epd.sprout.sprites.ItemSprite.Glowing;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.ui.BuffIndicator;
 import com.github.epd.sprout.utils.GLog;
+import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
@@ -45,33 +49,21 @@ import java.util.ArrayList;
 
 //TODO: Optimize this
 
-public class Pickaxe extends Weapon {
+public class Pickaxe extends Item {
 
-	public static final String AC_MINE = Messages.get(Pickaxe.class,"ac_mine");
-
+	public static final String AC_MINE = Messages.get(Pickaxe.class, "ac_mine");
 	public static final float TIME_TO_MINE = 2;
-
-	private static final String TXT_NO_VEIN = Messages.get(Pickaxe.class,"no_vein");
-
-	private static final Glowing BLOODY = new Glowing(0x550000);
+	private static final String TXT_NO_VEIN = Messages.get(Pickaxe.class, "no_vein");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.PICKAXE;
 
 		unique = true;
 
 		defaultAction = AC_MINE;
-
-		STR = 14;
-		MIN = 10;
-		MAX = 22;
 	}
 
-	public boolean bloodStained = false;
-	
-	
-		
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
@@ -84,7 +76,7 @@ public class Pickaxe extends Weapon {
 
 		if (action == AC_MINE) {
 
-			if ((Dungeon.depth < 11 || Dungeon.depth > 15) && !(Dungeon.depth==32) && !(Dungeon.depth > 55 || Dungeon.depth < 66)) {
+			if ((Dungeon.depth < 11 || Dungeon.depth > 15) && !(Dungeon.depth == 32) && !(Dungeon.depth > 55 || Dungeon.depth < 66)) {
 				GLog.w(TXT_NO_VEIN);
 				return;
 			}
@@ -92,6 +84,7 @@ public class Pickaxe extends Weapon {
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 
 				final int pos = hero.pos + PathFinder.NEIGHBOURS8[i];
+				final Heap heap = Dungeon.level.heaps.get(pos);
 				if (Dungeon.level.map[pos] == Terrain.WALL_DECO) {
 
 					hero.spend(TIME_TO_MINE);
@@ -119,7 +112,7 @@ public class Pickaxe extends Weapon {
 
 							Hunger hunger = hero.buff(Hunger.class);
 							if (hunger != null && !hunger.isStarving()) {
-								hunger.satisfy(-Hunger.STARVING / 10);
+								hunger.satisfy(-Hunger.STARVING / 50);
 								BuffIndicator.refreshHero();
 							}
 
@@ -128,8 +121,35 @@ public class Pickaxe extends Weapon {
 					});
 
 					return;
+				} else if (heap != null && heap.type == Heap.Type.HARD_TOMB){
+
+					hero.spend(TIME_TO_MINE);
+					hero.busy();
+
+					hero.sprite.attack(pos, new Callback() {
+
+						@Override
+						public void call() {
+
+							heap.type = Heap.Type.HEAP;
+							Sample.INSTANCE.play(Assets.SND_TOMB);
+							Camera.main.shake(1, 0.5f);
+							Wraith.spawnAround2x(hero.pos);
+
+							heap.sprite.link();
+							heap.sprite.drop();
+
+							GameScene.updateMap(pos);
+
+							hero.onOperateComplete();
+						}
+					});
+
+					return;
 				}
 			}
+
+
 
 			GLog.w(TXT_NO_VEIN);
 
@@ -151,40 +171,7 @@ public class Pickaxe extends Weapon {
 	}
 
 	@Override
-	public void proc(Char attacker, Char defender, int damage) {
-		if (!bloodStained && defender instanceof Bat && (defender.HP <= damage)) {
-			bloodStained = true;
-			updateQuickslot();
-		}
-		if (defender instanceof DwarfKingTomb){
-			
-			defender.damage(Random.Int(100,200), this);
-		}
-	}
-
-	private static final String BLOODSTAINED = "bloodStained";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-
-		bundle.put(BLOODSTAINED, bloodStained);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-
-		bloodStained = bundle.getBoolean(BLOODSTAINED);
-	}
-
-	@Override
-	public Glowing glowing() {
-		return bloodStained ? BLOODY : null;
-	}
-
-	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

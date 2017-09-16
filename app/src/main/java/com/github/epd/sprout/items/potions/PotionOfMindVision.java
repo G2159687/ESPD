@@ -28,34 +28,34 @@ import com.github.epd.sprout.utils.GLog;
 public class PotionOfMindVision extends Potion {
 
 	{
-		initials=7;
-		name = Messages.get(this,"name");
+		initials = 7;
+		name = Messages.get(this, "name");
 	}
 
-	private static final String TXT_PREVENTING = Messages.get(PotionOfMindVision.class,"prevent");
-	
+	private static final String TXT_PREVENTING = Messages.get(PotionOfMindVision.class, "prevent");
+
 	@Override
 	public void apply(Hero hero) {
 		setKnown();
-		
-		if (Dungeon.level.locked && Dungeon.depth>50 && Dungeon.hero.buff(MagicSight.class) == null){
-			GLog.w(TXT_PREVENTING);	
+
+		if (Dungeon.level.locked && Dungeon.depth > 50 && Dungeon.hero.buff(MagicSight.class) == null) {
+			GLog.w(TXT_PREVENTING);
 			return;
 		}
-		
-		Buff.affect(hero, MindVision.class, Dungeon.hero.buff(MagicSight.class) != null ? MindVision.DURATION*4 : MindVision.DURATION);
+
+		Buff.affect(hero, MindVision.class, Dungeon.hero.buff(MagicSight.class) != null ? MindVision.DURATION * 4 : MindVision.DURATION);
 		Dungeon.observe();
 
 		if (Dungeon.level.mobs.size() > 0) {
-			GLog.i(Messages.get(this,"see_mobs"));
+			GLog.i(Messages.get(this, "see_mobs"));
 		} else {
-			GLog.i(Messages.get(this,"see_none"));
+			GLog.i(Messages.get(this, "see_none"));
 		}
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

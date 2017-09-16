@@ -32,69 +32,71 @@ import com.github.epd.sprout.windows.WndTinkerer;
 
 public class Tinkerer1 extends NPC {
 
-    {
-        name = Messages.get(Tinkerer1.class, "name");
-        spriteClass = TinkererSprite.class;
-    }
+	{
+		name = Messages.get(Tinkerer1.class, "name");
+		spriteClass = TinkererSprite.class;
 
-    private static final String TXT_DUNGEON = Messages.get(Tinkerer1.class, "dungeon");
+		properties.add(Property.IMMOVABLE);
+	}
 
-    private static final String TXT_DUNGEON2 = Messages.get(Tinkerer1.class, "dungeon2");
+	private static final String TXT_DUNGEON = Messages.get(Tinkerer1.class, "dungeon");
 
-    private static final String TXT_MUSH = Messages.get(Tinkerer1.class, "mush");
+	private static final String TXT_DUNGEON2 = Messages.get(Tinkerer1.class, "dungeon2");
 
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
+	private static final String TXT_MUSH = Messages.get(Tinkerer1.class, "mush");
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-    @Override
-    public String defenseVerb() {
-        return Messages.get(Tinkerer1.class, "def");
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public String defenseVerb() {
+		return Messages.get(Tinkerer1.class, "def");
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public boolean reset() {
-        return true;
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean reset() {
+		return true;
+	}
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
-        Item item = Dungeon.hero.belongings.getItem(Mushroom.class);
-        Item vial = Dungeon.hero.belongings.getItem(DewVial.class);
-        if (item != null && vial != null) {
-            GameScene.show(new WndTinkerer(this, item));
-        } else if (item == null && vial != null) {
-            tell(TXT_DUNGEON);
-        } else {
-            tell(TXT_DUNGEON2);
-        }
-        return false;
-    }
+	@Override
+	public boolean interact() {
 
-    private void tell(String format, Object... args) {
-        GameScene.show(new WndQuest(this, Utils.format(format, args)));
-    }
+		sprite.turnTo(pos, Dungeon.hero.pos);
+		Item item = Dungeon.hero.belongings.getItem(Mushroom.class);
+		Item vial = Dungeon.hero.belongings.getItem(DewVial.class);
+		if (item != null && vial != null) {
+			GameScene.show(new WndTinkerer(this, item));
+		} else if (item == null && vial != null) {
+			tell(TXT_DUNGEON);
+		} else {
+			tell(TXT_DUNGEON2);
+		}
+		return false;
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(Tinkerer1.class, "desc");
-    }
+	private void tell(String format, Object... args) {
+		GameScene.show(new WndQuest(this, Utils.format(format, args)));
+	}
+
+	@Override
+	public String description() {
+		return Messages.get(Tinkerer1.class, "desc");
+	}
 
 }

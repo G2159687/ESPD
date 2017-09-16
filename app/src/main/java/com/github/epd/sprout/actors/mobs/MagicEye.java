@@ -45,15 +45,15 @@ import java.util.HashSet;
 
 public class MagicEye extends Mob {
 
-	private static final String TXT_DEATHGAZE_KILLED = Messages.get(MagicEye.class,"kill");
+	private static final String TXT_DEATHGAZE_KILLED = Messages.get(MagicEye.class, "kill");
 	protected static final float SPAWN_DELAY = 2f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MagicEyeSprite.class;
 
-		HP = HT = 400+(adj(0)*Random.NormalIntRange(4, 7));
-		defenseSkill = 40+adj(1);
+		HP = HT = 400 + (adj(0) * Random.NormalIntRange(4, 7));
+		defenseSkill = 40 + adj(1);
 		viewDistance = Light.DISTANCE;
 
 		EXP = 16;
@@ -67,22 +67,22 @@ public class MagicEye extends Mob {
 
 	@Override
 	public int dr() {
-		return 70+adj(1);
+		return 70 + adj(1);
 	}
 
 	private Ballistica beam;
 
 	@Override
-	protected boolean canAttack( Char enemy ) {
+	protected boolean canAttack(Char enemy) {
 
-		beam = new Ballistica( pos, enemy.pos, Ballistica.STOP_TERRAIN);
+		beam = new Ballistica(pos, enemy.pos, Ballistica.STOP_TERRAIN);
 
 		return beam.subPath(1, beam.dist).contains(enemy.pos);
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 30+adj(0);
+		return 30 + adj(0);
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class MagicEye extends Mob {
 	public static void spawnAroundChance(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
 			int cell = pos + n;
-			if (Level.passable[cell] && Actor.findChar(cell) == null && Random.Float()<0.50f) {
+			if (Level.passable[cell] && Actor.findChar(cell) == null && Random.Float() < 0.50f) {
 				spawnAt(cell);
 			}
 		}
@@ -155,7 +155,7 @@ public class MagicEye extends Mob {
 
 	public static MagicEye spawnAt(int pos) {
 		if (Level.passable[pos] && Actor.findChar(pos) == null) {
-          
+
 			MagicEye e = new MagicEye();
 			e.pos = pos;
 			e.state = e.HUNTING;
@@ -164,19 +164,20 @@ public class MagicEye extends Mob {
 			e.sprite.alpha(0);
 			e.sprite.parent.add(new AlphaTweener(e.sprite, 1, 0.5f));
 
-		return e;
-  			
+			return e;
+
 		} else {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(WandOfDisintegration.class);
 		RESISTANCES.add(Death.class);
@@ -189,6 +190,7 @@ public class MagicEye extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Terror.class);
 	}

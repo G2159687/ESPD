@@ -38,38 +38,38 @@ public class Ring extends KindofMisc {
 
 	private static final int TICKS_TO_KNOW = 200;
 
-    private static final String TXT_UNEQUIP_TITLE = Messages.get(Artifact.class,"unequip_title");
-    private static final String TXT_UNEQUIP_MESSAGE = Messages.get(Artifact.class,"unequip_msg");
+	private static final String TXT_UNEQUIP_TITLE = Messages.get(Artifact.class, "unequip_title");
+	private static final String TXT_UNEQUIP_MESSAGE = Messages.get(Artifact.class, "unequip_msg");
 
-	private static final String TXT_IDENTIFY = Messages.get(Ring.class,"identify");
+	private static final String TXT_IDENTIFY = Messages.get(Ring.class, "identify");
 
 	protected Buff buff;
 
-	private static final Class<?>[] rings = { RingOfAccuracy.class,
+	private static final Class<?>[] rings = {RingOfAccuracy.class,
 			RingOfEvasion.class, RingOfElements.class, RingOfForce.class,
 			RingOfFuror.class, RingOfHaste.class, RingOfMagic.class,
 			RingOfMight.class, RingOfSharpshooting.class, RingOfTenacity.class,
-			RingOfWealth.class, };
+			RingOfWealth.class,};
 	private static final String[] gems = {
-			Messages.get(Ring.class,"diamond"),
-			Messages.get(Ring.class,"opal"),
-			Messages.get(Ring.class,"garnet")		,
-			Messages.get(Ring.class,"ruby")		,
-			Messages.get(Ring.class,"amethyst")		,
-			Messages.get(Ring.class,"topaz")		,
-			Messages.get(Ring.class,"onyx")		,
-			Messages.get(Ring.class,"tourmaline")	,
-			Messages.get(Ring.class,"emerald")	,
-			Messages.get(Ring.class,"sapphire")	,
-			Messages.get(Ring.class,"quartz")	,
-			Messages.get(Ring.class,"agate")	 };
-	private static final Integer[] images = { ItemSpriteSheet.RING_DIAMOND,
+			Messages.get(Ring.class, "diamond"),
+			Messages.get(Ring.class, "opal"),
+			Messages.get(Ring.class, "garnet"),
+			Messages.get(Ring.class, "ruby"),
+			Messages.get(Ring.class, "amethyst"),
+			Messages.get(Ring.class, "topaz"),
+			Messages.get(Ring.class, "onyx"),
+			Messages.get(Ring.class, "tourmaline"),
+			Messages.get(Ring.class, "emerald"),
+			Messages.get(Ring.class, "sapphire"),
+			Messages.get(Ring.class, "quartz"),
+			Messages.get(Ring.class, "agate")};
+	private static final Integer[] images = {ItemSpriteSheet.RING_DIAMOND,
 			ItemSpriteSheet.RING_OPAL, ItemSpriteSheet.RING_GARNET,
 			ItemSpriteSheet.RING_RUBY, ItemSpriteSheet.RING_AMETHYST,
 			ItemSpriteSheet.RING_TOPAZ, ItemSpriteSheet.RING_ONYX,
 			ItemSpriteSheet.RING_TOURMALINE, ItemSpriteSheet.RING_EMERALD,
 			ItemSpriteSheet.RING_SAPPHIRE, ItemSpriteSheet.RING_QUARTZ,
-			ItemSpriteSheet.RING_AGATE };
+			ItemSpriteSheet.RING_AGATE};
 
 	private static ItemStatusHandler<Ring> handler;
 
@@ -162,12 +162,12 @@ public class Ring extends KindofMisc {
 
 	@Override
 	public String name() {
-		return isKnown() ? super.name() :Messages.get(this,"unknown_name", gem);
+		return isKnown() ? super.name() : Messages.get(this, "unknown_name", gem);
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"unknown_desc", gem);
+		return Messages.get(this, "unknown_desc", gem);
 	}
 
 	@Override
@@ -175,18 +175,18 @@ public class Ring extends KindofMisc {
 		if (isEquipped(Dungeon.hero)) {
 
 			return desc()
-					+ "\n\n" + Messages.get(this,"on_finger", name())
-					+ (cursed ? Messages.get(this,"cursed_worn"):"")
-					+ (reinforced ? Messages.get(this,"reinforced") : "");
+					+ "\n\n" + Messages.get(this, "on_finger", name())
+					+ (cursed ? Messages.get(this, "cursed_worn") : "")
+					+ (reinforced ? Messages.get(this, "reinforced") : "");
 
 		} else if (cursed && cursedKnown) {
 
 			return desc()
-					+ "\n\n" +Messages.get(this,"curse_known", name());
+					+ "\n\n" + Messages.get(this, "curse_known", name());
 
 		} else {
 
-			return desc() + (reinforced ? Messages.get(this,"reinforced"): "");
+			return desc() + (reinforced ? Messages.get(this, "reinforced") : "");
 
 		}
 	}
@@ -207,7 +207,7 @@ public class Ring extends KindofMisc {
 		int n = 1;
 		if (Random.Int(3) == 0) {
 			n++;
-			if (Random.Int(5) == 0){
+			if (Random.Int(5) == 0) {
 				n++;
 			}
 		}
@@ -265,7 +265,7 @@ public class Ring extends KindofMisc {
 
 	public class RingBuff extends Buff {
 
-		private final String TXT_KNOWN = Messages.get(Ring.class,"known");
+		private final String TXT_KNOWN = Messages.get(Ring.class, "known");
 
 		public int level;
 

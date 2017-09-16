@@ -56,7 +56,7 @@ public class HeroAction {
 			this.npc = npc;
 		}
 	}
-	
+
 	public static class InteractPet extends HeroAction {
 		public PET pet;
 

@@ -45,20 +45,22 @@ import java.util.ArrayList;
 
 public abstract class Wand extends KindOfWeapon {
 
+	//TODO: Damage balancing
+
 	private static final int USAGES_TO_KNOW = 20;
 
-	public static final String AC_ZAP = Messages.get(Wand.class,"ac_zap");
+	public static final String AC_ZAP = Messages.get(Wand.class, "ac_zap");
 
-	private static final String TXT_WOOD = Messages.get(Wand.class,"wood");
-	private static final String TXT_DAMAGE = Messages.get(Wand.class,"damage");
-	private static final String TXT_WEAPON = Messages.get(Wand.class,"weapon");
+	private static final String TXT_WOOD = Messages.get(Wand.class, "wood");
+	private static final String TXT_DAMAGE = Messages.get(Wand.class, "damage");
+	private static final String TXT_WEAPON = Messages.get(Wand.class, "weapon");
 
-	private static final String TXT_FIZZLES = Messages.get(Wand.class,"fizzles");
-	private static final String TXT_SELF_TARGET = Messages.get(Wand.class,"self_target");
+	private static final String TXT_FIZZLES = Messages.get(Wand.class, "fizzles");
+	private static final String TXT_SELF_TARGET = Messages.get(Wand.class, "self_target");
 
-	private static final String TXT_IDENTIFY = Messages.get(Wand.class,"identify");
-	
-	private static final String TXT_REINFORCED = Messages.get(Wand.class,"re");
+	private static final String TXT_IDENTIFY = Messages.get(Wand.class, "identify");
+
+	private static final String TXT_REINFORCED = Messages.get(Wand.class, "re");
 
 	private static final float TIME_TO_ZAP = 1f;
 
@@ -76,7 +78,7 @@ public abstract class Wand extends KindOfWeapon {
 
 	{
 		defaultAction = AC_ZAP;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Wand() {
@@ -123,7 +125,7 @@ public abstract class Wand extends KindOfWeapon {
 		}
 	}
 
-	protected abstract void onZap( Ballistica attack );
+	protected abstract void onZap(Ballistica attack);
 
 	@Override
 	public boolean collect(Bag container) {
@@ -139,12 +141,12 @@ public abstract class Wand extends KindOfWeapon {
 
 	public void charge(Char owner) {
 		if (charger == null) charger = new Charger();
-			charger.attachTo(owner);
+		charger.attachTo(owner);
 	}
 
-	public void charge( Char owner, float chargeScaleFactor ){
-		charge( owner );
-		charger.setScaleFactor( chargeScaleFactor );
+	public void charge(Char owner, float chargeScaleFactor) {
+		charge(owner);
+		charger.setScaleFactor(chargeScaleFactor);
 	}
 
 	@Override
@@ -160,12 +162,12 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	public int level() {
-		
+
 		int magicLevel = 0;
 		if (charger != null) {
 			Magic magic = charger.target.buff(Magic.class);
-			if  (magic != null ){
-			    magicLevel = magic.level;
+			if (magic != null) {
+				magicLevel = magic.level;
 			}
 			return magic == null ? level : Math.max(level + magicLevel, 0);
 		} else {
@@ -198,7 +200,7 @@ public abstract class Wand extends KindOfWeapon {
 
 	@Override
 	public String info() {
-		StringBuilder info = new StringBuilder(  desc() );
+		StringBuilder info = new StringBuilder(desc());
 		if (Dungeon.hero.heroClass == HeroClass.MAGE) {
 			info.append("\n\n");
 			if (levelKnown) {
@@ -206,9 +208,9 @@ public abstract class Wand extends KindOfWeapon {
 			} else {
 				info.append(String.format(TXT_WEAPON));
 			}
-			
+
 		}
-		if(reinforced){
+		if (reinforced) {
 			info.append(String.format(TXT_REINFORCED));
 		}
 		return info.toString();
@@ -271,9 +273,9 @@ public abstract class Wand extends KindOfWeapon {
 		MAX = (tier * tier - tier + 10) / 2 + level;
 	}
 
-	protected void fx( Ballistica bolt, Callback callback ) {
-		MagicMissile.whiteLight( curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.whiteLight(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 
 	protected void wandUsed() {
@@ -288,9 +290,9 @@ public abstract class Wand extends KindOfWeapon {
 
 		curUser.spendAndNext(TIME_TO_ZAP);
 	}
-	
+
 	protected void wandEmpty() {
-		curCharges=0;
+		curCharges = 0;
 		updateQuickslot();
 	}
 
@@ -329,12 +331,12 @@ public abstract class Wand extends KindOfWeapon {
 		return price;
 	}
 
-		
+
 	private static final String UNFAMILIRIARITY = "unfamiliarity";
 	private static final String MAX_CHARGES = "maxCharges";
 	private static final String CUR_CHARGES = "curCharges";
 	private static final String CUR_CHARGE_KNOWN = "curChargeKnown";
-	private static final String PARTIALCHARGE 		= "partialCharge";
+	private static final String PARTIALCHARGE = "partialCharge";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -343,7 +345,7 @@ public abstract class Wand extends KindOfWeapon {
 		bundle.put(MAX_CHARGES, maxCharges);
 		bundle.put(CUR_CHARGES, curCharges);
 		bundle.put(CUR_CHARGE_KNOWN, curChargeKnown);
-		bundle.put( PARTIALCHARGE , partialCharge );
+		bundle.put(PARTIALCHARGE, partialCharge);
 	}
 
 	@Override
@@ -355,7 +357,7 @@ public abstract class Wand extends KindOfWeapon {
 		maxCharges = bundle.getInt(MAX_CHARGES);
 		curCharges = bundle.getInt(CUR_CHARGES);
 		curChargeKnown = bundle.getBoolean(CUR_CHARGE_KNOWN);
-		partialCharge = bundle.getFloat( PARTIALCHARGE );
+		partialCharge = bundle.getFloat(PARTIALCHARGE);
 	}
 
 	protected static CellSelector.Listener zapper = new CellSelector.Listener() {
@@ -364,17 +366,17 @@ public abstract class Wand extends KindOfWeapon {
 		public void onSelect(Integer target) {
 
 			if (target != null) {
-				
+
 				final Wand curWand = (Wand) Item.curItem;
 
-				final Ballistica shot = new Ballistica( curUser.pos, target, curWand.collisionProperties);
+				final Ballistica shot = new Ballistica(curUser.pos, target, curWand.collisionProperties);
 				int cell = shot.collisionPos;
-				
+
 				if (target == curUser.pos || cell == curUser.pos) {
 					GLog.i(TXT_SELF_TARGET);
 					return;
 				}
-				
+
 				curUser.sprite.zap(cell);
 
 				//attempts to target the cell aimed at if something is there, otherwise targets the collision pos.
@@ -387,12 +389,12 @@ public abstract class Wand extends KindOfWeapon {
 
 					curUser.busy();
 
-					curWand.fx( shot, new Callback() {
+					curWand.fx(shot, new Callback() {
 						public void call() {
-							curWand.onZap( shot );
+							curWand.onZap(shot);
 							curWand.wandUsed();
 						}
-					} );
+					});
 
 					Invisibility.dispel();
 
@@ -400,7 +402,7 @@ public abstract class Wand extends KindOfWeapon {
 
 					curUser.spendAndNext(TIME_TO_ZAP);
 					GLog.w(TXT_FIZZLES);
-					
+
 				}
 
 			}
@@ -408,7 +410,7 @@ public abstract class Wand extends KindOfWeapon {
 
 		@Override
 		public String prompt() {
-			return Messages.get(Wand.class,"prompt");
+			return Messages.get(Wand.class, "prompt");
 		}
 	};
 
@@ -436,18 +438,19 @@ public abstract class Wand extends KindOfWeapon {
 				updateQuickslot();
 			}
 
-			spend( TICK );
+			spend(TICK);
 
 			return true;
 		}
 
-		private void gainCharge(){
+		private void gainCharge() {
 			int missingCharges = maxCharges - curCharges;
 
 			float turnsToCharge = (float) (BASE_CHARGE_DELAY + (SCALING_CHARGE_ADDITION * Math.pow(scalingFactor, missingCharges)));
-			partialCharge += 1f/turnsToCharge;
+			partialCharge += 1f / turnsToCharge;
 		}
-		private void setScaleFactor(float value){
+
+		private void setScaleFactor(float value) {
 			this.scalingFactor = value;
 		}
 	}

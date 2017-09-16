@@ -42,14 +42,14 @@ import java.util.ArrayList;
 
 public class SteelHoneypot extends Item {
 
-	public static final String AC_SHATTER = Messages.get(SteelHoneypot.class,"ac");
+	public static final String AC_SHATTER = Messages.get(SteelHoneypot.class, "ac");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.STL_HONEYPOT;
 		defaultAction = AC_THROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	@Override
@@ -121,11 +121,11 @@ public class SteelHoneypot extends Item {
 			bee.sprite.parent.add(new AlphaTweener(bee.sprite, 1, 0.15f));
 
 			Sample.INSTANCE.play(Assets.SND_BEE);
-			Dungeon.hero.haspet=true;
-			GLog.p(Messages.get(SteelHoneypot.class,"str"));
-			
+			Dungeon.hero.haspet = true;
+			GLog.p(Messages.get(SteelHoneypot.class, "str"));
+
 			return new PotionOfStrength();
-						
+
 		} else {
 			return this;
 		}
@@ -148,7 +148,7 @@ public class SteelHoneypot extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	// The bee's broken 'home', all this item does is let its bee know where it
@@ -156,7 +156,7 @@ public class SteelHoneypot extends Item {
 	public static class SteelShatteredPot extends Item {
 
 		{
-			name = Messages.get(SteelHoneypot.class,"sname");
+			name = Messages.get(SteelHoneypot.class, "sname");
 			image = ItemSpriteSheet.STL_SHATTPOT;
 			stackable = false;
 		}
@@ -221,7 +221,7 @@ public class SteelHoneypot extends Item {
 
 		@Override
 		public String info() {
-			return  Messages.get(SteelHoneypot.class,"sdesc");
+			return Messages.get(SteelHoneypot.class, "sdesc");
 		}
 
 		private static final String MYBEE = "mybee";

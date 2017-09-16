@@ -25,7 +25,6 @@ import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -37,12 +36,12 @@ import java.util.ArrayList;
 
 public class Palantir extends Item {
 
-private static final String TXT_PREVENTING = Messages.get(Palantir.class,"prevent");
-		
-	
+	private static final String TXT_PREVENTING = Messages.get(Palantir.class, "prevent");
+
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_PORT = Messages.get(CavesKey.class,"ac");
+	public static final String AC_PORT = Messages.get(CavesKey.class, "ac");
 
 	private int specialLevel = 99;
 	private int returnDepth = -1;
@@ -50,13 +49,13 @@ private static final String TXT_PREVENTING = Messages.get(Palantir.class,"preven
 	private boolean used = false;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.PALANTIR;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 	private static final String USED = "used";
@@ -82,101 +81,104 @@ private static final String TXT_PREVENTING = Messages.get(Palantir.class,"preven
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if((!used || Dungeon.depth==99) && (!Dungeon.level.locked || Dungeon.depth == 66) && !hero.petfollow){actions.add(AC_PORT);}
+		if ((!used || Dungeon.depth == 99) && (!Dungeon.level.locked || Dungeon.depth == 66) && !hero.petfollow) {
+			actions.add(AC_PORT);
+		}
 		return actions;
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {		
+	public void execute(Hero hero, String action) {
 
 		if (action == AC_PORT) {
-			
-			 hero.spend(TIME_TO_USE);
 
-				Buff buff = Dungeon.hero
-						.buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null)
-					buff.detach();
+			hero.spend(TIME_TO_USE);
 
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
-					if (mob instanceof DriedRose.GhostHero)
-						mob.destroy();
-              if (Dungeon.depth<99 && !Dungeon.bossLevel()){
-            	
-            	returnDepth = Dungeon.depth;
-       			returnPos = hero.pos;
-       			used=true;
+			Buff buff = Dungeon.hero
+					.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null)
+				buff.detach();
+
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
+				if (mob instanceof DriedRose.GhostHero)
+					mob.destroy();
+			if (Dungeon.depth < 99 && !Dungeon.bossLevel()) {
+
+				returnDepth = Dungeon.depth;
+				returnPos = hero.pos;
+				used = true;
 				InterlevelScene.mode = InterlevelScene.Mode.PALANTIR;
 			} else {
-				 checkPetPort();
-				 removePet();
-				
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
-				
-			}               
-                
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-					
+				checkPetPort();
+				removePet();
+
+				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
+
+			}
+
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+
 		} else {
 
 			super.execute(hero, action);
 
 		}
 	}
-	
+
 	public void reset() {
 		returnDepth = -1;
 	}
-	
 
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		//  GLog.i(Messages.get(Palantir.class,"pet"));
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			//  GLog.i(Messages.get(Palantir.class,"pet"));
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
-	private void removePet(){
-		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow){
-		 for (Mob mob : Dungeon.level.mobs) {
-				if(mob instanceof PET) {				 
-					Dungeon.hero.haspet=false;
+
+	private void removePet() {
+		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow) {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob instanceof PET) {
+					Dungeon.hero.haspet = false;
 					Dungeon.hero.petCount++;
-					mob.destroy();				
+					mob.destroy();
 				}
-			  }
+			}
 		}
 	}
-	
+
 
 	@Override
 	public boolean isUpgradable() {
@@ -190,6 +192,6 @@ private static final String TXT_PREVENTING = Messages.get(Palantir.class,"preven
 
 	@Override
 	public String info() {
-		return Messages.get(Palantir.class,"desc");
+		return Messages.get(Palantir.class, "desc");
 	}
 }

@@ -34,11 +34,11 @@ import com.watabou.noosa.audio.Sample;
 
 public class ScrollOfRegrowth extends Scroll {
 
-	private static final String TXT_LAYOUT = Messages.get(ScrollOfRegrowth.class,"layout");
+	private static final String TXT_LAYOUT = Messages.get(ScrollOfRegrowth.class, "layout");
 
 	{
 		initials = 12;
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		consumedValue = 15;
 	}
 
@@ -53,9 +53,9 @@ public class ScrollOfRegrowth extends Scroll {
 		boolean noticed = false;
 
 		for (int i = 0; i < length; i++) {
-			
+
 			GameScene.add(Blob.seed(i, (2) * 10, Water.class));
-		
+
 			int terr = map[i];
 
 			if (discoverable[i]) {
@@ -93,7 +93,7 @@ public class ScrollOfRegrowth extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

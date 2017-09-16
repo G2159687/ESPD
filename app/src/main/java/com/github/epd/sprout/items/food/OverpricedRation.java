@@ -24,16 +24,16 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class OverpricedRation extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.OVERPRICED;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
-		message = Messages.get(this,"eat_msg");
+		message = Messages.get(this, "eat_msg");
 		hornValue = 1;
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

@@ -32,7 +32,7 @@ import java.util.HashSet;
 public class RingOfElements extends Ring {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
 	@Override
@@ -42,12 +42,13 @@ public class RingOfElements extends Ring {
 
 	@Override
 	public String desc() {
-		return isKnown() ? Messages.get(this,"desc")
+		return isKnown() ? Messages.get(this, "desc")
 				: super.desc();
 	}
 
 	private static final HashSet<Class<?>> EMPTY = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> FULL;
+
 	static {
 		FULL = new HashSet<Class<?>>();
 		FULL.add(Burning.class);

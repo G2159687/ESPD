@@ -29,10 +29,10 @@ import com.watabou.utils.Random;
 public class Meat extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MEAT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
-		message = Messages.get(this,"eat");
+		message = Messages.get(this, "eat");
 		hornValue = 1;
 		bones = false;
 	}
@@ -45,23 +45,23 @@ public class Meat extends Food {
 		if (action.equals(AC_EAT)) {
 
 			switch (Random.Int(15)) {
-			case 0:
-				GLog.w(Messages.get(this,"effect"));
-				Buff.affect(hero, Poison.class).set(
-						Poison.durationFactor(hero) * hero.HT / 5);
-				break;
+				case 0:
+					GLog.w(Messages.get(this, "effect"));
+					Buff.affect(hero, Poison.class).set(
+							Poison.durationFactor(hero) * hero.HT / 5);
+					break;
 			}
 		}
-	}	
-	
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
-		
+
 }

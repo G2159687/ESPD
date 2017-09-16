@@ -34,23 +34,23 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-public class  ShortSword extends MeleeWeapon {
+public class ShortSword extends MeleeWeapon {
 
-	public static final String AC_REFORGE = Messages.get(ShortSword.class,"ac_reforge");
+	public static final String AC_REFORGE = Messages.get(ShortSword.class, "ac_reforge");
 
-	private static final String TXT_SELECT_WEAPON = Messages.get(ShortSword.class,"title");
+	private static final String TXT_SELECT_WEAPON = Messages.get(ShortSword.class, "title");
 
-	private static final String TXT_REFORGED = Messages.get(ShortSword.class,"reforged");
-	private static final String TXT_NOT_BOOMERANG = Messages.get(ShortSword.class,"notboomerang");
+	private static final String TXT_REFORGED = Messages.get(ShortSword.class, "reforged");
+	private static final String TXT_NOT_BOOMERANG = Messages.get(ShortSword.class, "notboomerang");
 
 	private static final float TIME_TO_REFORGE = 2f;
 
 	private boolean equipped;
-	
+
 	private float upgradeChance = 0.5f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SHORT_SWORD;
 
 		bones = false;
@@ -98,39 +98,39 @@ public class  ShortSword extends MeleeWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect(Item item) {
 			DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-			if (gold!=null){
-			upgradeChance = (upgradeChance + (gold.quantity()*0.01f));
+			if (gold != null) {
+				upgradeChance = (upgradeChance + (gold.quantity() * 0.01f));
 			}
 			if (item != null && !(item instanceof Boomerang)) {
-                int i=0;
-				while(i<level) {
-					if (i<2){
-					  Sample.INSTANCE.play(Assets.SND_EVOKE);
-					  ScrollOfUpgrade.upgrade(curUser);
-					  evoke(curUser);
-					  item.upgrade();
-					} else if (Random.Float()<upgradeChance){
-						if (item.level<15 || item.reinforced){
-				            Sample.INSTANCE.play(Assets.SND_EVOKE);
-				            ScrollOfUpgrade.upgrade(curUser);
-				            evoke(curUser);
-				            item.upgrade();
-				            upgradeChance = Math.max(0.5f, upgradeChance-0.1f);
-						 } else {
-							 GLog.w(Messages.get(ShortSword.class,"notenough"), item.name());
-							 i=level;
-						 }
-				  }
-				i++;
+				int i = 0;
+				while (i < level) {
+					if (i < 2) {
+						Sample.INSTANCE.play(Assets.SND_EVOKE);
+						ScrollOfUpgrade.upgrade(curUser);
+						evoke(curUser);
+						item.upgrade();
+					} else if (Random.Float() < upgradeChance) {
+						if (item.level < 15 || item.reinforced) {
+							Sample.INSTANCE.play(Assets.SND_EVOKE);
+							ScrollOfUpgrade.upgrade(curUser);
+							evoke(curUser);
+							item.upgrade();
+							upgradeChance = Math.max(0.5f, upgradeChance - 0.1f);
+						} else {
+							GLog.w(Messages.get(ShortSword.class, "notenough"), item.name());
+							i = level;
+						}
+					}
+					i++;
 				}
-							
+
 				curUser.spendAndNext(TIME_TO_REFORGE);
 
 				GLog.w(TXT_REFORGED, item.name());

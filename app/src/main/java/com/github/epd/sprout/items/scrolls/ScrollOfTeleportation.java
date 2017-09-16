@@ -39,15 +39,15 @@ import com.watabou.noosa.audio.Sample;
 
 public class ScrollOfTeleportation extends Scroll {
 
-	public static final String TXT_TELEPORTED = Messages.get(ScrollOfTeleportation.class,"tele");
+	public static final String TXT_TELEPORTED = Messages.get(ScrollOfTeleportation.class, "tele");
 
-	public static final String TXT_NO_TELEPORT = Messages.get(ScrollOfTeleportation.class,"no_tele");
-	
-	public static final String TXT_DEACTIVATE = Messages.get(ScrollOfTeleportation.class,"deact");
+	public static final String TXT_NO_TELEPORT = Messages.get(ScrollOfTeleportation.class, "no_tele");
+
+	public static final String TXT_DEACTIVATE = Messages.get(ScrollOfTeleportation.class, "deact");
 
 	{
-		initials=9;
-		name = Messages.get(this,"name");
+		initials = 9;
+		name = Messages.get(this, "name");
 		consumedValue = 10;
 	}
 
@@ -91,19 +91,19 @@ public class ScrollOfTeleportation extends Scroll {
 	}
 
 	public static void teleportHeroLocation(Hero hero, int spot) {
-		
+
 		Char ch = Actor.findChar(spot);
 		boolean sheepchk = false;
-		
-		if (ch!=null && (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep)){
+
+		if (ch != null && (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep)) {
 			sheepchk = true;
 		}
 
 		if (Level.passable[spot] && (Actor.findChar(spot) == null || sheepchk)) {
-			
+
 			//GLog.i("clear");
-			
-			if (Actor.findChar(spot) != null && sheepchk){
+
+			if (Actor.findChar(spot) != null && sheepchk) {
 				Camera.main.shake(2, 0.3f);
 				ch.destroy();
 				ch.sprite.killAndErase();
@@ -111,45 +111,42 @@ public class ScrollOfTeleportation extends Scroll {
 				Level.set(spot, Terrain.WOOL_RUG);
 				GameScene.updateMap(spot);
 			}
-			
+
 			WandOfBlink.appear(hero, spot);
 			Dungeon.level.press(spot, hero);
 			Dungeon.observe();
 
 			GLog.i(TXT_TELEPORTED);
-		} 
-		
-		
-		else {
-		
-		int count = 10;
-		int pos;
-		do {
-			pos = Dungeon.level.randomRespawnCell();
-			if (count-- <= 0) {
-				break;
-			}
-		} while (pos == -1);
-
-		if (pos == -1) {
-
-			GLog.w(TXT_DEACTIVATE);
-
 		} else {
 
-			WandOfBlink.appear(hero, pos);
-			Dungeon.level.press(pos, hero);
-			Dungeon.observe();
+			int count = 10;
+			int pos;
+			do {
+				pos = Dungeon.level.randomRespawnCell();
+				if (count-- <= 0) {
+					break;
+				}
+			} while (pos == -1);
 
-			GLog.i(TXT_TELEPORTED);
+			if (pos == -1) {
 
+				GLog.w(TXT_DEACTIVATE);
+
+			} else {
+
+				WandOfBlink.appear(hero, pos);
+				Dungeon.level.press(pos, hero);
+				Dungeon.observe();
+
+				GLog.i(TXT_TELEPORTED);
+
+			}
 		}
-	  }
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

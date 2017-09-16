@@ -46,11 +46,11 @@ public class DM300Sprite extends MobSprite {
 
 		play(idle);
 	}
-	
+
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (DM300)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (DM300) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);

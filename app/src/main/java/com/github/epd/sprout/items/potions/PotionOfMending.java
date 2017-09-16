@@ -31,8 +31,8 @@ import com.github.epd.sprout.utils.GLog;
 public class PotionOfMending extends Potion {
 
 	{
-		name = Messages.get(this,"name");
-		initials=12;
+		name = Messages.get(this, "name");
+		initials = 12;
 		bones = true;
 	}
 
@@ -40,7 +40,7 @@ public class PotionOfMending extends Potion {
 	public void apply(Hero hero) {
 		setKnown();
 		heal(Dungeon.hero);
-		GLog.p(Messages.get(this,"effect"));
+		GLog.p(Messages.get(this, "effect"));
 	}
 
 	public static void heal(Hero hero) {
@@ -58,7 +58,7 @@ public class PotionOfMending extends Potion {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

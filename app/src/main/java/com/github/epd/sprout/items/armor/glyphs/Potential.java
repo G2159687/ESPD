@@ -32,7 +32,7 @@ import com.watabou.utils.Random;
 
 public class Potential extends Glyph {
 
-	private static final String TXT_POTENTIAL = Messages.get(Potential.class,"name");
+	private static final String TXT_POTENTIAL = Messages.get(Potential.class, "name");
 
 	private static ItemSprite.Glowing BLUE = new ItemSprite.Glowing(0x66CCEE);
 
@@ -54,7 +54,7 @@ public class Potential extends Glyph {
 				Camera.main.shake(2, 0.3f);
 			}
 
-			attacker.sprite.parent.add( new Lightning( attacker.pos, defender.pos, null ) );
+			attacker.sprite.parent.add(new Lightning(attacker.pos, defender.pos, null));
 
 		}
 

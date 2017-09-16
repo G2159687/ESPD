@@ -32,44 +32,44 @@ public class Signal<T> {
 	private boolean stackMode;
 
 	public Signal() {
-		this( false );
+		this(false);
 	}
 
-	public Signal( boolean stackMode ) {
+	public Signal(boolean stackMode) {
 		this.stackMode = stackMode;
 	}
 
-	public synchronized void add( Listener<T> listener ) {
-		if (!listeners.contains( listener )) {
+	public synchronized void add(Listener<T> listener) {
+		if (!listeners.contains(listener)) {
 			if (stackMode) {
-				listeners.addFirst( listener );
+				listeners.addFirst(listener);
 			} else {
-				listeners.addLast( listener );
+				listeners.addLast(listener);
 			}
 		}
 	}
 
-	public synchronized void remove( Listener<T> listener ) {
-		listeners.remove( listener );
+	public synchronized void remove(Listener<T> listener) {
+		listeners.remove(listener);
 	}
 
 	public synchronized void removeAll() {
 		listeners.clear();
 	}
 
-	public synchronized void replace( Listener<T> listener ) {
+	public synchronized void replace(Listener<T> listener) {
 		removeAll();
-		add( listener );
+		add(listener);
 	}
 
 	public synchronized int numListeners() {
 		return listeners.size();
 	}
 
-	public synchronized void dispatch( T t ) {
+	public synchronized void dispatch(T t) {
 
 		@SuppressWarnings("unchecked")
-		Listener<T>[] list = listeners.toArray( new Listener[0] );
+		Listener<T>[] list = listeners.toArray(new Listener[0]);
 
 		canceled = false;
 		for (Listener<T> listener : list) {

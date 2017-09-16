@@ -37,10 +37,10 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class Sentinel extends Mob {
-	
+
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SentinelSprite.class;
 
 		EXP = 18;
@@ -132,11 +132,11 @@ public class Sentinel extends Mob {
 	@Override
 	public void die(Object cause) {
 		Dungeon.level.drop(weapon, pos).sprite.drop();
-		if (!Dungeon.limitedDrops.hallskey.dropped() && Dungeon.depth==24) {
+		if (!Dungeon.limitedDrops.hallskey.dropped() && Dungeon.depth == 24) {
 			Dungeon.limitedDrops.hallskey.drop();
 			Dungeon.level.drop(new HallsKey(), pos).sprite.drop();
-			explodeDew(pos);				
-		} 
+			explodeDew(pos);
+		}
 		super.die(cause);
 	}
 
@@ -145,9 +145,9 @@ public class Sentinel extends Mob {
 		Journal.remove(Journal.Feature.STATUE);
 		super.destroy();
 	}
-	
 
-		@Override
+
+	@Override
 	public boolean reset() {
 		state = PASSIVE;
 		return true;
@@ -155,11 +155,12 @@ public class Sentinel extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc", weapon.name());
+		return Messages.get(this, "desc", weapon.name());
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

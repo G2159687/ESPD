@@ -19,9 +19,7 @@ package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.hero.Hero;
-import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.npcs.Wandmaker;
 import com.github.epd.sprout.items.AdamantWand;
 import com.github.epd.sprout.items.Item;
@@ -38,13 +36,13 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndWandmaker extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndWandmaker.class,"msg");
-	private static final String TXT_BATTLE = Messages.get(WndWandmaker.class,"battle");
-	private static final String TXT_NON_BATTLE = Messages.get(WndWandmaker.class,"nonbattle");
+	private static final String TXT_MESSAGE = Messages.get(WndWandmaker.class, "msg");
+	private static final String TXT_BATTLE = Messages.get(WndWandmaker.class, "battle");
+	private static final String TXT_NON_BATTLE = Messages.get(WndWandmaker.class, "nonbattle");
 
-	private static final String TXT_ADAMANT = Messages.get(WndWandmaker.class,"adamant");
-	private static final String TXT_WOW = Messages.get(WndWandmaker.class,"wow");
-	private static final String TXT_FARAWELL = Messages.get(WndWandmaker.class,"farewell");
+	private static final String TXT_ADAMANT = Messages.get(WndWandmaker.class, "adamant");
+	private static final String TXT_WOW = Messages.get(WndWandmaker.class, "wow");
+	private static final String TXT_FARAWELL = Messages.get(WndWandmaker.class, "farewell");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -63,7 +61,7 @@ public class WndWandmaker extends Window {
 		RenderedTextMultiline message = PixelScene
 				.renderMultiline(TXT_MESSAGE, 6);
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
 		NewRedButton btnWand1 = new NewRedButton(Wandmaker.Quest.wand1.name()) {
@@ -72,7 +70,7 @@ public class WndWandmaker extends Window {
 				selectReward(wandmaker, item, Wandmaker.Quest.wand1);
 			}
 		};
-		btnWand1.setRect(0, message.top()+ message.height() + GAP, WIDTH,
+		btnWand1.setRect(0, message.top() + message.height() + GAP, WIDTH,
 				BTN_HEIGHT);
 		add(btnWand1);
 
@@ -92,13 +90,13 @@ public class WndWandmaker extends Window {
 
 		hide();
 
-		if (item != null && item == Dungeon.hero.belongings.getItem(CorpseDust.class)){
-			if (!item.cursed){
-				wandmaker.yell(Messages.get(this,"uncursed"));
+		if (item != null && item == Dungeon.hero.belongings.getItem(CorpseDust.class)) {
+			if (!item.cursed) {
+				wandmaker.yell(Messages.get(this, "uncursed"));
 				Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
 			}
-		} else if (item != null && item == Dungeon.hero.belongings.getItem(Wandmaker.Rotberry.Seed.class)){
-			if (item.quantity() > 1){
+		} else if (item != null && item == Dungeon.hero.belongings.getItem(Wandmaker.Rotberry.Seed.class)) {
+			if (item.quantity() > 1) {
 				wandmaker.yell("good");
 				Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
 			}
@@ -106,8 +104,8 @@ public class WndWandmaker extends Window {
 
 		item.detach(Dungeon.hero.belongings.backpack);
 
-		if ( item!=null )
-		item.detachAll(Dungeon.hero.belongings.backpack);
+		if (item != null)
+			item.detachAll(Dungeon.hero.belongings.backpack);
 
 		reward.identify();
 		if (reward.doPickUp(Dungeon.hero)) {
@@ -116,9 +114,10 @@ public class WndWandmaker extends Window {
 			Dungeon.level.drop(reward, wandmaker.pos).sprite.drop();
 		}
 
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS))
-		{Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();}
-		
+		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+			Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
+		}
+
 		wandmaker.yell(Utils.format(TXT_FARAWELL, Dungeon.hero.givenName()));
 		wandmaker.destroy();
 		wandmaker.sprite.die();

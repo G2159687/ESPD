@@ -25,7 +25,7 @@ public class QuickSlot {
 	// methods.
 	public void setSlot(int slot, Item item) {
 		clearItem(item); // we don't want to allow the same item in multiple
-							// slots.
+		// slots.
 		slots[slot] = item;
 	}
 

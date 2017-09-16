@@ -5,7 +5,7 @@ import com.github.epd.sprout.messages.Messages;
 public class RingOfFuror extends Ring {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class RingOfFuror extends Ring {
 
 	@Override
 	public String desc() {
-		return isKnown() ? Messages.get(this,"desc"): super.desc();
+		return isKnown() ? Messages.get(this, "desc") : super.desc();
 	}
 
 	public class Furor extends RingBuff {

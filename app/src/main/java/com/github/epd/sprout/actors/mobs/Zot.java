@@ -59,7 +59,7 @@ public class Zot extends Mob {
 	private static final int JUMP_DELAY = 5;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ZotSprite.class;
 		baseSpeed = 2f;
 
@@ -69,8 +69,8 @@ public class Zot extends Mob {
 	}
 
 	private int timeToJump = JUMP_DELAY;
-	
-	
+
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(300, 400);
@@ -88,11 +88,11 @@ public class Zot extends Mob {
 
 	@Override
 	protected boolean act() {
-		
+
 		if (paralysed == 0) {
-			yell(Messages.get(this,"p"));
-			
-			if(!checkEyes()){
+			yell(Messages.get(this, "p"));
+
+			if (!checkEyes()) {
 				ArrayList<Integer> spawnPoints = new ArrayList<Integer>();
 
 				for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
@@ -111,33 +111,33 @@ public class Zot extends Mob {
 					Actor.addDelayed(new Pushing(eye, pos, eye.pos), -1);
 				}
 			}
-			
+
 			if (HP < HT) {
-				sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-				HP = HP + 200;			
+				sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+				HP = HP + 200;
 			}
 		}
 
-		
+
 		boolean result = super.act();
 
-		int regen = Dungeon.hero.buff(AutoHealPotion.class) != null ? 1 : Random.Int(50,100);
-				
-		
+		int regen = Dungeon.hero.buff(AutoHealPotion.class) != null ? 1 : Random.Int(50, 100);
+
+
 		if (HP < HT) {
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-			HP = HP + regen;			
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+			HP = HP + regen;
 		}
 		return result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void die(Object cause) {
-		
-		Dungeon.level.locked=false;
-		GameScene.bossSlain();		
-		
+
+		Dungeon.level.locked = false;
+		GameScene.bossSlain();
+
 		for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
 			if (mob instanceof ZotPhase || mob instanceof MagicEye) {
 				mob.die(cause);
@@ -145,10 +145,10 @@ public class Zot extends Mob {
 				mob.sprite.killAndErase();
 			}
 		}
-		
+
 		super.die(cause);
-		yell(Messages.get(this,"die"));
-		OtilukeNPC.spawnAt(pos);					
+		yell(Messages.get(this, "die"));
+		OtilukeNPC.spawnAt(pos);
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class Zot extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -179,8 +179,8 @@ public class Zot extends Mob {
 
 	private void jump() {
 		timeToJump = JUMP_DELAY;
-		
-		if (!checkPhases()){
+
+		if (!checkPhases()) {
 			ArrayList<Integer> spawnPoints = new ArrayList<Integer>();
 
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
@@ -199,7 +199,7 @@ public class Zot extends Mob {
 				Actor.addDelayed(new Pushing(zot, pos, zot.pos), -1);
 			}
 		}
-		
+
 		int newPos;
 		do {
 			newPos = Random.Int(Level.getLength());
@@ -217,48 +217,48 @@ public class Zot extends Mob {
 
 		spend(1 / speed());
 	}
-	
-	private boolean checkPhases(){
+
+	private boolean checkPhases() {
 		boolean check = false;
 		int phases = 0;
 		for (Mob mob : Dungeon.level.mobs) {
 			if (mob != null && mob instanceof ZotPhase) {
 				phases++;
-				if (Dungeon.hero.heroClass!=HeroClass.HUNTRESS && phases>6){
-				check=true;
-				}else if (phases>10){
-				  check=true;
+				if (Dungeon.hero.heroClass != HeroClass.HUNTRESS && phases > 6) {
+					check = true;
+				} else if (phases > 10) {
+					check = true;
 				}
-		}			
-	  }
+			}
+		}
 		return check;
 	}
-	
-	private boolean checkEyes(){
+
+	private boolean checkEyes() {
 		boolean check = false;
 		int phases = 0;
 		for (Mob mob : Dungeon.level.mobs) {
 			if (mob != null && mob instanceof MagicEye) {
 				phases++;
-				if (Dungeon.hero.heroClass!=HeroClass.HUNTRESS && phases>20){
-				check=true;
-				}else if (phases>30){
-				  check=true;
+				if (Dungeon.hero.heroClass != HeroClass.HUNTRESS && phases > 20) {
+					check = true;
+				} else if (phases > 30) {
+					check = true;
 				}
-		}			
-	  }
+			}
+		}
 		return check;
 	}
-	
+
 	@Override
 	public void damage(int dmg, Object src) {
-		
-		if(!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)){
-			int max = Math.round(dmg*.25f);
-			dmg = Random.Int(1,max);
+
+		if (!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)) {
+			int max = Math.round(dmg * .25f);
+			dmg = Random.Int(1, max);
 		}
-		
-		if(Dungeon.hero.heroClass==HeroClass.HUNTRESS && !checkPhases()){
+
+		if (Dungeon.hero.heroClass == HeroClass.HUNTRESS && !checkPhases()) {
 			ArrayList<Integer> spawnPoints = new ArrayList<Integer>();
 
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
@@ -277,7 +277,7 @@ public class Zot extends Mob {
 				Actor.addDelayed(new Pushing(eye, pos, eye.pos), -1);
 			}
 		}
-		
+
 		super.damage(dmg, src);
 	}
 
@@ -285,22 +285,23 @@ public class Zot extends Mob {
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"die"));
+		yell(Messages.get(this, "die"));
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

@@ -34,19 +34,18 @@ public class FieldLevel extends Level {
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
-		cleared=true;
+		cleared = true;
 
 		viewDistance = 6;
 	}
 
 
-	
 	private static final int ROOM_LEFT = getWidth() / 2 - 2;
 	private static final int ROOM_RIGHT = getWidth() / 2 + 2;
 	private static final int ROOM_TOP = HEIGHT / 2 - 2;
 	private static final int ROOM_BOTTOM = HEIGHT / 2 + 2;
 
-		@Override
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_FOREST;
 	}
@@ -92,13 +91,12 @@ public class FieldLevel extends Level {
 
 		map[exit] = Terrain.WALL;
 
-		
-		
+
 		Painter.fill(this, ROOM_LEFT, ROOM_TOP + 1, ROOM_RIGHT - ROOM_LEFT + 1,
 				ROOM_BOTTOM - ROOM_TOP, Terrain.EMPTY);
 
-		
-				entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
+
+		entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
 				+ Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * getWidth();
 		map[entrance] = Terrain.EMPTY;
 
@@ -133,10 +131,18 @@ public class FieldLevel extends Level {
 			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
 				map[i] = Terrain.WALL_DECO;
 			}
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.EMPTY;}			
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.20){map[i] = Terrain.HIGH_GRASS;}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.25){map[i] = Terrain.GRASS;}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.30){map[i] = Terrain.SHRUB;}
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.EMPTY;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .20) {
+				map[i] = Terrain.HIGH_GRASS;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .25) {
+				map[i] = Terrain.GRASS;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .30) {
+				map[i] = Terrain.SHRUB;
+			}
 		}
 
 	}
@@ -151,9 +157,8 @@ public class FieldLevel extends Level {
 	//}
 
 	@Override
-	protected void createItems() {}
-
-	
+	protected void createItems() {
+	}
 
 
 	//@Override
@@ -162,27 +167,25 @@ public class FieldLevel extends Level {
 	//}
 
 
-	
-	
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(FieldLevel.class,"emptydeco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(SewerLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(FieldLevel.class, "emptydeco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(SewerLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
@@ -191,11 +194,12 @@ public class FieldLevel extends Level {
 	public void addVisuals(Scene scene) {
 		CavesLevel.addVisuals(this, scene);
 	}
+
 	@Override
 	public int nMobs() {
 		return 10;
 	}
-	
+
 	@Override
 	protected void createMobs() {
 		int nMobs = nMobs();
@@ -235,6 +239,6 @@ public class FieldLevel extends Level {
 			}
 		};
 	}
-	
-	
+
+
 }

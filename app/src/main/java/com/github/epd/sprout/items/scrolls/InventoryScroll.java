@@ -28,12 +28,12 @@ import com.watabou.noosa.audio.Sample;
 
 public abstract class InventoryScroll extends Scroll {
 
-	protected String inventoryTitle = Messages.get(InventoryScroll.class,"title");
+	protected String inventoryTitle = Messages.get(InventoryScroll.class, "title");
 	protected WndBag.Mode mode = WndBag.Mode.ALL;
 
-	private static final String TXT_WARNING = Messages.get(InventoryScroll.class,"warning");
-	private static final String TXT_YES = Messages.get(InventoryScroll.class,"yes");
-	private static final String TXT_NO = Messages.get(InventoryScroll.class,"no");
+	private static final String TXT_WARNING = Messages.get(InventoryScroll.class, "warning");
+	private static final String TXT_YES = Messages.get(InventoryScroll.class, "yes");
+	private static final String TXT_NO = Messages.get(InventoryScroll.class, "no");
 
 	@Override
 	protected void doRead() {
@@ -53,13 +53,13 @@ public abstract class InventoryScroll extends Scroll {
 			@Override
 			protected void onSelect(int index) {
 				switch (index) {
-				case 0:
-					curUser.spendAndNext(TIME_TO_READ);
-					identifiedByUse = false;
-					break;
-				case 1:
-					GameScene.selectItem(itemSelector, mode, inventoryTitle);
-					break;
+					case 0:
+						curUser.spendAndNext(TIME_TO_READ);
+						identifiedByUse = false;
+						break;
+					case 1:
+						GameScene.selectItem(itemSelector, mode, inventoryTitle);
+						break;
 				}
 			}
 

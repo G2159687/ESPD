@@ -33,7 +33,7 @@ import com.watabou.utils.Callback;
 public class WandOfSlowness extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_SLOWNESS;
 	}
 
@@ -46,7 +46,7 @@ public class WandOfSlowness extends Wand {
 
 		} else {
 
-			GLog.i(Messages.get(WandOfPoison.class,"nothing"));
+			GLog.i(Messages.get(WandOfPoison.class, "nothing"));
 
 		}
 	}
@@ -59,6 +59,6 @@ public class WandOfSlowness extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

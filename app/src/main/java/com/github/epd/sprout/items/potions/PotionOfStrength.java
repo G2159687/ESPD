@@ -25,8 +25,8 @@ import com.github.epd.sprout.utils.GLog;
 public class PotionOfStrength extends Potion {
 
 	{
-		initials=10;
-		name = Messages.get(this,"name");
+		initials = 10;
+		name = Messages.get(this, "name");
 
 		bones = true;
 	}
@@ -36,13 +36,13 @@ public class PotionOfStrength extends Potion {
 		setKnown();
 
 		hero.STR++;
-		hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this,"msg_1"));
-		GLog.p(Messages.get(this,"msg_2"));
+		hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "msg_1"));
+		GLog.p(Messages.get(this, "msg_2"));
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.github.epd.sprout.ui.NewRedButton;
 import com.github.epd.sprout.ui.RenderedTextMultiline;
 import com.github.epd.sprout.windows.WndChallenges;
 import com.github.epd.sprout.windows.help.HelpIndex;
+import com.github.epd.sprout.windows.help.WndHlpCatTS;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
@@ -40,54 +41,63 @@ public class BadgesScene extends PixelScene {
 	private NewRedButton btn6;
 	private NewRedButton btn7;
 	private NewRedButton btn8;
+
 	@Override
 	public void create() {
 
-		String TXT1= Messages.get(BadgesScene.class,"title");
+		String TXT1 = Messages.get(BadgesScene.class, "title");
 
 		super.create();
 
 		final float colWidth = Camera.main.width / (ShatteredPixelDungeon.landscape() ? 2 : 1);
 		final float colTop = (Camera.main.height / 2) - (ShatteredPixelDungeon.landscape() ? 30 : 90);
 
-		RenderedText title = renderText( TXT1, 8 );
-		title.hardlight( 0xFFFF00 );
-		add( title );
+		RenderedText title = renderText(TXT1, 8);
+		title.hardlight(0xFFFF00);
+		add(title);
 
 		title.x = (colWidth - title.width()) / 2;
 		title.y = colTop;
 		align(title);
 
-		RenderedTextMultiline text = renderMultiline( "", 7 );
-		text.maxWidth((int)Math.min(colWidth, 120));
+		RenderedTextMultiline text = renderMultiline("", 7);
+		text.maxWidth((int) Math.min(colWidth, 120));
 		//add( text );
 
 		text.setPos((colWidth - text.width()) / 2, title.y + title.height() + 12);
-	//	align(text);
+		//	align(text);
 
-		btn= new NewRedButton(Messages.get(BadgesScene.class,"b1")) {
+		btn = new NewRedButton(Messages.get(BadgesScene.class, "b1")) {
 			@Override
 			protected void onClick() {
 				BadgesScene.this.add(new WndChallenges(ShatteredPixelDungeon
 						.challenges(), true));
 			}
 		};
-		btn.setRect(colWidth / 2 - 50,colTop +30,100,18);
-		add (btn);
+		btn.setRect(colWidth / 2 - 50, colTop + 30, 100, 18);
+		add(btn);
 
-		btn2= new NewRedButton(Messages.get(BadgesScene.class,"b2")) {
+		btn2 = new NewRedButton(Messages.get(BadgesScene.class, "b2")) {
 			@Override
 			protected void onClick() {
 				Game.scene().add(new HelpIndex());
-				if (!Badges.isUnlocked(Badges.Badge.SUPPORTER2))
-					Badges.validateSupporter2();
+				Badges.validateSupporter2();
 			}
 		};
-		btn2.setRect(colWidth / 2 - 50,colTop + 50,100,18);
-		add (btn2);
+		btn2.setRect(colWidth / 2 - 50, colTop + 50, 100, 18);
+		add(btn2);
+
+		btn3 = new NewRedButton(Messages.get(BadgesScene.class, "ts")) {
+			@Override
+			protected void onClick() {
+				Game.scene().add(new WndHlpCatTS());
+			}
+		};
+		btn3.setRect(colWidth / 2 - 50, colTop + 70, 100, 18);
+		add(btn3);
 
 /*		btn3= new NewRedButton("Game Settings #3 (Unavailable)") {
-			@Override
+            @Override
 			protected void onClick() {
 			}
 		};
@@ -134,12 +144,12 @@ public class BadgesScene extends PixelScene {
 		add (btn8);
 */
 		Archs archs = new Archs();
-		archs.setSize( Camera.main.width, Camera.main.height );
-		addToBack( archs );
+		archs.setSize(Camera.main.width, Camera.main.height);
+		addToBack(archs);
 
 		ExitButton btnExit = new ExitButton();
-		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
-		add( btnExit );
+		btnExit.setPos(Camera.main.width - btnExit.width(), 0);
+		add(btnExit);
 
 		fadeIn();
 	}

@@ -27,8 +27,7 @@ import com.watabou.noosa.TextureFilm;
 
 public class ScorpionSprite extends MobSprite {
 
-	private HealthBar hpBar;
-
+	public HealthBar hpBar;
 
 	public ScorpionSprite() {
 		super();
@@ -45,7 +44,7 @@ public class ScorpionSprite extends MobSprite {
 
 		attack = new Animation(15, false);
 		attack.frames(frames, 28, 31, 32);
-		
+
 		die = new Animation(12, false);
 		die.frames(frames, 28, 35, 36, 37, 38);
 
@@ -55,14 +54,14 @@ public class ScorpionSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof Scorpion){
+		if (ch instanceof Scorpion) {
 			final Char finalCH = ch;
-			hpBar = new HealthBar(){
+			hpBar = new HealthBar() {
 				@Override
 				public synchronized void update() {
 					super.update();
-					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
-					hpBar.level( finalCH );
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y - 3, finalCH.sprite.width, hpBar.height());
+					hpBar.level(finalCH);
 					visible = finalCH.sprite.visible;
 				}
 			};
@@ -73,6 +72,15 @@ public class ScorpionSprite extends MobSprite {
 	@Override
 	public int blood() {
 		return 0xFF44FF22;
-	}	
-	
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
+	}
+
 }

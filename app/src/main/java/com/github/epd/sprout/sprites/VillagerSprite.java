@@ -42,6 +42,5 @@ public class VillagerSprite extends MobSprite {
 		play(idle);
 	}
 
-	
 
 }

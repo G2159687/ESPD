@@ -33,7 +33,7 @@ import com.watabou.utils.Random;
 public class IncendiaryDart extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.INCENDIARY_DART;
 
 		STR = 12;
@@ -68,7 +68,7 @@ public class IncendiaryDart extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

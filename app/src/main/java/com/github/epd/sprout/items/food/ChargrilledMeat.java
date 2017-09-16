@@ -24,16 +24,16 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class ChargrilledMeat extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.STEAK;
-		energy = Hunger.STARVING/2;
+		energy = Hunger.STARVING / 2;
 		hornValue = 2;
 		bones = false;
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ChargrilledMeat extends Food {
 		result.quantity = ingredient.quantity();
 		return result;
 	}
-	
+
 	public static Food cook(Meat ingredient) {
 		ChargrilledMeat result = new ChargrilledMeat();
 		result.quantity = ingredient.quantity();

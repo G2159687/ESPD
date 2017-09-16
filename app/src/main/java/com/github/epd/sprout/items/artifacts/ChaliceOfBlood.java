@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 public class ChaliceOfBlood extends Artifact {
 
-	private static final String TXT_CHALICE = Messages.get(ChaliceOfBlood.class,"name");
-	private static final String TXT_YES = Messages.get(ChaliceOfBlood.class,"yes");
-	private static final String TXT_NO = Messages.get(ChaliceOfBlood.class,"no");
-	private static final String TXT_PRICK = Messages.get(ChaliceOfBlood.class,"prick_warn");
+	private static final String TXT_CHALICE = Messages.get(ChaliceOfBlood.class, "name");
+	private static final String TXT_YES = Messages.get(ChaliceOfBlood.class, "yes");
+	private static final String TXT_NO = Messages.get(ChaliceOfBlood.class, "no");
+	private static final String TXT_PRICK = Messages.get(ChaliceOfBlood.class, "prick_warn");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_CHALICE1;
 
 		level = 0;
@@ -34,7 +34,7 @@ public class ChaliceOfBlood extends Artifact {
 		reinforced = true;
 	}
 
-	public static final String AC_PRICK = Messages.get(ChaliceOfBlood.class,"ac_prick");
+	public static final String AC_PRICK = Messages.get(ChaliceOfBlood.class, "ac_prick");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -87,17 +87,17 @@ public class ChaliceOfBlood extends Artifact {
 		hero.busy();
 		hero.spend(3f);
 		if (damage <= 0) {
-			GLog.i(Messages.get(this,"onprick2"));
+			GLog.i(Messages.get(this, "onprick2"));
 		} else if (damage < 25) {
-			GLog.w(Messages.get(this,"onprick3"));
+			GLog.w(Messages.get(this, "onprick3"));
 			Sample.INSTANCE.play(Assets.SND_CURSED);
 			hero.sprite.emitter().burst(ShadowParticle.CURSE, 6);
 		} else if (damage < 100) {
-			GLog.w(Messages.get(this,"onprick"));
+			GLog.w(Messages.get(this, "onprick"));
 			Sample.INSTANCE.play(Assets.SND_CURSED);
 			hero.sprite.emitter().burst(ShadowParticle.CURSE, 12);
 		} else {
-			GLog.w(Messages.get(this,"onprick4"));
+			GLog.w(Messages.get(this, "onprick4"));
 			Sample.INSTANCE.play(Assets.SND_CURSED);
 			hero.sprite.emitter().burst(ShadowParticle.CURSE, 18);
 		}
@@ -107,7 +107,7 @@ public class ChaliceOfBlood extends Artifact {
 
 		if (!hero.isAlive()) {
 			Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
-			GLog.n(Messages.get(this,"ondeath"));
+			GLog.n(Messages.get(this, "ondeath"));
 		} else {
 			upgrade();
 		}
@@ -129,22 +129,22 @@ public class ChaliceOfBlood extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 		if (level < levelCap)
-			desc += Messages.get(this,"desc_5");
+			desc += Messages.get(this, "desc_5");
 		else
-			desc += Messages.get(this,"desc_4");
+			desc += Messages.get(this, "desc_4");
 
 		if (isEquipped(Dungeon.hero)) {
 			desc += "\n\n";
 			if (cursed)
-				desc += Messages.get(this,"desc_cursed");
+				desc += Messages.get(this, "desc_cursed");
 			else if (level == 0)
-				desc += Messages.get(this,"desc_1");
+				desc += Messages.get(this, "desc_1");
 			else if (level < levelCap)
-				desc += Messages.get(this,"desc_2");
+				desc += Messages.get(this, "desc_2");
 			else
-				desc += Messages.get(this,"desc_3");
+				desc += Messages.get(this, "desc_3");
 		}
 
 		return desc;

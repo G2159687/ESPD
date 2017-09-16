@@ -36,12 +36,12 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class SokobanSentinel extends Mob {
-	
+
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SokobanSentinelSprite.class;
-		
+
 		baseSpeed = 0.5f;
 
 		EXP = 18;
@@ -64,8 +64,8 @@ public class SokobanSentinel extends Mob {
 		weapon.upgrade();
 		weapon.upgrade();
 		weapon.upgrade();
-		
-		
+
+
 		HP = HT = 500;
 		defenseSkill = 40;
 	}
@@ -84,7 +84,7 @@ public class SokobanSentinel extends Mob {
 		weapon = (Weapon) bundle.get(WEAPON);
 	}
 
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(weapon.MIN, weapon.MAX);
@@ -114,7 +114,7 @@ public class SokobanSentinel extends Mob {
 
 		super.damage(dmg, src);
 	}
-	
+
 	@Override
 	protected boolean getCloser(int target) {
 
@@ -122,9 +122,9 @@ public class SokobanSentinel extends Mob {
 			return false;
 		}
 
-		int step = Dungeon.findStep( this, pos, target,
+		int step = Dungeon.findStep(this, pos, target,
 				Level.water,
-				Level.fieldOfView );
+				Level.fieldOfView);
 		if (step != -1 && !Level.avoid[step]) {
 			move(step);
 			return true;
@@ -132,35 +132,36 @@ public class SokobanSentinel extends Mob {
 			return false;
 		}
 	}
-	
+
 	@Override
 	protected boolean act() {
-		
-				
-			// this causes pirahna to move away when a door is closed on them.
-		Dungeon.level.updateFieldOfView( this, Level.fieldOfView );
-			enemy = chooseEnemy();
-			if (state == this.HUNTING
-					&& !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)) {
-				state = this.WANDERING;
-				int oldPos = pos;
-				int i = 0;
-				do {
-					i++;
-					target = Dungeon.level.randomDestination();
-					if (i == 100)
-						return true;
-				} while (!getCloser(target));
-				moveSprite(oldPos, pos);
-				return true;
-			} else if (state == this.PASSIVE
-					&& !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)){
-				    state = this.HUNTING;				
-			}
 
-			return super.act();
-		
-	}		
+
+		// this causes pirahna to move away when a door is closed on them.
+		Dungeon.level.updateFieldOfView(this, Level.fieldOfView);
+		enemy = chooseEnemy();
+		if (state == this.HUNTING
+				&& !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)) {
+			state = this.WANDERING;
+			int oldPos = pos;
+			int i = 0;
+			do {
+				i++;
+				target = Dungeon.level.randomDestination();
+				if (i == 100)
+					return true;
+			} while (!getCloser(target));
+			moveSprite(oldPos, pos);
+			return true;
+		} else if (state == this.PASSIVE
+				&& !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)) {
+			state = this.HUNTING;
+		}
+
+		return super.act();
+
+	}
+
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		weapon.proc(this, enemy, damage);
@@ -174,17 +175,18 @@ public class SokobanSentinel extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		//Dungeon.level.drop(weapon, pos).sprite.drop();		
+		//Dungeon.level.drop(weapon, pos).sprite.drop();
 		super.die(cause);
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc", weapon.name());
+		return Messages.get(this, "desc", weapon.name());
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

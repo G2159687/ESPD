@@ -25,14 +25,14 @@ import com.watabou.utils.Random;
 public class Skull extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SKULLWEP;
 
 		MIN = 1;
 		MAX = 4;
 
 		bones = false; // Finding them in bones would be semi-frequent and
-						// disappointing.
+		// disappointing.
 	}
 
 	public Skull() {
@@ -46,7 +46,7 @@ public class Skull extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

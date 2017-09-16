@@ -25,7 +25,6 @@ import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSprite.Glowing;
@@ -38,26 +37,26 @@ import com.watabou.utils.PathFinder;
 import java.util.ArrayList;
 
 public class SanChikarah extends Item {
-	
-	private static final String TXT_PREVENTING = Messages.get(SanChikarah.class,"prevent1");
-	private static final String TXT_PREVENTING2 = Messages.get(SanChikarah.class,"prevent2");
-	
-	
+
+	private static final String TXT_PREVENTING = Messages.get(SanChikarah.class, "prevent1");
+	private static final String TXT_PREVENTING2 = Messages.get(SanChikarah.class, "prevent2");
+
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_PORT = Messages.get(SanChikarah.class,"ac");
+	public static final String AC_PORT = Messages.get(SanChikarah.class, "ac");
 
 	private int returnDepth = -1;
 	private int returnPos;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SANCHIKARAH;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 
@@ -81,7 +80,7 @@ public class SanChikarah extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_PORT);
-		
+
 		return actions;
 	}
 
@@ -95,8 +94,8 @@ public class SanChikarah extends Item {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			
-			if (Dungeon.depth>26 && !Dungeon.shadowyogkilled) {
+
+			if (Dungeon.depth > 26 && !Dungeon.shadowyogkilled) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING2);
 				return;
@@ -106,77 +105,77 @@ public class SanChikarah extends Item {
 		}
 
 		if (action == AC_PORT) {
-			
-			 hero.spend(TIME_TO_USE);
 
-				Buff buff = Dungeon.hero
-						.buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null)
-					buff.detach();
+			hero.spend(TIME_TO_USE);
 
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
-					if (mob instanceof DriedRose.GhostHero)
-						mob.destroy();
-           if (Dungeon.depth<27){
-            	returnDepth = Dungeon.depth;
-       			returnPos = hero.pos;
+			Buff buff = Dungeon.hero
+					.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null)
+				buff.detach();
+
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
+				if (mob instanceof DriedRose.GhostHero)
+					mob.destroy();
+			if (Dungeon.depth < 27) {
+				returnDepth = Dungeon.depth;
+				returnPos = hero.pos;
 				InterlevelScene.mode = InterlevelScene.Mode.PORT4;
 			} else {
-				 checkPetPort();
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
+				checkPetPort();
+				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 				this.doDrop(hero);
 			}
-               
-                
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-					
+
+
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+
 		} else {
 
 			super.execute(hero, action);
 
 		}
 	}
-	
+
 	public void reset() {
 		returnDepth = -1;
 	}
-	
 
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		//  GLog.i(Messages.get(SanChikarah.class,"pet"));
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			//  GLog.i(Messages.get(SanChikarah.class,"pet"));
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
 
 	@Override
@@ -191,7 +190,7 @@ public class SanChikarah extends Item {
 
 
 	private static final Glowing WHITE = new Glowing(0xFFFFCC);
-	
+
 	@Override
 	public Glowing glowing() {
 		return WHITE;
@@ -199,6 +198,6 @@ public class SanChikarah extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

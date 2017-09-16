@@ -30,12 +30,12 @@ import com.github.epd.sprout.windows.WndBag;
 
 public class ScrollOfUpgrade extends InventoryScroll {
 
-	private static final String TXT_LOOKS_BETTER = Messages.get(ScrollOfUpgrade.class,"looks_better");
+	private static final String TXT_LOOKS_BETTER = Messages.get(ScrollOfUpgrade.class, "looks_better");
 
 	{
-		initials=11;
-		name = Messages.get(this,"name");
-		inventoryTitle = Messages.get(this,"inv_title");
+		initials = 11;
+		name = Messages.get(this, "name");
+		inventoryTitle = Messages.get(this, "inv_title");
 		mode = WndBag.Mode.UPGRADEABLE;
 		consumedValue = 15;
 
@@ -45,27 +45,27 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	@Override
 	protected void onItemSelected(Item item) {
 
-        ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
+		ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
 
-		if (item instanceof Artifact){
+		if (item instanceof Artifact) {
 			if (item.level < ((Artifact) item).levelCap || item.level >= 150) {
-				GLog.w(Messages.get(this,"cannot"));
+				GLog.w(Messages.get(this, "cannot"));
 				new ScrollOfUpgrade().collect();
 				return;
 			} else if (item instanceof HornOfPlenty)
 				item.upgrade(2);
 		}
 
-        if (Dungeon.isChallenged(Challenges.DARKNESS)) {
-            item.upgrade(10);
+		if (Dungeon.isChallenged(Challenges.DARKNESS)) {
+			item.upgrade(10);
 			if (item instanceof HornOfPlenty) item.upgrade(18);
-        } else {
+		} else {
 			item.upgrade();
 		}
 
-            upgrade(curUser);
-            GLog.p(TXT_LOOKS_BETTER, item.name());
-    }
+		upgrade(curUser);
+		GLog.p(TXT_LOOKS_BETTER, item.name());
+	}
 
 	public static void upgrade(Hero hero) {
 		hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
@@ -73,9 +73,9 @@ public class ScrollOfUpgrade extends InventoryScroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 
 	@Override
 	public int price() {

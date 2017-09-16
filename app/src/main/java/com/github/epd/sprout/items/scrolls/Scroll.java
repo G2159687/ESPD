@@ -34,41 +34,41 @@ public abstract class Scroll extends Item {
 
 	protected int initials;
 
-	private static final String TXT_BLINDED = Messages.get(Scroll.class,"blinded");
+	private static final String TXT_BLINDED = Messages.get(Scroll.class, "blinded");
 
-	private static final String TXT_CURSED = Messages.get(Scroll.class,"cursed");
+	private static final String TXT_CURSED = Messages.get(Scroll.class, "cursed");
 
-	public static final String AC_READ = Messages.get(Scroll.class,"ac_read");
+	public static final String AC_READ = Messages.get(Scroll.class, "ac_read");
 
 	protected static final float TIME_TO_READ = 1f;
 
-	private static final Class<?>[] scrolls = { ScrollOfIdentify.class,
+	private static final Class<?>[] scrolls = {ScrollOfIdentify.class,
 			ScrollOfMagicMapping.class, ScrollOfRecharging.class,
 			ScrollOfRemoveCurse.class, ScrollOfTeleportation.class,
 			ScrollOfUpgrade.class, ScrollOfRage.class, ScrollOfTerror.class,
 			ScrollOfLullaby.class, ScrollOfMagicalInfusion.class,
-			ScrollOfPsionicBlast.class, ScrollOfMirrorImage.class, ScrollOfRegrowth.class };
+			ScrollOfPsionicBlast.class, ScrollOfMirrorImage.class, ScrollOfRegrowth.class};
 	private static final String[] runes = {
-			Messages.get(Scroll.class,"kaunan"),
-			Messages.get(Scroll.class,"sowilo"),
-			Messages.get(Scroll.class,"laguz"),
-			Messages.get(Scroll.class,	"yngvi"),
-			Messages.get(Scroll.class,	"gyfu"),
-			Messages.get(Scroll.class,	"raido"),
-			Messages.get(Scroll.class,	"isaz"),
-			Messages.get(Scroll.class,	"mannaz"),
-			Messages.get(Scroll.class,	"naudiz"),
-			Messages.get(Scroll.class,	"berkanan"),
-			Messages.get(Scroll.class,	"ncosrane"),
-			Messages.get(Scroll.class,	"tiwaz"),
-			Messages.get(Scroll.class,  "nendil") };
-	private static final Integer[] images = { ItemSpriteSheet.SCROLL_KAUNAN,
+			Messages.get(Scroll.class, "kaunan"),
+			Messages.get(Scroll.class, "sowilo"),
+			Messages.get(Scroll.class, "laguz"),
+			Messages.get(Scroll.class, "yngvi"),
+			Messages.get(Scroll.class, "gyfu"),
+			Messages.get(Scroll.class, "raido"),
+			Messages.get(Scroll.class, "isaz"),
+			Messages.get(Scroll.class, "mannaz"),
+			Messages.get(Scroll.class, "naudiz"),
+			Messages.get(Scroll.class, "berkanan"),
+			Messages.get(Scroll.class, "ncosrane"),
+			Messages.get(Scroll.class, "tiwaz"),
+			Messages.get(Scroll.class, "nendil")};
+	private static final Integer[] images = {ItemSpriteSheet.SCROLL_KAUNAN,
 			ItemSpriteSheet.SCROLL_SOWILO, ItemSpriteSheet.SCROLL_LAGUZ,
 			ItemSpriteSheet.SCROLL_YNGVI, ItemSpriteSheet.SCROLL_GYFU,
 			ItemSpriteSheet.SCROLL_RAIDO, ItemSpriteSheet.SCROLL_ISAZ,
 			ItemSpriteSheet.SCROLL_MANNAZ, ItemSpriteSheet.SCROLL_NAUDIZ,
 			ItemSpriteSheet.SCROLL_BERKANAN, ItemSpriteSheet.SCROLL_NCOSRANE,
-			ItemSpriteSheet.SCROLL_TIWAZ, ItemSpriteSheet.SCROLL_NENDIL };
+			ItemSpriteSheet.SCROLL_TIWAZ, ItemSpriteSheet.SCROLL_NENDIL};
 
 	private static ItemStatusHandler<Scroll> handler;
 
@@ -123,7 +123,7 @@ public abstract class Scroll extends Item {
 				GLog.w(TXT_BLINDED);
 			} else if (hero.buff(UnstableSpellbook.bookRecharge.class) != null
 					&& hero.buff(UnstableSpellbook.bookRecharge.class)
-							.isCursed()
+					.isCursed()
 					&& !(this instanceof ScrollOfRemoveCurse)) {
 				GLog.n(TXT_CURSED);
 			} else {
@@ -159,13 +159,13 @@ public abstract class Scroll extends Item {
 
 	@Override
 	public String name() {
-		return isKnown() ? name : Messages.get(this,"unknown_name", rune);
+		return isKnown() ? name : Messages.get(this, "unknown_name", rune);
 	}
 
 	@Override
 	public String info() {
 		return isKnown() ? desc()
-				:Messages.get(this,"unknown_desc", rune) ;
+				: Messages.get(this, "unknown_desc", rune);
 	}
 
 	@Override
@@ -195,7 +195,7 @@ public abstract class Scroll extends Item {
 		return 15 * quantity;
 	}
 
-	public Integer initials(){
+	public Integer initials() {
 		return isKnown() ? initials : null;
 	}
 }

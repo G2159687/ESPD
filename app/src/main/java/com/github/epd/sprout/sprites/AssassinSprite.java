@@ -56,26 +56,25 @@ public class AssassinSprite extends MobSprite {
 		play(run.clone());
 	}
 
-	
+
 	@Override
 	public void attack(int cell) {
 		if (!Level.adjacent(cell, ch.pos)) {
 			Char enemy = Actor.findChar(cell);
-				  ((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
+			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new Shuriken(), new Callback() {
 						@Override
 						public void call() {
 							ch.onAttackComplete();
 						}
-				});
-		 	  
-		  		
-		  		if(Random.Int(5)==0){
-		  			Buff.affect(enemy, Slow.class, Slow.duration(enemy));
-		  		}
-		  				  		
-		  		
-		  		
+					});
+
+
+			if (Random.Int(5) == 0) {
+				Buff.affect(enemy, Slow.class, Slow.duration(enemy));
+			}
+
+
 			play(cast);
 			turnTo(ch.pos, cell);
 
@@ -89,7 +88,7 @@ public class AssassinSprite extends MobSprite {
 	@Override
 	public void onComplete(Animation anim) {
 		if (anim == run) {
-			synchronized (this){
+			synchronized (this) {
 				isMoving = false;
 				idle();
 				notifyAll();

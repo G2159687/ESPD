@@ -20,9 +20,7 @@ package com.github.epd.sprout.scenes;
 import android.opengl.GLES20;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.ShatteredPixelDungeon;
-import com.github.epd.sprout.effects.BadgeBanner;
 import com.github.epd.sprout.ui.RenderedTextMultiline;
 import com.watabou.input.Touchscreen;
 import com.watabou.noosa.BitmapText;
@@ -42,8 +40,8 @@ import javax.microedition.khronos.opengles.GL10;
 public class PixelScene extends Scene {
 
 	// Minimum virtual display size for portrait orientation
-	public static final float MIN_WIDTH_P = 128;
-	public static final float MIN_HEIGHT_P = 224;
+	public static final float MIN_WIDTH_P = 135;
+	public static final float MIN_HEIGHT_P = 225;
 
 	// Minimum virtual display size for landscape orientation
 	public static final float MIN_WIDTH_L = 224;
@@ -81,21 +79,20 @@ public class PixelScene extends Scene {
 			minHeight = MIN_HEIGHT_P;
 		}
 
-		maxDefaultZoom = (int)Math.min(Game.width/minWidth, Game.height/minHeight);
-		maxScreenZoom = (int)Math.min(Game.dispWidth/minWidth, Game.dispHeight/minHeight);
+		maxDefaultZoom = (int) Math.min(Game.width / minWidth, Game.height / minHeight);
+		maxScreenZoom = (int) Math.min(Game.dispWidth / minWidth, Game.dispHeight / minHeight);
 
-		maxDefaultZoom = (int)Math.min(Game.width/minWidth, Game.height/minHeight);
+		maxDefaultZoom = (int) Math.min(Game.width / minWidth, Game.height / minHeight);
 		defaultZoom = ShatteredPixelDungeon.scale();
-		if (defaultZoom < Math.ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
-			defaultZoom = (int)Math.ceil( Game.density * 2.5 );
+		if (defaultZoom < Math.ceil(Game.density * 2) || defaultZoom > maxDefaultZoom) {
+			defaultZoom = (int) Math.ceil(Game.density * 2.5);
 			while ((
 					Game.width / defaultZoom < minWidth ||
 							Game.height / defaultZoom < minHeight
-				&& defaultZoom > 1)) {
+									&& defaultZoom > 1)) {
 
-			defaultZoom--;
+				defaultZoom--;
 			}
-			ShatteredPixelDungeon.scale(defaultZoom);
 		}
 
 		minZoom = 1;
@@ -191,8 +188,7 @@ public class PixelScene extends Scene {
 				scale = (int) scale;
 			}
 
-		}
-		else if (pt >= 10) {
+		} else if (pt >= 10) {
 
 			scale = pt / 10;
 			if (1.4 <= scale && scale < 2) {
@@ -246,40 +242,40 @@ public class PixelScene extends Scene {
 	}
 
 
-	public static RenderedText renderText(int size ) {
+	public static RenderedText renderText(int size) {
 		return renderText("", size);
 	}
 
-	public static RenderedText renderText( String text, int size ) {
-		RenderedText result = new RenderedText( text, size*defaultZoom);
-		result.scale.set(1/(float)defaultZoom);
+	public static RenderedText renderText(String text, int size) {
+		RenderedText result = new RenderedText(text, size * defaultZoom);
+		result.scale.set(1 / (float) defaultZoom);
 		return result;
 	}
 
-	public static RenderedTextMultiline renderMultiline( int size ){
+	public static RenderedTextMultiline renderMultiline(int size) {
 		return renderMultiline("", size);
 	}
 
-	public static RenderedTextMultiline renderMultiline( String text, int size ){
-		RenderedTextMultiline result = new RenderedTextMultiline( text, size*defaultZoom);
-		result.zoom(1/(float)defaultZoom);
+	public static RenderedTextMultiline renderMultiline(String text, int size) {
+		RenderedTextMultiline result = new RenderedTextMultiline(text, size * defaultZoom);
+		result.zoom(1 / (float) defaultZoom);
 		return result;
 	}
 
-	public static float align( float pos ) {
-		return Math.round(pos * defaultZoom) / (float)defaultZoom;
+	public static float align(float pos) {
+		return Math.round(pos * defaultZoom) / (float) defaultZoom;
 	}
 
-	public static float align( Camera camera, float pos ) {
+	public static float align(Camera camera, float pos) {
 		return Math.round(pos * camera.zoom) / camera.zoom;
 	}
 
-	public static void align( Visual v ) {
-		v.x = align( v.x );
-		v.y = align( v.y );
+	public static void align(Visual v) {
+		v.x = align(v.x);
+		v.y = align(v.y);
 	}
 
-	public static void align( Component c ){
+	public static void align(Component c) {
 		c.setPos(align(c.left()), align(c.top()));
 	}
 
@@ -295,16 +291,6 @@ public class PixelScene extends Scene {
 
 	protected void fadeIn(int color, boolean light) {
 		add(new Fader(color, light));
-	}
-
-	public static void showBadge(Badges.Badge badge) {
-		BadgeBanner banner = BadgeBanner.show(badge.image);
-		banner.camera = uiCamera;
-		banner.x = align(banner.camera,
-				(banner.camera.width - banner.width) / 2);
-		banner.y = align(banner.camera,
-				(banner.camera.height - banner.height) / 3);
-		Game.scene().add(banner);
 	}
 
 	protected static class Fader extends ColorBlock {

@@ -78,7 +78,7 @@ public class SokobanCastle extends Level {
 		color2 = 0xb9d661;
 		WIDTH = 48;
 		HEIGHT = 48;
-		LENGTH = HEIGHT*WIDTH;
+		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -97,7 +97,7 @@ public class SokobanCastle extends Level {
 	private static final String PORTSWITCHSPOTS = "portswitchspots";
 	private static final String DESTINATIONSPOTS = "destinationspots";
 	private static final String TELEPORTASSIGN = "teleportassign";
-	private static final String DESTINATIONASSIGN= "destinationassign";
+	private static final String DESTINATIONASSIGN = "destinationassign";
 	private static final String PRIZENO = "prizeNo";
 
 
@@ -118,28 +118,28 @@ public class SokobanCastle extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WOOL_RUG:
-		return Messages.get(DragonCaveLevel.class,"rug_name");
-	case Terrain.FLEECING_TRAP:
-		return Messages.get(DragonCaveLevel.class,"fleecing_name");
-	case Terrain.CHANGE_SHEEP_TRAP:
-		return Messages.get(DragonCaveLevel.class,"changetrap_name");
-	case Terrain.SOKOBAN_ITEM_REVEAL:
-		return Messages.get(DragonCaveLevel.class,"reveal_name");
-	case Terrain.SOKOBAN_SHEEP:
-		return Messages.get(Level.class,"floor_name");
-	case Terrain.SWITCH_SOKOBAN_SHEEP:
-		return Messages.get(Level.class,"floor_name");
-	case Terrain.CORNER_SOKOBAN_SHEEP:
-		return Messages.get(Level.class,"floor_name");
-	case Terrain.BLACK_SOKOBAN_SHEEP:
-		return Messages.get(Level.class,"floor_name");
-	case Terrain.SOKOBAN_PORT_SWITCH:
-		return Messages.get(DragonCaveLevel.class,"switch_name");
-	case Terrain.PORT_WELL:
-		return Messages.get(DragonCaveLevel.class,"portal_name");
-		case Terrain.WATER:
-			return Messages.get(PrisonLevel.class,"water_name");
+			case Terrain.WOOL_RUG:
+				return Messages.get(DragonCaveLevel.class, "rug_name");
+			case Terrain.FLEECING_TRAP:
+				return Messages.get(DragonCaveLevel.class, "fleecing_name");
+			case Terrain.CHANGE_SHEEP_TRAP:
+				return Messages.get(DragonCaveLevel.class, "changetrap_name");
+			case Terrain.SOKOBAN_ITEM_REVEAL:
+				return Messages.get(DragonCaveLevel.class, "reveal_name");
+			case Terrain.SOKOBAN_SHEEP:
+				return Messages.get(Level.class, "floor_name");
+			case Terrain.SWITCH_SOKOBAN_SHEEP:
+				return Messages.get(Level.class, "floor_name");
+			case Terrain.CORNER_SOKOBAN_SHEEP:
+				return Messages.get(Level.class, "floor_name");
+			case Terrain.BLACK_SOKOBAN_SHEEP:
+				return Messages.get(Level.class, "floor_name");
+			case Terrain.SOKOBAN_PORT_SWITCH:
+				return Messages.get(DragonCaveLevel.class, "switch_name");
+			case Terrain.PORT_WELL:
+				return Messages.get(DragonCaveLevel.class, "portal_name");
+			case Terrain.WATER:
+				return Messages.get(PrisonLevel.class, "water_name");
 			default:
 				return super.tileName(tile);
 		}
@@ -158,21 +158,21 @@ public class SokobanCastle extends Level {
 			case Terrain.BLACK_SOKOBAN_SHEEP:
 				return "";
 			case Terrain.FLEECING_TRAP:
-			return Messages.get(DragonCaveLevel.class,"fleecing_desc");
-		case Terrain.CHANGE_SHEEP_TRAP:
-			return Messages.get(DragonCaveLevel.class,"changetrap_desc");
-		case Terrain.SOKOBAN_ITEM_REVEAL:
-			return Messages.get(DragonCaveLevel.class,"reveal_desc");
-		case Terrain.SOKOBAN_PORT_SWITCH:
-			return Messages.get(DragonCaveLevel.class,"switch_desc");
-		case Terrain.PORT_WELL:
-			return Messages.get(DragonCaveLevel.class,"portal_desc");
+				return Messages.get(DragonCaveLevel.class, "fleecing_desc");
+			case Terrain.CHANGE_SHEEP_TRAP:
+				return Messages.get(DragonCaveLevel.class, "changetrap_desc");
+			case Terrain.SOKOBAN_ITEM_REVEAL:
+				return Messages.get(DragonCaveLevel.class, "reveal_desc");
+			case Terrain.SOKOBAN_PORT_SWITCH:
+				return Messages.get(DragonCaveLevel.class, "switch_desc");
+			case Terrain.PORT_WELL:
+				return Messages.get(DragonCaveLevel.class, "portal_desc");
 			case Terrain.WOOL_RUG:
-			return Messages.get(DragonCaveLevel.class,"rug_desc");
-		case Terrain.EMPTY_DECO:
-			return Messages.get(PrisonLevel.class,"empty_deco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(PrisonLevel.class,"bookshelf_desc");
+				return Messages.get(DragonCaveLevel.class, "rug_desc");
+			case Terrain.EMPTY_DECO:
+				return Messages.get(PrisonLevel.class, "empty_deco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(PrisonLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc(tile);
 		}
@@ -194,7 +194,7 @@ public class SokobanCastle extends Level {
 
 		heapstogen = new HashSet<Item>();
 
-		Collection <Bundlable> collectionheap = bundle.getCollection(HEAPSTOGEN);
+		Collection<Bundlable> collectionheap = bundle.getCollection(HEAPSTOGEN);
 		for (Bundlable i : collectionheap) {
 			Item item = (Item) i;
 			if (item != null) {
@@ -218,7 +218,7 @@ public class SokobanCastle extends Level {
 	public void addItemToGen(Item item, int arraypos, int pos) {
 		if (item != null) {
 			heapstogen.add(item);
-			heapgenspots[arraypos]=pos;
+			heapgenspots[arraypos] = pos;
 		}
 	}
 
@@ -238,7 +238,7 @@ public class SokobanCastle extends Level {
 		for (Item item : heapstogen) {
 			if (match.isInstance(item)) {
 				heapstogen.remove(item);
-				keysLeft=true;
+				keysLeft = true;
 				return item;
 			}
 		}
@@ -271,7 +271,7 @@ public class SokobanCastle extends Level {
 
 			case Terrain.FLEECING_TRAP:
 
-				if (ch != null && ch==Dungeon.hero){
+				if (ch != null && ch == Dungeon.hero) {
 					trap = true;
 					FleecingTrap.trigger(cell, ch);
 				}
@@ -279,7 +279,7 @@ public class SokobanCastle extends Level {
 
 			case Terrain.CHANGE_SHEEP_TRAP:
 
-				if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep){
+				if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep) {
 					trap = true;
 					ChangeSheepTrap.trigger(cell, ch);
 				}
@@ -287,21 +287,21 @@ public class SokobanCastle extends Level {
 
 			case Terrain.PORT_WELL:
 
-				if (ch != null && ch==Dungeon.hero){
+				if (ch != null && ch == Dungeon.hero) {
 
-					int portarray=-1;
-					int destinationspot=cell;
+					int portarray = -1;
+					int destinationspot = cell;
 
-					for(int i = 0; i < teleportspots.length; i++) {
-						if(teleportspots[i] == cell) {
+					for (int i = 0; i < teleportspots.length; i++) {
+						if (teleportspots[i] == cell) {
 							portarray = i;
 							break;
 						}
 					}
 
-					if(portarray != -1) {
-						destinationspot=destinationspots[portarray];
-						if (destinationspot>0){
+					if (portarray != -1) {
+						destinationspot = destinationspots[portarray];
+						if (destinationspot > 0) {
 							SokobanPortalTrap.trigger(cell, ch, destinationspot);
 						}
 					}
@@ -309,9 +309,9 @@ public class SokobanCastle extends Level {
 				break;
 
 			case Terrain.SOKOBAN_PORT_SWITCH:
-				trap=false;
+				trap = false;
 				ActivatePortalTrap.trigger(cell, ch);
-				
+
 				/*	
 				int arraypos = -1; //position in array of teleport switch
 				int portpos = -1; //position on map of teleporter
@@ -369,11 +369,11 @@ public class SokobanCastle extends Level {
 				break;
 
 			case Terrain.DOOR:
-				Door.enter(cell, ch);
+				Door.enter(cell);
 				break;
 		}
 
-		if (trap){
+		if (trap) {
 
 			if (Dungeon.visible[cell])
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -390,7 +390,6 @@ public class SokobanCastle extends Level {
 			plant.activate(ch);
 		}
 	}
-
 
 
 	@Override
@@ -421,34 +420,34 @@ public class SokobanCastle extends Level {
 				break;
 
 			case Terrain.FLEECING_TRAP:
-				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
-					fleece=true;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
+					fleece = true;
 				}
 				FleecingTrap.trigger(cell, mob);
 				break;
 
 			case Terrain.CHANGE_SHEEP_TRAP:
-				trap=false;
-				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof Sheep){
-					trap=true;
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof Sheep) {
+					trap = true;
 					ChangeSheepTrap.trigger(cell, mob);
 				}
 				break;
 
 			case Terrain.SOKOBAN_ITEM_REVEAL:
-				trap=false;
-				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
 					HeapGenTrap.trigger(cell, mob);
-					drop(genPrizeItem(IronKey.class),heapgenspots[prizeNo]);
+					drop(genPrizeItem(IronKey.class), heapgenspots[prizeNo]);
 					prizeNo++;
-					sheep=true;
-					trap=true;
+					sheep = true;
+					trap = true;
 				}
 				break;
 
 			case Terrain.SOKOBAN_PORT_SWITCH:
-				trap=false;
-				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
 					ActivatePortalTrap.trigger(cell, mob);
 				
 				/*
@@ -464,8 +463,8 @@ public class SokobanCastle extends Level {
 					int portarray = -1; //position in array of teleporter
 					int destpos = -1; //destination position assigned to switch
 
-					for(int i = 0; i < portswitchspots.length; i++) {
-						if(portswitchspots[i] == cell) {
+					for (int i = 0; i < portswitchspots.length; i++) {
+						if (portswitchspots[i] == cell) {
 							arraypos = i;
 							//GLog.i("Pos1 %s", arraypos);
 							break;
@@ -478,21 +477,21 @@ public class SokobanCastle extends Level {
 					//GLog.i("ass2 %s", portpos);
 					//GLog.i("dest3 %s", destpos);
 
-					for(int i = 0; i < teleportspots.length; i++) {
-						if(teleportspots[i] == portpos) {
+					for (int i = 0; i < teleportspots.length; i++) {
+						if (teleportspots[i] == portpos) {
 							portarray = i;
 							//GLog.i("Pos4 %s", portarray);
 							break;
 						}
 					}
 
-					if (map[portpos] == Terrain.PORT_WELL){
-						destinationspots[portarray]=destpos;
+					if (map[portpos] == Terrain.PORT_WELL) {
+						destinationspots[portarray] = destpos;
 						//GLog.i("Pos5 %s", destpos);
-						GLog.i(Messages.get(SokobanIntroLevel.class,"click"));
+						GLog.i(Messages.get(SokobanIntroLevel.class, "click"));
 					}
 
-					sheep=true;
+					sheep = true;
 				}
 				break;
 
@@ -517,7 +516,7 @@ public class SokobanCastle extends Level {
 				break;
 
 			case Terrain.DOOR:
-				Door.enter(cell, mob);
+				Door.enter(cell);
 
 			default:
 				trap = false;
@@ -583,6 +582,7 @@ public class SokobanCastle extends Level {
 
 		return true;
 	}
+
 	@Override
 	protected void decorate() {
 		//do nothing, all decorations are hard-coded.
@@ -600,7 +600,7 @@ public class SokobanCastle extends Level {
 		SokobanSentinel mob2 = new SokobanSentinel();
 		mob2.pos = 38 + WIDTH * 20;
 		mobs.add(mob2);
-		Actor.occupyCell(mob2);	
+		Actor.occupyCell(mob2);
 		/*	
 		    SokobanSentinel mob3 = new SokobanSentinel();
 			mob3.pos = 2 + WIDTH * 43;
@@ -616,14 +616,29 @@ public class SokobanCastle extends Level {
 	}
 
 
-
 	protected void createSheep() {
 		for (int i = 0; i < LENGTH; i++) {
-			if (map[i]==Terrain.SOKOBAN_SHEEP){SheepSokoban npc = new SheepSokoban(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-			else if (map[i]==Terrain.CORNER_SOKOBAN_SHEEP){SheepSokobanCorner npc = new SheepSokobanCorner(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-			else if (map[i]==Terrain.SWITCH_SOKOBAN_SHEEP){SheepSokobanSwitch npc = new SheepSokobanSwitch(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-			else if (map[i]==Terrain.BLACK_SOKOBAN_SHEEP){SheepSokobanBlack npc = new SheepSokobanBlack(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-			else if (map[i]==Terrain.PORT_WELL){
+			if (map[i] == Terrain.SOKOBAN_SHEEP) {
+				SheepSokoban npc = new SheepSokoban();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
+				SheepSokobanCorner npc = new SheepSokobanCorner();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
+				SheepSokobanSwitch npc = new SheepSokobanSwitch();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
+				SheepSokobanBlack npc = new SheepSokobanBlack();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.PORT_WELL) {
 				/*
 					Portal portal = new Portal();
 				    portal.seed(i, 1);
@@ -635,28 +650,28 @@ public class SokobanCastle extends Level {
 	}
 
 
-	protected void createSwitches(){
+	protected void createSwitches() {
 
-		//spots where your portals are		
+		//spots where your portals are
 		teleportspots[0] = 4 + WIDTH * 3;
 		teleportspots[1] = 7 + WIDTH * 27;
 		teleportspots[2] = 37 + WIDTH * 35;
 
 
-		//spots where your portal switches are		
+		//spots where your portal switches are
 		portswitchspots[0] = 32 + WIDTH * 40;
 
 
-		//assign each switch to a portal		
+		//assign each switch to a portal
 		teleportassign[0] = 37 + WIDTH * 35;
 
 
-		//assign each switch to a destination spot		
+		//assign each switch to a destination spot
 		destinationassign[0] = 9 + WIDTH * 37;
 
 
-		//set the original destination of portals		
-		destinationspots[0] = 24 + WIDTH * 22; //6 + WIDTH * 5;			
+		//set the original destination of portals
+		destinationspots[0] = 24 + WIDTH * 22; //6 + WIDTH * 5;
 		destinationspots[1] = 1 + WIDTH * 27;
 		destinationspots[2] = 0;
 
@@ -666,33 +681,38 @@ public class SokobanCastle extends Level {
 
 	@Override
 	protected void createItems() {
-		int goldmin=1; int goldmax=100;
-		if (first){
-			goldmin=400; goldmax=800;
+		int goldmin = 1;
+		int goldmax = 100;
+		if (first) {
+			goldmin = 400;
+			goldmax = 800;
 		}
 		for (int i = 0; i < LENGTH; i++) {
-			if (map[i]==Terrain.SOKOBAN_HEAP){
-				if (first && Random.Int(5)==0){drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;}
-				else {drop(new Gold(Random.Int(goldmin, goldmax)), i).type = Heap.Type.CHEST;}
+			if (map[i] == Terrain.SOKOBAN_HEAP) {
+				if (first && Random.Int(5) == 0) {
+					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
+				} else {
+					drop(new Gold(Random.Int(goldmin, goldmax)), i).type = Heap.Type.CHEST;
+				}
 			}
 		}
 
-		addItemToGen(new IronKey(Dungeon.depth) , 0, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth) , 1, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth) , 2, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth) , 3, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth) , 4, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth) , 5, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 0, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 1, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 2, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 3, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 4, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 5, 24 + WIDTH * 22);
 
 
-	//	if (first){
-			addItemToGen(new Phaseshift.Seed() , 6, 30 + WIDTH * 23);
-			addItemToGen(new Starflower.Seed() , 7, 18 + WIDTH * 23);
-			addItemToGen(new Spectacles() , 8, 25 + WIDTH * 2);
-			addItemToGen(new ScrollOfMagicalInfusion() , 9, 26 + WIDTH * 2);
-			addItemToGen(new ScrollOfMagicalInfusion() , 10, 8 + WIDTH * 37);
-			addItemToGen(new ScrollOfRegrowth() , 11, 10 + WIDTH * 37);
-	//	}
+		//	if (first){
+		addItemToGen(new Phaseshift.Seed(), 6, 30 + WIDTH * 23);
+		addItemToGen(new Starflower.Seed(), 7, 18 + WIDTH * 23);
+		addItemToGen(new Spectacles(), 8, 25 + WIDTH * 2);
+		addItemToGen(new ScrollOfMagicalInfusion(), 9, 26 + WIDTH * 2);
+		addItemToGen(new ScrollOfMagicalInfusion(), 10, 8 + WIDTH * 37);
+		addItemToGen(new ScrollOfRegrowth(), 11, 10 + WIDTH * 37);
+		//	}
 
 		drop(new PotionOfLiquidFlame(), 9 + WIDTH * 24).type = Heap.Type.CHEST;
 	}

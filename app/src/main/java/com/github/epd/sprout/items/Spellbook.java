@@ -67,56 +67,55 @@ public class Spellbook extends Item {
 	 * Magic Missile
 	 * Transfusion
 	 */
-	
-	
+
+
 	public final float TIME_TO_USE = 1;
 	public final int fullCharge = 1000;
-	
-	
+
+
 	public static final String AC_SELECT = "SELECT SPELLS";
 	public static final String AC_VIEW = "VIEW SPELLS";
-		
+
 	protected String inventoryTitle = "Select a journal page";
 	protected WndBag.Mode mode = WndBag.Mode.JOURNALPAGES;
 
-	
+
 	public int returnDepth = -1;
 	public int returnPos;
-	
+
 	public int charge = 0;
 	public int level = 1;
-	
-	public int checkReading(){
-		int lvl=1;			
-		if (Dungeon.hero.buff(MagicSight.class) != null){
-			lvl+=1;
+
+	public int checkReading() {
+		int lvl = 1;
+		if (Dungeon.hero.buff(MagicSight.class) != null) {
+			lvl += 1;
 		}
 		return lvl;
 	}
-	
-	public int reqCharges(){
-			
-		int calcCharges = Math.round(fullCharge/(level*checkReading()));
-		return calcCharges;
-		
-	}
-	
 
-	public boolean[] spells = new boolean[20];	
-	public int[] charges = new int[20];	
+	public int reqCharges() {
+
+		return Math.round(fullCharge / (level * checkReading()));
+
+	}
+
+
+	public boolean[] spells = new boolean[20];
+	public int[] charges = new int[20];
 	public boolean[] learn = new boolean[20];
-	public int[] learnCount = new int[20];	
-		
+	public int[] learnCount = new int[20];
+
 	{
 		name = "Spellbook";
 		image = ItemSpriteSheet.OTILUKES_JOURNAL;
 
 		unique = true;
-		
+
 		//rooms[0] = true;
 		//firsts[0] = true;
 	}
-		
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 	private static final String SPELLS = "rooms";
@@ -157,29 +156,27 @@ public class Spellbook extends Item {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		
+
 		actions.add(AC_SELECT);
 		actions.add(AC_VIEW);
-						
+
 		return actions;
 	}
 
 	@Override
 	public void execute(Hero hero, String action) {
 
-		
+
 		if (action == AC_SELECT) {
-				
-		//	GameScene.show(new WndOtiluke(rooms, this));
-			
+
+			//	GameScene.show(new WndOtiluke(rooms, this));
+
 		}
-              
-       if (action == AC_VIEW) {
-    	   
-    	  
-		}
-                 					
-		 else {
+
+		if (action == AC_VIEW) {
+
+
+		} else {
 
 			super.execute(hero, action);
 
@@ -188,9 +185,9 @@ public class Spellbook extends Item {
 
 	@Override
 	public int price() {
-		return 300*quantity;
+		return 300 * quantity;
 	}
-	
+
 	public void reset() {
 		returnDepth = -1;
 	}
@@ -205,21 +202,20 @@ public class Spellbook extends Item {
 		return true;
 	}
 
-		
+
 	@Override
 	public String info() {
-		
-		String strdesc = "Your trusty spellbook.";		
-		return strdesc;
+
+		return "Your trusty spellbook.";
 	}
-	
+
 	protected WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect(Item item) {
 			if (item != null && item instanceof Spell) {
 				Hero hero = Dungeon.hero;
 				int spellnum = ((Spell) item).spellnum;
-			
+
 				hero.sprite.operate(hero.pos);
 				hero.busy();
 				hero.spend(2f);
@@ -227,14 +223,14 @@ public class Spellbook extends Item {
 				hero.sprite.emitter().burst(ElmoParticle.FACTORY, 12);
 
 				item.detach(hero.belongings.backpack);
-				GLog.h("You add the spell to your book!");							
-				
-				
-				spells[spellnum] = true;				
-				
+				GLog.h("You add the spell to your book!");
+
+
+				spells[spellnum] = true;
+
+			}
 		}
-	 }
 	};
-	
+
 
 }

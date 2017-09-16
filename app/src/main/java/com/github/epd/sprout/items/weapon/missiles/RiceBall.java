@@ -43,19 +43,19 @@ import com.github.epd.sprout.utils.GLog;
 import com.watabou.utils.Random;
 
 public class RiceBall extends MissileWeapon {
-	
+
 	public static final float DURATION = 10f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.RICEBALL;
 
 		MIN = 1;
 		MAX = 2;
-		
+
 		DLY = 0.25f;
 
-		bones = false; 
+		bones = false;
 	}
 
 	public RiceBall() {
@@ -69,15 +69,14 @@ public class RiceBall extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	@Override
 	public void proc(Char attacker, Char defender, int damage) {
-		
-		
-			
-		if (defender != null 
+
+
+		if (defender != null
 				&& !(defender instanceof NPC)
 				&& !(defender instanceof BlueWraith)
 				&& !(defender instanceof Wraith)
@@ -92,40 +91,40 @@ public class RiceBall extends MissileWeapon {
 				&& !(defender instanceof ShadowYog)
 				&& !(defender instanceof SpectralRat)
 				) {
-  
+
 			Buff.affect(defender, Drowsy.class);
 			defender.sprite.centerEmitter().start(Speck.factory(Speck.NOTE), 0.3f, 5);
-			
-			if  (defender.HP/defender.HT > 0.01f){ 
-			int count = 20;
-			int pos;
-			do {
-				pos = Dungeon.level.randomRespawnCell();
-				if (count-- <= 0) {
-					break;
+
+			if (defender.HP / defender.HT > 0.01f) {
+				int count = 20;
+				int pos;
+				do {
+					pos = Dungeon.level.randomRespawnCell();
+					if (count-- <= 0) {
+						break;
+					}
+				} while (pos == -1);
+
+				if (pos == -1) {
+
+					GLog.w(ScrollOfTeleportation.TXT_NO_TELEPORT);
+
+				} else {
+
+					defender.pos = pos;
+					defender.sprite.place(defender.pos);
+					defender.sprite.visible = Dungeon.visible[pos];
+					GLog.i(Messages.get(this, "tele", curUser.name, defender.name));
+
 				}
-			} while (pos == -1);
-
-			if (pos == -1) {
-
-				GLog.w(ScrollOfTeleportation.TXT_NO_TELEPORT);
 
 			} else {
 
-				defender.pos = pos;
-				defender.sprite.place(defender.pos);
-				defender.sprite.visible = Dungeon.visible[pos];
-				GLog.i(Messages.get(this,"tele", curUser.name, defender.name));
+				GLog.i(Messages.get(this, "nothing"));
 
 			}
+		}
 
-		   } else {
-
-			GLog.i(Messages.get(this,"nothing"));
-
-		  }
-	    }
-		
 		super.proc(attacker, defender, damage);
 	}
 

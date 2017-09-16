@@ -31,10 +31,10 @@ import com.watabou.utils.Random;
 public class Blackberry extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEED_BLACKBERRY;
-		energy = (Hunger.STARVING - Hunger.HUNGRY)/10;
-		message = Messages.get(this,"eat");
+		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
+		message = Messages.get(this, "eat");
 		hornValue = 6;
 		bones = false;
 	}
@@ -47,37 +47,45 @@ public class Blackberry extends Food {
 		if (action.equals(AC_EAT)) {
 
 			switch (Random.Int(10)) {
-			case 1:
-				Buff.affect(hero, MindVision.class, MindVision.DURATION);
-				Dungeon.observe();
+				case 1:
+					Buff.affect(hero, MindVision.class, MindVision.DURATION);
+					Dungeon.observe();
 
-				if (Dungeon.level.mobs.size() > 0) {
-					GLog.i(Messages.get(this,"mv1"));
-				} else {
-					GLog.i(Messages.get(this,"mv2"));
-				}
-				Buff.affect(hero, BerryRegeneration.class).level(hero.HT+hero.HT);
-				GLog.w(Messages.get(this,"eat3"));
-				break;
-			case 0: case 2: case 3: case 4: case 5: 
-			case 6: case 7: case 8: case 9: case 10:
-				GLog.p(Messages.get(this,"eat3"));
-				Buff.affect(hero, BerryRegeneration.class).level(hero.HT/2);
-				break;
+					if (Dungeon.level.mobs.size() > 0) {
+						GLog.i(Messages.get(this, "mv1"));
+					} else {
+						GLog.i(Messages.get(this, "mv2"));
+					}
+					Buff.affect(hero, BerryRegeneration.class).level(hero.HT + hero.HT);
+					GLog.w(Messages.get(this, "eat3"));
+					break;
+				case 0:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+					GLog.p(Messages.get(this, "eat3"));
+					Buff.affect(hero, BerryRegeneration.class).level(hero.HT / 2);
+					break;
 			}
 		}
-	}	
-	
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
-	
+
 	public Blackberry() {
 		this(1);
 	}

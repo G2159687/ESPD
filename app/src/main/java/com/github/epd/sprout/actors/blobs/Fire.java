@@ -48,7 +48,7 @@ public class Fire extends Blob {
 
 		boolean observe = false;
 
-		for (int i = area.left-1; i <= area.right; i++) {
+		for (int i = area.left - 1; i <= area.right; i++) {
 			for (int j = area.top - 1; j <= area.bottom; j++) {
 				cell = i + j * WIDTH;
 				if (cur[cell] > 0) {
@@ -83,7 +83,7 @@ public class Fire extends Blob {
 						}
 
                     /*
-					if (shelf && Random.Float()<.02 && Dungeon.hero.buff(MagicSight.class) != null){
+                    if (shelf && Random.Float()<.02 && Dungeon.hero.buff(MagicSight.class) != null){
 
 							if (Dungeon.limitedDrops.vaultpage.dropped()) {
 								Dungeon.level.drop(new RoyalSpork(), pos);
@@ -141,8 +141,9 @@ public class Fire extends Blob {
 		super.use(emitter);
 		emitter.start(FlameParticle.FACTORY, 0.03f, 0);
 	}
+
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

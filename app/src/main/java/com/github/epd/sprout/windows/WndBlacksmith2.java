@@ -47,12 +47,12 @@ public class WndBlacksmith2 extends Window {
 	private ItemButton btnItem2;
 	private NewRedButton btnReforge;
 
-	private static final String TXT_PROMPT = Messages.get(WndBlacksmith2.class,"prompt");
-	
-	private static final String TXT_SELECT1 = Messages.get(WndBlacksmith2.class,"select1");
-	private static final String TXT_SELECT2 = Messages.get(WndBlacksmith2.class,"select2");
-	private static final String TXT_REFORGE = Messages.get(WndBlacksmith2.class,"reforge");
-	private static final String TXT_WORK = Messages.get(WndBlacksmith2.class,"work");
+	private static final String TXT_PROMPT = Messages.get(WndBlacksmith2.class, "prompt");
+
+	private static final String TXT_SELECT1 = Messages.get(WndBlacksmith2.class, "select1");
+	private static final String TXT_SELECT2 = Messages.get(WndBlacksmith2.class, "select2");
+	private static final String TXT_REFORGE = Messages.get(WndBlacksmith2.class, "reforge");
+	private static final String TXT_WORK = Messages.get(WndBlacksmith2.class, "work");
 
 	public WndBlacksmith2(Blacksmith2 troll, Hero hero) {
 

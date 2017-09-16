@@ -44,7 +44,7 @@ public class AdultDragonVioletSprite extends MobSprite {
 
 		attack = new Animation(6, false);
 		attack.frames(frames, 0, 2, 3, 4, 5);
-		
+
 		cast = attack.clone();
 
 		die = new Animation(8, false);
@@ -53,7 +53,6 @@ public class AdultDragonVioletSprite extends MobSprite {
 		play(run.clone());
 	}
 
-	
 
 	@Override
 	public void zap(int cell) {

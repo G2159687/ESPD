@@ -47,7 +47,7 @@ public class Mimic extends Mob {
 	private int level;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MimicSprite.class;
 	}
 
@@ -117,7 +117,7 @@ public class Mimic extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static Mimic spawnAt(int pos, List<Item> items) {
@@ -164,23 +164,30 @@ public class Mimic extends Mob {
 
 
 		//generate an extra reward for killing the mimic
-		switch(Random.Int(6)){
-			case 0: case 1:
-				m.items.add(new Gold().random()); break;
+		switch (Random.Int(6)) {
+			case 0:
+			case 1:
+				m.items.add(new Gold().random());
+				break;
 			case 2:
-				m.items.add(Generator.randomArmor().identify()); break;
+				m.items.add(Generator.randomArmor().identify());
+				break;
 			case 3:
-				m.items.add(Generator.randomWeapon().identify()); break;
+				m.items.add(Generator.randomWeapon().identify());
+				break;
 			case 4:
-				m.items.add(Generator.random(Generator.Category.RING).identify()); break;
+				m.items.add(Generator.random(Generator.Category.RING).identify());
+				break;
 			case 5:
-				m.items.add(Generator.random(Generator.Category.WAND).identify()); break;
+				m.items.add(Generator.random(Generator.Category.WAND).identify());
+				break;
 		}
 
 		return m;
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(ScrollOfPsionicBlast.class);
 	}

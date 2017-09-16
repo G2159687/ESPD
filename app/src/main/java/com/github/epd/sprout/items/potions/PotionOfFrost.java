@@ -32,9 +32,9 @@ public class PotionOfFrost extends Potion {
 	private static final int DISTANCE = 2;
 
 	{
-		initials =1;
+		initials = 1;
 
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class PotionOfFrost extends Potion {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

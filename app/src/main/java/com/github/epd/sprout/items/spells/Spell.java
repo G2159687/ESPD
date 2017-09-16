@@ -34,13 +34,13 @@ public class Spell extends Item {
 		stackable = false;
 		unique = true;
 	}
-		
+
 	@Override
 	public boolean doPickUp(Hero hero) {
-         
+
 		GLog.p("You found a spell page! It reads, %s.", TXT_VALUE);
 		return super.doPickUp(hero);
-	
+
 	}
 
 
@@ -58,7 +58,7 @@ public class Spell extends Item {
 	public int price() {
 		return 10 * quantity;
 	}
-	
+
 	@Override
 	public String info() {
 		return "A Spell Page.";

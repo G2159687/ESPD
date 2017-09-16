@@ -69,7 +69,7 @@ public class Burning extends Buff implements Hero.Doom {
 			}
 
 			target.damage(Random.Int(1, 5), this);
-			Buff.detach( target, Chill.class);
+			Buff.detach(target, Chill.class);
 
 			if (target instanceof Hero) {
 
@@ -78,7 +78,7 @@ public class Burning extends Buff implements Hero.Doom {
 				if (item instanceof Scroll) {
 
 					item = item.detach(hero.belongings.backpack);
-					GLog.w(Messages.get(this,"up"), item.toString());
+					GLog.w(Messages.get(this, "up"), item.toString());
 
 					Heap.burnFX(hero.pos);
 
@@ -89,7 +89,7 @@ public class Burning extends Buff implements Hero.Doom {
 					if (!steak.collect(hero.belongings.backpack)) {
 						Dungeon.level.drop(steak, hero.pos).sprite.drop();
 					}
-					GLog.w(Messages.get(this,"up"), item.toString());
+					GLog.w(Messages.get(this, "up"), item.toString());
 
 					Heap.burnFX(hero.pos);
 
@@ -106,7 +106,7 @@ public class Burning extends Buff implements Hero.Doom {
 			detach();
 		}
 
-		if (Level.flamable[target.pos]) {
+		if (Level.flamable[target.pos] && Blob.volumeAt(target.pos, Fire.class) == 0) {
 			GameScene.add(Blob.seed(target.pos, 4, Fire.class));
 		}
 
@@ -134,7 +134,7 @@ public class Burning extends Buff implements Hero.Doom {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	public static float duration(Char ch) {
@@ -145,7 +145,7 @@ public class Burning extends Buff implements Hero.Doom {
 	@Override
 	public void onDeath() {
 		Dungeon.fail(ResultDescriptions.BURNING);
-		GLog.n(Messages.get(this,"die"));
+		GLog.n(Messages.get(this, "die"));
 	}
 
 	@Override

@@ -51,11 +51,11 @@ public class Levitation extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
 	public String desc() {
-		return  Messages.get(this,"desc", dispTurns());
+		return Messages.get(this, "desc", dispTurns());
 	}
 }

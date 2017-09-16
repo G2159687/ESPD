@@ -82,22 +82,22 @@ public class PlantSprite extends Image {
 		visible = pos == -1 || Dungeon.visible[pos];
 
 		switch (state) {
-		case GROWING:
-			if ((time -= Game.elapsed) <= 0) {
-				state = State.NORMAL;
-				scale.set(1);
-			} else {
-				scale.set(1 - time / DELAY);
-			}
-			break;
-		case WITHERING:
-			if ((time -= Game.elapsed) <= 0) {
-				super.kill();
-			} else {
-				alpha(time / DELAY);
-			}
-			break;
-		default:
+			case GROWING:
+				if ((time -= Game.elapsed) <= 0) {
+					state = State.NORMAL;
+					scale.set(1);
+				} else {
+					scale.set(1 - time / DELAY);
+				}
+				break;
+			case WITHERING:
+				if ((time -= Game.elapsed) <= 0) {
+					super.kill();
+				} else {
+					alpha(time / DELAY);
+				}
+				break;
+			default:
 		}
 	}
 

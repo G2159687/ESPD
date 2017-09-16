@@ -25,10 +25,12 @@ import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.Artifact;
 import com.github.epd.sprout.items.weapon.missiles.MissileWeapon;
+import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -67,6 +69,8 @@ public class Bones {
 			OutputStream output = Game.instance.openFileOutput(BONES_FILE,
 					Context.MODE_PRIVATE);
 			Bundle.write(bundle, output);
+			File file = new File(TextureCache.context.getExternalFilesDir(null), BONES_FILE);
+			Bundle.writeext(bundle, file);
 			output.close();
 		} catch (IOException e) {
 
@@ -76,22 +80,28 @@ public class Bones {
 	private static Item pickItem(Hero hero) {
 		Item item = null;
 		if (Random.Int(2) == 0) {
-			switch (Random.Int(5)) {
-			case 0:
-				item = hero.belongings.weapon;
-				break;
-			case 1:
-				item = hero.belongings.armor;
-				break;
-			case 2:
-				item = hero.belongings.misc1;
-				break;
-			case 3:
-				item = hero.belongings.misc2;
-				break;
-			case 4:
-				item = Dungeon.quickslot.randomNonePlaceholder();
-				break;
+			switch (Random.Int(7)) {
+				case 0:
+					item = hero.belongings.weapon;
+					break;
+				case 1:
+					item = hero.belongings.armor;
+					break;
+				case 2:
+					item = hero.belongings.misc1;
+					break;
+				case 3:
+					item = hero.belongings.misc2;
+					break;
+				case 4:
+					item = hero.belongings.misc3;
+					break;
+				case 5:
+					item = hero.belongings.misc4;
+					break;
+				case 6:
+					item = Dungeon.quickslot.randomNonePlaceholder();
+					break;
 			}
 			if (item != null && !item.bones)
 				return pickItem(hero);

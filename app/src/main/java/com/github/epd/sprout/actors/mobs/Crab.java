@@ -30,17 +30,17 @@ import com.watabou.utils.Random;
 public class Crab extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = CrabSprite.class;
 
-		HP = HT = 18 + (adj(0)*Random.NormalIntRange(1, 3));
-		defenseSkill = 5+adj(1);
+		HP = HT = 18 + (adj(0) * Random.NormalIntRange(1, 3));
+		defenseSkill = 5 + adj(1);
 
 		EXP = 3;
 		maxLvl = 9;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))
-		{	loot = new ScrollOfUpgrade();
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			loot = new ScrollOfUpgrade();
 			lootChance = 0.5f;
 
 			lootOther = new ScrollOfMagicalInfusion();
@@ -55,12 +55,12 @@ public class Crab extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(3, 6+adj(0));
+		return Random.NormalIntRange(3, 6 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 12+adj(0);
+		return 12 + adj(0);
 	}
 
 	@Override
@@ -70,11 +70,11 @@ public class Crab extends Mob {
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

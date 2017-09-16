@@ -117,7 +117,7 @@ public class LastShopLevel extends RegularLevel {
 		if (roomShop == null || shopSquare < 54) {
 			return false;
 		} else {
-			roomShop.type =  Room.Type.SHOP;
+			roomShop.type = Room.Type.SHOP;
 		}
 
 		paint();
@@ -147,15 +147,15 @@ public class LastShopLevel extends RegularLevel {
 			}
 		}
 
-		
-			while (true) {
-				int pos = roomEntrance.random();
-				if (pos != entrance) {
-					map[pos] = Terrain.SIGN;
-					break;
-				}
+
+		while (true) {
+			int pos = roomEntrance.random();
+			if (pos != entrance) {
+				map[pos] = Terrain.SIGN;
+				break;
 			}
-		
+		}
+
 	}
 
 	@Override
@@ -187,29 +187,29 @@ public class LastShopLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return Messages.get(CityLevel.class,"entrance_desc");
-		case Terrain.EXIT:
-			return Messages.get(CityLevel.class,"exit_desc");
-		case Terrain.WALL_DECO:
-		case Terrain.EMPTY_DECO:
-			return Messages.get(CityLevel.class,"deco_desc");
-		case Terrain.EMPTY_SP:
-			return Messages.get(CityLevel.class,"sp_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return Messages.get(CityLevel.class, "entrance_desc");
+			case Terrain.EXIT:
+				return Messages.get(CityLevel.class, "exit_desc");
+			case Terrain.WALL_DECO:
+			case Terrain.EMPTY_DECO:
+				return Messages.get(CityLevel.class, "deco_desc");
+			case Terrain.EMPTY_SP:
+				return Messages.get(CityLevel.class, "sp_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

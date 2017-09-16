@@ -29,13 +29,13 @@ import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.utils.Utils;
 
 public class WndPetHaste extends Window {
-	
+
 	//if people don't get it after this, I quit. I just quit.
 
-	private static final String TXT_MESSAGE = Messages.get(WndPetHaste.class,"msg");
-	
-	private static final String TXT_YES = Messages.get(WndPetHaste.class,"yes");
-	private static final String TXT_NO = Messages.get(WndPetHaste.class,"no");
+	private static final String TXT_MESSAGE = Messages.get(WndPetHaste.class, "msg");
+
+	private static final String TXT_YES = Messages.get(WndPetHaste.class, "yes");
+	private static final String TXT_NO = Messages.get(WndPetHaste.class, "no");
 
 
 	private static final int WIDTH = 120;
@@ -55,14 +55,14 @@ public class WndPetHaste extends Window {
 		RenderedTextMultiline message = PixelScene
 				.renderMultiline(TXT_MESSAGE, 6);
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
 		NewRedButton btnBattle = new NewRedButton(TXT_YES) {
 			@Override
 			protected void onClick() {
-				Dungeon.petHasteLevel=ring.level;
-				GLog.p(Messages.get(WndPetHaste.class,"faster", pet.name));
+				Dungeon.petHasteLevel = ring.level;
+				GLog.p(Messages.get(WndPetHaste.class, "faster", pet.name));
 				hide();
 			}
 		};
@@ -76,15 +76,13 @@ public class WndPetHaste extends Window {
 				hide();
 			}
 		};
-		
+
 		btnNonBattle.setRect(0, btnBattle.bottom() + GAP, WIDTH, BTN_HEIGHT);
 		add(btnNonBattle);
-		
-		
+
+
 		resize(WIDTH, (int) btnNonBattle.bottom());
 	}
 
-	
-	
-	
+
 }

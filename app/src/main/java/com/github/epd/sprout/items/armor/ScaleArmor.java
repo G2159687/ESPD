@@ -23,7 +23,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class ScaleArmor extends Armor {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_SCALE;
 	}
 
@@ -33,6 +33,6 @@ public class ScaleArmor extends Armor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

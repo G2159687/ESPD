@@ -41,7 +41,7 @@ public class TenguDenLevel extends RegularLevel {
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
-		cleared=true;
+		cleared = true;
 	}
 
 	private int stairs = 0;
@@ -141,7 +141,7 @@ public class TenguDenLevel extends RegularLevel {
 					Room kingsRoom = Random.element(candidates);
 					kingsRoom.connect(lastRoom);
 					kingsRoom.type = Room.Type.RAT_KING2;
-					
+
 
 					// unacceptable! make a new level...
 				} else {
@@ -176,11 +176,11 @@ public class TenguDenLevel extends RegularLevel {
 
 		exit = roomEntrance.top * Level.getWidth()
 				+ (roomEntrance.left + roomEntrance.right) / 2;
-		
-		
-			map[exit] = Terrain.WALL;
-			map[entrance] = Terrain.PEDESTAL;
-	   
+
+
+		map[exit] = Terrain.WALL;
+		map[entrance] = Terrain.PEDESTAL;
+
 
 		paintWater();
 		paintGrass();
@@ -219,7 +219,7 @@ public class TenguDenLevel extends RegularLevel {
 
 	@Override
 	protected void createMobs() {
-		if (Dungeon.tengudenkilled){
+		if (Dungeon.tengudenkilled) {
 			return;
 		}
 		Mob mob = Bestiary.mob(Dungeon.depth);
@@ -247,11 +247,12 @@ public class TenguDenLevel extends RegularLevel {
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
 	}
-	
+
 	@Override
 	public int randomRespawnCell() {
 		return -1;
 	}
+
 	public void seal() {
 		if (entrance != 0) {
 
@@ -297,20 +298,20 @@ public class TenguDenLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 }

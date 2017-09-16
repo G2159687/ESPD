@@ -72,7 +72,7 @@ public class Hunger extends Buff implements Hero.Doom {
 				boolean statusUpdated = false;
 				if (newLevel >= STARVING) {
 
-					GLog.n(Messages.get(this,"starve"));
+					GLog.n(Messages.get(this, "starve"));
 					hero.damage(1, this);
 					statusUpdated = true;
 
@@ -80,7 +80,7 @@ public class Hunger extends Buff implements Hero.Doom {
 
 				} else if (newLevel >= HUNGRY && level < HUNGRY) {
 
-					GLog.w(Messages.get(this,"hunger"));
+					GLog.w(Messages.get(this, "hunger"));
 					statusUpdated = true;
 
 				}
@@ -110,7 +110,7 @@ public class Hunger extends Buff implements Hero.Doom {
 				.buff(HornOfPlenty.hornRecharge.class);
 		if (buff != null && buff.isCursed()) {
 			energy = Math.round(energy * 0.67f);
-			GLog.n(Messages.get(this,"horn"));
+			GLog.n(Messages.get(this, "horn"));
 		}
 		level -= energy;
 		if (level < 0) {
@@ -125,7 +125,7 @@ public class Hunger extends Buff implements Hero.Doom {
 	public boolean isStarving() {
 		return level >= STARVING;
 	}
-	
+
 	public int hungerLevel() {
 		return (int) level;
 	}
@@ -144,9 +144,9 @@ public class Hunger extends Buff implements Hero.Doom {
 	@Override
 	public String toString() {
 		if (level < STARVING) {
-			return Messages.get(this,"hungerst");
+			return Messages.get(this, "hungerst");
 		} else {
-			return Messages.get(this,"starvest");
+			return Messages.get(this, "starvest");
 		}
 	}
 
@@ -167,6 +167,6 @@ public class Hunger extends Buff implements Hero.Doom {
 	@Override
 	public void onDeath() {
 		Dungeon.fail(ResultDescriptions.HUNGER);
-		GLog.n(Messages.get(this,"die"));
+		GLog.n(Messages.get(this, "die"));
 	}
 }

@@ -31,7 +31,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class IncendiaryShuriken extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SHURIKEN;
 
 		STR = 13;
@@ -56,7 +56,7 @@ public class IncendiaryShuriken extends MissileWeapon {
 		Char enemy = Actor.findChar(cell);
 		if ((enemy == null || enemy == curUser) && Level.flamable[cell])
 			GameScene.add(Blob.seed(cell, 4, Fire.class));
-		
+
 		else
 			super.onThrow(cell);
 	}
@@ -66,11 +66,11 @@ public class IncendiaryShuriken extends MissileWeapon {
 		Buff.affect(defender, Burning.class).reignite(defender);
 		super.proc(attacker, defender, damage);
 	}
-	
+
 	@Override
 	public String desc() {
-		return Messages.get(Shuriken.class,"desc");
+		return Messages.get(Shuriken.class, "desc");
 	}
 
-	
+
 }

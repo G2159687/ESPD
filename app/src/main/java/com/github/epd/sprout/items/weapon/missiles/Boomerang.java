@@ -28,7 +28,7 @@ import com.github.epd.sprout.sprites.MissileSprite;
 public class Boomerang extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.BOOMERANG;
 
 		STR = 10;
@@ -109,18 +109,18 @@ public class Boomerang extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		String info = Messages.get(this,"desc");
+		String info = Messages.get(this, "desc");
 		switch (imbue) {
-		case LIGHT:
-			info += Messages.get(this,"lighter");
-			break;
-		case HEAVY:
-			info += Messages.get(this,"heavier");
-			break;
-		case NONE:
+			case LIGHT:
+				info += Messages.get(this, "lighter");
+				break;
+			case HEAVY:
+				info += Messages.get(this, "heavier");
+				break;
+			case NONE:
 		}
-		if(reinforced){
-			info += Messages.get(this,"reinforced");
+		if (reinforced) {
+			info += Messages.get(this, "reinforced");
 		}
 		return info;
 	}

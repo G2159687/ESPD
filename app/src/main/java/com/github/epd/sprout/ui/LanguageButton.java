@@ -43,12 +43,12 @@ public class LanguageButton extends Button {
 		super.createChildren();
 
 		image = Icons.get(Icons.LANGS);
-		add( image );
+		add(image);
 		updateIcon();
 	}
 
-	private void updateIcon(){
-		switch(Messages.lang().status()){
+	private void updateIcon() {
+		switch (Messages.lang().status()) {
 			case INCOMPLETE:
 				image.tint(1, 0, 0, .5f);
 				break;
@@ -68,8 +68,8 @@ public class LanguageButton extends Button {
 
 	@Override
 	protected void onTouchDown() {
-		image.brightness( 1.5f );
-		Sample.INSTANCE.play( Assets.SND_CLICK );
+		image.brightness(1.5f);
+		Sample.INSTANCE.play(Assets.SND_CLICK);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class FishingLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		cleared=true;
+		cleared = true;
 
 		viewDistance = 8;
 	}
@@ -47,7 +47,7 @@ public class FishingLevel extends Level {
 	private static final int ROOM_TOP = HEIGHT / 2 - 2;
 	private static final int ROOM_BOTTOM = HEIGHT / 2 + 2;
 
-		@Override
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_BEACH;
 	}
@@ -57,7 +57,6 @@ public class FishingLevel extends Level {
 		return Assets.WATER_PRISON;
 	}
 
-	
 
 	@Override
 	protected boolean build() {
@@ -90,22 +89,24 @@ public class FishingLevel extends Level {
 			}
 		}
 
-		
+
 		map[exit] = Terrain.WALL;
-		
-		
-	   Painter.fill(this, ROOM_LEFT, ROOM_TOP + 1, ROOM_RIGHT - ROOM_LEFT + 1,
+
+
+		Painter.fill(this, ROOM_LEFT, ROOM_TOP + 1, ROOM_RIGHT - ROOM_LEFT + 1,
 				ROOM_BOTTOM - ROOM_TOP, Terrain.EMPTY);
 
-				
-	   entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
+
+		entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
 				+ Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * getWidth();
-	   
-	   for (int i = 0; i < getLength(); i++) {
-					
-			if (map[i]==Terrain.EMPTY && Random.Float()<.95){map[i] = Terrain.WATER;}
+
+		for (int i = 0; i < getLength(); i++) {
+
+			if (map[i] == Terrain.EMPTY && Random.Float() < .95) {
+				map[i] = Terrain.WATER;
+			}
 		}
-	   
+
 		boolean[] patch = Patch.generate(0.45f, 6);
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.WATER && patch[i]) {
@@ -144,7 +145,9 @@ public class FishingLevel extends Level {
 			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
 				map[i] = Terrain.WALL_DECO;
 			}
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.EMPTY;}			
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.EMPTY;
+			}
 		}
 
 	}
@@ -157,11 +160,10 @@ public class FishingLevel extends Level {
 	protected void createItems() {
 
 		int pos = entrance + 1;
-	    drop(new FishingBomb(99), pos).type = Heap.Type.CHEST;
-	    drop(new PotionOfLevitation(), pos);
-	
+		drop(new FishingBomb(99), pos).type = Heap.Type.CHEST;
+		drop(new PotionOfLevitation(), pos);
+
 	}
-	
 
 
 	//@Override
@@ -170,39 +172,37 @@ public class FishingLevel extends Level {
 	//}
 
 
-	
-	
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(PrisonLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CrabBossLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(PrisonLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CrabBossLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return "";
-		case Terrain.EXIT:
-			return "";
-		case Terrain.WALL_DECO:
-		case Terrain.EMPTY_DECO:
-			return Messages.get(CrabBossLevel.class,"deco_desc");
-		case Terrain.EMPTY_SP:
-			return "";
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(CrabBossLevel.class,"statue_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(CrabBossLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return "";
+			case Terrain.EXIT:
+				return "";
+			case Terrain.WALL_DECO:
+			case Terrain.EMPTY_DECO:
+				return Messages.get(CrabBossLevel.class, "deco_desc");
+			case Terrain.EMPTY_SP:
+				return "";
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(CrabBossLevel.class, "statue_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(CrabBossLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
@@ -211,11 +211,12 @@ public class FishingLevel extends Level {
 	public void addVisuals(Scene scene) {
 		CavesLevel.addVisuals(this, scene);
 	}
+
 	@Override
 	public int nMobs() {
 		return 30;
 	}
-	
+
 	@Override
 	protected void createMobs() {
 		int nMobs = nMobs();
@@ -229,16 +230,15 @@ public class FishingLevel extends Level {
 		}
 	}
 
-	
 
 	public int randomRespawnCellFishMob() {
 		int cell;
 		do {
 			cell = Random.Int(getLength());
-		} while (map[cell]!=Terrain.WATER);
+		} while (map[cell] != Terrain.WATER);
 		return cell;
 	}
-	
+
 	@Override
 	public Actor respawner() {
 		return new Actor() {

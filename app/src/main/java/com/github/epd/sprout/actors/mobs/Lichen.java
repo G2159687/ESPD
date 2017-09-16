@@ -33,31 +33,31 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class Lichen extends Mob {
-	
+
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MrDestructoSprite.class;
 		hostile = false;
 		state = HUNTING;
-		HP = HT= 100;
-		defenseSkill = 3;	
+		HP = HT = 100;
+		defenseSkill = 3;
 		viewDistance = 1;
 	}
 
-	
+
 	private static final float SPAWN_DELAY = 0.1f;
-	
+
 	@Override
 	public int dr() {
 		return 5;
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(1, 3);
 	}
-	
+
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(1) == 0) {
@@ -66,11 +66,11 @@ public class Lichen extends Mob {
 
 		return damage;
 	}
-	
+
 	@Override
-	public void move(int step) {		
+	public void move(int step) {
 	}
-		
+
 	@Override
 	protected Char chooseEnemy() {
 
@@ -91,45 +91,44 @@ public class Lichen extends Mob {
 	public static void spawnAroundChance(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
 			int cell = pos + n;
-			if (Level.passable[cell] && Actor.findChar(cell) == null && Random.Float()<0.25f) {
+			if (Level.passable[cell] && Actor.findChar(cell) == null && Random.Float() < 0.25f) {
 				spawnAt(cell);
-				GLog.i(Messages.get(Lichen.class,"spawn"));
+				GLog.i(Messages.get(Lichen.class, "spawn"));
 			}
 		}
 	}
-		
-    public static Lichen spawnAt(int pos) {
-		
-    	Lichen b = new Lichen();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-		
+	public static Lichen spawnAt(int pos) {
+
+		Lichen b = new Lichen();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
 	@Override
 	public int attackSkill(Char target) {
-		return 20+(Dungeon.depth);
+		return 20 + (Dungeon.depth);
 	}
 
 	@Override
 	protected float attackDelay() {
 		return 0.5f;
 	}
-		
-	
+
+
 	@Override
 	public void beckon(int cell) {
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
-			
+
 }

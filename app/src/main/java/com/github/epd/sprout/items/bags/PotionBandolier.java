@@ -14,7 +14,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class PotionBandolier extends Bag {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.BANDOLIER;
 
 		size = 24;
@@ -22,7 +22,7 @@ public class PotionBandolier extends Bag {
 
 	@Override
 	public boolean grab(Item item) {
-		return item instanceof Potion 
+		return item instanceof Potion
 				|| item instanceof BlueMilk
 				|| item instanceof DeathCap
 				|| item instanceof Earthstar
@@ -33,6 +33,6 @@ public class PotionBandolier extends Bag {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

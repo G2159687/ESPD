@@ -38,7 +38,7 @@ import java.util.HashSet;
 public class DriedRose extends Artifact {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_ROSE1;
 
 		level = 0;
@@ -59,7 +59,7 @@ public class DriedRose extends Artifact {
 
 	public int droppedPetals = 0;
 
-	public static final String AC_SUMMON = Messages.get(DriedRose.class,"ac_summon");
+	public static final String AC_SUMMON = Messages.get(DriedRose.class, "ac_summon");
 
 	public DriedRose() {
 		super();
@@ -84,13 +84,13 @@ public class DriedRose extends Artifact {
 		if (action.equals(AC_SUMMON)) {
 
 			if (spawned)
-				GLog.n(Messages.get(this,"spawned"));
+				GLog.n(Messages.get(this, "spawned"));
 			else if (!isEquipped(hero))
-				GLog.i(Messages.get(this,"equip"));
+				GLog.i(Messages.get(this, "equip"));
 			else if (charge != chargeCap)
-				GLog.i(Messages.get(this,"no_charge"));
+				GLog.i(Messages.get(this, "no_charge"));
 			else if (cursed)
-				GLog.i(Messages.get(this,"cursed"));
+				GLog.i(Messages.get(this, "cursed"));
 			else {
 				ArrayList<Integer> spawnPoints = new ArrayList<Integer>();
 				for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
@@ -116,7 +116,7 @@ public class DriedRose extends Artifact {
 					hero.sprite.operate(hero.pos);
 
 					if (!firstSummon) {
-						ghost.yell(Messages.get(DriedRose.class,"hello", Dungeon.hero.givenName()));
+						ghost.yell(Messages.get(DriedRose.class, "hello", Dungeon.hero.givenName()));
 						Sample.INSTANCE.play(Assets.SND_GHOST);
 						firstSummon = true;
 					} else
@@ -127,7 +127,7 @@ public class DriedRose extends Artifact {
 					updateQuickslot();
 
 				} else
-					GLog.i(Messages.get(this,"no_space"));
+					GLog.i(Messages.get(this, "no_space"));
 			}
 
 		} else {
@@ -137,14 +137,14 @@ public class DriedRose extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 
 		if (isEquipped(Dungeon.hero)) {
 			if (!cursed) {
-				desc += Messages.get(this,"warm");
-				desc += Messages.get(this,"desc_hint");
+				desc += Messages.get(this, "warm");
+				desc += Messages.get(this, "desc_hint");
 			} else
-				desc += Messages.get(this,"desc_cursed");
+				desc += Messages.get(this, "desc_cursed");
 		}
 
 		return desc;
@@ -206,7 +206,7 @@ public class DriedRose extends Artifact {
 					partialCharge--;
 					if (charge == chargeCap) {
 						partialCharge = 0f;
-						GLog.p(Messages.get(DriedRose.class,"charged"));
+						GLog.p(Messages.get(DriedRose.class, "charged"));
 					}
 				}
 			} else if (cursed && Random.Int(100) == 0) {
@@ -239,7 +239,7 @@ public class DriedRose extends Artifact {
 	public static class Petal extends Item {
 
 		{
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			stackable = true;
 			image = ItemSpriteSheet.PETAL;
 		}
@@ -249,21 +249,21 @@ public class DriedRose extends Artifact {
 			DriedRose rose = hero.belongings.getItem(DriedRose.class);
 
 			if (rose == null) {
-				GLog.w(Messages.get(this,"no_rose"));
+				GLog.w(Messages.get(this, "no_rose"));
 				return false;
 			}
 			if (rose.level >= rose.levelCap) {
-				GLog.i(Messages.get(this,"no_room"));
+				GLog.i(Messages.get(this, "no_room"));
 				return true;
 			} else {
 
 				rose.upgrade();
 				if (rose.level == rose.levelCap) {
-					GLog.p(Messages.get(this,"maxlevel"));
+					GLog.p(Messages.get(this, "maxlevel"));
 					Sample.INSTANCE.play(Assets.SND_GHOST);
-					GLog.n(Messages.get(DriedRose.class,"ghost"));
+					GLog.n(Messages.get(DriedRose.class, "ghost"));
 				} else
-					GLog.i(Messages.get(this,"levelup"));
+					GLog.i(Messages.get(this, "levelup"));
 
 				Sample.INSTANCE.play(Assets.SND_DEWDROP);
 				hero.spendAndNext(TIME_TO_PICK_UP);
@@ -274,7 +274,7 @@ public class DriedRose extends Artifact {
 
 		@Override
 		public String info() {
-			return Messages.get(this,"desc");
+			return Messages.get(this, "desc");
 		}
 
 	}
@@ -282,7 +282,7 @@ public class DriedRose extends Artifact {
 	public static class GhostHero extends NPC {
 
 		{
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			spriteClass = GhostSprite.class;
 
 			flying = true;
@@ -307,14 +307,16 @@ public class DriedRose extends Artifact {
 
 		public void saySpawned() {
 			int i = (Dungeon.depth - 1) / 5;
-			if (!(Dungeon.depth >=26)) {
-			if (chooseEnemy() == null)
-				yell(Random.element(VOICE_AMBIENT[i]));
-			else
-				yell(Random.element(VOICE_ENEMIES[i][Dungeon.bossLevel() ? 1
-						: 0]));
-			Sample.INSTANCE.play(Assets.SND_GHOST);}
-			else {Sample.INSTANCE.play(Assets.SND_GHOST);}
+			if (!(Dungeon.depth >= 26)) {
+				if (chooseEnemy() == null)
+					yell(Random.element(VOICE_AMBIENT[i]));
+				else
+					yell(Random.element(VOICE_ENEMIES[i][Dungeon.bossLevel() ? 1
+							: 0]));
+				Sample.INSTANCE.play(Assets.SND_GHOST);
+			} else {
+				Sample.INSTANCE.play(Assets.SND_GHOST);
+			}
 		}
 
 		public void sayAnkh() {
@@ -339,7 +341,7 @@ public class DriedRose extends Artifact {
 
 		@Override
 		public String defenseVerb() {
-			return Messages.get(this,"def_verb");
+			return Messages.get(this, "def_verb");
 		}
 
 		@Override
@@ -390,7 +392,7 @@ public class DriedRose extends Artifact {
 		@Override
 		public int damageRoll() {
 			int lvl = (HT - 10) / 4;
-			return Random.NormalIntRange( 3 + lvl / 2, 8 + lvl);
+			return Random.NormalIntRange(3 + lvl / 2, 8 + lvl);
 		}
 
 		@Override
@@ -439,10 +441,11 @@ public class DriedRose extends Artifact {
 
 		@Override
 		public String description() {
-			return Messages.get(this,"desc");
+			return Messages.get(this, "desc");
 		}
 
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 		static {
 			IMMUNITIES.add(ToxicGas.class);
 			IMMUNITIES.add(ScrollOfPsionicBlast.class);
@@ -463,44 +466,44 @@ public class DriedRose extends Artifact {
 		// ghost's voice lines.
 		// ************************************************************************************
 
-		private static final String VOICE_INTRODUCE = Messages.get(DriedRose.class,"1");
+		private static final String VOICE_INTRODUCE = Messages.get(DriedRose.class, "1");
 
 		// 1st index - depth type, 2nd index - specific line.
 		public static final String[][] VOICE_AMBIENT = {
-				{Messages.get(DriedRose.class,"2")},
-				{Messages.get(DriedRose.class,"3") },
-				{Messages.get(DriedRose.class,"4")},
-				{Messages.get(DriedRose.class,"5")},
-				{Messages.get(DriedRose.class,"6")},
-				{Messages.get(DriedRose.class,"7")} };
+				{Messages.get(DriedRose.class, "2")},
+				{Messages.get(DriedRose.class, "3")},
+				{Messages.get(DriedRose.class, "4")},
+				{Messages.get(DriedRose.class, "5")},
+				{Messages.get(DriedRose.class, "6")},
+				{Messages.get(DriedRose.class, "7")}};
 
 		// 1st index - depth type, 2nd index - boss or not, 3rd index - specific
 		// line.
 		public static final String[][][] VOICE_ENEMIES = {
-				{{Messages.get(DriedRose.class,"8")} ,{Messages.get(DriedRose.class,"9")} },
-				{{Messages.get(DriedRose.class,"10")},{Messages.get(DriedRose.class,"11")} },
-				{{Messages.get(DriedRose.class,"12")},{Messages.get(DriedRose.class,"13")} },
-				{{Messages.get(DriedRose.class,"14")},{Messages.get(DriedRose.class,"15")} },
-				{{Messages.get(DriedRose.class,"16")}, {Messages.get(DriedRose.class,"17")} },
-				{{Messages.get(DriedRose.class,"18")},
-				{ "Hello source viewer, I'm writing this here as this line should never trigger. Have a nice day!" } } };
+				{{Messages.get(DriedRose.class, "8")}, {Messages.get(DriedRose.class, "9")}},
+				{{Messages.get(DriedRose.class, "10")}, {Messages.get(DriedRose.class, "11")}},
+				{{Messages.get(DriedRose.class, "12")}, {Messages.get(DriedRose.class, "13")}},
+				{{Messages.get(DriedRose.class, "14")}, {Messages.get(DriedRose.class, "15")}},
+				{{Messages.get(DriedRose.class, "16")}, {Messages.get(DriedRose.class, "17")}},
+				{{Messages.get(DriedRose.class, "18")},
+						{"Hello source viewer, I'm writing this here as this line should never trigger. Have a nice day!"}}};
 
 		// 1st index - Yog or not, 2nd index - specific line.
 		public static final String[][] VOICE_BOSSBEATEN = {
-				{ Messages.get(DriedRose.class,"19") },
-				{ Messages.get(DriedRose.class,"20") } };
+				{Messages.get(DriedRose.class, "19")},
+				{Messages.get(DriedRose.class, "20")}};
 
 		// 1st index - boss or not, 2nd index - specific line.
 		public static final String[][] VOICE_DEFEATED = {
-				{ Messages.get(DriedRose.class,"21"), Messages.get(DriedRose.class,"22"),
-				Messages.get(DriedRose.class,"23")},
-				{ Messages.get(DriedRose.class,"24"), Messages.get(DriedRose.class,"25"),
-						Messages.get(DriedRose.class,"26") } };
+				{Messages.get(DriedRose.class, "21"), Messages.get(DriedRose.class, "22"),
+						Messages.get(DriedRose.class, "23")},
+				{Messages.get(DriedRose.class, "24"), Messages.get(DriedRose.class, "25"),
+						Messages.get(DriedRose.class, "26")}};
 
-		public static final String[] VOICE_HEROKILLED = { Messages.get(DriedRose.class,"27"),
-				Messages.get(DriedRose.class,"28"), Messages.get(DriedRose.class,"29")};
+		public static final String[] VOICE_HEROKILLED = {Messages.get(DriedRose.class, "27"),
+				Messages.get(DriedRose.class, "28"), Messages.get(DriedRose.class, "29")};
 
-		public static final String[] VOICE_BLESSEDANKH = { Messages.get(DriedRose.class,"30"),
-				Messages.get(DriedRose.class,"31"), Messages.get(DriedRose.class,"32") };
+		public static final String[] VOICE_BLESSEDANKH = {Messages.get(DriedRose.class, "30"),
+				Messages.get(DriedRose.class, "31"), Messages.get(DriedRose.class, "32")};
 	}
 }

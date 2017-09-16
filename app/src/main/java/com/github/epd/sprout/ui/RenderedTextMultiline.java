@@ -48,16 +48,16 @@ public class RenderedTextMultiline extends Component {
 
 	private boolean chinese = false;
 
-	public RenderedTextMultiline(int size){
+	public RenderedTextMultiline(int size) {
 		this.size = size;
 	}
 
-	public RenderedTextMultiline(String text, int size){
+	public RenderedTextMultiline(String text, int size) {
 		this.size = size;
 		text(text);
 	}
 
-	public void text(String text){
+	public void text(String text) {
 		this.text = text;
 
 		if (text != null && !text.equals("")) {
@@ -65,7 +65,7 @@ public class RenderedTextMultiline extends Component {
 
 			chinese = text.replaceAll("\\p{Han}", "").length() != text.length();
 
-			if (chinese){
+			if (chinese) {
 				tokens = Arrays.asList(text.split(""));
 			} else {
 				tokens = Arrays.asList(text.split("(?<= )|(?= )|(?<=\n)|(?=\n)"));
@@ -74,46 +74,46 @@ public class RenderedTextMultiline extends Component {
 		}
 	}
 
-	public void text(String text, int maxWidth){
+	public void text(String text, int maxWidth) {
 		this.maxWidth = maxWidth;
 		text(text);
 	}
 
-	public String text(){
+	public String text() {
 		return text;
 	}
 
-	public void maxWidth(int maxWidth){
-		if (this.maxWidth != maxWidth){
+	public void maxWidth(int maxWidth) {
+		if (this.maxWidth != maxWidth) {
 			this.maxWidth = maxWidth;
 			layout();
 		}
 	}
 
-	public int maxWidth(){
+	public int maxWidth() {
 		return maxWidth;
 	}
 
-	private synchronized void build(){
+	private synchronized void build() {
 		clear();
 		words = new ArrayList<>();
 		boolean highlighting = false;
-		for (String str : tokens){
-			if (str.equals(UNDERSCORE)){
+		for (String str : tokens) {
+			if (str.equals(UNDERSCORE)) {
 				highlighting = !highlighting;
-			} else if (str.equals(NEWLINE)){
+			} else if (str.equals(NEWLINE)) {
 				words.add(null);
-			} else if (!str.equals(SPACE)){
+			} else if (!str.equals(SPACE)) {
 				RenderedText word;
-				if (str.startsWith(UNDERSCORE) && str.endsWith(UNDERSCORE)){
-					word = new RenderedText(str.substring(1, str.length()-1), size);
+				if (str.startsWith(UNDERSCORE) && str.endsWith(UNDERSCORE)) {
+					word = new RenderedText(str.substring(1, str.length() - 1), size);
 					word.hardlight(0xFFFF44);
 				} else {
-					if (str.startsWith(UNDERSCORE)){
+					if (str.startsWith(UNDERSCORE)) {
 						highlighting = !highlighting;
 						word = new RenderedText(str.substring(1, str.length()), size);
 					} else if (str.endsWith(UNDERSCORE)) {
-						word = new RenderedText(str.substring(0, str.length()-1), size);
+						word = new RenderedText(str.substring(0, str.length() - 1), size);
 					} else {
 						word = new RenderedText(str, size);
 					}
@@ -133,21 +133,21 @@ public class RenderedTextMultiline extends Component {
 		layout();
 	}
 
-	public synchronized void zoom(float zoom){
+	public synchronized void zoom(float zoom) {
 		this.zoom = zoom;
 		for (RenderedText word : words) {
 			if (word != null) word.scale.set(zoom);
 		}
 	}
 
-	public synchronized void hardlight(int color){
+	public synchronized void hardlight(int color) {
 		this.color = color;
 		for (RenderedText word : words) {
-			if (word != null) word.hardlight( color );
+			if (word != null) word.hardlight(color);
 		}
 	}
 
-	public synchronized void invert(){
+	public synchronized void invert() {
 		if (words != null) {
 			for (RenderedText word : words) {
 				if (word != null) {
@@ -170,17 +170,17 @@ public class RenderedTextMultiline extends Component {
 		float height = 0;
 		nLines = 1;
 
-		for (RenderedText word : words){
+		for (RenderedText word : words) {
 			if (word == null) {
 				//newline
-				y += height+0.5f;
+				y += height + 0.5f;
 				x = this.x;
 				nLines++;
 			} else {
 				if (word.height() > height) height = word.baseLine();
 
-				if ((x - this.x) + word.width() > maxWidth){
-					y += height+0.5f;
+				if ((x - this.x) + word.width() > maxWidth) {
+					y += height + 0.5f;
 					x = this.x;
 					nLines++;
 				}
@@ -189,13 +189,13 @@ public class RenderedTextMultiline extends Component {
 				word.y = y;
 				PixelScene.align(word);
 				x += word.width();
-				if (!chinese) x ++;
+				if (!chinese) x++;
 				else x--;
 
 				if ((x - this.x) > width) width = (x - this.x);
 
 			}
 		}
-		this.height = (y - this.y) + height+0.5f;
+		this.height = (y - this.y) + height + 0.5f;
 	}
 }

@@ -41,11 +41,11 @@ public class ThiefBossLevel extends Level {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
-		cleared=true;
+		cleared = true;
 	}
 
 	protected static final int DROP_TIMER = 5;
-	
+
 	private static final int TOP = 2;
 	private static final int HALL_WIDTH = 13;
 	private static final int HALL_HEIGHT = 15;
@@ -100,7 +100,7 @@ public class ThiefBossLevel extends Level {
 			map[y * getWidth() + CENTER + 2] = Terrain.CHASM;
 			y += 2;
 		}
-		
+
 		exit = (TOP - 1) * getWidth() + CENTER;
 		map[exit] = Terrain.LOCKED_EXIT;
 
@@ -163,7 +163,7 @@ public class ThiefBossLevel extends Level {
 			do {
 				pos = Random.IntRange(LEFT + 1, LEFT + HALL_WIDTH - 2)
 						+ Random.IntRange(TOP + HALL_HEIGHT + 1, TOP
-								+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
+						+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
 			} while (pos == entrance || map[pos] == Terrain.SIGN);
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
@@ -193,19 +193,19 @@ public class ThiefBossLevel extends Level {
 			int count = 0;
 			do {
 				boss.pos = Random.Int(getLength());
-				bandit1.pos = (TOP + 1) * getWidth() + CENTER+1;
-				bandit2.pos = (TOP + 1) * getWidth() + CENTER-1;
-				
-			} while (!passable[boss.pos] 
+				bandit1.pos = (TOP + 1) * getWidth() + CENTER + 1;
+				bandit2.pos = (TOP + 1) * getWidth() + CENTER - 1;
+
+			} while (!passable[boss.pos]
 					|| !outsideEntraceRoom(boss.pos)
 					|| (Dungeon.visible[boss.pos] && count++ < 20));
-			
+
 			GameScene.add(boss);
-			
-			
+
+
 			GameScene.add(bandit1);
 			GameScene.add(bandit2);
-			
+
 
 			if (Dungeon.visible[boss.pos]) {
 				boss.notice();
@@ -242,34 +242,34 @@ public class ThiefBossLevel extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return Messages.get(CityLevel.class,"entrance_desc");
-		case Terrain.EXIT:
-			return Messages.get(CityLevel.class,"exit_desc");
-		case Terrain.WALL_DECO:
-		case Terrain.EMPTY_DECO:
-			return Messages.get(ThiefBossLevel.class,"deco_desc");
-		case Terrain.EMPTY_SP:
-			return Messages.get(CityLevel.class,"sp_desc");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(CityLevel.class,"statue_desc");
-		case Terrain.BOOKSHELF:
-			return "";
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return Messages.get(CityLevel.class, "entrance_desc");
+			case Terrain.EXIT:
+				return Messages.get(CityLevel.class, "exit_desc");
+			case Terrain.WALL_DECO:
+			case Terrain.EMPTY_DECO:
+				return Messages.get(ThiefBossLevel.class, "deco_desc");
+			case Terrain.EMPTY_SP:
+				return Messages.get(CityLevel.class, "sp_desc");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(CityLevel.class, "statue_desc");
+			case Terrain.BOOKSHELF:
+				return "";
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

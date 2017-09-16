@@ -84,10 +84,10 @@ public class DewVial2 extends Item {
 	private int volume = 0;
 
 	private static final String VOLUME = "volume";
-	
 
-	public void setVol (int vol) {
-		volume=vol;		
+
+	public void setVol(int vol) {
+		volume = vol;
 	}
 
 	@Override
@@ -110,26 +110,24 @@ public class DewVial2 extends Item {
 			actions.add(AC_WATER);
 			actions.add(AC_SPLASH);
 			actions.add(AC_BLESS);
-		}	
+		}
 		if (volume > 70) {
 			actions.add(AC_DRINK);
 			actions.add(AC_WATER);
 			actions.add(AC_SPLASH);
-		}
-		else if (volume > 49) {
+		} else if (volume > 49) {
 			actions.add(AC_DRINK);
 			actions.add(AC_SPLASH);
-		}
-		else if (volume > 0) {
+		} else if (volume > 0) {
 			actions.add(AC_DRINK);
-		} 
-		
+		}
+
 		return actions;
 	}
 
 	@Override
 	public void execute(final Hero hero, String action) {
-		
+
 		/*
 		if (action.equals(AC_SIP)) {
 
@@ -173,10 +171,9 @@ public class DewVial2 extends Item {
 			}
               }else
 		*/
-		
-		
-			
-			if (action.equals(AC_DRINK)) {
+
+
+		if (action.equals(AC_DRINK)) {
 
 			if (volume > 0) {
 
@@ -217,7 +214,7 @@ public class DewVial2 extends Item {
 			}
 
 		} else if (action.equals(AC_WATER)) {
-			
+
 			int positive = 0;
 			int negative = 0;
 
@@ -247,13 +244,13 @@ public class DewVial2 extends Item {
 				by = Level.HEIGHT - 1;
 			}
 
-			
+
 			for (int y = ay; y <= by; y++) {
 				for (int x = ax, p = ax + y * Level.getWidth(); x <= bx; x++, p++) {
 
 					if (Dungeon.visible[p]) {
 						int c = Dungeon.level.map[p];
-						
+
 						if (c == Terrain.GRASS) {
 							GameScene.add(Blob.seed(p, (2) * 20, Water.class));
 						}
@@ -265,31 +262,32 @@ public class DewVial2 extends Item {
 			hero.sprite.operate(hero.pos);
 			hero.busy();
 			hero.spend(TIME_TO_WATER);
-		
-		} else if (action.equals(AC_SPLASH)) {	
+
+		} else if (action.equals(AC_SPLASH)) {
 			Buff.affect(hero, Haste.class, Haste.DURATION);
 			Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
 			GLog.i(TXT_REFRESHED);
 			GLog.i("You see your hands turn invisible!");
 			GLog.i("You are moving much faster!");
 			volume = volume - 10;
-			
-		} else if (action.equals(AC_BLESS)) {	
+
+		} else if (action.equals(AC_BLESS)) {
 
 			boolean procced = uncurse(hero, hero.belongings.backpack.items.toArray(new Item[0]));
 			procced = uncurse(hero, hero.belongings.weapon,
 					hero.belongings.armor, hero.belongings.misc1,
-					hero.belongings.misc2)
+					hero.belongings.misc2, hero.belongings.misc3,
+					hero.belongings.misc4)
 					|| procced;
-			
+
 			if (procced) {
 				GLog.p(TXT_PROCCED);
 			} else {
 				GLog.i(TXT_NOT_PROCCED);
 			}
-													
-			volume = volume - 50;	
-			
+
+			volume = volume - 50;
+
 		} else {
 
 			super.execute(hero, action);
@@ -298,39 +296,46 @@ public class DewVial2 extends Item {
 	}
 
 	public static boolean uncurse(Hero hero, Item... items) {
-		
-		
-        int levelLimit = Math.max(5, 5+Math.round(Statistics.deepestFloor/3));
-        if (hero.heroClass == HeroClass.MAGE){levelLimit += 1;}
-        
-        float lvlchance = 0.33f;
-        if (hero.heroClass == HeroClass.MAGE){lvlchance = 0.38f;}
-        
-        boolean procced = false;
+
+
+		int levelLimit = Math.max(5, 5 + Math.round(Statistics.deepestFloor / 3));
+		if (hero.heroClass == HeroClass.MAGE) {
+			levelLimit += 1;
+		}
+
+		float lvlchance = 0.33f;
+		if (hero.heroClass == HeroClass.MAGE) {
+			lvlchance = 0.38f;
+		}
+
+		boolean procced = false;
 		boolean proccedUp = false;
 		for (int i = 0; i < items.length; i++) {
 			Item item = items[i];
 			if (item != null && item.cursed) {
 				item.cursed = false;
-				if(item.level<0){item.upgrade(-item.level);} //upgrade to even
+				if (item.level < 0) {
+					item.upgrade(-item.level);
+				} //upgrade to even
 				procced = true;
 				hero.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
 			}
-			if (item != null && Random.Float()<lvlchance && item.isUpgradable() && item.level < levelLimit){
-			    item.upgrade();
-			    proccedUp = true;
-			    hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
-			    GLog.p(TXT_LOOKS_BETTER, item.name());
+			if (item != null && Random.Float() < lvlchance && item.isUpgradable() && item.level < levelLimit) {
+				item.upgrade();
+				proccedUp = true;
+				hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
+				GLog.p(TXT_LOOKS_BETTER, item.name());
 			}
 		}
-		
-		if (proccedUp){GLog.i(TXT_BLESSED);}
-					
+
+		if (proccedUp) {
+			GLog.i(TXT_BLESSED);
+		}
+
 		return procced;
 	}
-			
-		
-	
+
+
 	public void empty() {
 		volume = volume - 10;
 		updateQuickslot();
@@ -349,7 +354,7 @@ public class DewVial2 extends Item {
 	public boolean isFullBless() {
 		return volume >= BLESS_VOLUME;
 	}
-	
+
 
 	public boolean isFull() {
 		return volume >= MAX_VOLUME;
@@ -370,7 +375,7 @@ public class DewVial2 extends Item {
 	public void collectDew(RedDewdrop dew) {
 
 		GLog.i(TXT_COLLECTED);
-		volume += (dew.quantity*5);
+		volume += (dew.quantity * 5);
 		if (volume >= MAX_VOLUME) {
 			volume = MAX_VOLUME;
 			GLog.p(TXT_FULL);
@@ -378,11 +383,11 @@ public class DewVial2 extends Item {
 
 		updateQuickslot();
 	}
-	
+
 	public void collectDew(YellowDewdrop dew) {
 
 		GLog.i(TXT_COLLECTED);
-		volume += (dew.quantity*2);
+		volume += (dew.quantity * 2);
 		if (volume >= MAX_VOLUME) {
 			volume = MAX_VOLUME;
 			GLog.p(TXT_FULL);
@@ -391,7 +396,7 @@ public class DewVial2 extends Item {
 		updateQuickslot();
 	}
 
-	
+
 	public void fill() {
 		volume = volume + 50;
 		if (volume >= MAX_VOLUME) {

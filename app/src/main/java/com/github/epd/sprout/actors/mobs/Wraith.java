@@ -55,15 +55,15 @@ public class Wraith extends Mob {
 	protected int level;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = WraithSprite.class;
 
-		HP = HT = 1+level;
-		EXP = 1+level;
+		HP = HT = 1 + level;
+		EXP = 1 + level;
 
 		flying = true;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)){
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
 			loot = new ScrollOfMagicalInfusion();
 			lootChance = 0.75f;
 
@@ -119,7 +119,7 @@ public class Wraith extends Mob {
 
 		return damage;
 	}
-	
+
 	//public void damage(int dmg, Object src) {
 	//	if (enemySeen
 	//			&& (src instanceof Wand || src instanceof LightningTrap.Electricity || src instanceof Char)) {
@@ -130,10 +130,10 @@ public class Wraith extends Mob {
 	//	}
 	//}
 
-	
+
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
@@ -143,14 +143,8 @@ public class Wraith extends Mob {
 	}
 
 	@Override
-	public void notice() {
-		super.notice();
-		if (Dungeon.getMonth()==9) {yell(Messages.get(this,"notice"));}
-	}
-	
-	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static void spawnAround(int pos) {
@@ -162,9 +156,18 @@ public class Wraith extends Mob {
 		}
 	}
 
+	public static void spawnAround2x(int pos) {
+		for (int n : PathFinder.NEIGHBOURS8DIST2) {
+			int cell = pos + n;
+			if (Level.passable[cell] && Actor.findChar(cell) == null) {
+				spawnAt(cell);
+			}
+		}
+	}
+
 	public static Wraith spawnAt(int pos) {
 		if (Level.passable[pos] && Actor.findChar(pos) == null) {
-          
+
 			Wraith w = new Wraith();
 			w.adjustStats(Dungeon.depth);
 			w.pos = pos;
@@ -177,13 +180,14 @@ public class Wraith extends Mob {
 			w.sprite.emitter().burst(ShadowParticle.CURSE, 5);
 
 			return w;
-  			
+
 		} else {
 			return null;
 		}
 	}
 
 	protected static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Death.class);
 		IMMUNITIES.add(Terror.class);

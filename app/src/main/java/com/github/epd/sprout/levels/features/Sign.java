@@ -32,48 +32,48 @@ import com.watabou.noosa.audio.Sample;
 
 public class Sign {
 
-	private static final String TXT_DEAD_END = Messages.get(Sign.class,"dead_end");
+	private static final String TXT_DEAD_END = Messages.get(Sign.class, "dead_end");
 
 	private static final String[] TIPS = {
-			Messages.get(Sign.class,"tip_1"),
-			Messages.get(Sign.class,"tip_2"),
-			Messages.get(Sign.class,"tip_3"),
-			Messages.get(Sign.class,"tip_4"),
+			Messages.get(Sign.class, "tip_1"),
+			Messages.get(Sign.class, "tip_2"),
+			Messages.get(Sign.class, "tip_3"),
+			Messages.get(Sign.class, "tip_4"),
 
-			Messages.get(Sign.class,"tip_5"),
+			Messages.get(Sign.class, "tip_5"),
 
-			Messages.get(Sign.class,"tip_6"),
-			Messages.get(Sign.class,"tip_7"),
-			Messages.get(Sign.class,"tip_8"),
-			Messages.get(Sign.class,"tip_9"),
+			Messages.get(Sign.class, "tip_6"),
+			Messages.get(Sign.class, "tip_7"),
+			Messages.get(Sign.class, "tip_8"),
+			Messages.get(Sign.class, "tip_9"),
 
-			Messages.get(Sign.class,"tip_10"),
+			Messages.get(Sign.class, "tip_10"),
 
-			Messages.get(Sign.class,"tip_11"),
-			Messages.get(Sign.class,"tip_12"),
-			Messages.get(Sign.class,"tip_13"),
-			Messages.get(Sign.class,"tip_14"),
+			Messages.get(Sign.class, "tip_11"),
+			Messages.get(Sign.class, "tip_12"),
+			Messages.get(Sign.class, "tip_13"),
+			Messages.get(Sign.class, "tip_14"),
 
-			Messages.get(Sign.class,"tip_15"),
+			Messages.get(Sign.class, "tip_15"),
 
-			Messages.get(Sign.class,"tip_16"),
-			Messages.get(Sign.class,"tip_17"),
-			Messages.get(Sign.class,"tip_18"),
-			Messages.get(Sign.class,"tip_19"),
+			Messages.get(Sign.class, "tip_16"),
+			Messages.get(Sign.class, "tip_17"),
+			Messages.get(Sign.class, "tip_18"),
+			Messages.get(Sign.class, "tip_19"),
 
-			Messages.get(Sign.class,"tip_20"),
+			Messages.get(Sign.class, "tip_20"),
 
-			Messages.get(Sign.class,"tip_21"),
+			Messages.get(Sign.class, "tip_21"),
 
 			// hmm.. I wonder what this is?
-			"standOfF roW", "fraCtion doWnpOur", "gaffe MaSts" };
-	
-	
-	private static final String PIT = Messages.get(Sign.class,"pit");
+			"standOfF roW", "fraCtion doWnpOur", "gaffe MaSts"};
+
+
+	private static final String PIT = Messages.get(Sign.class, "pit");
 	//private static final String BOOKLVL = "Note to self: Always leave a teleport scroll in the vault.";
 
 
-	private static final String TXT_BURN = Messages.get(Sign.class,"burn");
+	private static final String TXT_BURN = Messages.get(Sign.class, "burn");
 
 	public static void read(int pos) {
 
@@ -103,10 +103,10 @@ public class Sign {
 			}
 		}
 	}
-	
+
 	public static void readPit(int pos) {
-				GameScene.show(new WndMessage(PIT));			
-			}
-			
-	
+		GameScene.show(new WndMessage(PIT));
+	}
+
+
 }

@@ -88,8 +88,10 @@ public class SummoningTrap {
 			GameScene.add(mob, DELAY);
 			WandOfBlink.appear(mob, point);
 		}
-		
+
 		Heap heap = Dungeon.level.heaps.get(pos);
-		if (heap != null) {heap.summon();}
+		if (heap != null) {
+			heap.summon();
+		}
 	}
 }

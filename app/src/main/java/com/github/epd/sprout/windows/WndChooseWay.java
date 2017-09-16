@@ -29,15 +29,15 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndChooseWay extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndChooseWay.class,"msg");
-	private static final String TXT_CANCEL = Messages.get(WndChooseWay.class,"cancel");
+	private static final String TXT_MESSAGE = Messages.get(WndChooseWay.class, "msg");
+	private static final String TXT_CANCEL = Messages.get(WndChooseWay.class, "cancel");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 18;
 	private static final float GAP = 2;
 
 	public WndChooseWay(final TomeOfMastery tome, final HeroSubClass way1,
-			final HeroSubClass way2) {
+	                    final HeroSubClass way2) {
 
 		super();
 
@@ -47,10 +47,10 @@ public class WndChooseWay extends Window {
 		titlebar.setRect(0, 0, WIDTH, 0);
 		add(titlebar);
 
-		RenderedTextMultiline hl = PixelScene.renderMultiline( 6 );
-		hl.text( way1.desc() + "\n\n" + way2.desc() + "\n\n" + Messages.get(this, "message"), WIDTH );
-		hl.setPos( titlebar.left(), titlebar.bottom() + GAP );
-		add( hl );
+		RenderedTextMultiline hl = PixelScene.renderMultiline(6);
+		hl.text(way1.desc() + "\n\n" + way2.desc() + "\n\n" + Messages.get(this, "message"), WIDTH);
+		hl.setPos(titlebar.left(), titlebar.bottom() + GAP);
+		add(hl);
 
 		NewRedButton btnWay1 = new NewRedButton(Utils.capitalize(way1.title())) {
 			@Override
@@ -59,8 +59,8 @@ public class WndChooseWay extends Window {
 				tome.choose(way1);
 			}
 		};
-		btnWay1.setRect( 0, hl.bottom() + GAP, (WIDTH - GAP) / 2, BTN_HEIGHT );
-		add( btnWay1 );
+		btnWay1.setRect(0, hl.bottom() + GAP, (WIDTH - GAP) / 2, BTN_HEIGHT);
+		add(btnWay1);
 
 		NewRedButton btnWay2 = new NewRedButton(Utils.capitalize(way2.title())) {
 			@Override

@@ -43,7 +43,7 @@ public class BanditKingSprite extends MobSprite {
 
 		idle();
 	}
-	
+
 	@Override
 	public void link(Char ch) {
 		super.link(ch);

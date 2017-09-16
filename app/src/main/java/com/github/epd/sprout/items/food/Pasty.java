@@ -24,7 +24,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class Pasty extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.PASTY;
 		energy = Hunger.STARVING;
 		hornValue = 5;
@@ -34,7 +34,7 @@ public class Pasty extends Food {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"pasty_desc");
+		return Messages.get(this, "pasty_desc");
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class Bleeding extends Buff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class Bleeding extends Buff {
 
 				if (target == Dungeon.hero && !target.isAlive()) {
 					Dungeon.fail(ResultDescriptions.BLEEDING);
-					GLog.n(Messages.get(this,"die"));
+					GLog.n(Messages.get(this, "die"));
 				}
 
 				spend(TICK);

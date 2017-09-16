@@ -62,7 +62,7 @@ public class IceBlock extends Gizmo {
 
 		IceBlock iceBlock = new IceBlock(sprite);
 		if (sprite.parent != null)
-			sprite.parent.add( iceBlock );
+			sprite.parent.add(iceBlock);
 
 		return iceBlock;
 	}

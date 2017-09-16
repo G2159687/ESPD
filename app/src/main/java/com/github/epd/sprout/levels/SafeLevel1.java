@@ -116,7 +116,7 @@ public class SafeLevel1 extends RegularLevel {
 			for (Room next : path) {
 				room.connect(next);
 				room = next;
-			}			
+			}
 			lastRoom = curRoom;
 		}
 
@@ -144,11 +144,11 @@ public class SafeLevel1 extends RegularLevel {
 
 		exit = roomEntrance.top * Level.getWidth()
 				+ (roomEntrance.left + roomEntrance.right) / 2;
-		
-		
-			map[exit] = Terrain.WALL;
-			map[entrance] = Terrain.PEDESTAL;
-	   
+
+
+		map[exit] = Terrain.WALL;
+		map[entrance] = Terrain.PEDESTAL;
+
 
 		paintWater();
 		paintGrass();
@@ -187,7 +187,7 @@ public class SafeLevel1 extends RegularLevel {
 
 	@Override
 	protected void createMobs() {
-		
+
 	}
 
 	@Override
@@ -206,8 +206,8 @@ public class SafeLevel1 extends RegularLevel {
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
 	}
-	
-	
+
+
 	public void seal() {
 		if (entrance != 0) {
 
@@ -253,20 +253,20 @@ public class SafeLevel1 extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 }

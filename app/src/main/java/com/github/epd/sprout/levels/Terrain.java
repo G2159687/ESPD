@@ -95,6 +95,7 @@ public class Terrain {
 	public static final int UNSTITCHABLE = 0x100;
 
 	public static final int[] flags = new int[256];
+
 	static {
 		flags[CHASM] = AVOID | PIT | UNSTITCHABLE;
 		flags[EMPTY] = PASSABLE;
@@ -122,7 +123,7 @@ public class Terrain {
 		flags[STATUE_SP] = flags[STATUE] | UNSTITCHABLE;
 		flags[BOOKSHELF] = flags[BARRICADE] | UNSTITCHABLE;
 		flags[ALCHEMY] = PASSABLE;
-		flags[SHRUB] =  FLAMABLE | SOLID | LOS_BLOCKING;
+		flags[SHRUB] = FLAMABLE | SOLID | LOS_BLOCKING;
 
 		flags[CHASM_WALL] = flags[CHASM];
 		flags[CHASM_FLOOR] = flags[CHASM];
@@ -147,7 +148,7 @@ public class Terrain {
 		flags[SUMMONING_TRAP] = AVOID;
 		flags[SECRET_SUMMONING_TRAP] = flags[EMPTY] | SECRET;
 		flags[INACTIVE_TRAP] = flags[EMPTY];
-		flags[FLEECING_TRAP] = AVOID ;
+		flags[FLEECING_TRAP] = AVOID;
 		flags[WOOL_RUG] = PASSABLE;
 		flags[SOKOBAN_SHEEP] = PASSABLE;
 		flags[CORNER_SOKOBAN_SHEEP] = PASSABLE;
@@ -159,7 +160,7 @@ public class Terrain {
 		flags[SOKOBAN_PORT_SWITCH] = PASSABLE;
 		flags[PORT_WELL] = PASSABLE;
 
-		
+
 		for (int i = WATER_TILES; i < WATER_TILES + 16; i++) {
 			flags[i] = flags[WATER];
 		}
@@ -167,26 +168,26 @@ public class Terrain {
 
 	public static int discover(int terr) {
 		switch (terr) {
-		case SECRET_DOOR:
-			return DOOR;
-		case SECRET_FIRE_TRAP:
-			return FIRE_TRAP;
-		case SECRET_PARALYTIC_TRAP:
-			return PARALYTIC_TRAP;
-		case SECRET_TOXIC_TRAP:
-			return TOXIC_TRAP;
-		case SECRET_POISON_TRAP:
-			return POISON_TRAP;
-		case SECRET_ALARM_TRAP:
-			return ALARM_TRAP;
-		case SECRET_LIGHTNING_TRAP:
-			return LIGHTNING_TRAP;
-		case SECRET_GRIPPING_TRAP:
-			return GRIPPING_TRAP;
-		case SECRET_SUMMONING_TRAP:
-			return SUMMONING_TRAP;
-		default:
-			return terr;
+			case SECRET_DOOR:
+				return DOOR;
+			case SECRET_FIRE_TRAP:
+				return FIRE_TRAP;
+			case SECRET_PARALYTIC_TRAP:
+				return PARALYTIC_TRAP;
+			case SECRET_TOXIC_TRAP:
+				return TOXIC_TRAP;
+			case SECRET_POISON_TRAP:
+				return POISON_TRAP;
+			case SECRET_ALARM_TRAP:
+				return ALARM_TRAP;
+			case SECRET_LIGHTNING_TRAP:
+				return LIGHTNING_TRAP;
+			case SECRET_GRIPPING_TRAP:
+				return GRIPPING_TRAP;
+			case SECRET_SUMMONING_TRAP:
+				return SUMMONING_TRAP;
+			default:
+				return terr;
 		}
 	}
 }

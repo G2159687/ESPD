@@ -41,11 +41,13 @@ public class MagicImmunity extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
-	public String desc() { return Messages.get(this,"desc", dispTurns()); }
+	public String desc() {
+		return Messages.get(this, "desc", dispTurns());
+	}
 
 	{
 		immunities.add(ParalyticGas.class);
@@ -61,8 +63,8 @@ public class MagicImmunity extends FlavourBuff {
 		immunities.add(Yog.BurningFist.class);
 		immunities.add(BrokenRobot.class);
 		immunities.add(CorruptGas.class);
-		
-		
+
+
 	}
 }
 

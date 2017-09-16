@@ -61,10 +61,10 @@ public class ItemSprite extends MovieClip {
 	public ItemSprite(Item item) {
 		super(Assets.ITEMS);
 		if (film == null) {
-			film = new TextureFilm( texture, SIZE, SIZE );
+			film = new TextureFilm(texture, SIZE, SIZE);
 		}
 
-		view (item);
+		view(item);
 	}
 
 	public ItemSprite(int image, Glowing glowing) {
@@ -111,7 +111,7 @@ public class ItemSprite extends MovieClip {
 
 	public void place(int p) {
 		if (Dungeon.level != null)
-			point( worldToCamera( p ) );
+			point(worldToCamera(p));
 	}
 
 	public void drop() {
@@ -148,7 +148,7 @@ public class ItemSprite extends MovieClip {
 		}
 	}
 
-	public ItemSprite view(Item item){
+	public ItemSprite view(Item item) {
 		return view(item.image(), item.glowing());
 	}
 

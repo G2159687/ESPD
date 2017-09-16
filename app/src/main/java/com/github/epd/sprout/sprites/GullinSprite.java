@@ -30,10 +30,10 @@ public class GullinSprite extends MobSprite {
 		TextureFilm frames = new TextureFilm(texture, 12, 16);
 
 		idle = new Animation(12, true);
-		idle.frames(frames, 0, 0, 0, 0, 0, 0, 1, 1 );
+		idle.frames(frames, 0, 0, 0, 0, 0, 0, 1, 1);
 
 		run = new Animation(15, true);
-		run.frames(frames, 0, 2, 3, 4, 5 );
+		run.frames(frames, 0, 2, 3, 4, 5);
 
 		attack = new Animation(15, false);
 		attack.frames(frames, 0, 5, 6);

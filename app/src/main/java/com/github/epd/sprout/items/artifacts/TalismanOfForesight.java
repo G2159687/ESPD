@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class TalismanOfForesight extends Artifact {
 
 	{
-		name = Messages.get(TalismanOfForesight.class,"name");
+		name = Messages.get(TalismanOfForesight.class, "name");
 		image = ItemSpriteSheet.ARTIFACT_TALISMAN;
 
 		level = 0;
@@ -36,7 +36,7 @@ public class TalismanOfForesight extends Artifact {
 		defaultAction = AC_SCRY;
 	}
 
-	public static final String AC_SCRY = Messages.get(TalismanOfForesight.class,"ac_scry");
+	public static final String AC_SCRY = Messages.get(TalismanOfForesight.class, "ac_scry");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -57,11 +57,11 @@ public class TalismanOfForesight extends Artifact {
 		if (action.equals(AC_SCRY)) {
 
 			if (!isEquipped(hero))
-				GLog.i(Messages.get(TalismanOfForesight.class,"equip"));
+				GLog.i(Messages.get(TalismanOfForesight.class, "equip"));
 			else if (charge != chargeCap)
-				GLog.i(Messages.get(TalismanOfForesight.class,"no_charge"));
+				GLog.i(Messages.get(TalismanOfForesight.class, "no_charge"));
 			else if (Dungeon.depth > 50 && level < 50)
-				GLog.i(Messages.get(TalismanOfForesight.class,"sokoban"));
+				GLog.i(Messages.get(TalismanOfForesight.class, "sokoban"));
 			else {
 				hero.sprite.operate(hero.pos);
 				hero.busy();
@@ -76,7 +76,7 @@ public class TalismanOfForesight extends Artifact {
 						}
 					}
 				}
-				if (level > 10 && Dungeon.depth <= 50){
+				if (level > 10 && Dungeon.depth <= 50) {
 					//Magic mapping normal
 					int length = Level.LENGTH;
 					int[] map = Dungeon.level.map;
@@ -98,10 +98,10 @@ public class TalismanOfForesight extends Artifact {
 					GameScene.updateFog();
 					SpellSprite.show(curUser, SpellSprite.MAP);
 				}
-				if (level > 24){
+				if (level > 24) {
 					Buff.affect(hero, MindVision.class, (float) level);
 				}
-				if (level > 49 && Dungeon.depth > 50){
+				if (level > 49 && Dungeon.depth > 50) {
 					//Magic mapping with sokoban
 					int length = Level.LENGTH;
 					int[] map = Dungeon.level.map;
@@ -124,7 +124,7 @@ public class TalismanOfForesight extends Artifact {
 					SpellSprite.show(curUser, SpellSprite.MAP);
 				}
 
-				GLog.p(Messages.get(TalismanOfForesight.class,"scry"));
+				GLog.p(Messages.get(TalismanOfForesight.class, "scry"));
 				updateQuickslot();
 
 				Buff.affect(hero, Awareness.class, Awareness.DURATION);
@@ -140,14 +140,14 @@ public class TalismanOfForesight extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 		if (isEquipped(Dungeon.hero)) {
 			if (!cursed) {
-				desc += "\n\n" + Messages.get(this,"desc_worn");
+				desc += "\n\n" + Messages.get(this, "desc_worn");
 				if (charge == 100)
-					desc += "\n\n" + Messages.get(this,"full");
+					desc += "\n\n" + Messages.get(this, "full");
 			} else {
-				desc += "\n\n" + Messages.get(this,"desc_cursed");
+				desc += "\n\n" + Messages.get(this, "desc_cursed");
 			}
 		}
 
@@ -193,9 +193,9 @@ public class TalismanOfForesight extends Artifact {
 				}
 			}
 
-			if (smthFound == true && !cursed) {
+			if (smthFound && !cursed) {
 				if (warn == 0) {
-					GLog.w(Messages.get(this,"uneasy"));
+					GLog.w(Messages.get(this, "uneasy"));
 					if (target instanceof Hero) {
 						((Hero) target).interrupt();
 					}
@@ -219,7 +219,7 @@ public class TalismanOfForesight extends Artifact {
 					updateQuickslot();
 				} else if (charge >= 100) {
 					partialCharge = 0;
-					GLog.p(Messages.get(this,"full_charge"));
+					GLog.p(Messages.get(this, "full_charge"));
 				}
 			}
 
@@ -231,14 +231,14 @@ public class TalismanOfForesight extends Artifact {
 			exp++;
 			if (exp >= 4 && level < levelCap) {
 				upgrade();
-				GLog.p(Messages.get(this,"levelup"));
+				GLog.p(Messages.get(this, "levelup"));
 				exp -= 4;
 			}
 		}
 
 		@Override
 		public String toString() {
-			return Messages.get(this,"name");
+			return Messages.get(this, "name");
 		}
 
 		@Override
@@ -250,6 +250,8 @@ public class TalismanOfForesight extends Artifact {
 		}
 
 		@Override
-		public String desc() {	return Messages.get(this,"desc"); }
+		public String desc() {
+			return Messages.get(this, "desc");
+		}
 	}
 }

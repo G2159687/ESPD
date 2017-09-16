@@ -11,7 +11,6 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.particles.EarthParticle;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.levels.Level;
-import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Plant;
 import com.github.epd.sprout.scenes.GameScene;
@@ -27,7 +26,7 @@ import java.util.Collections;
 public class SandalsOfNature extends Artifact {
 
 	{
-        name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_SANDALS;
 
 		level = 0;
@@ -39,13 +38,13 @@ public class SandalsOfNature extends Artifact {
 		reinforced = true;
 	}
 
-    public static final String[] NAMES = {Messages.get(SandalsOfNature.class,"name"),
-            Messages.get(SandalsOfNature.class,"name_1"), Messages.get(SandalsOfNature.class,"name_2"), Messages.get(SandalsOfNature.class,"name_3")};
-    public static final String AC_FEED = Messages.get(SandalsOfNature.class,"ac_feed");
-    public static final String AC_ROOT = Messages.get(SandalsOfNature.class,"ac_root");
-    public static final String AC_GROW = Messages.get(SandalsOfNature.class,"ac_grow");
+	public static final String[] NAMES = {Messages.get(SandalsOfNature.class, "name"),
+			Messages.get(SandalsOfNature.class, "name_1"), Messages.get(SandalsOfNature.class, "name_2"), Messages.get(SandalsOfNature.class, "name_3")};
+	public static final String AC_FEED = Messages.get(SandalsOfNature.class, "ac_feed");
+	public static final String AC_ROOT = Messages.get(SandalsOfNature.class, "ac_root");
+	public static final String AC_GROW = Messages.get(SandalsOfNature.class, "ac_grow");
 
-    protected String inventoryTitle = Messages.get(SandalsOfNature.class,"prompt");
+	protected String inventoryTitle = Messages.get(SandalsOfNature.class, "prompt");
 	protected WndBag.Mode mode = WndBag.Mode.SEED;
 
 	public ArrayList<String> seeds = new ArrayList<>();
@@ -75,11 +74,11 @@ public class SandalsOfNature extends Artifact {
 		} else if (action.equals(AC_ROOT) && level > 0) {
 
 			if (!isEquipped(hero))
-                GLog.i(Messages.get(SandalsOfNature.class,"equip"));
+				GLog.i(Messages.get(SandalsOfNature.class, "equip"));
 			else if (charge == 0)
-                GLog.i(Messages.get(SandalsOfNature.class,"no_charge"));
+				GLog.i(Messages.get(SandalsOfNature.class, "no_charge"));
 			else {
-				Buff.affect(hero, Barkskin.class).level(charge/2);
+				Buff.affect(hero, Barkskin.class).level(charge / 2);
 				CellEmitter.bottom(hero.pos).start(EarthParticle.FACTORY,
 						0.05f, 8);
 				charge = 0;
@@ -88,9 +87,9 @@ public class SandalsOfNature extends Artifact {
 		} else if (action.equals(AC_GROW) && level > 0) {
 
 			if (!isEquipped(hero))
-				GLog.i(Messages.get(SandalsOfNature.class,"equip"));
+				GLog.i(Messages.get(SandalsOfNature.class, "equip"));
 			else if (charge < 50)
-				GLog.i(Messages.get(SandalsOfNature.class,"no_charge"));
+				GLog.i(Messages.get(SandalsOfNature.class, "no_charge"));
 			else {
 				growPlant();
 				charge = charge - 50;
@@ -105,7 +104,7 @@ public class SandalsOfNature extends Artifact {
 		for (int i = 0; i < length; i++) {
 			GameScene.add(Blob.seed(i, (2) * 20, Water.class));
 		}
-		GLog.p(Messages.get(SandalsOfNature.class,"grow"));
+		GLog.p(Messages.get(SandalsOfNature.class, "grow"));
 	}
 
 	@Override
@@ -115,41 +114,41 @@ public class SandalsOfNature extends Artifact {
 
 	@Override
 	public String desc() {
-        String desc = "";
-        if (level == 0)
-            desc += Messages.get(SandalsOfNature.class,"desc_1");
-        else if (level == 1)
-            desc += Messages.get(SandalsOfNature.class,"desc_2");
-        else if (level == 2)
-            desc += Messages.get(SandalsOfNature.class,"desc_3");
-        else
-            desc += Messages.get(SandalsOfNature.class,"desc_4");
+		String desc = "";
+		if (level == 0)
+			desc += Messages.get(SandalsOfNature.class, "desc_1");
+		else if (level == 1)
+			desc += Messages.get(SandalsOfNature.class, "desc_2");
+		else if (level == 2)
+			desc += Messages.get(SandalsOfNature.class, "desc_3");
+		else
+			desc += Messages.get(SandalsOfNature.class, "desc_4");
 
-        if (isEquipped(Dungeon.hero)) {
-            desc += "\n\n";
-            if (level == 0) {
-                if (!cursed)
-                    desc += Messages.get(SandalsOfNature.class,"desc_5");
-                else
-                    desc += Messages.get(SandalsOfNature.class,"desc_6");
-            } else if (level == 1)
-                desc += Messages.get(SandalsOfNature.class,"desc_7");
-            else if (level == 2)
-                desc += Messages.get(SandalsOfNature.class,"desc_8");
-            else
-                desc += Messages.get(SandalsOfNature.class,"desc_9");
+		if (isEquipped(Dungeon.hero)) {
+			desc += "\n\n";
+			if (level == 0) {
+				if (!cursed)
+					desc += Messages.get(SandalsOfNature.class, "desc_5");
+				else
+					desc += Messages.get(SandalsOfNature.class, "desc_6");
+			} else if (level == 1)
+				desc += Messages.get(SandalsOfNature.class, "desc_7");
+			else if (level == 2)
+				desc += Messages.get(SandalsOfNature.class, "desc_8");
+			else
+				desc += Messages.get(SandalsOfNature.class, "desc_9");
 
-            if (!cursed)
-                desc += Messages.get(SandalsOfNature.class,"desc_hint");
-            else
-                desc += Messages.get(SandalsOfNature.class,"desc_cursed");
+			if (!cursed)
+				desc += Messages.get(SandalsOfNature.class, "desc_hint");
+			else
+				desc += Messages.get(SandalsOfNature.class, "desc_cursed");
 
-            if (level > 0)
-                desc += "\n\n" + Messages.get(SandalsOfNature.class,"desc_ability");
-        }
+			if (level > 0)
+				desc += "\n\n" + Messages.get(SandalsOfNature.class, "desc_ability");
+		}
 
-        if (!seeds.isEmpty()) {
-            desc += "\n\n" +Messages.get(SandalsOfNature.class,"desc_10",seeds.size());
+		if (!seeds.isEmpty()) {
+			desc += "\n\n" + Messages.get(SandalsOfNature.class, "desc_10", seeds.size());
 		}
 
 		return desc;
@@ -157,17 +156,17 @@ public class SandalsOfNature extends Artifact {
 
 	@Override
 	public Item upgrade() {
-        if (level < 3) {
-            if (level < 0)
-                image = ItemSpriteSheet.ARTIFACT_SANDALS;
-            else if (level == 0)
-                image = ItemSpriteSheet.ARTIFACT_SHOES;
-            else if (level == 1)
-                image = ItemSpriteSheet.ARTIFACT_BOOTS;
-            else if (level >= 2)
-                image = ItemSpriteSheet.ARTIFACT_GREAVES;
-            name = NAMES[level + 1];
-        }
+		if (level < 3) {
+			if (level < 0)
+				image = ItemSpriteSheet.ARTIFACT_SANDALS;
+			else if (level == 0)
+				image = ItemSpriteSheet.ARTIFACT_SHOES;
+			else if (level == 1)
+				image = ItemSpriteSheet.ARTIFACT_BOOTS;
+			else if (level >= 2)
+				image = ItemSpriteSheet.ARTIFACT_GREAVES;
+			name = NAMES[level + 1];
+		}
 		return super.upgrade();
 	}
 
@@ -203,7 +202,7 @@ public class SandalsOfNature extends Artifact {
 		public void onSelect(Item item) {
 			if (item != null && item instanceof Plant.Seed) {
 				if (seeds.contains(item.name())) {
-                    GLog.w(Messages.get(SandalsOfNature.class,"already_fed"));
+					GLog.w(Messages.get(SandalsOfNature.class, "already_fed"));
 				} else {
 					seeds.add(item.name());
 
@@ -216,11 +215,11 @@ public class SandalsOfNature extends Artifact {
 						seeds.clear();
 						upgrade();
 						if (level >= 1 && level <= 3) {
-                            GLog.p(Messages.get(SandalsOfNature.class,"levelup"));
+							GLog.p(Messages.get(SandalsOfNature.class, "levelup"));
 						}
 
 					} else {
-                        GLog.i(Messages.get(SandalsOfNature.class,"absorb_seed"));
+						GLog.i(Messages.get(SandalsOfNature.class, "absorb_seed"));
 					}
 					item.detach(hero.belongings.backpack);
 				}

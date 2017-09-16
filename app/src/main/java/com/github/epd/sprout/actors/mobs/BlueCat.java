@@ -36,25 +36,25 @@ import com.watabou.utils.Random;
 
 public class BlueCat extends Mob {
 
-	protected static final String TXT_STOLE = Messages.get(BlueCat.class,"1");
-	protected static final String TXT_CARRIES = Messages.get(BlueCat.class,"2");
-	protected static final String TXT_RATCHECK1 = Messages.get(BlueCat.class,"3");
-	protected static final String TXT_RATCHECK2 = Messages.get(BlueCat.class,"4");
+	protected static final String TXT_STOLE = Messages.get(BlueCat.class, "1");
+	protected static final String TXT_CARRIES = Messages.get(BlueCat.class, "2");
+	protected static final String TXT_RATCHECK1 = Messages.get(BlueCat.class, "3");
+	protected static final String TXT_RATCHECK2 = Messages.get(BlueCat.class, "4");
 
 	public Item item;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ThiefSprite.class;
 
-		HP = HT = 20+(adj(0)*Random.NormalIntRange(3, 5));
-		defenseSkill = 8+adj(0);
+		HP = HT = 20 + (adj(0) * Random.NormalIntRange(3, 5));
+		defenseSkill = 8 + adj(0);
 
 		EXP = 5;
-		
+
 		loot = new MasterThievesArmband().identify();
 		lootChance = 0.01f;
-		
+
 		lootOther = Generator.Category.BERRY;
 		lootChanceOther = 1f; // by default, see die()
 
@@ -77,13 +77,13 @@ public class BlueCat extends Mob {
 
 	@Override
 	public float speed() {
-		if (item != null) return (5*super.speed())/6;
+		if (item != null) return (5 * super.speed()) / 6;
 		else return super.speed();
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(1, 7+adj(0));
+		return Random.NormalIntRange(1, 7 + adj(0));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class BlueCat extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		
+
 		super.die(cause);
 
 		if (item != null) {
@@ -142,14 +142,14 @@ public class BlueCat extends Mob {
 
 		Amulet item = hero.belongings.getItem(Amulet.class);
 		if (item != null) {
-			
+
 			GLog.w(TXT_STOLE, this.name, item.name());
-			Dungeon.quickslot.clearItem( item );
+			Dungeon.quickslot.clearItem(item);
 			item.updateQuickslot();
-					
+
 			this.item = item;
 			item.detachAll(hero.belongings.backpack);
-			
+
 
 			return true;
 		} else {
@@ -159,7 +159,7 @@ public class BlueCat extends Mob {
 
 	@Override
 	public String description() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 
 		if (item != null) {
 			desc += String.format(TXT_CARRIES, Utils.capitalize(this.name),

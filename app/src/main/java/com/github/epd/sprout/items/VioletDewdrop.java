@@ -29,10 +29,10 @@ import com.watabou.noosa.audio.Sample;
 
 public class VioletDewdrop extends Item {
 
-	private static final String TXT_VALUE = Messages.get(RedDewdrop.class,"value");
+	private static final String TXT_VALUE = Messages.get(RedDewdrop.class, "value");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.VIOLETDEWDROP;
 
 		stackable = true;
@@ -71,6 +71,6 @@ public class VioletDewdrop extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(RedDewdrop.class,"desc");
+		return Messages.get(RedDewdrop.class, "desc");
 	}
 }

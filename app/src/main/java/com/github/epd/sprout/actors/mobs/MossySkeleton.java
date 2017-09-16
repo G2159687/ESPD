@@ -26,8 +26,6 @@ import com.github.epd.sprout.items.Bone;
 import com.github.epd.sprout.items.PrisonKey;
 import com.github.epd.sprout.items.RedDewdrop;
 import com.github.epd.sprout.items.YellowDewdrop;
-import com.github.epd.sprout.items.weapon.enchantments.Death;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.MossySkeletonSprite;
 import com.github.epd.sprout.utils.GLog;
@@ -36,65 +34,63 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import java.util.HashSet;
-
 public class MossySkeleton extends Mob {
 
-	private static final String TXT_HERO_KILLED = Messages.get(MossySkeleton.class,"kill");
-	private static final String TXT_KILLCOUNT = Messages.get(MossySkeleton.class,"count");
+	private static final String TXT_HERO_KILLED = Messages.get(MossySkeleton.class, "kill");
+	private static final String TXT_KILLCOUNT = Messages.get(MossySkeleton.class, "count");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MossySkeletonSprite.class;
 
-		HP = HT = 40+(10*Random.NormalIntRange(7, 10));
+		HP = HT = 40 + (10 * Random.NormalIntRange(7, 10));
 		defenseSkill = 17;
 
 		EXP = 1;
 		maxLvl = 10;
-		
-		baseSpeed = 0.5f+(Math.min(2f, Statistics.skeletonsKilled/50));
+
+		baseSpeed = 0.5f + (Math.min(2f, Statistics.skeletonsKilled / 50));
 
 		loot = new YellowDewdrop();
 		lootChance = 0.5f; // by default, see die()
-			
-		lootThird= new RedDewdrop();
+
+		lootThird = new RedDewdrop();
 		lootChanceThird = 0.1f; // by default, see die()
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(20+Math.round(Statistics.skeletonsKilled/10), 45+Math.round(Statistics.skeletonsKilled/5));
-		
+		return Random.NormalIntRange(20 + Math.round(Statistics.skeletonsKilled / 10), 45 + Math.round(Statistics.skeletonsKilled / 5));
+
 	}
 
 	@Override
 	protected float attackDelay() {
-		return 2f-(Math.min(1.5f, Statistics.skeletonsKilled/50));
+		return 2f - (Math.min(1.5f, Statistics.skeletonsKilled / 50));
 	}
-	
+
 	@Override
 	public void die(Object cause) {
 
 		super.die(cause);
-		
+
 		Statistics.skeletonsKilled++;
 		GLog.h(TXT_KILLCOUNT, Statistics.skeletonsKilled);
-		
-		if (!Dungeon.limitedDrops.prisonkey.dropped() && Dungeon.depth<27) {
+
+		if (!Dungeon.limitedDrops.prisonkey.dropped() && Dungeon.depth < 27) {
 			Dungeon.limitedDrops.prisonkey.drop();
 			Dungeon.level.drop(new PrisonKey(), pos).sprite.drop();
-			explodeDew(pos);				
+			explodeDew(pos);
 		} else {
 			explodeDew(pos);
 		}
-		
-		if(!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 50 && Random.Int(10)==0) {
+
+		if (!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 50 && Random.Int(10) == 0) {
 			Dungeon.limitedDrops.bone.drop();
 			Dungeon.level.drop(new Bone(), pos).sprite.drop();
 		}
-		
-		if(!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 100) {
+
+		if (!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 100) {
 			Dungeon.limitedDrops.bone.drop();
 			Dungeon.level.drop(new Bone(), pos).sprite.drop();
 		}
@@ -123,8 +119,6 @@ public class MossySkeleton extends Mob {
 		}
 	}
 
-	
-	
 
 	@Override
 	public int attackSkill(Char target) {
@@ -138,11 +132,11 @@ public class MossySkeleton extends Mob {
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

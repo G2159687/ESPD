@@ -28,33 +28,35 @@ import com.watabou.utils.Random;
 
 public class SheepSokoban extends NPC {
 
-    private static final String[] QUOTES = {Messages.get(SheepSokoban.class, "one"), Messages.get(SheepSokoban.class, "two"), Messages.get(SheepSokoban.class, "three"),
-            Messages.get(SheepSokoban.class, "four")};
+	private static final String[] QUOTES = {Messages.get(SheepSokoban.class, "one"), Messages.get(SheepSokoban.class, "two"), Messages.get(SheepSokoban.class, "three"),
+			Messages.get(SheepSokoban.class, "four")};
 
-    {
-        name = Messages.get(SheepSokoban.class, "name");
-        spriteClass = SokobanSheepSprite.class;
-    }
+	{
+		name = Messages.get(SheepSokoban.class, "name");
+		spriteClass = SokobanSheepSprite.class;
+
+		properties.add(Property.IMMOVABLE);
+	}
 
 
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(SheepSokoban.class, "desc");
-    }
+	@Override
+	public String description() {
+		return Messages.get(SheepSokoban.class, "desc");
+	}
 
 /*  -W-1 -W  -W+1
  *  -1    P  +1
@@ -62,40 +64,40 @@ public class SheepSokoban extends NPC {
  * 
  */
 
-    @Override
-    public boolean interact() {
-        int curPos = pos;
-        int movPos = pos;
-        int width = Level.getWidth();
-        boolean moved = false;
-        int posDif = Dungeon.hero.pos - curPos;
+	@Override
+	public boolean interact() {
+		int curPos = pos;
+		int movPos = pos;
+		int width = Level.getWidth();
+		boolean moved = false;
+		int posDif = Dungeon.hero.pos - curPos;
 
-        if (posDif == 1) {
-            movPos = curPos - 1;
-        } else if (posDif == -1) {
-            movPos = curPos + 1;
-        } else if (posDif == width) {
-            movPos = curPos - width;
-        } else if (posDif == -width) {
-            movPos = curPos + width;
-        }
+		if (posDif == 1) {
+			movPos = curPos - 1;
+		} else if (posDif == -1) {
+			movPos = curPos + 1;
+		} else if (posDif == width) {
+			movPos = curPos - width;
+		} else if (posDif == -width) {
+			movPos = curPos + width;
+		}
 
-        if (movPos != pos && (Level.passable[movPos] || Level.avoid[movPos]) && Actor.findChar(movPos) == null) {
+		if (movPos != pos && (Level.passable[movPos] || Level.avoid[movPos]) && Actor.findChar(movPos) == null) {
 
-            moveSprite(curPos, movPos);
-            move(movPos);
-            moved = true;
+			moveSprite(curPos, movPos);
+			move(movPos);
+			moved = true;
 
-        }
+		}
 
-        if (moved) {
-            Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-            Dungeon.hero.move(curPos);
-        }
+		if (moved) {
+			Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+			Dungeon.hero.move(curPos);
+		}
 
-        GLog.n(Messages.get(SheepSokoban.class, "sheepname") + Random.element(QUOTES));
+		GLog.n(Messages.get(SheepSokoban.class, "sheepname") + Random.element(QUOTES));
 
-        return true;
-    }
+		return true;
+	}
 
 }

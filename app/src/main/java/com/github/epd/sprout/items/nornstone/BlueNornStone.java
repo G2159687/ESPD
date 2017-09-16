@@ -22,17 +22,17 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class BlueNornStone extends NornStone {
 
-	
+
 	{
 		type = 2;
-		name = Messages.get(NornStone.class,"name");
-		image = ItemSpriteSheet.NORNBLUE;			
+		name = Messages.get(NornStone.class, "name");
+		image = ItemSpriteSheet.NORNBLUE;
 	}
 
-	
+
 	@Override
 	public String info() {
-		return Messages.get(NornStone.class,"desc");
+		return Messages.get(NornStone.class, "desc");
 	}
 
 	@Override

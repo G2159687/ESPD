@@ -29,10 +29,10 @@ import com.watabou.utils.Random;
 public class ToastedNut extends Nut {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEED_TOASTEDDUNGEONNUT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
-		message = Messages.get(this,"eat");
+		message = Messages.get(this, "eat");
 		hornValue = 2;
 	}
 
@@ -44,27 +44,28 @@ public class ToastedNut extends Nut {
 		if (action.equals(AC_EAT)) {
 
 			switch (Random.Int(2)) {
-			case 0:
-				GLog.i(Messages.get(this,"effect"));
-				Buff.affect(hero, Barkskin.class).level(hero.HT/2);
-				break;
-			case 1:
-				GLog.i(Messages.get(this,"effect"));
-				Buff.affect(hero, Barkskin.class).level(hero.HT);
-				break;
+				case 0:
+					GLog.i(Messages.get(this, "effect"));
+					Buff.affect(hero, Barkskin.class).level(hero.HT / 2);
+					break;
+				case 1:
+					GLog.i(Messages.get(this, "effect"));
+					Buff.affect(hero, Barkskin.class).level(hero.HT);
+					break;
 			}
 		}
-	}	
-	
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
+
 	public static Food cook(Nut ingredient) {
 		ToastedNut result = new ToastedNut();
 		result.quantity = ingredient.quantity();

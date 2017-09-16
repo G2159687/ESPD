@@ -25,32 +25,34 @@ import com.watabou.utils.Random;
 
 public class SheepSokobanStop extends NPC {
 
-    private static final String[] QUOTES = {Messages.get(SheepSokoban.class, "one"), Messages.get(SheepSokoban.class, "two"), Messages.get(SheepSokoban.class, "three"), Messages.get(SheepSokoban.class, "four")};
+	private static final String[] QUOTES = {Messages.get(SheepSokoban.class, "one"), Messages.get(SheepSokoban.class, "two"), Messages.get(SheepSokoban.class, "three"), Messages.get(SheepSokoban.class, "four")};
 
-    {
-        name = Messages.get(SheepSokobanStop.class, "name");
-        spriteClass = SheepSprite.class;
-    }
+	{
+		name = Messages.get(SheepSokobanStop.class, "name");
+		spriteClass = SheepSprite.class;
+
+		properties.add(Property.IMMOVABLE);
+	}
 
 
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(SheepSokobanStop.class, "desc");
-    }
+	@Override
+	public String description() {
+		return Messages.get(SheepSokobanStop.class, "desc");
+	}
 
 /*  -W-1 -W  -W+1
  *  -1    P  +1
@@ -58,10 +60,10 @@ public class SheepSokobanStop extends NPC {
  * 
  */
 
-    @Override
-    public boolean interact() {
-        GLog.n(Messages.get(SheepSokoban.class, "sheepname") + Random.element(QUOTES));
-        return false;
-    }
+	@Override
+	public boolean interact() {
+		GLog.n(Messages.get(SheepSokoban.class, "sheepname") + Random.element(QUOTES));
+		return false;
+	}
 
 }

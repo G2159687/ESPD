@@ -25,82 +25,82 @@ import com.watabou.gltextures.TextureCache;
 import java.util.HashMap;
 
 public class TextureFilm {
-	
-	private static final RectF FULL = new RectF( 0, 0, 1, 1 );
-	
+
+	private static final RectF FULL = new RectF(0, 0, 1, 1);
+
 	private int texWidth;
 	private int texHeight;
-	
-	protected HashMap<Object,RectF> frames = new HashMap<Object, RectF>();
-	
-	public TextureFilm( Object tx ) {
-		
-		SmartTexture texture = TextureCache.get( tx );
-		
+
+	protected HashMap<Object, RectF> frames = new HashMap<Object, RectF>();
+
+	public TextureFilm(Object tx) {
+
+		SmartTexture texture = TextureCache.get(tx);
+
 		texWidth = texture.width;
 		texHeight = texture.height;
-		
-		add( null, FULL );
+
+		add(null, FULL);
 	}
-	
-	public TextureFilm( SmartTexture texture, int width ) {
-		this( texture, width, texture.height );
+
+	public TextureFilm(SmartTexture texture, int width) {
+		this(texture, width, texture.height);
 	}
-	
-	public TextureFilm( Object tx, int width, int height ) {
-		
-		SmartTexture texture = TextureCache.get( tx );
-		
+
+	public TextureFilm(Object tx, int width, int height) {
+
+		SmartTexture texture = TextureCache.get(tx);
+
 		texWidth = texture.width;
 		texHeight = texture.height;
-		
-		float uw = (float)width / texWidth;
-		float vh = (float)height / texHeight;
+
+		float uw = (float) width / texWidth;
+		float vh = (float) height / texHeight;
 		int cols = texWidth / width;
 		int rows = texHeight / height;
-		
-		for (int i=0; i < rows; i++) {
-			for (int j=0; j < cols; j++) {
-				RectF rect = new RectF( j * uw, i * vh, (j+1) * uw, (i+1) * vh );
-				add( i * cols + j, rect );
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				RectF rect = new RectF(j * uw, i * vh, (j + 1) * uw, (i + 1) * vh);
+				add(i * cols + j, rect);
 			}
 		}
 	}
-	
-	public TextureFilm( TextureFilm atlas, Object key, int width, int height ) {
-	
+
+	public TextureFilm(TextureFilm atlas, Object key, int width, int height) {
+
 		texWidth = atlas.texWidth;
 		texHeight = atlas.texHeight;
-		
-		RectF patch = atlas.get( key );
-		
-		float uw = (float)width / texWidth;
-		float vh = (float)height / texHeight;
-		int cols = (int)(width( patch ) / width);
-		int rows = (int)(height( patch ) / height);
-		
-		for (int i=0; i < rows; i++) {
-			for (int j=0; j < cols; j++) {
-				RectF rect = new RectF( j * uw, i * vh, (j+1) * uw, (i+1) * vh );
-				rect.offset( patch.left, patch.top );
-				add( i * cols + j, rect );
+
+		RectF patch = atlas.get(key);
+
+		float uw = (float) width / texWidth;
+		float vh = (float) height / texHeight;
+		int cols = (int) (width(patch) / width);
+		int rows = (int) (height(patch) / height);
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				RectF rect = new RectF(j * uw, i * vh, (j + 1) * uw, (i + 1) * vh);
+				rect.offset(patch.left, patch.top);
+				add(i * cols + j, rect);
 			}
 		}
 	}
-	
-	public void add( Object id, RectF rect ) {
-		frames.put( id, rect );
+
+	public void add(Object id, RectF rect) {
+		frames.put(id, rect);
 	}
-	
-	public RectF get( Object id ) {
-		return frames.get( id );
+
+	public RectF get(Object id) {
+		return frames.get(id);
 	}
-	
-	public float width( RectF frame ) {
+
+	public float width(RectF frame) {
 		return frame.width() * texWidth;
 	}
-	
-	public float height( RectF frame ) {
+
+	public float height(RectF frame) {
 		return frame.height() * texHeight;
 	}
 }

@@ -42,5 +42,5 @@ public class OtilukeNPCSprite extends MobSprite {
 		play(idle);
 	}
 
-	
+
 }

@@ -34,7 +34,7 @@ import java.util.HashSet;
 public class Bee extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BeeSprite.class;
 
 		viewDistance = 4;
@@ -71,7 +71,7 @@ public class Bee extends Mob {
 	}
 
 	public void spawn(int level) {
-		this.level = Math.min(level,Statistics.deepestFloor);
+		this.level = Math.min(level, Statistics.deepestFloor);
 
 		HT = (2 + level) * 4;
 		defenseSkill = 9 + level;
@@ -109,11 +109,11 @@ public class Bee extends Mob {
 		if (potHolder == -1 && potPos == -1)
 			return Dungeon.hero;
 
-		// if something is holding the pot, target that
+			// if something is holding the pot, target that
 		else if (Actor.findById(potHolder) != null)
 			return (Char) Actor.findById(potHolder);
 
-		// if the pot is on the ground
+			// if the pot is on the ground
 		else {
 
 			// if already targeting something, and that thing is still alive and
@@ -153,10 +153,11 @@ public class Bee extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Poison.class);
 		IMMUNITIES.add(Amok.class);

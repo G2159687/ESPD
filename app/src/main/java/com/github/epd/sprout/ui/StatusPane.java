@@ -20,7 +20,6 @@ package com.github.epd.sprout.ui;
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.effects.Speck;
-import com.github.epd.sprout.effects.particles.BloodParticle;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.scenes.PixelScene;
@@ -93,8 +92,8 @@ public class StatusPane extends Component {
 		compass = new Compass(Dungeon.level.exit);
 		add(compass);
 
-		shield = new Image( Assets.SHLD_BAR );
-	//	add(shield);
+		shield = new Image(Assets.SHLD_BAR);
+		//	add(shield);
 
 		hp = new Image(Assets.HP_BAR);
 		add(hp);
@@ -103,7 +102,7 @@ public class StatusPane extends Component {
 		add(exp);
 
 		bossHP = new BossHealthBar();
-		add( bossHP );
+		add(bossHP);
 
 		level = new BitmapText(PixelScene.font1x);
 		level.hardlight(0xFFEBA4);
@@ -144,7 +143,7 @@ public class StatusPane extends Component {
 		hp.x = shield.x = 30;
 		hp.y = shield.y = 3;
 
-		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
+		bossHP.setPos(6 + (width - bossHP.width()) / 2, 20);
 
 		depth.x = width - 24 - depth.width() - 18;
 		depth.y = 6;
@@ -164,20 +163,20 @@ public class StatusPane extends Component {
 
 		float health = Dungeon.hero.HP;
 		float shield = Dungeon.hero.SHLD;
-		float max = Math.max(health+shield, Dungeon.hero.HT);
+		float max = Math.max(health + shield, Dungeon.hero.HT);
 
 		if (!Dungeon.hero.isAlive()) {
 			avatar.tint(0x000000, 0.5f);
-		} else if ((health/max) < 0.3f) {
-			warning += Game.elapsed * 5f *(0.4f - (health/max));
+		} else if ((health / max) < 0.3f) {
+			warning += Game.elapsed * 5f * (0.4f - (health / max));
 			warning %= 1f;
-			avatar.tint(ColorMath.interpolate(warning, 0x660000, 0xCC0000, 0x660000), 0.5f );
+			avatar.tint(ColorMath.interpolate(warning, 0x660000, 0xCC0000, 0x660000), 0.5f);
 		} else {
 			avatar.resetColor();
 		}
 
-		hp.scale.x = health/max;
-		this.shield.scale.x = (health+shield)/max;
+		hp.scale.x = health / max;
+		this.shield.scale.x = (health + shield) / max;
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp
 				/ Dungeon.hero.maxExp();

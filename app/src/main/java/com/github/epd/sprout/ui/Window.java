@@ -46,7 +46,7 @@ public class Window extends Group implements Signal.Listener<Key> {
 
 	public static final int TITLE_COLOR = 0xFFFF44;
 	public static final int EASY_COLOR = 0x00FFFF;
-    public static final int SHPX_COLOR = 0xCCFFCC;
+	public static final int SHPX_COLOR = 0xCCFFCC;
 
 	public Window() {
 		this(0, 0, Chrome.get(Chrome.Type.WINDOW));
@@ -117,12 +117,12 @@ public class Window extends Group implements Signal.Listener<Key> {
 				chrome.width(), chrome.height);
 	}
 
-	public void offset( int yOffset ){
+	public void offset(int yOffset) {
 		camera.y -= this.yOffset * camera.zoom;
 		this.yOffset = yOffset;
 		camera.y += yOffset * camera.zoom;
 
-		shadow.boxRect( camera.x / camera.zoom, camera.y / camera.zoom, chrome.width(), chrome.height );
+		shadow.boxRect(camera.x / camera.zoom, camera.y / camera.zoom, chrome.width(), chrome.height);
 	}
 
 	public void hide() {
@@ -144,12 +144,12 @@ public class Window extends Group implements Signal.Listener<Key> {
 	public void onSignal(Key key) {
 		if (key.pressed) {
 			switch (key.code) {
-			case Keys.BACK:
-				onBackPressed();
-				break;
-			case Keys.MENU:
-				onMenuPressed();
-				break;
+				case Keys.BACK:
+					onBackPressed();
+					break;
+				case Keys.MENU:
+					onMenuPressed();
+					break;
 			}
 		}
 

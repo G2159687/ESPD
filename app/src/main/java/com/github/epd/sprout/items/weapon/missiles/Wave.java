@@ -25,14 +25,14 @@ import com.watabou.utils.Random;
 public class Wave extends MissileWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAVE;
 
 		MIN = 1;
 		MAX = 4;
 
 		bones = false; // Finding them in bones would be semi-frequent and
-						// disappointing.
+		// disappointing.
 	}
 
 	public Wave() {
@@ -46,7 +46,7 @@ public class Wave extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

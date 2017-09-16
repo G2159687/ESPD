@@ -28,10 +28,10 @@ import com.watabou.noosa.audio.Sample;
 
 public abstract class EquipableItem extends Item {
 
-	private static final String TXT_UNEQUIP_CURSED = Messages.get(EquipableItem.class,"unequipcursed");
+	private static final String TXT_UNEQUIP_CURSED = Messages.get(EquipableItem.class, "unequipcursed");
 
-	public static final String AC_EQUIP = Messages.get(EquipableItem.class,"ac_equip");
-	public static final String AC_UNEQUIP = Messages.get(EquipableItem.class,"ac_unequip");
+	public static final String AC_EQUIP = Messages.get(EquipableItem.class, "ac_equip");
+	public static final String AC_UNEQUIP = Messages.get(EquipableItem.class, "ac_unequip");
 
 	{
 		bones = true;
@@ -114,5 +114,6 @@ public abstract class EquipableItem extends Item {
 		return doUnequip(hero, collect, true);
 	}
 
-	public void activate( Char ch ){}
+	public void activate(Char ch) {
+	}
 }

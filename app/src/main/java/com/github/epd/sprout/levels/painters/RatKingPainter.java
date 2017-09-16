@@ -34,7 +34,7 @@ import com.watabou.utils.Random;
 public class RatKingPainter extends Painter {
 
 	static boolean page = false;
-	
+
 	public static void paint(Level level, Room room) {
 
 		fill(level, room, Terrain.WALL);
@@ -43,8 +43,8 @@ public class RatKingPainter extends Painter {
 		Room.Door entrance = room.entrance();
 		entrance.set(Room.Door.Type.HIDDEN);
 		int door = entrance.x + entrance.y * Level.getWidth();
-		
-		Dungeon.ratChests=0;
+
+		Dungeon.ratChests = 0;
 
 		for (int i = room.left + 1; i < room.right; i++) {
 			addChest(level, (room.top + 1) * Level.getWidth() + i, door);
@@ -61,7 +61,7 @@ public class RatKingPainter extends Painter {
 		level.mobs.add(king);
 	}
 
-	private static void addChest(Level level, int pos, int door) {		
+	private static void addChest(Level level, int pos, int door) {
 
 		if (pos == door - 1 || pos == door + 1 || pos == door - Level.getWidth()
 				|| pos == door + Level.getWidth()) {
@@ -70,29 +70,29 @@ public class RatKingPainter extends Painter {
 
 		Item prize;
 		switch (Random.Int(10)) {
-		case 0:
-			prize = Generator.random(Generator.Category.WEAPON);
-			if (prize instanceof MissileWeapon) {
-				prize.quantity(1);
-			} else {
-				prize.degrade(Random.Int(3));
-			}
-			break;
-		case 1:
-			prize = Generator.random(Generator.Category.ARMOR).degrade(
-					Random.Int(3));
-			break;
-		default:
-			prize = new Gold(Random.IntRange(1, 5));
-			break;
+			case 0:
+				prize = Generator.random(Generator.Category.WEAPON);
+				if (prize instanceof MissileWeapon) {
+					prize.quantity(1);
+				} else {
+					prize.degrade(Random.Int(3));
+				}
+				break;
+			case 1:
+				prize = Generator.random(Generator.Category.ARMOR).degrade(
+						Random.Int(3));
+				break;
+			default:
+				prize = new Gold(Random.IntRange(1, 5));
+				break;
 		}
 
-		if (!page && Statistics.enemiesSlain<21 && Dungeon.limitedDrops.journal.dropped()){
+		if (!page && Statistics.enemiesSlain < 21 && Dungeon.limitedDrops.journal.dropped()) {
 			level.drop(new Town(), pos);
-			page=true;
+			page = true;
 		} else {
-		level.drop(prize, pos).type = Heap.Type.CHEST;
-		Dungeon.ratChests++;
+			level.drop(prize, pos).type = Heap.Type.CHEST;
+			Dungeon.ratChests++;
 		}
 	}
 }

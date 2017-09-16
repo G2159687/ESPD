@@ -29,9 +29,9 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public class MiscEquippable extends KindofMisc {
-	
-	public String cursedDesc(){
-		return Messages.get(this,"cursed", this);
+
+	public String cursedDesc() {
+		return Messages.get(this, "cursed", this);
 	}
 
 	protected Buff buff;
@@ -83,15 +83,14 @@ public class MiscEquippable extends KindofMisc {
 	}
 
 
-
 	@Override
 	public String name() {
-		return name ;
+		return name;
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
@@ -99,20 +98,19 @@ public class MiscEquippable extends KindofMisc {
 		if (isEquipped(Dungeon.hero)) {
 
 			return desc();
-				
+
 
 		} else if (cursed && cursedKnown) {
 
 			return desc();
-					
+
 		} else {
 
-			return desc() ;
+			return desc();
 
 		}
 	}
 
-	
 
 	@Override
 	public Item random() {
@@ -124,7 +122,7 @@ public class MiscEquippable extends KindofMisc {
 		return this;
 	}
 
-	
+
 	@Override
 	public int price() {
 		int price = 75;
@@ -148,7 +146,6 @@ public class MiscEquippable extends KindofMisc {
 		return null;
 	}
 
-	
 
 	public class MiscBuff extends Buff {
 
@@ -160,12 +157,12 @@ public class MiscEquippable extends KindofMisc {
 
 		@Override
 		public boolean attachTo(Char target) {
-		
+
 			return super.attachTo(target);
 		}
 
 		@Override
-		public boolean act() {		
+		public boolean act() {
 
 			spend(TICK);
 

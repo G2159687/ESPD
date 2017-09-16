@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class CloakOfShadows extends Artifact {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_CLOAK;
 
 		level = 0;
@@ -38,7 +38,7 @@ public class CloakOfShadows extends Artifact {
 
 	private boolean stealthed = false;
 
-	public static final String AC_STEALTH = Messages.get(CloakOfShadows.class,"ac_stealth");
+	public static final String AC_STEALTH = Messages.get(CloakOfShadows.class, "ac_stealth");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -54,13 +54,13 @@ public class CloakOfShadows extends Artifact {
 
 			if (!stealthed) {
 				if (!isEquipped(hero))
-					GLog.i(Messages.get(this,"equip"));
+					GLog.i(Messages.get(this, "equip"));
 				else if (cooldown > 0)
-					GLog.i(Messages.get(this,"cooldown", cooldown));
+					GLog.i(Messages.get(this, "cooldown", cooldown));
 				else if (Dungeon.depth == 29)
-					GLog.i(Messages.get(this,"29"));
+					GLog.i(Messages.get(this, "29"));
 				else if (charge <= 1)
-					GLog.i(Messages.get(this,"no_charge"));
+					GLog.i(Messages.get(this, "no_charge"));
 				else {
 					stealthed = true;
 					hero.spend(1f);
@@ -75,14 +75,14 @@ public class CloakOfShadows extends Artifact {
 						hero.sprite.alpha(0.4f);
 					}
 					hero.sprite.operate(hero.pos);
-					GLog.i(Messages.get(this,"enable"));
+					GLog.i(Messages.get(this, "enable"));
 				}
 			} else {
 				stealthed = false;
 				activeBuff.detach();
 				activeBuff = null;
 				hero.sprite.operate(hero.pos);
-				GLog.i(Messages.get(this,"disable"));
+				GLog.i(Messages.get(this, "disable"));
 			}
 
 		} else
@@ -125,19 +125,19 @@ public class CloakOfShadows extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc1");
+		String desc = Messages.get(this, "desc1");
 
 		if (level < 5)
-			desc += Messages.get(this,"desc2");
+			desc += Messages.get(this, "desc2");
 		else if (level < 10)
-			desc += Messages.get(this,"desc3");
+			desc += Messages.get(this, "desc3");
 		else if (level < 15)
-			desc += Messages.get(this,"desc4");
+			desc += Messages.get(this, "desc4");
 		else
-			desc += Messages.get(this,"desc5");
+			desc += Messages.get(this, "desc5");
 
 		if (isEquipped(Dungeon.hero))
-			desc += Messages.get(this,"desc6");
+			desc += Messages.get(this, "desc6");
 
 		return desc;
 	}
@@ -210,7 +210,7 @@ public class CloakOfShadows extends Artifact {
 			charge--;
 			if (charge <= 0) {
 				detach();
-				GLog.w(Messages.get(this,"no_charge"));
+				GLog.w(Messages.get(this, "no_charge"));
 				((Hero) target).interrupt();
 			}
 
@@ -219,7 +219,7 @@ public class CloakOfShadows extends Artifact {
 			if (exp >= (level + 1) * 50 && level < levelCap) {
 				upgrade();
 				exp -= level * 50;
-				GLog.p(Messages.get(this,"levelup"));
+				GLog.p(Messages.get(this, "levelup"));
 			}
 
 			updateQuickslot();
@@ -231,11 +231,13 @@ public class CloakOfShadows extends Artifact {
 
 		@Override
 		public String toString() {
-			return Messages.get(this,"name");
+			return Messages.get(this, "name");
 		}
 
 		@Override
-		public String desc() { return Messages.get(this,"desc"); }
+		public String desc() {
+			return Messages.get(this, "desc");
+		}
 
 		@Override
 		public void detach() {

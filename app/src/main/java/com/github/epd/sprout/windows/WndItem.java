@@ -38,11 +38,11 @@ public class WndItem extends Window {
 
 	private static final int WIDTH = 120;
 
-	public WndItem( final WndBag owner, final Item item ){
-		this( owner, item, owner != null );
+	public WndItem(final WndBag owner, final Item item) {
+		this(owner, item, owner != null);
 	}
 
-	public WndItem( final WndBag owner, final Item item , final boolean options ) {
+	public WndItem(final WndBag owner, final Item item, final boolean options) {
 
 		super();
 
@@ -58,10 +58,10 @@ public class WndItem extends Window {
 			titlebar.color(ItemSlot.DEGRADED);
 		}
 
-		RenderedTextMultiline info = PixelScene.renderMultiline( item.info(), 6 );
+		RenderedTextMultiline info = PixelScene.renderMultiline(item.info(), 6);
 		info.maxWidth(WIDTH);
 		info.setPos(titlebar.left(), titlebar.bottom() + GAP);
-		add( info );
+		add(info);
 
 		float y = info.top() + info.height() + GAP;
 		float x = 0;
@@ -75,8 +75,9 @@ public class WndItem extends Window {
 						item.execute(Dungeon.hero, action);
 						hide();
 						if (owner != null) owner.hide();
-						if (action.equals(EquipableItem.AC_UNEQUIP))
-						{GameScene.show(new WndBag(Dungeon.hero.belongings.backpack, null, WndBag.Mode.ALL, null));}
+						if (action.equals(EquipableItem.AC_UNEQUIP)) {
+							GameScene.show(new WndBag(Dungeon.hero.belongings.backpack, null, WndBag.Mode.ALL, null));
+						}
 					}
 				};
 				btn.setSize(Math.max(BUTTON_WIDTH, btn.reqWidth()),

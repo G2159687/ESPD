@@ -32,65 +32,73 @@ import com.watabou.utils.Random;
 public class GoldenJelly extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MUSHROOM_GOLDENJELLY;
-		energy = (Hunger.STARVING - Hunger.HUNGRY)/10;
-		message = Messages.get(BlueMilk.class,"eat");
+		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
+		message = Messages.get(BlueMilk.class, "eat");
 		hornValue = 2;
 		bones = false;
 	}
 
-	private static final String TXT_PREVENTING = Messages.get(BlueMilk.class,"prevent");
-	private static final String TXT_EFFECT = Messages.get(GoldenJelly.class,"effect");
+	private static final String TXT_PREVENTING = Messages.get(BlueMilk.class, "prevent");
+	private static final String TXT_EFFECT = Messages.get(GoldenJelly.class, "effect");
 
 	@Override
 	public void execute(Hero hero, String action) {
-		
+
 		if (action.equals(AC_EAT)) {
-			
-			if (Dungeon.bossLevel()){
+
+			if (Dungeon.bossLevel()) {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
 
 		}
-		
-	   if (action.equals(AC_EAT)) {
-		   
-		  	   
-		   GLog.w(TXT_EFFECT);
-			
-		   switch (Random.Int(10)) {
-			case 1:
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-					if (mob.hostile)
-					Buff.prolong(mob, Roots.class, 20);
-				}
-				Buff.affect(hero, Vertigo.class, 1f);
-				break;
-			case 0: case 2: case 3: case 4: case 5: 
-			case 6: case 7: case 8: case 9: case 10:
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-					if (mob.hostile)
-					Buff.prolong(mob, Roots.class, 10);
-				}
-				Buff.affect(hero, Vertigo.class, 3f);
-				break;
+
+		if (action.equals(AC_EAT)) {
+
+
+			GLog.w(TXT_EFFECT);
+
+			switch (Random.Int(10)) {
+				case 1:
+					for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+						if (mob.hostile)
+							Buff.prolong(mob, Roots.class, 20);
+					}
+					Buff.affect(hero, Vertigo.class, 1f);
+					break;
+				case 0:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+					for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+						if (mob.hostile)
+							Buff.prolong(mob, Roots.class, 10);
+					}
+					Buff.affect(hero, Vertigo.class, 3f);
+					break;
 			}
 		}
-	   super.execute(hero, action);
-	}	
-	
+		super.execute(hero, action);
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
-	
+
 	public GoldenJelly() {
 		this(1);
 	}

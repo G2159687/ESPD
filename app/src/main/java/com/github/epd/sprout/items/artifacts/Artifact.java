@@ -21,10 +21,10 @@ public class Artifact extends KindofMisc {
 	private static final String TXT_TO_STRING_LVL = "%s%+d";
 	private static final String TXT_TO_STRING_LVL_CHARGE = "%s%+d (%d/%d)";
 
-    private static final String TXT_UNEQUIP_TITLE = Messages.get(Artifact.class,"unequip_title");
-    private static final String TXT_UNEQUIP_MESSAGE = Messages.get(Artifact.class,"unequip_msg");
+	private static final String TXT_UNEQUIP_TITLE = Messages.get(Artifact.class, "unequip_title");
+	private static final String TXT_UNEQUIP_MESSAGE = Messages.get(Artifact.class, "unequip_msg");
 
-    protected Buff passiveBuff;
+	protected Buff passiveBuff;
 	protected Buff activeBuff;
 
 	// level is used internally to track upgrades to artifacts, size/logic
@@ -55,16 +55,18 @@ public class Artifact extends KindofMisc {
 	}
 
 	@Override
-    public boolean doEquip( final Hero hero ) {
+	public boolean doEquip(final Hero hero) {
 
-        if ((hero.belongings.misc1 != null && hero.belongings.misc1.getClass() == this.getClass())
-                || (hero.belongings.misc2 != null && hero.belongings.misc2.getClass() == this.getClass())){
+		if ((hero.belongings.misc1 != null && hero.belongings.misc1.getClass() == this.getClass())
+				|| (hero.belongings.misc2 != null && hero.belongings.misc2.getClass() == this.getClass())
+				|| (hero.belongings.misc3 != null && hero.belongings.misc3.getClass() == this.getClass())
+				|| (hero.belongings.misc4 != null && hero.belongings.misc4.getClass() == this.getClass())) {
 
-            GLog.w(Messages.get(Artifact.class,"2a"));
+			GLog.w(Messages.get(Artifact.class, "2a"));
 			return false;
 
-        } else {
-			if (super.doEquip( hero )){
+		} else {
+			if (super.doEquip(hero)) {
 				identify();
 				return true;
 			} else {
@@ -117,7 +119,7 @@ public class Artifact extends KindofMisc {
 		if (cursed && cursedKnown && !isEquipped(Dungeon.hero)) {
 
 			return desc()
-					+ Messages.get(this,"curse_known");
+					+ Messages.get(this, "curse_known");
 
 		} else {
 
@@ -231,7 +233,7 @@ public class Artifact extends KindofMisc {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		image = bundle.getInt(IMAGE);
+		if (bundle.contains(IMAGE)) image = bundle.getInt(IMAGE);
 		exp = bundle.getInt(EXP);
 		charge = bundle.getInt(CHARGE);
 		partialCharge = bundle.getFloat(PARTIALCHARGE);

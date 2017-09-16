@@ -35,7 +35,7 @@ public class ItemStatusHandler<T extends Item> {
 	private HashSet<Class<? extends T>> known;
 
 	public ItemStatusHandler(Class<? extends T>[] items, String[] allLabels,
-			Integer[] allImages) {
+	                         Integer[] allImages) {
 
 		this.items = items;
 
@@ -63,7 +63,7 @@ public class ItemStatusHandler<T extends Item> {
 	}
 
 	public ItemStatusHandler(Class<? extends T>[] items, String[] labels,
-			Integer[] images, Bundle bundle) {
+	                         Integer[] images, Bundle bundle) {
 
 		this.items = items;
 

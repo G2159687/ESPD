@@ -23,19 +23,19 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class NornStone extends Item {
 
-	public int type=0;
-	
+	public int type = 0;
+
 	{
 		stackable = true;
-		name = Messages.get(NornStone.class,"name");
+		name = Messages.get(NornStone.class, "name");
 		image = ItemSpriteSheet.NORNGREEN;
 		bones = false;
 	}
 
-	
+
 	@Override
 	public String info() {
-		return Messages.get(NornStone.class,"desc");
+		return Messages.get(NornStone.class, "desc");
 	}
 
 	@Override

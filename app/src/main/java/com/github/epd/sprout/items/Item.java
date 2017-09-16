@@ -49,7 +49,7 @@ import java.util.Comparator;
 
 public class Item implements Bundlable {
 
-	private static final String TXT_PACK_FULL = Messages.get(Item.class,"pack_full");
+	private static final String TXT_PACK_FULL = Messages.get(Item.class, "pack_full");
 
 	private static final String TXT_TO_STRING = "%s";
 	private static final String TXT_TO_STRING_X = "%s x%d";
@@ -60,11 +60,11 @@ public class Item implements Bundlable {
 	protected static final float TIME_TO_PICK_UP = 1.0f;
 	protected static final float TIME_TO_DROP = 0.5f;
 
-	public static final String AC_DROP = Messages.get(Item.class,"ac_drop");
-	public static final String AC_THROW = Messages.get(Item.class,"ac_throw");
+	public static final String AC_DROP = Messages.get(Item.class, "ac_drop");
+	public static final String AC_THROW = Messages.get(Item.class, "ac_throw");
 
 	public String defaultAction;
-    public boolean usesTargeting;
+	public boolean usesTargeting;
 
 	protected String name = "smth";
 	public int image = 0;
@@ -107,9 +107,11 @@ public class Item implements Bundlable {
 
 			GameScene.pickUp(this);
 			Sample.INSTANCE.play(Assets.SND_ITEM);
-            if (!ShatteredPixelDungeon.autocollect()) {
-			hero.spendAndNext(TIME_TO_PICK_UP);
-            } else {hero.spendAndNext(0);}
+			if (!ShatteredPixelDungeon.autocollect()) {
+				hero.spendAndNext(TIME_TO_PICK_UP);
+			} else {
+				hero.spendAndNext(0);
+			}
 			return true;
 
 		} else {
@@ -238,7 +240,7 @@ public class Item implements Bundlable {
 			}
 		}
 	}
-	
+
 	public final Item detach(Bag container, Integer quant) {
 
 		if (quantity <= 0) {
@@ -255,7 +257,7 @@ public class Item implements Bundlable {
 
 		} else {
 
-			quantity-=quant;
+			quantity -= quant;
 			updateQuickslot();
 
 			try {
@@ -301,14 +303,14 @@ public class Item implements Bundlable {
 
 	protected void onDetach() {
 	}
-	
-	public Item uncurse(){
-		cursed=false;
+
+	public Item uncurse() {
+		cursed = false;
 		return this;
 	}
-	
-	public Item reinforce(){
-		reinforced=true;
+
+	public Item reinforce() {
+		reinforced = true;
 		return this;
 	}
 
@@ -363,7 +365,7 @@ public class Item implements Bundlable {
 	public boolean isReinforced() {
 		return reinforced;
 	}
-	
+
 	public boolean isIdentified() {
 		return levelKnown && cursedKnown;
 	}
@@ -515,7 +517,7 @@ public class Item implements Bundlable {
 
 	public void cast(final Hero user, int dst) {
 
-		final int cell = new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
+		final int cell = new Ballistica(user.pos, dst, Ballistica.PROJECTILE).collisionPos;
 		user.sprite.zap(cell);
 		user.busy();
 
@@ -562,6 +564,8 @@ public class Item implements Bundlable {
 		}
 
 		@Override
-		public String prompt() {return Messages.get(Item.class,"prompt");}
+		public String prompt() {
+			return Messages.get(Item.class, "prompt");
+		}
 	};
 }

@@ -32,8 +32,8 @@ import com.watabou.utils.Random;
 
 public class AmuletScene extends PixelScene {
 
-	private static final String TXT_EXIT = Messages.get(AmuletScene.class,"exit");
-	private static final String TXT_STAY = Messages.get(AmuletScene.class,"stay");
+	private static final String TXT_EXIT = Messages.get(AmuletScene.class, "exit");
+	private static final String TXT_STAY = Messages.get(AmuletScene.class, "stay");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 18;
@@ -51,9 +51,9 @@ public class AmuletScene extends PixelScene {
 
 		RenderedTextMultiline text = null;
 		if (!noText) {
-			text = renderMultiline( Messages.get(this, "text"), 7 );
+			text = renderMultiline(Messages.get(this, "text"), 7);
 			text.maxWidth(WIDTH);
-			add( text );
+			add(text);
 		}
 
 		amulet = new Image(Assets.AMULET);
@@ -88,8 +88,8 @@ public class AmuletScene extends PixelScene {
 			amulet.y = (Camera.main.height - height) / 2;
 			align(amulet);
 
-			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, amulet.y + amulet.height + LARGE_GAP );
-			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
+			btnExit.setPos((Camera.main.width - btnExit.width()) / 2, amulet.y + amulet.height + LARGE_GAP);
+			btnStay.setPos(btnExit.left(), btnExit.bottom() + SMALL_GAP);
 
 		} else {
 			height = amulet.height + LARGE_GAP + text.height() + LARGE_GAP + btnExit.height() + SMALL_GAP + btnStay.height();
@@ -101,8 +101,8 @@ public class AmuletScene extends PixelScene {
 			text.setPos((Camera.main.width - text.width()) / 2, amulet.y + amulet.height + LARGE_GAP);
 			align(text);
 
-			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, text.top() + text.height() + LARGE_GAP );
-			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
+			btnExit.setPos((Camera.main.width - btnExit.width()) / 2, text.top() + text.height() + LARGE_GAP);
+			btnStay.setPos(btnExit.left(), btnExit.bottom() + SMALL_GAP);
 		}
 
 		new Flare(8, 48).color(0xFFDDBB, true).show(amulet, 0).angularSpeed = +30;

@@ -70,29 +70,29 @@ import java.util.Locale;
 
 public class WndHero extends WndTabbed {
 
-	private static final String TXT_STATS = Messages.get(WndHero.class,"stats");
-	private static final String TXT_LEVELSTATS = Messages.get(WndHero.class,"levelstats");
-	private static final String TXT_BUFFS = Messages.get(WndHero.class,"buffs");
-	private static final String TXT_PET = Messages.get(WndHero.class,"pet");
+	private static final String TXT_STATS = Messages.get(WndHero.class, "stats");
+	private static final String TXT_LEVELSTATS = Messages.get(WndHero.class, "levelstats");
+	private static final String TXT_BUFFS = Messages.get(WndHero.class, "buffs");
+	private static final String TXT_PET = Messages.get(WndHero.class, "pet");
 
-	private static final String TXT_HEALS = Messages.get(WndHero.class,"heals");
+	private static final String TXT_HEALS = Messages.get(WndHero.class, "heals");
 
-	private static final String TXT_EXP = Messages.get(WndHero.class,"exp");
-	private static final String TXT_STR = Messages.get(WndHero.class,"str");
-	private static final String TXT_BREATH = Messages.get(WndHero.class,"breath");
-	private static final String TXT_SPIN = Messages.get(WndHero.class,"spin");
-	private static final String TXT_STING = Messages.get(WndHero.class,"sting");
-	private static final String TXT_FEATHERS = Messages.get(WndHero.class,"feathers");
-	private static final String TXT_SPARKLE = Messages.get(WndHero.class,"sparkle");
-	private static final String TXT_FANGS = Messages.get(WndHero.class,"fangs");
-	private static final String TXT_ATTACK = Messages.get(WndHero.class,"attack");
-	private static final String TXT_HEALTH = Messages.get(WndHero.class,"health");
-	private static final String TXT_MOVES2 = Messages.get(WndHero.class,"moves2");
-	private static final String TXT_MOVES3 = Messages.get(WndHero.class,"moves3");
-	private static final String TXT_MOVES4 = Messages.get(WndHero.class,"moves4");
-	private static final String TXT_HUNGER = Messages.get(WndHero.class,"hunger");
-	private static final String TXT_MOVES_DEW = Messages.get(WndHero.class,"moves_dew");
-	private static final String TXT_ATTACKSKILL = Messages.get(WndHero.class,"attackskill");
+	private static final String TXT_EXP = Messages.get(WndHero.class, "exp");
+	private static final String TXT_STR = Messages.get(WndHero.class, "str");
+	private static final String TXT_BREATH = Messages.get(WndHero.class, "breath");
+	private static final String TXT_SPIN = Messages.get(WndHero.class, "spin");
+	private static final String TXT_STING = Messages.get(WndHero.class, "sting");
+	private static final String TXT_FEATHERS = Messages.get(WndHero.class, "feathers");
+	private static final String TXT_SPARKLE = Messages.get(WndHero.class, "sparkle");
+	private static final String TXT_FANGS = Messages.get(WndHero.class, "fangs");
+	private static final String TXT_ATTACK = Messages.get(WndHero.class, "attack");
+	private static final String TXT_HEALTH = Messages.get(WndHero.class, "health");
+	private static final String TXT_MOVES2 = Messages.get(WndHero.class, "moves2");
+	private static final String TXT_MOVES3 = Messages.get(WndHero.class, "moves3");
+	private static final String TXT_MOVES4 = Messages.get(WndHero.class, "moves4");
+	private static final String TXT_HUNGER = Messages.get(WndHero.class, "hunger");
+	private static final String TXT_MOVES_DEW = Messages.get(WndHero.class, "moves_dew");
+	private static final String TXT_ATTACKSKILL = Messages.get(WndHero.class, "attackskill");
 
 	private static final int WIDTH = 100;
 
@@ -105,9 +105,9 @@ public class WndHero extends WndTabbed {
 	private TextureFilm film;
 
 
-	private PET checkpet(){
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
 		}
@@ -124,16 +124,15 @@ public class WndHero extends WndTabbed {
 		stats = new StatsTab();
 		add(stats);
 
-		if(Dungeon.dewDraw){
-		  levelstats = new LevelStatsTab();
-		  add(levelstats);
+		if (Dungeon.dewDraw) {
+			levelstats = new LevelStatsTab();
+			add(levelstats);
 		}
 		PET heropet = checkpet();
 
-		if (heropet!=null)
-		{
-		  pet = new PetTab(heropet);
-		  add(pet);
+		if (heropet != null) {
+			pet = new PetTab(heropet);
+			add(pet);
 		}
 
 		buffs = new BuffsTab();
@@ -148,24 +147,24 @@ public class WndHero extends WndTabbed {
 			}
 		});
 
-		if(Dungeon.dewDraw){
-		add(new LabeledTab(TXT_LEVELSTATS) {
-			@Override
-			protected void select(boolean value) {
-				super.select(value);
-				levelstats.visible = levelstats.active = selected;
-			}
-		});
+		if (Dungeon.dewDraw) {
+			add(new LabeledTab(TXT_LEVELSTATS) {
+				@Override
+				protected void select(boolean value) {
+					super.select(value);
+					levelstats.visible = levelstats.active = selected;
+				}
+			});
 		}
 
-		if (heropet!=null){
-		add(new LabeledTab(TXT_PET) {
-			@Override
-			protected void select(boolean value) {
-				super.select(value);
-				pet.visible = pet.active = selected;
-			}
-		});
+		if (heropet != null) {
+			add(new LabeledTab(TXT_PET) {
+				@Override
+				protected void select(boolean value) {
+					super.select(value);
+					pet.visible = pet.active = selected;
+				}
+			});
 		}
 
 		add(new LabeledTab(TXT_BUFFS) {
@@ -185,9 +184,9 @@ public class WndHero extends WndTabbed {
 
 	private class StatsTab extends Group {
 
-		private final String TXT_TITLE = Messages.get(WndHero.class,"title");
-		private final String TXT_CATALOGUS = Messages.get(WndHero.class,"catalogus");
-		private final String TXT_JOURNAL = Messages.get(WndHero.class,"journal");
+		private final String TXT_TITLE = Messages.get(WndHero.class, "title");
+		private final String TXT_CATALOGUS = Messages.get(WndHero.class, "catalogus");
+		private final String TXT_JOURNAL = Messages.get(WndHero.class, "journal");
 
 		private static final int GAP = 5;
 
@@ -215,8 +214,8 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected boolean onLongClick() {
 					Hero heroToBuff = Dungeon.hero;
-					if (Level.water[heroToBuff.pos] && heroToBuff.belongings.armor == null ){
-					heroToBuff.heroClass.playtest(heroToBuff);
+					if (Level.water[heroToBuff.pos] && heroToBuff.belongings.armor == null) {
+						heroToBuff.heroClass.playtest(heroToBuff);
 					}
 					return true;
 				}
@@ -239,18 +238,17 @@ public class WndHero extends WndTabbed {
 			pos = btnJournal.bottom() + GAP;
 
 			statSlot(TXT_STR, hero.STR());
-			statSlot(TXT_HEALTH, ( hero.HP + hero.SHLD ) + "/" + hero.HT);
+			statSlot(TXT_HEALTH, (hero.HP + hero.SHLD) + "/" + hero.HT);
 			statSlot(TXT_EXP, hero.exp + "/" + hero.maxExp());
 			statSlot(TXT_ATTACKSKILL, hero.attackSkill + "/" + hero.defenseSkill);
 
-			if(Dungeon.hero.buff(Hunger.class) != null){
+			if (Dungeon.hero.buff(Hunger.class) != null) {
 				statSlot(TXT_HUNGER,
 						(100 - Math.round(((float) Dungeon.hero.buff(Hunger.class).hungerLevel()) / 7f)) + "%");
 			}
 
 
 			pos += GAP;
-
 
 
 		}
@@ -280,9 +278,9 @@ public class WndHero extends WndTabbed {
 
 	private class LevelStatsTab extends Group {
 
-		private final String TXT_TITLE = Messages.get(WndHero.class,"title");
-		private final String TXT_CATALOGUS = Messages.get(WndHero.class,"catalogus");
-		private final String TXT_JOURNAL = Messages.get(WndHero.class,"journal");
+		private final String TXT_TITLE = Messages.get(WndHero.class, "title");
+		private final String TXT_CATALOGUS = Messages.get(WndHero.class, "catalogus");
+		private final String TXT_JOURNAL = Messages.get(WndHero.class, "journal");
 
 		private static final int GAP = 5;
 
@@ -312,12 +310,15 @@ public class WndHero extends WndTabbed {
 					Hero heroToBuff = Dungeon.hero;
 					// (heroToBuff.belongings.weapon == null ){
 					heroToBuff.heroClass.playtest(heroToBuff);
-					GLog.i(Messages.get(WndHero.class,"test"));
-					Dungeon.hero.HT=Dungeon.hero.HP=999;
+					GLog.i(Messages.get(WndHero.class, "test"));
+					Dungeon.hero.HT = Dungeon.hero.HP = 999;
 					Dungeon.hero.STR = Dungeon.hero.STR + 20;
-					OtilukesJournal jn = new OtilukesJournal(); jn.collect();
-					JournalPage sk1 = new Sokoban1(); sk1.collect();
-					JournalPage sk2 = new Sokoban2(); sk2.collect();
+					OtilukesJournal jn = new OtilukesJournal();
+					jn.collect();
+					JournalPage sk1 = new Sokoban1();
+					sk1.collect();
+					JournalPage sk2 = new Sokoban2();
+					sk2.collect();
 					//}
 					return true;
 				}
@@ -340,14 +341,14 @@ public class WndHero extends WndTabbed {
 			pos = btnCatalogus.bottom() + GAP;
 
 
-			if (Dungeon.dewDraw && Dungeon.depth<26){
-			statSlot(TXT_MOVES2, Dungeon.level.currentmoves);
-			statSlot(TXT_MOVES3, Dungeon.pars[Dungeon.depth]);
-			statSlot(TXT_MOVES4, Statistics.prevfloormoves);
-			if (Dungeon.hero.buff(Dewcharge.class) != null) {
-				int dewration = Dungeon.hero.buff(Dewcharge.class).dispTurnsInt();
-			    statSlot(TXT_MOVES_DEW, dewration);
-			  }
+			if (Dungeon.dewDraw && Dungeon.depth < 26) {
+				statSlot(TXT_MOVES2, Dungeon.level.currentmoves);
+				statSlot(TXT_MOVES3, Dungeon.pars[Dungeon.depth]);
+				statSlot(TXT_MOVES4, Statistics.prevfloormoves);
+				if (Dungeon.hero.buff(Dewcharge.class) != null) {
+					int dewration = Dungeon.hero.buff(Dewcharge.class).dispTurnsInt();
+					statSlot(TXT_MOVES_DEW, dewration);
+				}
 			}
 
 
@@ -378,8 +379,6 @@ public class WndHero extends WndTabbed {
 	}
 
 
-
-
 	private class BuffsTab extends Group {
 
 		private static final int GAP = 2;
@@ -401,37 +400,38 @@ public class WndHero extends WndTabbed {
 			return pos;
 		}
 
-		private class BuffSlot extends Button{
+		private class BuffSlot extends Button {
 			private Buff buff;
 			Image icon;
 			RenderedText txt;
 
-			public BuffSlot( Buff buff ){
+			public BuffSlot(Buff buff) {
 				super();
 				this.buff = buff;
 				int index = buff.icon();
 
-				icon = new Image( icons );
-				icon.frame( film.get( index ) );
+				icon = new Image(icons);
+				icon.frame(film.get(index));
 				icon.y = this.y;
-				add( icon );
+				add(icon);
 
-				txt = PixelScene.renderText( buff.toString(), 8 );
+				txt = PixelScene.renderText(buff.toString(), 8);
 				txt.x = icon.width + GAP;
-				txt.y = this.y + (int)(icon.height - txt.baseLine()) / 2;
-				add( txt );
+				txt.y = this.y + (int) (icon.height - txt.baseLine()) / 2;
+				add(txt);
 			}
+
 			@Override
 			protected void layout() {
 				super.layout();
 				icon.y = this.y;
 				txt.x = icon.width + GAP;
-				txt.y = pos + (int)(icon.height - txt.baseLine()) / 2;
+				txt.y = pos + (int) (icon.height - txt.baseLine()) / 2;
 			}
 
 			@Override
 			protected void onClick() {
-				GameScene.show( new WndInfoBuff( buff ));
+				GameScene.show(new WndInfoBuff(buff));
 			}
 		}
 
@@ -440,13 +440,13 @@ public class WndHero extends WndTabbed {
 
 	private class PetTab extends Group {
 
-		private final String TXT_TITLE = Messages.get(WndHero.class,"p_title");
-		private final String TXT_FEED = Messages.get(WndHero.class,"p_feed");
-		private final String TXT_CALL = Messages.get(WndHero.class,"p_call");
-		private final String TXT_STAY = Messages.get(WndHero.class,"p_stay");
-		private final String TXT_RELEASE = Messages.get(WndHero.class,"p_release");
-		private final String TXT_SELECT = Messages.get(WndHero.class,"p_select");
-        private final String TXT_SPEED = Messages.get(WndHero.class,"p_speed");
+		private final String TXT_TITLE = Messages.get(WndHero.class, "p_title");
+		private final String TXT_FEED = Messages.get(WndHero.class, "p_feed");
+		private final String TXT_CALL = Messages.get(WndHero.class, "p_call");
+		private final String TXT_STAY = Messages.get(WndHero.class, "p_stay");
+		private final String TXT_RELEASE = Messages.get(WndHero.class, "p_release");
+		private final String TXT_SELECT = Messages.get(WndHero.class, "p_select");
+		private final String TXT_SPEED = Messages.get(WndHero.class, "p_speed");
 
 		private CharSprite image;
 		private RenderedText name;
@@ -475,7 +475,6 @@ public class WndHero extends WndTabbed {
 			add(buffs);
 
 
-
 			IconTitle title = new IconTitle();
 			title.icon(image);
 			title.label(Utils.format(TXT_TITLE, heropet.level, heropet.name).toUpperCase(Locale.ENGLISH), 9);
@@ -500,7 +499,7 @@ public class WndHero extends WndTabbed {
 					hide();
 					heropet.callback = true;
 					heropet.stay = false;
-                    heropet.enemy = null;
+					heropet.enemy = null;
 				}
 			};
 			btnCall.setRect(btnFeed.right() + 1, btnFeed.top(),
@@ -516,35 +515,33 @@ public class WndHero extends WndTabbed {
 			};
 			btnStay.setRect(btnCall.right() + 1, btnCall.top(),
 					btnStay.reqWidth() + 2, btnStay.reqHeight() + 2);
-			
+
 			add(btnStay);
-
-
 
 
 			pos = btnStay.bottom() + GAP;
 
 			statSlot(TXT_ATTACK, heropet.attackSkill(null));
-            statSlot(TXT_SPEED, Dungeon.petHasteLevel);
+			statSlot(TXT_SPEED, Dungeon.petHasteLevel);
 			statSlot(TXT_HEALTH, heropet.HP + "/" + heropet.HT);
-			statSlot(TXT_EXP, heropet.level<100 ? heropet.experience + "/" + (5 + heropet.level * 5) : Messages.get(WndHero.class,"max"));
-			if (heropet.type==4 || heropet.type==5 || heropet.type==6 || heropet.type==7 || heropet.type==12){
-			  statSlot(TXT_BREATH, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") : (Math.round((1000-heropet.cooldown)/10) + "%"));
-			} else if (heropet.type==1){
-				statSlot(TXT_SPIN, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") :(Math.round((1000-heropet.cooldown)/10) + "%"));
-			} else if (heropet.type==3){
-				statSlot(TXT_FEATHERS, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") : (Math.round((1000-heropet.cooldown)/10) + "%"));
-			} else if (heropet.type==8){
-				statSlot(TXT_STING, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") : (Math.round((1000-heropet.cooldown)/10) + "%"));
-			} else if (heropet.type==10 || heropet.type==11){
-				statSlot(TXT_SPARKLE, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") : (Math.round((1000-heropet.cooldown)/10) + "%"));
-			} else if (heropet.type==9){
-				statSlot(TXT_FANGS, heropet.cooldown==0 ? Messages.get(WndHero.class,"p_ready") : (Math.round((1000-heropet.cooldown)/10) + "%"));
+			statSlot(TXT_EXP, heropet.level < 100 ? heropet.experience + "/" + (5 + heropet.level * 5) : Messages.get(WndHero.class, "max"));
+			if (heropet.type == 4 || heropet.type == 5 || heropet.type == 6 || heropet.type == 7 || heropet.type == 12) {
+				statSlot(TXT_BREATH, heropet.cooldown == 0 ? Messages.get(WndHero.class, "p_ready") : (Math.round((1000 - heropet.cooldown) / 10) + "%"));
+			} else if (heropet.type == 1) {
+				statSlot(TXT_SPIN, heropet.cooldown == 0 ? Messages.get(WndHero.class, "p_ready") : (Math.round((1000 - heropet.cooldown) / 10) + "%"));
+			} else if (heropet.type == 3) {
+				statSlot(TXT_FEATHERS, heropet.cooldown == 0 ? Messages.get(WndHero.class, "p_ready") : (Math.round((1000 - heropet.cooldown) / 10) + "%"));
+			} else if (heropet.type == 8) {
+				statSlot(TXT_STING, heropet.cooldown == 0 ? Messages.get(WndHero.class, "p_ready") : (Math.round((1000 - heropet.cooldown) / 10) + "%"));
+			} else if (heropet.type == 10 || heropet.type == 11) {
+				statSlot(TXT_SPARKLE, heropet.cooldown == 0 ? Messages.get(WndHero.class, "p_ready") : (Math.round((1000 - heropet.cooldown) / 10) + "%"));
+			} else if (heropet.type == 9) {
+				statSlot(TXT_FANGS, heropet.cooldown == 0 ? Messages.get(WndHero.class, "p_ready") : (Math.round((1000 - heropet.cooldown) / 10) + "%"));
 			}
 
 			pos += GAP;
 
-			
+
 		}
 
 		private void statSlot(String label, String value) {
@@ -569,7 +566,7 @@ public class WndHero extends WndTabbed {
 			return pos;
 		}
 	}
-	
+
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect(Item item) {
@@ -578,8 +575,8 @@ public class WndHero extends WndTabbed {
 			}
 		}
 	};
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
 			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
@@ -588,162 +585,162 @@ public class WndHero extends WndTabbed {
 		}
 		return false;
 	}
-	
+
 	private void feed(Item item) {
-						
+
 		PET heropet = checkpet();
 		boolean nomnom = checkFood(heropet.type, item);
 		boolean nearby = checkpetNear();
-	
-		if (nomnom && nearby){
-		  int effect = heropet.HT-heropet.HP;
-		  if (effect > 0){
-		    heropet.HP=heropet.HT;
-		    heropet.sprite.emitter().burst(Speck.factory(Speck.HEALING),2);
-		    heropet.sprite.showStatus(CharSprite.POSITIVE, TXT_HEALS, effect);
-		  }
-	      heropet.cooldown=1;  
-		  item.detach(Dungeon.hero.belongings.backpack);
-		  GLog.n(Messages.get(WndHero.class,"p_eat", item.name()));
-		}else if (!nearby){
-			GLog.n(Messages.get(WndHero.class,"p_far"));
+
+		if (nomnom && nearby) {
+			int effect = heropet.HT - heropet.HP;
+			if (effect > 0) {
+				heropet.HP = heropet.HT;
+				heropet.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2);
+				heropet.sprite.showStatus(CharSprite.POSITIVE, TXT_HEALS, effect);
+			}
+			heropet.cooldown = 1;
+			item.detach(Dungeon.hero.belongings.backpack);
+			GLog.i(Messages.get(WndHero.class, "p_eat", item.name()));
+		} else if (!nearby) {
+			GLog.w(Messages.get(WndHero.class, "p_far"));
 		} else {
-		  GLog.n(Messages.get(WndHero.class,"p_reject", item.name()));
+			GLog.w(Messages.get(WndHero.class, "p_reject", item.name()));
 
-		}		
+		}
 	}
 
-	private boolean checkFood(Integer petType, Item item){
+	private boolean checkFood(Integer petType, Item item) {
 		boolean nomnom = false;
-		
-		if (petType==1){ //Spider
-			if (item instanceof Nut){				
-				nomnom=true;
+
+		if (petType == 1) { //Spider
+			if (item instanceof Nut) {
+				nomnom = true;
 			}
-		} 
-		
-		if (petType==2){ //steel bee
+		}
+
+		if (petType == 2) { //steel bee
 			if (item instanceof Blackberry
-				|| item instanceof Blueberry 
-				|| item instanceof Cloudberry
-				|| item instanceof Moonberry
-				|| item instanceof FullMoonberry
-				){				
-				nomnom=true;
+					|| item instanceof Blueberry
+					|| item instanceof Cloudberry
+					|| item instanceof Moonberry
+					|| item instanceof FullMoonberry
+					) {
+				nomnom = true;
 			}
-		} 
-		if (petType==3){//Velocirooster 
+		}
+		if (petType == 3) {//Velocirooster
 			if (item instanceof Plant.Seed
-				|| item instanceof Nut
-				|| item instanceof ToastedNut
-				){				
-				nomnom=true;
-			}
-		}			
-		if (petType==4){//red dragon - fire
-			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof FrozenCarpaccio
-				|| item instanceof MysteryMeat
-				){				
-				nomnom=true;
+					|| item instanceof Nut
+					|| item instanceof ToastedNut
+					) {
+				nomnom = true;
 			}
 		}
-		
-		if (petType==5){//green dragon - lit
+		if (petType == 4) {//red dragon - fire
 			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof Plant.Seed
-				|| item instanceof Nut
-				|| item instanceof ToastedNut
-				|| item instanceof Blackberry
-				|| item instanceof Blueberry 
-				|| item instanceof Cloudberry
-				|| item instanceof Moonberry
-				|| item instanceof FullMoonberry
-				){				
-				nomnom=true;
+					|| item instanceof ChargrilledMeat
+					|| item instanceof FrozenCarpaccio
+					|| item instanceof MysteryMeat
+					) {
+				nomnom = true;
 			}
 		}
-		
-		if (petType==6){//violet dragon - poison
+
+		if (petType == 5) {//green dragon - lit
 			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof FrozenCarpaccio
-				|| item instanceof MysteryMeat
-				|| item instanceof Nut
-				|| item instanceof ToastedNut
-				){				
-				nomnom=true;
+					|| item instanceof ChargrilledMeat
+					|| item instanceof Plant.Seed
+					|| item instanceof Nut
+					|| item instanceof ToastedNut
+					|| item instanceof Blackberry
+					|| item instanceof Blueberry
+					|| item instanceof Cloudberry
+					|| item instanceof Moonberry
+					|| item instanceof FullMoonberry
+					) {
+				nomnom = true;
 			}
 		}
-		if (petType==7){//blue dragon - ice
+
+		if (petType == 6) {//violet dragon - poison
 			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof FrozenCarpaccio
-				|| item instanceof Plant.Seed
-				){				
-				nomnom=true;
+					|| item instanceof ChargrilledMeat
+					|| item instanceof FrozenCarpaccio
+					|| item instanceof MysteryMeat
+					|| item instanceof Nut
+					|| item instanceof ToastedNut
+					) {
+				nomnom = true;
 			}
 		}
-		
-		if (petType==8){ //scorpion
+		if (petType == 7) {//blue dragon - ice
 			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof FrozenCarpaccio
-				|| item instanceof MysteryMeat
-				){				
-				nomnom=true;
-			}
-		} 
-		
-		if (petType==9){//Vorpal Bunny 
-			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof FrozenCarpaccio
-				|| item instanceof MysteryMeat
-				){				
-				nomnom=true;
+					|| item instanceof ChargrilledMeat
+					|| item instanceof FrozenCarpaccio
+					|| item instanceof Plant.Seed
+					) {
+				nomnom = true;
 			}
 		}
-		if (petType==10){//Fairy
+
+		if (petType == 8) { //scorpion
+			if (item instanceof Meat
+					|| item instanceof ChargrilledMeat
+					|| item instanceof FrozenCarpaccio
+					|| item instanceof MysteryMeat
+					) {
+				nomnom = true;
+			}
+		}
+
+		if (petType == 9) {//Vorpal Bunny
+			if (item instanceof Meat
+					|| item instanceof ChargrilledMeat
+					|| item instanceof FrozenCarpaccio
+					|| item instanceof MysteryMeat
+					) {
+				nomnom = true;
+			}
+		}
+		if (petType == 10) {//Fairy
 			if (item instanceof Blackberry
-				|| item instanceof Blueberry 
-				|| item instanceof Cloudberry
-				|| item instanceof Moonberry
-				|| item instanceof FullMoonberry
-				){				
-				nomnom=true;
+					|| item instanceof Blueberry
+					|| item instanceof Cloudberry
+					|| item instanceof Moonberry
+					|| item instanceof FullMoonberry
+					) {
+				nomnom = true;
 			}
 		}
-		if (petType==11){//Sugarplum Fairy
+		if (petType == 11) {//Sugarplum Fairy
 			if (item instanceof Blackberry
-				|| item instanceof Blueberry 
-				|| item instanceof Cloudberry
-				|| item instanceof Moonberry
-				|| item instanceof FullMoonberry
-				){				
-				nomnom=true;
+					|| item instanceof Blueberry
+					|| item instanceof Cloudberry
+					|| item instanceof Moonberry
+					|| item instanceof FullMoonberry
+					) {
+				nomnom = true;
 			}
 		}
-		if (petType==12){//shadow dragon - non elemental
+		if (petType == 12) {//shadow dragon - non elemental
 			if (item instanceof Meat
-				|| item instanceof ChargrilledMeat 
-				|| item instanceof FrozenCarpaccio
-				|| item instanceof Plant.Seed
-				|| item instanceof Blackberry
-				|| item instanceof Blueberry 
-				|| item instanceof Cloudberry
-				|| item instanceof Moonberry
-				|| item instanceof FullMoonberry
-				|| item instanceof MysteryMeat
-				|| item instanceof Nut
-				|| item instanceof ToastedNut
-				){				
-				nomnom=true;
+					|| item instanceof ChargrilledMeat
+					|| item instanceof FrozenCarpaccio
+					|| item instanceof Plant.Seed
+					|| item instanceof Blackberry
+					|| item instanceof Blueberry
+					|| item instanceof Cloudberry
+					|| item instanceof Moonberry
+					|| item instanceof FullMoonberry
+					|| item instanceof MysteryMeat
+					|| item instanceof Nut
+					|| item instanceof ToastedNut
+					) {
+				nomnom = true;
 			}
 		}
-	return nomnom;		
+		return nomnom;
 	}
-	
+
 }

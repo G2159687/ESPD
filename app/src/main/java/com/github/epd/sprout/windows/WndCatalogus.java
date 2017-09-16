@@ -45,9 +45,9 @@ public class WndCatalogus extends WndTabbed {
 
 	private static final int TAB_WIDTH = 50;
 
-	private static final String TXT_POTIONS = Messages.get(WndCatalogus.class,"potions");
-	private static final String TXT_SCROLLS = Messages.get(WndCatalogus.class,"scrolls");
-	private static final String TXT_TITLE = Messages.get(WndCatalogus.class,"title");
+	private static final String TXT_POTIONS = Messages.get(WndCatalogus.class, "potions");
+	private static final String TXT_SCROLLS = Messages.get(WndCatalogus.class, "scrolls");
+	private static final String TXT_TITLE = Messages.get(WndCatalogus.class, "title");
 
 	private RenderedText txtTitle;
 	private ScrollPane list;
@@ -85,7 +85,7 @@ public class WndCatalogus extends WndTabbed {
 		list.setRect(0, txtTitle.height(), width, height - txtTitle.height());
 
 		boolean showPotions = WndCatalogus.showPotions;
-		Tab[] tabs = { new LabeledTab(TXT_POTIONS) {
+		Tab[] tabs = {new LabeledTab(TXT_POTIONS) {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
@@ -99,7 +99,7 @@ public class WndCatalogus extends WndTabbed {
 				WndCatalogus.showPotions = !value;
 				updateList();
 			}
-		} };
+		}};
 		for (Tab tab : tabs) {
 			add(tab);
 		}

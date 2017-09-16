@@ -30,37 +30,37 @@ import com.watabou.glscripts.Script;
 // if this script is to be used many times try to block them together
 public class NoosaScriptNoLighting extends NoosaScript {
 
-    @Override
-    public void lighting(float rm, float gm, float bm, float am, float ra, float ga, float ba, float aa) {
-        //Does nothing
-    }
+	@Override
+	public void lighting(float rm, float gm, float bm, float am, float ra, float ga, float ba, float aa) {
+		//Does nothing
+	}
 
-    public static NoosaScriptNoLighting get(){
-        return Script.use( NoosaScriptNoLighting.class );
-    }
+	public static NoosaScriptNoLighting get() {
+		return Script.use(NoosaScriptNoLighting.class);
+	}
 
-    @Override
-    protected String shader() {
-        return SHADER;
-    }
+	@Override
+	protected String shader() {
+		return SHADER;
+	}
 
-    private static final String SHADER =
+	private static final String SHADER =
 
-            "uniform mat4 uCamera;" +
-                    "uniform mat4 uModel;" +
-                    "attribute vec4 aXYZW;" +
-                    "attribute vec2 aUV;" +
-                    "varying vec2 vUV;" +
-                    "void main() {" +
-                    "  gl_Position = uCamera * uModel * aXYZW;" +
-                    "  vUV = aUV;" +
-                    "}" +
+			"uniform mat4 uCamera;" +
+					"uniform mat4 uModel;" +
+					"attribute vec4 aXYZW;" +
+					"attribute vec2 aUV;" +
+					"varying vec2 vUV;" +
+					"void main() {" +
+					"  gl_Position = uCamera * uModel * aXYZW;" +
+					"  vUV = aUV;" +
+					"}" +
 
-                    "//\n" +
+					"//\n" +
 
-                    "varying mediump vec2 vUV;" +
-                    "uniform lowp sampler2D uTex;" +
-                    "void main() {" +
-                    "  gl_FragColor = texture2D( uTex, vUV );" +
-                    "}";
+					"varying mediump vec2 vUV;" +
+					"uniform lowp sampler2D uTex;" +
+					"void main() {" +
+					"  gl_FragColor = texture2D( uTex, vUV );" +
+					"}";
 }

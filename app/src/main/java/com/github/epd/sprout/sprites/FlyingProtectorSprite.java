@@ -41,7 +41,7 @@ public class FlyingProtectorSprite extends MobSprite {
 		attack.frames(frames, 8, 9, 10);
 
 		zap = attack.clone();
-		
+
 		die = new Animation(5, false);
 		die.frames(frames, 11, 12, 13, 14, 15, 15);
 
@@ -51,12 +51,12 @@ public class FlyingProtectorSprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (FlyingProtector)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (FlyingProtector) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);
 	}
-	
+
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;

@@ -54,17 +54,17 @@ public class RedWraith extends Mob {
 	protected int level;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = RedWraithSprite.class;
 
 		HP = HT = 1;
-		EXP = 1+level;
+		EXP = 1 + level;
 
 		flying = true;
-		
+
 		loot = new RedDewdrop();
 		lootChance = 0.5f;
-		
+
 	}
 
 	protected static final String LEVEL = "level";
@@ -107,22 +107,22 @@ public class RedWraith extends Mob {
 
 		return damage;
 	}
-	
+
 	@Override
 	public void die(Object cause) {
-		
-		if (!Dungeon.limitedDrops.ringofwealth.dropped() && Random.Float()<0.04f) {
+
+		if (!Dungeon.limitedDrops.ringofwealth.dropped() && Random.Float() < 0.04f) {
 			Dungeon.limitedDrops.ringofwealth.drop();
 			Dungeon.level.drop(new RingOfWealth(), pos).sprite.drop();
-			explodeDew(pos);				
+			explodeDew(pos);
 		} else {
 			explodeDew(pos);
 		}
 
 		super.die(cause);
-	
+
 	}
-	
+
 	//public void damage(int dmg, Object src) {
 	//	if (enemySeen
 	//			&& (src instanceof Wand || src instanceof LightningTrap.Electricity || src instanceof Char)) {
@@ -133,10 +133,10 @@ public class RedWraith extends Mob {
 	//	}
 	//}
 
-	
+
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class RedWraith extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static void spawnAround(int pos) {
@@ -161,7 +161,7 @@ public class RedWraith extends Mob {
 
 	public static RedWraith spawnAt(int pos) {
 		if (Level.passable[pos] && Actor.findChar(pos) == null) {
-          
+
 			RedWraith w = new RedWraith();
 			w.adjustStats(Dungeon.depth);
 			w.pos = pos;
@@ -174,13 +174,14 @@ public class RedWraith extends Mob {
 			w.sprite.emitter().burst(ShadowParticle.CURSE, 5);
 
 			return w;
-  			
+
 		} else {
 			return null;
 		}
 	}
 
 	protected static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Death.class);
 		IMMUNITIES.add(Terror.class);

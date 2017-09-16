@@ -34,9 +34,9 @@ public class CromCruachAxe extends RelicMeleeWeapon {
 
 	}
 
-	
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.CROMAXE;
 
 		level = 0;
@@ -50,10 +50,10 @@ public class CromCruachAxe extends RelicMeleeWeapon {
 		bones = false;
 
 		defaultAction = AC_DISPEL;
-		
-  }
-		
-	public static final String AC_DISPEL = Messages.get(CromCruachAxe.class,"ac_dispel");
+
+	}
+
+	public static final String AC_DISPEL = Messages.get(CromCruachAxe.class, "ac_dispel");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -66,33 +66,33 @@ public class CromCruachAxe extends RelicMeleeWeapon {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_DISPEL)) {
-			GLog.p(Messages.get(this,"ready"));
+			GLog.p(Messages.get(this, "ready"));
 			charge = 0;
-			Buff.prolong(hero, MagicImmunity.class, 2f*(level/10));	
+			Buff.prolong(hero, MagicImmunity.class, 2f * (level / 10));
 		} else
 			super.execute(hero, action);
 	}
 
-	
+
 	public class DispelCounter extends WeaponBuff {
 
 		@Override
 		public boolean act() {
 			if (charge < chargeCap) {
-				charge+=level;
+				charge += level;
 				if (charge >= chargeCap) {
 					charge = chargeCap;
-					GLog.p(Messages.get(CromCruachAxe.class,"buffdesc"));
+					GLog.p(Messages.get(CromCruachAxe.class, "buffdesc"));
 				}
 				updateQuickslot();
 			}
 			spend(TICK);
 			return true;
 		}
-		
+
 		@Override
 		public String toString() {
-			return Messages.get(CromCruachAxe.class,"buffname");
+			return Messages.get(CromCruachAxe.class, "buffname");
 		}
 
 		@Override
@@ -111,15 +111,13 @@ public class CromCruachAxe extends RelicMeleeWeapon {
 		}
 
 	}
-	
-	
-	
-	
+
+
 	@Override
 	protected WeaponBuff passiveBuff() {
 		return new DispelCounter();
 	}
-	
+
 }
 
 

@@ -24,14 +24,14 @@ import java.util.Collections;
 public class AlchemistsToolkit extends Artifact {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_TOOLKIT;
 
 		level = 0;
 		levelCap = 10;
 	}
 
-	public static final String AC_BREW = Messages.get(AlchemistsToolkit.class,"ac_brew");
+	public static final String AC_BREW = Messages.get(AlchemistsToolkit.class, "ac_brew");
 
 	// arrays used in containing potion collections for mix logic.
 	public final ArrayList<Class> combination = new ArrayList<>();
@@ -43,7 +43,7 @@ public class AlchemistsToolkit extends Artifact {
 
 	private int seedsToPotion = 0;
 
-	protected String inventoryTitle = Messages.get(AlchemistsToolkit.class,"invtitle");
+	protected String inventoryTitle = Messages.get(AlchemistsToolkit.class, "invtitle");
 	protected WndBag.Mode mode = WndBag.Mode.POTION;
 
 	public AlchemistsToolkit() {
@@ -56,7 +56,8 @@ public class AlchemistsToolkit extends Artifact {
 				potion = cat.classes[Random.chances(cat.probs)];
 				// forcing the player to use experience potions would be
 				// completely unfair.
-			} while (combination.contains(potion) || potion == PotionOfExperience.class || potion == Egg.class || potion == PotionOfOverHealing.class );
+			}
+			while (combination.contains(potion) || potion == PotionOfExperience.class || potion == Egg.class || potion == PotionOfOverHealing.class);
 			combination.add(potion);
 		}
 	}
@@ -102,7 +103,7 @@ public class AlchemistsToolkit extends Artifact {
 
 		if (score == 0) {
 
-			GLog.i(Messages.get(this,"0"));
+			GLog.i(Messages.get(this, "0"));
 
 		} else if (score > level) {
 
@@ -114,18 +115,18 @@ public class AlchemistsToolkit extends Artifact {
 
 			if (level == 10) {
 				bstGuess = new ArrayList<>();
-				GLog.p(Messages.get(this,"10"));
+				GLog.p(Messages.get(this, "10"));
 			} else {
-				GLog.w(Messages.get(this,"finish")
+				GLog.w(Messages.get(this, "finish")
 						+ brewDesc(numWrongPlace, numRight)
-						+ Messages.get(this,"bestbrew"));
+						+ Messages.get(this, "bestbrew"));
 			}
 
 		} else {
 
-			GLog.w(Messages.get(this,"finish")
+			GLog.w(Messages.get(this, "finish")
 					+ brewDesc(numWrongPlace, numRight)
-					+ Messages.get(this,"throw"));
+					+ Messages.get(this, "throw"));
 		}
 		curGuess = new ArrayList<>();
 
@@ -134,12 +135,12 @@ public class AlchemistsToolkit extends Artifact {
 	private String brewDesc(int numWrongPlace, int numRight) {
 		String result = "";
 		if (numWrongPlace > 0) {
-			result += numWrongPlace + Messages.get(this,"bdorder");
+			result += numWrongPlace + Messages.get(this, "bdorder");
 			if (numRight > 0)
-				result += Messages.get(this,"and");
+				result += Messages.get(this, "and");
 		}
 		if (numRight > 0) {
-			result += numRight + Messages.get(this,"perfect");
+			result += numRight + Messages.get(this, "perfect");
 		}
 		return result;
 	}
@@ -151,29 +152,29 @@ public class AlchemistsToolkit extends Artifact {
 
 	@Override
 	public String desc() {
-		String result = Messages.get(this,"desc1");
+		String result = Messages.get(this, "desc1");
 
 		if (isEquipped(Dungeon.hero))
 			if (cursed)
-				result += Messages.get(this,"desc2");
+				result += Messages.get(this, "desc2");
 			else
-				result += Messages.get(this,"desc3");
+				result += Messages.get(this, "desc3");
 
 		if (level == 0) {
-			result += Messages.get(this,"desc4");
+			result += Messages.get(this, "desc4");
 		} else if (level == 10) {
-			result += Messages.get(this,"desc5");
+			result += Messages.get(this, "desc5");
 		} else if (!bstGuess.isEmpty()) {
-			result += Messages.get(this,"desc6")
+			result += Messages.get(this, "desc6")
 					+ Messages.get(bstGuess.get(0), "name") + ", " + Messages.get(bstGuess.get(1), "name") + ", "
-					+ Messages.get(bstGuess.get(2), "name") + Messages.get(this,"desc7");
-			result += Messages.get(this,"desc8")
-					+ brewDesc(numWrongPlace, numRight) + Messages.get(this,"desc9");
+					+ Messages.get(bstGuess.get(2), "name") + Messages.get(this, "desc7");
+			result += Messages.get(this, "desc8")
+					+ brewDesc(numWrongPlace, numRight) + Messages.get(this, "desc9");
 
 			// would only trigger if an upgraded toolkit was gained through
 			// transmutation or bones.
 		} else {
-			result += Messages.get(this,"desc10");
+			result += Messages.get(this, "desc10");
 		}
 		return result;
 	}
@@ -196,9 +197,9 @@ public class AlchemistsToolkit extends Artifact {
 		bundle.put(SEEDSTOPOTION, seedsToPotion);
 
 		bundle.put(COMBINATION,
-				combination.toArray(new Class [combination.size()]));
-		bundle.put(CURGUESS, curGuess.toArray(new Class [curGuess.size()]));
-		bundle.put(BSTGUESS, bstGuess.toArray(new Class [bstGuess.size()]));
+				combination.toArray(new Class[combination.size()]));
+		bundle.put(CURGUESS, curGuess.toArray(new Class[curGuess.size()]));
+		bundle.put(BSTGUESS, bstGuess.toArray(new Class[bstGuess.size()]));
 	}
 
 	@Override
@@ -261,14 +262,14 @@ public class AlchemistsToolkit extends Artifact {
 					if (curGuess.size() == 3) {
 						guessBrew();
 					} else {
-						GLog.i(Messages.get(AlchemistsToolkit.class,"mix1") + item.name()
-								+ Messages.get(AlchemistsToolkit.class,"mix2"));
+						GLog.i(Messages.get(AlchemistsToolkit.class, "mix1") + item.name()
+								+ Messages.get(AlchemistsToolkit.class, "mix2"));
 					}
 				} else {
-					GLog.w(Messages.get(AlchemistsToolkit.class,"mix3"));
+					GLog.w(Messages.get(AlchemistsToolkit.class, "mix3"));
 				}
 			} else if (item != null) {
-				GLog.w(Messages.get(AlchemistsToolkit.class,"mix4"));
+				GLog.w(Messages.get(AlchemistsToolkit.class, "mix4"));
 			}
 		}
 	};

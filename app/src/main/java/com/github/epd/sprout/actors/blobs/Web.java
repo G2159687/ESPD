@@ -32,18 +32,18 @@ public class Web extends Blob {
 
 		int cell;
 
-		for (int i = area.left; i < area.right; i++){
-			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*WIDTH;
+		for (int i = area.left; i < area.right; i++) {
+			for (int j = area.top; j < area.bottom; j++) {
+				cell = i + j * WIDTH;
 				off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
 
 				if (off[cell] > 0) {
 
 					volume += off[cell];
 
-					Char ch = Actor.findChar( cell );
+					Char ch = Actor.findChar(cell);
 					if (ch != null) {
-						Buff.prolong( ch, Roots.class, TICK );
+						Buff.prolong(ch, Roots.class, TICK);
 					}
 				}
 			}
@@ -59,6 +59,6 @@ public class Web extends Blob {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

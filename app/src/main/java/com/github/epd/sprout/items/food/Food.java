@@ -36,16 +36,16 @@ public class Food extends Item {
 
 	private static final float TIME_TO_EAT = 3f;
 
-	public static final String AC_EAT = Messages.get(Food.class,"ac_eat");
+	public static final String AC_EAT = Messages.get(Food.class, "ac_eat");
 
 	public float energy = Hunger.HUNGRY;
-	public String message = Messages.get(this,"eat_msg");
+	public String message = Messages.get(this, "eat_msg");
 
 	public int hornValue = 3;
 
 	{
 		stackable = true;
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.RATION;
 
 		bones = true;
@@ -68,33 +68,33 @@ public class Food extends Item {
 
 			hero.buff(Hunger.class).satisfy(energy);
 			GLog.i(message);
-            int healEnergy = Math.max(7, Math.round(energy/40));
+			int healEnergy = Math.max(7, Math.round(energy / 40));
 			switch (hero.heroClass) {
-			case WARRIOR:
-				if (hero.HP < hero.HT) {
-					hero.HP = Math.min(hero.HP + Random.Int(3, healEnergy), hero.HT);
-					hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				}
-				break;
-			case MAGE:
-				hero.belongings.charge(false);
-				ScrollOfRecharging.charge(hero);
-				if (hero.HP < hero.HT) {
-					hero.HP = Math.min((hero.HP + Random.Int(1, 3)), hero.HT);
-					hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				}
-				break;
-			case ROGUE:
-				if (hero.HP < hero.HT) {
-					hero.HP = Math.min((hero.HP + Random.Int(1, 3)), hero.HT);
-					hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				}
-			case HUNTRESS:
-				if (hero.HP < hero.HT) {
-					hero.HP = Math.min((hero.HP + Random.Int(1, 3)), hero.HT);
-					hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				}
-				break;
+				case WARRIOR:
+					if (hero.HP < hero.HT) {
+						hero.HP = Math.min(hero.HP + Random.Int(3, healEnergy), hero.HT);
+						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+					}
+					break;
+				case MAGE:
+					hero.belongings.charge(false);
+					ScrollOfRecharging.charge(hero);
+					if (hero.HP < hero.HT) {
+						hero.HP = Math.min((hero.HP + Random.Int(1, 3)), hero.HT);
+						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+					}
+					break;
+				case ROGUE:
+					if (hero.HP < hero.HT) {
+						hero.HP = Math.min((hero.HP + Random.Int(1, 3)), hero.HT);
+						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+					}
+				case HUNTRESS:
+					if (hero.HP < hero.HT) {
+						hero.HP = Math.min((hero.HP + Random.Int(1, 3)), hero.HT);
+						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+					}
+					break;
 			}
 
 			hero.sprite.operate(hero.pos);
@@ -113,7 +113,7 @@ public class Food extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

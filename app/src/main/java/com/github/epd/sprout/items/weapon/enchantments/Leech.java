@@ -29,7 +29,7 @@ import com.watabou.utils.Random;
 
 public class Leech extends Weapon.Enchantment {
 
-	private static final String TXT_VAMPIRIC = Messages.get(Leech.class,"name");
+	private static final String TXT_VAMPIRIC = Messages.get(Leech.class, "name");
 
 	private static ItemSprite.Glowing RED = new ItemSprite.Glowing(0x660022);
 
@@ -37,7 +37,7 @@ public class Leech extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 

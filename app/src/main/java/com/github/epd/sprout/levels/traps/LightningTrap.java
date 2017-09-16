@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class LightningTrap {
 
-	private static final String name = Messages.get(LightningTrap.class,"name");
+	private static final String name = Messages.get(LightningTrap.class, "name");
 
 	// 00x66CCEE
 
@@ -51,7 +51,7 @@ public class LightningTrap {
 
 				if (!ch.isAlive()) {
 					Dungeon.fail(Utils.format(ResultDescriptions.TRAP, name));
-					GLog.n(Messages.get(LightningTrap.class,"ondeath"));
+					GLog.n(Messages.get(LightningTrap.class, "ondeath"));
 				} else {
 					((Hero) ch).belongings.charge(false);
 				}
@@ -61,14 +61,16 @@ public class LightningTrap {
 			arcs.add(new Lightning.Arc(pos - Level.WIDTH, pos + Level.WIDTH));
 			arcs.add(new Lightning.Arc(pos - 1, pos + 1));
 
-			ch.sprite.parent.add( new Lightning( arcs, null ) );
+			ch.sprite.parent.add(new Lightning(arcs, null));
 		}
 
 		CellEmitter.center(pos).burst(SparkParticle.FACTORY,
 				Random.IntRange(3, 4));
-		
+
 		Heap heap = Dungeon.level.heaps.get(pos);
-		if (heap != null) {heap.lit();}
+		if (heap != null) {
+			heap.lit();
+		}
 
 	}
 

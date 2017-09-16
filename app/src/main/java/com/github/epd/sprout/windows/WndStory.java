@@ -57,44 +57,44 @@ public class WndStory extends Window {
 	static {
 		CHAPTERS.put(
 				ID_SEWERS,
-				Messages.get(WndStory.class,"sewers"));
+				Messages.get(WndStory.class, "sewers"));
 
 		CHAPTERS.put(
 				ID_PRISON,
-				Messages.get(WndStory.class,"prison"));
+				Messages.get(WndStory.class, "prison"));
 
 		CHAPTERS.put(
 				ID_CAVES,
-				Messages.get(WndStory.class,"caves"));
+				Messages.get(WndStory.class, "caves"));
 
 		CHAPTERS.put(
 				ID_METROPOLIS,
-				Messages.get(WndStory.class,"city"));
+				Messages.get(WndStory.class, "city"));
 
 		CHAPTERS.put(
 				ID_HALLS,
-				Messages.get(WndStory.class,"halls"));
+				Messages.get(WndStory.class, "halls"));
 		CHAPTERS.put(
 				ID_SOKOBAN1,
-				Messages.get(WndStory.class,"s1"));
+				Messages.get(WndStory.class, "s1"));
 		CHAPTERS.put(
 				ID_SOKOBAN2,
-				Messages.get(WndStory.class,"s2"));
+				Messages.get(WndStory.class, "s2"));
 		CHAPTERS.put(
 				ID_SOKOBAN3,
-				Messages.get(WndStory.class,"s3"));
+				Messages.get(WndStory.class, "s3"));
 		CHAPTERS.put(
 				ID_SOKOBAN4,
-				Messages.get(WndStory.class,"s4"));
+				Messages.get(WndStory.class, "s4"));
 		CHAPTERS.put(
 				ID_SAFELEVEL,
-				Messages.get(WndStory.class,"s5"));
+				Messages.get(WndStory.class, "s5"));
 		CHAPTERS.put(
 				ID_TOWN,
-				Messages.get(WndStory.class,"s6"));
+				Messages.get(WndStory.class, "s6"));
 		CHAPTERS.put(
 				ID_ZOT,
-				Messages.get(WndStory.class,"s7"));
+				Messages.get(WndStory.class, "s7"));
 	}
 
 	private RenderedTextMultiline tf;
@@ -104,13 +104,13 @@ public class WndStory extends Window {
 	public WndStory(String text) {
 		super(0, 0, Chrome.get(Chrome.Type.SCROLL));
 
-		tf = PixelScene.renderMultiline( text, 7 );
+		tf = PixelScene.renderMultiline(text, 7);
 		tf.maxWidth(ShatteredPixelDungeon.landscape() ?
-				WIDTH_L - MARGIN * 2:
-				WIDTH_P - MARGIN *2);
+				WIDTH_L - MARGIN * 2 :
+				WIDTH_P - MARGIN * 2);
 		tf.invert();
 		tf.setPos(MARGIN, 0);
-		add( tf );
+		add(tf);
 
 		add(new TouchArea(chrome) {
 			@Override

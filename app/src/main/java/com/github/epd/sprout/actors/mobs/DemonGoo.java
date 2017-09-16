@@ -46,18 +46,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class DemonGoo extends Mob {
-	
-protected static final float SPAWN_DELAY = 2f;
 
-private int demonGooGeneration = 0;
+	protected static final float SPAWN_DELAY = 2f;
 
-private static final String DEMONGOOGENERATION = "demonGooGeneration";
+	private int demonGooGeneration = 0;
+
+	private static final String DEMONGOOGENERATION = "demonGooGeneration";
 
 	{
-		name = Messages.get(this,"name");
-		HP = HT = 200+(adj(0)*Random.NormalIntRange(4, 7));
+		name = Messages.get(this, "name");
+		HP = HT = 200 + (adj(0) * Random.NormalIntRange(4, 7));
 		EXP = 10;
-		defenseSkill = 10+adj(1);
+		defenseSkill = 10 + adj(1);
 		//10
 		spriteClass = DemonGooSprite.class;
 		baseSpeed = 2f;
@@ -67,37 +67,37 @@ private static final String DEMONGOOGENERATION = "demonGooGeneration";
 		lootChance = 1f;
 	}
 
-	private static final float SPLIT_DELAY = 1f;	
-	
+	private static final float SPLIT_DELAY = 1f;
+
 	@Override
 	protected boolean act() {
 		boolean result = super.act();
-		
+
 		if (Level.water[pos] && HP < HT) {
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			HP++;
-		} else if(Level.water[pos] && HP == HT && HT < 200){
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-			HT=HT+5;
-			HP=HT;
+		} else if (Level.water[pos] && HP == HT && HT < 200) {
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+			HT = HT + 5;
+			HP = HT;
 		}
 		return result;
 	}
 
-		
+
 	@Override
 	public int damageRoll() {
-			return Random.NormalIntRange(30+adj(1), 60+adj(1));
+		return Random.NormalIntRange(30 + adj(1), 60 + adj(1));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 35+adj(1);
+		return 35 + adj(1);
 	}
 
 	@Override
 	public int dr() {
-		return 20+adj(1);
+		return 20 + adj(1);
 		//10
 	}
 
@@ -115,13 +115,13 @@ private static final String DEMONGOOGENERATION = "demonGooGeneration";
 
 	@Override
 	public int defenseProc(Char enemy, int damage) {
-		
+
 		if (HP >= damage + 2) {
 			ArrayList<Integer> candidates = new ArrayList<Integer>();
 			boolean[] passable = Level.passable;
 
-			int[] neighbours = { pos + 1, pos - 1, pos + Level.getWidth(),
-					pos - Level.getWidth() };
+			int[] neighbours = {pos + 1, pos - 1, pos + Level.getWidth(),
+					pos - Level.getWidth()};
 			for (int n : neighbours) {
 				if (passable[n] && Actor.findChar(n) == null) {
 					candidates.add(n);
@@ -129,14 +129,14 @@ private static final String DEMONGOOGENERATION = "demonGooGeneration";
 			}
 
 			if (candidates.size() > 0) {
-				GLog.n(Messages.get(DemonGoo.class,"divide"));
+				GLog.n(Messages.get(DemonGoo.class, "divide"));
 				DemonGoo clone = split();
 				clone.HP = (HP - damage) / 2;
 				clone.pos = Random.element(candidates);
 				clone.state = clone.HUNTING;
 
 				if (Dungeon.level.map[clone.pos] == Terrain.DOOR) {
-					Door.enter(clone.pos, clone);
+					Door.enter(clone.pos);
 				}
 
 				GameScene.add(clone, SPLIT_DELAY);
@@ -161,37 +161,37 @@ private static final String DEMONGOOGENERATION = "demonGooGeneration";
 		}
 		return clone;
 	}
-	
+
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(3) == 0) {
 			Buff.affect(enemy, Ooze.class);
 			enemy.sprite.burst(0x000000, 5);
-		}				
+		}
 		return damage;
 	}
 
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(DemonGoo.class,"notice"));
+		yell(Messages.get(DemonGoo.class, "notice"));
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public void die(Object cause) {
 
 		super.die(cause);
-       	yell(Messages.get(DemonGoo.class,"die"));
+		yell(Messages.get(DemonGoo.class, "die"));
 	}
-	
-	
+
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Death.class);
@@ -202,7 +202,7 @@ private static final String DEMONGOOGENERATION = "demonGooGeneration";
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;
 	}
-	
+
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 
 	static {
@@ -213,6 +213,6 @@ private static final String DEMONGOOGENERATION = "demonGooGeneration";
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
 	}
-		
-	
+
+
 }

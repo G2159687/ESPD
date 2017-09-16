@@ -35,7 +35,7 @@ import com.watabou.utils.Callback;
 public class WandOfRegrowth extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_REGROWTH;
 	}
 
@@ -61,7 +61,7 @@ public class WandOfRegrowth extends Wand {
 
 		} else {
 
-			GLog.i(Messages.get(WandOfPoison.class,"nothing"));
+			GLog.i(Messages.get(WandOfPoison.class, "nothing"));
 
 		}
 	}
@@ -74,6 +74,6 @@ public class WandOfRegrowth extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

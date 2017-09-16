@@ -32,7 +32,6 @@ import com.github.epd.sprout.items.food.Blueberry;
 import com.github.epd.sprout.items.food.Cloudberry;
 import com.github.epd.sprout.items.food.FullMoonberry;
 import com.github.epd.sprout.items.food.Moonberry;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSprite.Glowing;
@@ -45,26 +44,26 @@ import com.watabou.utils.PathFinder;
 import java.util.ArrayList;
 
 public class CavesKey extends Item {
-	
-	private static final String TXT_PREVENTING = Messages.get(CavesKey.class,"prevent");
-		
-	
+
+	private static final String TXT_PREVENTING = Messages.get(CavesKey.class, "prevent");
+
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_PORT = Messages.get(CavesKey.class,"ac");
+	public static final String AC_PORT = Messages.get(CavesKey.class, "ac");
 
 	private int specialLevel = 29;
 	private int returnDepth = -1;
 	private int returnPos;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ANCIENTKEY;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 
@@ -88,7 +87,7 @@ public class CavesKey extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_PORT);
-		
+
 		return actions;
 	}
 
@@ -102,13 +101,13 @@ public class CavesKey extends Item {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			
-			if (Dungeon.depth>25 && Dungeon.depth!=specialLevel) {
+
+			if (Dungeon.depth > 25 && Dungeon.depth != specialLevel) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			if (Dungeon.depth==1) {
+			if (Dungeon.depth == 1) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
@@ -119,116 +118,116 @@ public class CavesKey extends Item {
 
 		if (action == AC_PORT) {
 
-            hero.invisible = 0;
-			
-            hero.spend(TIME_TO_USE);
+			hero.invisible = 0;
 
-            Buff buff = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null)
-					buff.detach();
+			hero.spend(TIME_TO_USE);
 
-            Buff buffinv = Dungeon.hero.buff(Invisibility.class);
-            if (buffinv != null)
-                buffinv.detach();
-            Invisibility.dispel();
+			Buff buff = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null)
+				buff.detach();
 
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
-					if (mob instanceof DriedRose.GhostHero)
-						mob.destroy();
+			Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+			if (buffinv != null)
+				buffinv.detach();
+			Invisibility.dispel();
 
-            if (Dungeon.depth<25 && !Dungeon.bossLevel()){
-            	returnDepth = Dungeon.depth;
-       			returnPos = hero.pos;
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
+				if (mob instanceof DriedRose.GhostHero)
+					mob.destroy();
+
+			if (Dungeon.depth < 25 && !Dungeon.bossLevel()) {
+				returnDepth = Dungeon.depth;
+				returnPos = hero.pos;
 				InterlevelScene.mode = InterlevelScene.Mode.PORTCAVES;
 			} else {
-                FishingBomb bomb = Dungeon.hero.belongings.getItem(FishingBomb.class);
+				FishingBomb bomb = Dungeon.hero.belongings.getItem(FishingBomb.class);
 
-				if (bomb!=null){
-                    bomb.detachAll(Dungeon.hero.belongings.backpack);
+				if (bomb != null) {
+					bomb.detachAll(Dungeon.hero.belongings.backpack);
 				}
 				updateQuickslot();
-								
+
 				this.doDrop(hero);
 				checkPetPort();
 				removePet();
 
-             if (Statistics.albinoPiranhasKilled>99){
+				if (Statistics.albinoPiranhasKilled > 99) {
 					Moonberry berry1 = new Moonberry(10);
-					berry1.doPickUp(Dungeon.hero);	
+					berry1.doPickUp(Dungeon.hero);
 					Cloudberry berry2 = new Cloudberry(10);
-					berry2.doPickUp(Dungeon.hero);	
+					berry2.doPickUp(Dungeon.hero);
 					Blueberry berry3 = new Blueberry(10);
-					berry3.doPickUp(Dungeon.hero);	
+					berry3.doPickUp(Dungeon.hero);
 					Blackberry berry4 = new Blackberry(10);
 					berry4.doPickUp(Dungeon.hero);
-					
-					if (Dungeon.checkNight()){
+
+					if (Dungeon.checkNight()) {
 						FullMoonberry berry = new FullMoonberry();
 						berry.doPickUp(Dungeon.hero);
-						}
+					}
 				}
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
+				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 			}
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-					
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+
 		} else {
 
 			super.execute(hero, action);
 
 		}
 	}
-	
-	
 
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		  //GLog.i("I see pet");
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			//GLog.i("I see pet");
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
-	private void removePet(){
-		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow){
-		 for (Mob mob : Dungeon.level.mobs) {
-				if(mob instanceof PET) {				 
-					Dungeon.hero.haspet=false;
+
+	private void removePet() {
+		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow) {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob instanceof PET) {
+					Dungeon.hero.haspet = false;
 					Dungeon.hero.petCount++;
-					mob.destroy();				
+					mob.destroy();
 				}
-			  }
+			}
 		}
 	}
-	
-	
+
+
 	public void reset() {
 		returnDepth = -1;
 	}
@@ -253,6 +252,6 @@ public class CavesKey extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

@@ -25,13 +25,13 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class SanChikarahTranscend extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SANCHIKARAH;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -47,8 +47,8 @@ public class SanChikarahTranscend extends Item {
 	public boolean doPickUp(Hero hero) {
 		if (super.doPickUp(hero)) {
 
-			if (Dungeon.level != null && Dungeon.depth==33) {
-				Dungeon.sanchikarahtranscend= true;							
+			if (Dungeon.level != null && Dungeon.depth == 33) {
+				Dungeon.sanchikarahtranscend = true;
 			}
 
 			return true;
@@ -56,19 +56,19 @@ public class SanChikarahTranscend extends Item {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void doDrop(Hero hero) {
-		
-			if (Dungeon.level != null && Dungeon.depth==33) {
-				Dungeon.sanchikarahtranscend= false;							
-			}
-		
-			super.doDrop(hero);
+
+		if (Dungeon.level != null && Dungeon.depth == 33) {
+			Dungeon.sanchikarahtranscend = false;
+		}
+
+		super.doDrop(hero);
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(SanChikarahDeath.class,"desc");
+		return Messages.get(SanChikarahDeath.class, "desc");
 	}
 }

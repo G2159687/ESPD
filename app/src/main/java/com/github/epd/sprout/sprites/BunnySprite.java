@@ -27,10 +27,10 @@ import com.watabou.noosa.TextureFilm;
 
 public class BunnySprite extends MobSprite {
 
-	private HealthBar hpBar;
-	
-	//Frames 0,2 are idle, 0,1,2 are moving, 0,3,4,1 are attack and 5,6,7 are for death 
-	
+	public HealthBar hpBar;
+
+	//Frames 0,2 are idle, 0,1,2 are moving, 0,3,4,1 are attack and 5,6,7 are for death
+
 
 	public BunnySprite() {
 		super();
@@ -49,7 +49,7 @@ public class BunnySprite extends MobSprite {
 		attack.frames(frames, 0, 2, 3, 4);
 
 		zap = attack.clone();
-		
+
 		die = new Animation(8, false);
 		die.frames(frames, 5, 6, 7, 8);
 
@@ -59,23 +59,32 @@ public class BunnySprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof Bunny){
+		if (ch instanceof Bunny) {
 			final Char finalCH = ch;
-			hpBar = new HealthBar(){
+			hpBar = new HealthBar() {
 				@Override
 				public synchronized void update() {
 					super.update();
-					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
-					hpBar.level( finalCH );
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y - 3, finalCH.sprite.width, hpBar.height());
+					hpBar.level(finalCH);
 					visible = finalCH.sprite.visible;
 				}
 			};
 			((GameScene) ShatteredPixelDungeon.scene()).ghostHP.add(hpBar);
 		}
 	}
-		
+
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
 	}
 }

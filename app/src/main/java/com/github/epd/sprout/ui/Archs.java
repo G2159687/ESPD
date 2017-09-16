@@ -40,7 +40,7 @@ public class Archs extends Component {
 
 	@Override
 	protected void createChildren() {
-		arcsBg = new SkinnedBlock( 1, 1, Assets.ARCS_BG ){
+		arcsBg = new SkinnedBlock(1, 1, Assets.ARCS_BG) {
 			@Override
 			protected NoosaScript script() {
 				return NoosaScriptNoLighting.get();
@@ -51,22 +51,22 @@ public class Archs extends Component {
 				//arch bg has no alpha component, this improves performance
 				GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ZERO);
 				super.draw();
-				GLES20.glBlendFunc( GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA );
+				GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 			}
 		};
 		arcsBg.autoAdjust = true;
-		arcsBg.offsetTo( 0,  offsB );
-		add( arcsBg );
+		arcsBg.offsetTo(0, offsB);
+		add(arcsBg);
 
-		arcsFg = new SkinnedBlock( 1, 1, Assets.ARCS_FG ){
+		arcsFg = new SkinnedBlock(1, 1, Assets.ARCS_FG) {
 			@Override
 			protected NoosaScript script() {
 				return NoosaScriptNoLighting.get();
 			}
 		};
 		arcsFg.autoAdjust = true;
-		arcsFg.offsetTo( 0,  offsF );
-		add( arcsFg );
+		arcsFg.offsetTo(0, offsF);
+		add(arcsFg);
 	}
 
 	@Override

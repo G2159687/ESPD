@@ -25,7 +25,7 @@ import com.watabou.utils.Random;
 public class Acidic extends Scorpio {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = AcidicSprite.class;
 	}
 

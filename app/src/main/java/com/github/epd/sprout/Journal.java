@@ -26,12 +26,12 @@ import java.util.ArrayList;
 public class Journal {
 
 	public enum Feature {
-		WELL_OF_HEALTH(Messages.get(Journal.class,"well_of_health")), WELL_OF_AWARENESS(Messages.get(Journal.class,"well_of_awareness")), WELL_OF_TRANSMUTATION(
-				Messages.get(Journal.class,"well_of_transmutation")), ALCHEMY(Messages.get(Journal.class,"alchemy")), GARDEN(
-				Messages.get(Journal.class,"garden")), STATUE(Messages.get(Journal.class,"statue")),
+		WELL_OF_HEALTH(Messages.get(Journal.class, "well_of_health")), WELL_OF_AWARENESS(Messages.get(Journal.class, "well_of_awareness")), WELL_OF_TRANSMUTATION(
+				Messages.get(Journal.class, "well_of_transmutation")), ALCHEMY(Messages.get(Journal.class, "alchemy")), GARDEN(
+				Messages.get(Journal.class, "garden")), STATUE(Messages.get(Journal.class, "statue")),
 
-		GHOST(Messages.get(Journal.class,"ghost")), WANDMAKER(Messages.get(Journal.class,"wandmaker")), TROLL(
-				Messages.get(Journal.class,"troll")), IMP(Messages.get(Journal.class,"imp"));
+		GHOST(Messages.get(Journal.class, "ghost")), WANDMAKER(Messages.get(Journal.class, "wandmaker")), TROLL(
+				Messages.get(Journal.class, "troll")), IMP(Messages.get(Journal.class, "imp"));
 
 		public String desc;
 

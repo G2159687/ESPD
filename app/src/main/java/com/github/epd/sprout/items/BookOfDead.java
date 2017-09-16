@@ -26,7 +26,6 @@ import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSprite.Glowing;
@@ -40,25 +39,25 @@ import java.util.ArrayList;
 
 public class BookOfDead extends Item {
 
-	private static final String TXT_PREVENTING = Messages.get(BookOfDead.class,"prevent");
-	private static final String TXT_PREVENTING2 = Messages.get(BookOfDead.class,"prevent2");
-	
+	private static final String TXT_PREVENTING = Messages.get(BookOfDead.class, "prevent");
+	private static final String TXT_PREVENTING2 = Messages.get(BookOfDead.class, "prevent2");
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_PORT = Messages.get(BookOfDead.class,"ac");
+	public static final String AC_PORT = Messages.get(BookOfDead.class, "ac");
 
 	private int specialLevel = 31;
 	private int returnDepth = -1;
 	private int returnPos;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.BOOKOFDEAD;
 
 		unique = true;
 	}
 
-	
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 
@@ -82,7 +81,7 @@ public class BookOfDead extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_PORT);
-		
+
 		return actions;
 	}
 
@@ -96,52 +95,51 @@ public class BookOfDead extends Item {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			
-			if (Dungeon.depth==specialLevel && hero.pos != Dungeon.level.exit) {
-				hero.spend(TIME_TO_USE);
-				GLog.w(TXT_PREVENTING2);
-				return;
-			}
-			
-			if (Dungeon.depth!=specialLevel && Dungeon.depth>26) {
+
+			if (Dungeon.depth == specialLevel && hero.pos != Dungeon.level.exit) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING2);
 				return;
 			}
 
+			if (Dungeon.depth != specialLevel && Dungeon.depth > 26) {
+				hero.spend(TIME_TO_USE);
+				GLog.w(TXT_PREVENTING2);
+				return;
+			}
 
 
 		}
 
 		if (action == AC_PORT) {
-			
-			 hero.spend(TIME_TO_USE);
 
-			if (Dungeon.depth==specialLevel){
+			hero.spend(TIME_TO_USE);
+
+			if (Dungeon.depth == specialLevel) {
 				this.doDrop(hero);
 			}
 			Buff buff = Dungeon.hero
-						.buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null)
-					buff.detach();
+					.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null)
+				buff.detach();
 
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
-					if (mob instanceof DriedRose.GhostHero)
-						mob.destroy();
-              if (Dungeon.depth<27){
-            	returnDepth = Dungeon.depth;
-       			returnPos = hero.pos;
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
+				if (mob instanceof DriedRose.GhostHero)
+					mob.destroy();
+			if (Dungeon.depth < 27) {
+				returnDepth = Dungeon.depth;
+				returnPos = hero.pos;
 				InterlevelScene.mode = InterlevelScene.Mode.PORT1;
 			} else {
-				 checkPetPort();
-				 removePet();
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
+				checkPetPort();
+				removePet();
+				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 			}
-             
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-					
+
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+
 		} else {
 
 			super.execute(hero, action);
@@ -150,60 +148,63 @@ public class BookOfDead extends Item {
 	}
 
 
-	private PET checkpet(){
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		  //GLog.i("I see pet");
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			//GLog.i("I see pet");
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
-	
-	private void removePet(){
-		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow){
-		 for (Mob mob : Dungeon.level.mobs) {
-				if(mob instanceof PET) {				 
-					Dungeon.hero.haspet=false;
+
+	private void removePet() {
+		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow) {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob instanceof PET) {
+					Dungeon.hero.haspet = false;
 					Dungeon.hero.petCount++;
-					mob.destroy();				
+					mob.destroy();
 				}
-			  }
+			}
 		}
 	}
-	
-	
+
+
 	@Override
 	public int price() {
-		if (!Statistics.amuletObtained){return 9000 * quantity;}
-		else {return 300*quantity;}
+		if (!Statistics.amuletObtained) {
+			return 9000 * quantity;
+		} else {
+			return 300 * quantity;
+		}
 	}
-	
+
 	public void reset() {
 		returnDepth = -1;
 	}
@@ -224,10 +225,10 @@ public class BookOfDead extends Item {
 	public Glowing glowing() {
 		return BLACK;
 	}
-	
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 }

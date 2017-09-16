@@ -57,34 +57,33 @@ public class WndBlacksmith extends Window {
 		titlebar.setRect(0, 0, WIDTH, 0);
 		add(titlebar);
 
-		RenderedTextMultiline message = PixelScene.renderMultiline( Messages.get(WndBlacksmith.class, "prompt"), 6 );
-		message.maxWidth( WIDTH);
+		RenderedTextMultiline message = PixelScene.renderMultiline(Messages.get(WndBlacksmith.class, "prompt"), 6);
+		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
-		add( message );
+		add(message);
 
 		btnItem1 = new ItemButton() {
 			@Override
 			protected void onClick() {
 				btnPressed = btnItem1;
-				GameScene.selectItem( itemSelector, WndBag.Mode.UPGRADEABLESIMPLE, Messages.get(WndBlacksmith.class, "select1") );
+				GameScene.selectItem(itemSelector, WndBag.Mode.UPGRADEABLESIMPLE, Messages.get(WndBlacksmith.class, "select1"));
 			}
 		};
-		btnItem1.setRect( (WIDTH - BTN_GAP) / 2 - BTN_SIZE, message.top() + message.height() + BTN_GAP, BTN_SIZE, BTN_SIZE );
-		add( btnItem1 );
+		btnItem1.setRect((WIDTH - BTN_GAP) / 2 - BTN_SIZE, message.top() + message.height() + BTN_GAP, BTN_SIZE, BTN_SIZE);
+		add(btnItem1);
 
 		btnItem2 = new ItemButton() {
 			@Override
 			protected void onClick() {
 				btnPressed = btnItem2;
 				GameScene.selectItem(itemSelector, WndBag.Mode.UPGRADEABLESIMPLE,
-						Messages.get(WndBlacksmith.class,"select2"));
+						Messages.get(WndBlacksmith.class, "select2"));
 			}
 		};
-		btnItem2.setRect(btnItem1.right() + BTN_GAP, btnItem1.top(), BTN_SIZE,
-				BTN_SIZE);
+		btnItem2.setRect(btnItem1.right() + BTN_GAP, btnItem1.top(), BTN_SIZE, BTN_SIZE);
 		add(btnItem2);
 
-		btnReforge = new NewRedButton(Messages.get(WndBlacksmith.class,"reforge")) {
+		btnReforge = new NewRedButton(Messages.get(WndBlacksmith.class, "reforge")) {
 			@Override
 			protected void onClick() {
 				Blacksmith.upgrade(btnItem1.item, btnItem2.item);

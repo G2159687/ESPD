@@ -38,7 +38,7 @@ import com.watabou.utils.Random;
 public class ZotSprite extends MobSprite {
 
 	private Animation cast;
-	
+
 	public ZotSprite() {
 		super();
 
@@ -54,7 +54,7 @@ public class ZotSprite extends MobSprite {
 
 		attack = new Animation(8, false);
 		attack.frames(frames, 0, 2, 2);
-		
+
 		cast = new Animation(8, false);
 		cast.frames(frames, 2, 3, 4);
 
@@ -85,19 +85,19 @@ public class ZotSprite extends MobSprite {
 	public void attack(int cell) {
 		if (!Level.adjacent(cell, ch.pos)) {
 			//Char enemy = Actor.findChar(cell);
-				  ((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
+			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new Skull(), new Callback() {
 						@Override
 						public void call() {
 							ch.onAttackComplete();
 						}
-				});
-		 	  
-		  			  		
+					});
+
+
 			play(cast);
 			turnTo(ch.pos, cell);
-			explode(cell);			
-			
+			explode(cell);
+
 		} else {
 
 			super.attack(cell);
@@ -106,7 +106,7 @@ public class ZotSprite extends MobSprite {
 	}
 
 	public void explode(int cell) {
-		
+
 		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
 		if (Dungeon.visible[cell]) {
@@ -117,7 +117,7 @@ public class ZotSprite extends MobSprite {
 		for (int n : PathFinder.NEIGHBOURS9) {
 			int c = cell + n;
 			if (c >= 0 && c < Level.getLength()) {
-				
+
 				if (Level.flamable[c]) {
 					Level.set(c, Terrain.EMBERS);
 					GameScene.updateMap(c);
@@ -125,7 +125,7 @@ public class ZotSprite extends MobSprite {
 				}
 
 				Char ch = Actor.findChar(c);
-				if (ch != null && ch==Dungeon.hero) {
+				if (ch != null && ch == Dungeon.hero) {
 					// those not at the center of the blast take damage less
 					// consistently.
 					int minDamage = c == cell ? Dungeon.depth + 5 : 1;
@@ -149,14 +149,14 @@ public class ZotSprite extends MobSprite {
 		if (terrainAffected) {
 			Dungeon.observe();
 		}
-		
+
 	}
 
-	
+
 	@Override
 	public void onComplete(Animation anim) {
 		if (anim == run) {
-			synchronized (this){
+			synchronized (this) {
 				isMoving = false;
 				idle();
 				notifyAll();

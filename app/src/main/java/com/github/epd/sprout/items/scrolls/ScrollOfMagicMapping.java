@@ -33,19 +33,19 @@ import com.watabou.noosa.audio.Sample;
 
 public class ScrollOfMagicMapping extends Scroll {
 
-	private static final String TXT_LAYOUT = Messages.get(ScrollOfMagicMapping.class,"layout");
-	private static final String TXT_PREVENTING = Messages.get(ScrollOfMagicMapping.class,"prevent");
+	private static final String TXT_LAYOUT = Messages.get(ScrollOfMagicMapping.class, "layout");
+	private static final String TXT_PREVENTING = Messages.get(ScrollOfMagicMapping.class, "prevent");
 
 	{
-		initials=3;
-		name = Messages.get(this,"name");
+		initials = 3;
+		name = Messages.get(this, "name");
 		consumedValue = 10;
 	}
 
 	@Override
 	protected void doRead() {
 
-		if (Dungeon.depth>50 && Dungeon.hero.buff(MagicSight.class) == null){
+		if (Dungeon.depth > 50 && Dungeon.hero.buff(MagicSight.class) == null) {
 			GLog.w(TXT_PREVENTING);
 			SpellSprite.show(curUser, SpellSprite.MAP);
 			Sample.INSTANCE.play(Assets.SND_READ);
@@ -56,7 +56,7 @@ public class ScrollOfMagicMapping extends Scroll {
 			curUser.spendAndNext(TIME_TO_READ);
 			return;
 		}
-		
+
 		int length = Level.LENGTH;
 		int[] map = Dungeon.level.map;
 		boolean[] mapped = Dungeon.level.mapped;
@@ -103,7 +103,7 @@ public class ScrollOfMagicMapping extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

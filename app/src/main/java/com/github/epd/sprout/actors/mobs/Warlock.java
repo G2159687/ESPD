@@ -43,43 +43,43 @@ public class Warlock extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 1f;
 
-	private static final String TXT_SHADOWBOLT_KILLED = Messages.get(Warlock.class,"kill");
+	private static final String TXT_SHADOWBOLT_KILLED = Messages.get(Warlock.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = WarlockSprite.class;
 
-		HP = HT = 80+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 20+adj(0);
+		HP = HT = 80 + (adj(0) * Random.NormalIntRange(5, 7));
+		defenseSkill = 20 + adj(0);
 
 		EXP = 11;
 		maxLvl = 21;
 
 		loot = Generator.Category.POTION;
 		lootChance = 0.83f;
-		
+
 		lootOther = new Meat();
 		lootChanceOther = 0.5f; // by default, see die()
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(12, 25+adj(0));
+		return Random.NormalIntRange(12, 25 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 25+adj(0);
+		return 25 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 8+adj(1);
+		return 8 + adj(1);
 	}
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class Warlock extends Mob implements Callback {
 				Buff.prolong(enemy, Weakness.class, Weakness.duration(enemy));
 			}
 
-			int dmg = Random.Int(16, 24+adj(0));
+			int dmg = Random.Int(16, 24 + adj(0));
 			enemy.damage(dmg, this);
 
 			if (!enemy.isAlive() && enemy == Dungeon.hero) {
@@ -153,10 +153,11 @@ public class Warlock extends Mob implements Callback {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 	}

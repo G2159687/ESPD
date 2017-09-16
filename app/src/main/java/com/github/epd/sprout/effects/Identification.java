@@ -28,8 +28,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Identification extends Group {
 
-	private static int[] DOTS = { -1, -3, 0, -3, +1, -3, -1, -2, +1, -2, +1,
-			-1, 0, 0, +1, 0, 0, +1, 0, +3 };
+	private static int[] DOTS = {-1, -3, 0, -3, +1, -3, -1, -2, +1, -2, +1,
+			-1, 0, 0, +1, 0, 0, +1, 0, +3};
 
 	public Identification(PointF p) {
 

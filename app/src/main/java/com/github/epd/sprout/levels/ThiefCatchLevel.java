@@ -38,7 +38,7 @@ public class ThiefCatchLevel extends RegularLevel {
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
-		cleared=true;
+		cleared = true;
 	}
 
 	private int stairs = 0;
@@ -137,9 +137,9 @@ public class ThiefCatchLevel extends RegularLevel {
 				if (candidates.size() > 0) {
 					Room kingsRoom = Random.element(candidates);
 					kingsRoom.connect(lastRoom);
-					
-						kingsRoom.type = Room.Type.STANDARD;	
-					
+
+					kingsRoom.type = Room.Type.STANDARD;
+
 
 					// unacceptable! make a new level...
 				} else {
@@ -173,10 +173,10 @@ public class ThiefCatchLevel extends RegularLevel {
 
 		exit = roomEntrance.top * Level.getWidth()
 				+ (roomEntrance.left + roomEntrance.right) / 2;
-		
-		
-			  map[exit] = Terrain.EMPTY_SP;
-		  
+
+
+		map[exit] = Terrain.EMPTY_SP;
+
 
 		paintWater();
 		paintGrass();
@@ -215,7 +215,7 @@ public class ThiefCatchLevel extends RegularLevel {
 
 	@Override
 	protected void createMobs() {
-		if (Dungeon.tengudenkilled){
+		if (Dungeon.tengudenkilled) {
 			return;
 		}
 		Mob mob = Bestiary.mob(Dungeon.depth);
@@ -231,7 +231,7 @@ public class ThiefCatchLevel extends RegularLevel {
 	public Actor respawner() {
 		return null;
 	}
-	
+
 	//@Override
 	//public int randomRespawnCell() {
 	//	return -1;
@@ -281,20 +281,20 @@ public class ThiefCatchLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 }

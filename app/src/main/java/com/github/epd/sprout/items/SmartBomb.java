@@ -44,11 +44,11 @@ import java.util.ArrayList;
 public class SmartBomb extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SMART_BOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Fuse fuse;
@@ -56,10 +56,8 @@ public class SmartBomb extends Item {
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(SmartBomb.class,"ac");
-	
-	
-	
+	private static final String AC_LIGHTTHROW = Messages.get(SmartBomb.class, "ac");
+
 
 	@Override
 	public boolean isSimilar(Item item) {
@@ -81,7 +79,7 @@ public class SmartBomb extends Item {
 		} else {
 			lightingFuse = false;
 		}
-		
+
 		super.execute(hero, action);
 	}
 
@@ -106,7 +104,7 @@ public class SmartBomb extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(SmartBomb.class,"sniff"));
+			GLog.w(Messages.get(SmartBomb.class, "sniff"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -152,9 +150,9 @@ public class SmartBomb extends Item {
 							- Random.Int(ch.dr());
 					if (dmg > 0) {
 						ch.damage(dmg, this);
-						
-					 }
-					
+
+					}
+
 
 					if (ch == Dungeon.hero && !ch.isAlive())
 						// constant is used here in the rare instance a player
@@ -168,10 +166,10 @@ public class SmartBomb extends Item {
 		if (terrainAffected) {
 			Dungeon.observe();
 		}
-		
+
 	}
-	
-	
+
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -182,7 +180,7 @@ public class SmartBomb extends Item {
 		return true;
 	}
 
-	
+
 	@Override
 	public ItemSprite.Glowing glowing() {
 		return fuse != null ? new ItemSprite.Glowing(0xFF0000, 0.6f) : null;
@@ -195,7 +193,7 @@ public class SmartBomb extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc1") + (fuse != null ? Messages.get(this,"desc2") : Messages.get(this,"desc3"));
+		return Messages.get(this, "desc1") + (fuse != null ? Messages.get(this, "desc2") : Messages.get(this, "desc3"));
 	}
 
 	private static final String FUSE = "fuse";
@@ -247,10 +245,10 @@ public class SmartBomb extends Item {
 				}
 			}
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}
 
-	
+
 }

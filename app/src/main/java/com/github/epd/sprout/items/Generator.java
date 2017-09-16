@@ -170,9 +170,9 @@ public class Generator {
 		WEAPON(150, Weapon.class), ARMOR(100, Armor.class), POTION(500, Potion.class),
 		SCROLL(400, Scroll.class), WAND(60, Wand.class), RING(30, Ring.class),
 		ARTIFACT(40, Artifact.class), SEED(0, Plant.Seed.class),
-		SEED2(0,	Plant.Seed.class), SEEDRICH(0,	Plant.Seed.class),
+		SEED2(0, Plant.Seed.class), SEEDRICH(0, Plant.Seed.class),
 		FOOD(0, Food.class), GOLD(500, Gold.class), BERRY(50, Food.class), MUSHROOM(0, Food.class),
-		NORNSTONE(0,NornStone.class), NORNSTONE2(0,NornStone.class), SCROLL2(0, Scroll.class);
+		NORNSTONE(0, NornStone.class), NORNSTONE2(0, NornStone.class), SCROLL2(0, Scroll.class);
 
 		public Class<?>[] classes;
 		public float[] probs;
@@ -198,45 +198,45 @@ public class Generator {
 	}
 
 	private static HashMap<Category, Float> categoryProbs = new HashMap<Generator.Category, Float>();
-	
-	private static final float[] INITIAL_ARTIFACT_PROBS = new float[]{  0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0};
+
+	private static final float[] INITIAL_ARTIFACT_PROBS = new float[]{0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0};
 
 	static {
 
-		Category.GOLD.classes = new Class<?>[] { Gold.class };
-		Category.GOLD.probs = new float[] { 1 };
+		Category.GOLD.classes = new Class<?>[]{Gold.class};
+		Category.GOLD.probs = new float[]{1};
 
-		Category.SCROLL.classes = new Class<?>[] { ScrollOfIdentify.class,
+		Category.SCROLL.classes = new Class<?>[]{ScrollOfIdentify.class,
 				ScrollOfTeleportation.class, ScrollOfRemoveCurse.class,
 				ScrollOfUpgrade.class, ScrollOfRecharging.class,
 				ScrollOfMagicMapping.class, ScrollOfRage.class,
 				ScrollOfTerror.class, ScrollOfLullaby.class,
 				ScrollOfMagicalInfusion.class, ScrollOfPsionicBlast.class,
-				ScrollOfMirrorImage.class, ScrollOfRegrowth.class };
-		Category.SCROLL.probs = new float[] { 20,
+				ScrollOfMirrorImage.class, ScrollOfRegrowth.class};
+		Category.SCROLL.probs = new float[]{20,
 				10, 8,
 				0, 15,
 				15, 10,
 				8, 8,
 				0, 4,
-				10, 0 };
+				10, 0};
 
-		Category.SCROLL2.classes = new Class<?>[] { ScrollOfIdentify.class,
+		Category.SCROLL2.classes = new Class<?>[]{ScrollOfIdentify.class,
 				ScrollOfTeleportation.class, ScrollOfRemoveCurse.class,
 				ScrollOfUpgrade.class, ScrollOfRecharging.class,
 				ScrollOfMagicMapping.class, ScrollOfRage.class,
 				ScrollOfTerror.class, ScrollOfLullaby.class,
 				ScrollOfMagicalInfusion.class, ScrollOfPsionicBlast.class,
-				ScrollOfMirrorImage.class, ScrollOfRegrowth.class };
-		Category.SCROLL2.probs = new float[] { 8,
+				ScrollOfMirrorImage.class, ScrollOfRegrowth.class};
+		Category.SCROLL2.probs = new float[]{8,
 				10, 4,
 				2, 15,
 				6, 10,
 				8, 8,
 				1, 4,
-				10, 5 };
+				10, 5};
 
-		Category.POTION.classes = new Class<?>[] { PotionOfHealing.class,
+		Category.POTION.classes = new Class<?>[]{PotionOfHealing.class,
 				PotionOfExperience.class, PotionOfToxicGas.class,
 				PotionOfParalyticGas.class, PotionOfLiquidFlame.class,
 				PotionOfLevitation.class, PotionOfStrength.class,
@@ -244,7 +244,7 @@ public class Generator {
 				PotionOfInvisibility.class, PotionOfMight.class,
 				PotionOfFrost.class, PotionOfMending.class,
 				PotionOfOverHealing.class, Egg.class};
-		Category.POTION.probs = new float[] { 10,
+		Category.POTION.probs = new float[]{10,
 				4, 15,
 				10, 15,
 				10, 0,
@@ -253,7 +253,7 @@ public class Generator {
 				10, 45,
 				4, 10};
 
-		Category.WAND.classes = new Class<?>[] { WandOfTeleportation.class,
+		Category.WAND.classes = new Class<?>[]{WandOfTeleportation.class,
 				WandOfSlowness.class, WandOfFirebolt.class,
 				WandOfRegrowth.class, WandOfPoison.class, WandOfBlink.class,
 				WandOfLightning.class, WandOfAmok.class,
@@ -261,7 +261,7 @@ public class Generator {
 				WandOfDisintegration.class, WandOfAvalanche.class,
 				WandOfPrismaticLight.class, WandOfVenom.class,
 				WandOfFrost.class, WandOfBlastWave.class};
-		Category.WAND.probs = new float[] { 10,
+		Category.WAND.probs = new float[]{10,
 				10, 10,
 				10, 10, 10,
 				10, 10,
@@ -270,107 +270,107 @@ public class Generator {
 				10, 10,
 				10, 10};
 
-		Category.WEAPON.classes = new Class<?>[] { Dagger.class,
+		Category.WEAPON.classes = new Class<?>[]{Dagger.class,
 				Knuckles.class, Quarterstaff.class, Spear.class, Mace.class,
 				Sword.class, Longsword.class, BattleAxe.class, WarHammer.class,
 				Glaive.class, ShortSword.class, Dart.class, Javelin.class,
 				IncendiaryDart.class, CurareDart.class, Shuriken.class,
-				Boomerang.class, Tamahawk.class, Spork.class };
-		Category.WEAPON.probs = new float[] { 1,
+				Boomerang.class, Tamahawk.class, Spork.class};
+		Category.WEAPON.probs = new float[]{1,
 				1, 1, 1, 1,
 				1, 1, 1, 1,
 				1, 0, 0, 1,
 				1, 1, 1,
-				0, 1, 0 };
+				0, 1, 0};
 
-		Category.ARMOR.classes = new Class<?>[] { ClothArmor.class,
+		Category.ARMOR.classes = new Class<?>[]{ClothArmor.class,
 				LeatherArmor.class, MailArmor.class, ScaleArmor.class,
-				PlateArmor.class };
-		Category.ARMOR.probs = new float[] { 1,
+				PlateArmor.class};
+		Category.ARMOR.probs = new float[]{1,
 				1, 1, 1,
-				1 };
+				1};
 
-		Category.FOOD.classes = new Class<?>[] { Food.class, Pasty.class, MysteryMeat.class };
-		Category.FOOD.probs = new float[] { 4, 1, 0 };
+		Category.FOOD.classes = new Class<?>[]{Food.class, Pasty.class, MysteryMeat.class};
+		Category.FOOD.probs = new float[]{4, 1, 0};
 
-		Category.RING.classes = new Class<?>[] { RingOfAccuracy.class,
+		Category.RING.classes = new Class<?>[]{RingOfAccuracy.class,
 				RingOfEvasion.class, RingOfElements.class, RingOfForce.class,
 				RingOfFuror.class, RingOfHaste.class, RingOfMagic.class,
 				RingOfMight.class, RingOfSharpshooting.class,
-				RingOfTenacity.class, RingOfWealth.class };
-		Category.RING.probs = new float[] { 10,
+				RingOfTenacity.class, RingOfWealth.class};
+		Category.RING.probs = new float[]{10,
 				10, 10, 10,
 				10, 10, 2,
 				10, 10,
-				10, 0 };
+				10, 0};
 
-		Category.ARTIFACT.classes = new Class<?>[] { CapeOfThorns.class,
+		Category.ARTIFACT.classes = new Class<?>[]{CapeOfThorns.class,
 				ChaliceOfBlood.class, CloakOfShadows.class, HornOfPlenty.class,
 				MasterThievesArmband.class, SandalsOfNature.class,
 				TalismanOfForesight.class, TimekeepersHourglass.class,
 				UnstableSpellbook.class, AlchemistsToolkit.class, RingOfDisintegration.class,
 				RingOfFrost.class,
 				DriedRose.class // starts with no chance of spawning, chance is
-								// set directly after beating ghost quest.
+				// set directly after beating ghost quest.
 		};
-		Category.ARTIFACT.probs =  INITIAL_ARTIFACT_PROBS.clone();
+		Category.ARTIFACT.probs = INITIAL_ARTIFACT_PROBS.clone();
 
-		Category.SEED.classes = new Class<?>[] { 
+		Category.SEED.classes = new Class<?>[]{
 				Firebloom.Seed.class, Icecap.Seed.class, Sorrowmoss.Seed.class, Blindweed.Seed.class, Sungrass.Seed.class,
 				Earthroot.Seed.class, Fadeleaf.Seed.class, Rotberry.Seed.class, BlandfruitBush.Seed.class, Dreamfoil.Seed.class,
 				Stormvine.Seed.class, Nut.class, Blackberry.class, Blueberry.class, Cloudberry.class,
 				Moonberry.class, Starflower.Seed.class, Phaseshift.Seed.class, Flytrap.Seed.class, Dewcatcher.Seed.class};
-		
-		Category.SEED.probs = new float[] { 12, 12, 12, 12, 12,
-				                            12, 12, 0, 2, 12,
-				                            12, 48, 20, 4, 16,
-				                            2, 1, 1, 4, (Dungeon.isChallenged(Challenges.NO_SCROLLS)?12:8)};
-		
-		
-		Category.SEED2.classes = new Class<?>[] { Firebloom.Seed.class,
+
+		Category.SEED.probs = new float[]{12, 12, 12, 12, 12,
+				12, 12, 0, 2, 12,
+				12, 48, 20, 4, 16,
+				2, 1, 1, 4, (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 12 : 8)};
+
+
+		Category.SEED2.classes = new Class<?>[]{Firebloom.Seed.class,
 				Icecap.Seed.class, Sorrowmoss.Seed.class, Blindweed.Seed.class,
 				Sungrass.Seed.class, Earthroot.Seed.class, Fadeleaf.Seed.class,
 				Rotberry.Seed.class, BlandfruitBush.Seed.class,
 				Dreamfoil.Seed.class, Stormvine.Seed.class,
 				Starflower.Seed.class, Phaseshift.Seed.class, Flytrap.Seed.class,
 				Dewcatcher.Seed.class};
-		
-		Category.SEED2.probs = new float[] { 12,
+
+		Category.SEED2.probs = new float[]{12,
 				12, 12, 12,
 				12, 12, 12,
 				0, 4,
 				12, 12,
 				2, 2, 6,
 				8};
-		
-		Category.SEEDRICH.classes = new Class<?>[] { Firebloom.Seed.class,
+
+		Category.SEEDRICH.classes = new Class<?>[]{Firebloom.Seed.class,
 				Icecap.Seed.class, Sorrowmoss.Seed.class, Blindweed.Seed.class,
 				Sungrass.Seed.class, Earthroot.Seed.class, Fadeleaf.Seed.class,
 				Rotberry.Seed.class, BlandfruitBush.Seed.class,
 				Dreamfoil.Seed.class, Stormvine.Seed.class,
 				Starflower.Seed.class, Phaseshift.Seed.class, Flytrap.Seed.class,
 				Dewcatcher.Seed.class};
-		
-		Category.SEEDRICH.probs = new float[] { 1,
+
+		Category.SEEDRICH.probs = new float[]{1,
 				1, 1, 1,
 				2, 1, 1,
 				0, 4,
 				1, 1,
 				4, 4, 8,
 				6};
-		
-		Category.BERRY.classes = new Class<?>[] {Blackberry.class, Blueberry.class, Cloudberry.class, Moonberry.class};
-		Category.BERRY.probs = new float[] {8,2,2,1};	
-		
-		Category.MUSHROOM.classes = new Class<?>[] {BlueMilk.class, DeathCap.class, Earthstar.class, JackOLantern.class, PixieParasol.class, GoldenJelly.class};
-		Category.MUSHROOM.probs = new float[] {2,2,2,2,2,2};
-		
-		Category.NORNSTONE.classes = new Class<?>[] {BlueNornStone.class, GreenNornStone.class, OrangeNornStone.class, PurpleNornStone.class, YellowNornStone.class};
-		Category.NORNSTONE.probs = new float[] {2,2,2,2,2};
-		
-		Category.NORNSTONE2.classes = new Class<?>[] {BlueNornStone.class, GreenNornStone.class, OrangeNornStone.class, PurpleNornStone.class, YellowNornStone.class};
-		Category.NORNSTONE2.probs = new float[] {2,0,2,2,2};
-		
+
+		Category.BERRY.classes = new Class<?>[]{Blackberry.class, Blueberry.class, Cloudberry.class, Moonberry.class};
+		Category.BERRY.probs = new float[]{8, 2, 2, 1};
+
+		Category.MUSHROOM.classes = new Class<?>[]{BlueMilk.class, DeathCap.class, Earthstar.class, JackOLantern.class, PixieParasol.class, GoldenJelly.class};
+		Category.MUSHROOM.probs = new float[]{2, 2, 2, 2, 2, 2};
+
+		Category.NORNSTONE.classes = new Class<?>[]{BlueNornStone.class, GreenNornStone.class, OrangeNornStone.class, PurpleNornStone.class, YellowNornStone.class};
+		Category.NORNSTONE.probs = new float[]{2, 2, 2, 2, 2};
+
+		Category.NORNSTONE2.classes = new Class<?>[]{BlueNornStone.class, GreenNornStone.class, OrangeNornStone.class, PurpleNornStone.class, YellowNornStone.class};
+		Category.NORNSTONE2.probs = new float[]{2, 0, 2, 2, 2};
+
 	}
 
 	public static void reset() {
@@ -389,17 +389,17 @@ public class Generator {
 			categoryProbs.put(cat, categoryProbs.get(cat) / 2);
 
 			switch (cat) {
-			case ARMOR:
-				return randomArmor();
-			case WEAPON:
-				return randomWeapon();
-			case ARTIFACT:
-				Item item = randomArtifact();
-				// if we're out of artifacts, return a ring instead.
-				return item != null ? item : random(Category.RING);
-			default:
-				return ((Item) cat.classes[Random.chances(cat.probs)]
-						.newInstance()).random();
+				case ARMOR:
+					return randomArmor();
+				case WEAPON:
+					return randomWeapon();
+				case ARTIFACT:
+					Item item = randomArtifact();
+					// if we're out of artifacts, return a ring instead.
+					return item != null ? item : random(Category.RING);
+				default:
+					return ((Item) cat.classes[Random.chances(cat.probs)]
+							.newInstance()).random();
 			}
 
 		} catch (Exception e) {
@@ -523,7 +523,7 @@ public class Generator {
 	// resets artifact probabilities, for new dungeons
 	public static void initArtifacts() {
 		Category.ARTIFACT.probs = INITIAL_ARTIFACT_PROBS.clone();
-		
+
 		//checks for dried rose quest completion, adds the rose in accordingly.
 		if (Ghost.Quest.completed()) Category.ARTIFACT.probs[12] = 1;
 		spawnedArtifacts = new ArrayList<String>();

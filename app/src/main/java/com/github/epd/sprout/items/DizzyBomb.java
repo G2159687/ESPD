@@ -48,21 +48,19 @@ import java.util.ArrayList;
 public class DizzyBomb extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.DIZZY_BOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Fuse fuse;
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(DizzyBomb.class,"ac");
-	
-	
-	
+	private static final String AC_LIGHTTHROW = Messages.get(DizzyBomb.class, "ac");
+
 
 	@Override
 	public boolean isSimilar(Item item) {
@@ -84,7 +82,7 @@ public class DizzyBomb extends Item {
 		} else {
 			lightingFuse = false;
 		}
-		
+
 		super.execute(hero, action);
 	}
 
@@ -109,7 +107,7 @@ public class DizzyBomb extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(DizzyBomb.class,"sniff"));
+			GLog.w(Messages.get(DizzyBomb.class, "sniff"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -155,11 +153,11 @@ public class DizzyBomb extends Item {
 							- Random.Int(ch.dr());
 					if (dmg > 0) {
 						ch.damage(dmg, this);
-						if (!ch.immunities().contains(ConfusionGas.class) && !(ch instanceof NPC)){
+						if (!ch.immunities().contains(ConfusionGas.class) && !(ch instanceof NPC)) {
 							Buff.affect(ch, Vertigo.class, Vertigo.duration(ch));
-						   }
-					 }
-					
+						}
+					}
+
 
 					if (ch == Dungeon.hero && !ch.isAlive())
 						// constant is used here in the rare instance a player
@@ -173,10 +171,10 @@ public class DizzyBomb extends Item {
 		if (terrainAffected) {
 			Dungeon.observe();
 		}
-		
+
 	}
-	
-	
+
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -187,7 +185,7 @@ public class DizzyBomb extends Item {
 		return true;
 	}
 
-	
+
 	@Override
 	public ItemSprite.Glowing glowing() {
 		return fuse != null ? new ItemSprite.Glowing(0xFF0000, 0.6f) : null;
@@ -200,7 +198,7 @@ public class DizzyBomb extends Item {
 
 	@Override
 	public String info() {
-		return fuse != null ? Messages.get(this,"desc1") : Messages.get(this,"desc2");
+		return fuse != null ? Messages.get(this, "desc1") : Messages.get(this, "desc2");
 	}
 
 	private static final String FUSE = "fuse";
@@ -252,10 +250,10 @@ public class DizzyBomb extends Item {
 				}
 			}
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}
 
-	
+
 }

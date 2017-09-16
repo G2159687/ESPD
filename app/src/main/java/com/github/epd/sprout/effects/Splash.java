@@ -46,7 +46,7 @@ public class Splash {
 	}
 
 	public static void at(PointF p, final float dir, final float cone,
-			final int color, int n) {
+	                      final int color, int n) {
 
 		if (n <= 0) {
 			return;

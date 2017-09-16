@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class Multiplicity extends Glyph {
 
-	private static final String TXT_MULTIPLICITY = Messages.get(Multiplicity.class,"name");
+	private static final String TXT_MULTIPLICITY = Messages.get(Multiplicity.class, "name");
 
 	private static ItemSprite.Glowing PINK = new ItemSprite.Glowing(0xCCAA88);
 

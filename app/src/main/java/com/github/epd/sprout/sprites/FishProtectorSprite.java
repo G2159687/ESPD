@@ -19,7 +19,6 @@ package com.github.epd.sprout.sprites;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.actors.mobs.FishProtector;
-import com.github.epd.sprout.actors.mobs.FlyingProtector;
 import com.github.epd.sprout.effects.Lightning;
 import com.watabou.noosa.TextureFilm;
 
@@ -42,7 +41,7 @@ public class FishProtectorSprite extends MobSprite {
 		attack.frames(frames, 8, 9, 10);
 
 		zap = attack.clone();
-		
+
 		die = new Animation(5, false);
 		die.frames(frames, 11, 12, 13, 14, 15, 15);
 
@@ -52,12 +51,12 @@ public class FishProtectorSprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (FishProtector)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (FishProtector) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);
 	}
-	
+
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;

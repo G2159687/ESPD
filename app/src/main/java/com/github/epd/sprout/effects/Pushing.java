@@ -50,10 +50,10 @@ public class Pushing extends Actor {
 				new Effect();
 			}
 		}
-		Actor.remove( Pushing.this );
+		Actor.remove(Pushing.this);
 
 		//so that all pushing effects at the same time go simultaneously
-		for ( Actor actor : Actor.all() ){
+		for (Actor actor : Actor.all()) {
 			if (actor instanceof Pushing && ((Pushing) actor).cooldown() == 0)
 				return true;
 		}

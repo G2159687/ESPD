@@ -18,6 +18,7 @@
 package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.items.DewVial;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.PixelScene;
@@ -29,8 +30,8 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndDescend extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndDescend.class,"msg");
-	private static final String TXT_REWARD = Messages.get(WndDescend.class,"ok");
+	private static final String TXT_MESSAGE = Messages.get(WndDescend.class, "msg");
+	private static final String TXT_REWARD = Messages.get(WndDescend.class, "ok");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -39,7 +40,7 @@ public class WndDescend extends Window {
 	public WndDescend() {
 
 		super();
-		
+
 		DewVial dewvial = new DewVial();
 
 		IconTitle titlebar = new IconTitle();
@@ -57,7 +58,10 @@ public class WndDescend extends Window {
 		NewRedButton btnReward = new NewRedButton(TXT_REWARD) {
 			@Override
 			protected void onClick() {
-				Dungeon.level.forcedone=true;
+				Dungeon.level.forcedone = true;
+				if (!Dungeon.level.cleared){
+					Statistics.prevfloormoves = 0;
+				}
 				hide();
 			}
 		};
@@ -68,5 +72,5 @@ public class WndDescend extends Window {
 		resize(WIDTH, (int) btnReward.bottom());
 	}
 
-	
+
 }

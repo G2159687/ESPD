@@ -8,13 +8,13 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class DemonFloors extends Item {
 
-    {
-        name = Messages.get(this, "name");
-        image = ItemSpriteSheet.DWARFHAMMER;
-    }
+	{
+		name = Messages.get(this, "name");
+		image = ItemSpriteSheet.DWARFHAMMER;
+	}
 
-    @Override
-    public String info() {
-        return Messages.get(this, "desc");
-    }
+	@Override
+	public String info() {
+		return Messages.get(this, "desc");
+	}
 }

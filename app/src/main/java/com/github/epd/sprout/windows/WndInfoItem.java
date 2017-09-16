@@ -51,7 +51,7 @@ public class WndInfoItem extends Window {
 
 		} else {
 
-			fillFields( heap.image(), heap.glowing(), TITLE_COLOR, heap.toString(), heap.info() );
+			fillFields(heap.image(), heap.glowing(), TITLE_COLOR, heap.toString(), heap.info());
 
 		}
 	}
@@ -72,7 +72,7 @@ public class WndInfoItem extends Window {
 	}
 
 	private void fillFields(int image, ItemSprite.Glowing glowing,
-			int titleColor, String title, String info) {
+	                        int titleColor, String title, String info) {
 
 		IconTitle titlebar = new IconTitle();
 		titlebar.icon(new ItemSprite(image, glowing));
@@ -80,11 +80,11 @@ public class WndInfoItem extends Window {
 		titlebar.setRect(0, 0, WIDTH, 0);
 		add(titlebar);
 
-		RenderedTextMultiline txtInfo = PixelScene.renderMultiline( info, 6 );
+		RenderedTextMultiline txtInfo = PixelScene.renderMultiline(info, 6);
 		txtInfo.maxWidth(WIDTH);
 		txtInfo.setPos(titlebar.left(), titlebar.bottom() + GAP);
-		add( txtInfo );
+		add(txtInfo);
 
-		resize( WIDTH, (int)(txtInfo.top() + txtInfo.height()) );
+		resize(WIDTH, (int) (txtInfo.top() + txtInfo.height()));
 	}
 }

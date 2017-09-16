@@ -46,10 +46,10 @@ import java.util.ArrayList;
 public class Bomb extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.BOMB;
 		defaultAction = AC_LIGHTTHROW;
-        usesTargeting = true;
+		usesTargeting = true;
 		stackable = true;
 	}
 
@@ -58,14 +58,14 @@ public class Bomb extends Item {
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(Bomb.class,"ac_lightthrow");
-	
-	public static final String AC_DIZZYBOMB = Messages.get(Bomb.class,"dizzy");
-	public static final String AC_SMARTBOMB = Messages.get(Bomb.class,"smart");
-	public static final String AC_SEEKINGBOMB = Messages.get(Bomb.class,"seeking");
-	public static final String AC_CLUSTERBOMB = Messages.get(Bomb.class,"cluster");
-	public static final String AC_SEEKINGCLUSTERBOMB = Messages.get(Bomb.class,"sc");
-	
+	private static final String AC_LIGHTTHROW = Messages.get(Bomb.class, "ac_lightthrow");
+
+	public static final String AC_DIZZYBOMB = Messages.get(Bomb.class, "dizzy");
+	public static final String AC_SMARTBOMB = Messages.get(Bomb.class, "smart");
+	public static final String AC_SEEKINGBOMB = Messages.get(Bomb.class, "seeking");
+	public static final String AC_CLUSTERBOMB = Messages.get(Bomb.class, "cluster");
+	public static final String AC_SEEKINGCLUSTERBOMB = Messages.get(Bomb.class, "sc");
+
 	public static final float TIME_TO_COOK_BOMB = 4;
 
 	@Override
@@ -77,22 +77,22 @@ public class Bomb extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_LIGHTTHROW);
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Dungeon.hero.lvl>4){
-		  actions.add(AC_DIZZYBOMB);
-		} 
-         if (Dungeon.hero.heroClass==HeroClass.ROGUE && Dungeon.hero.lvl>9){
-		  actions.add(AC_SMARTBOMB);
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.lvl > 4) {
+			actions.add(AC_DIZZYBOMB);
 		}
-         if (Dungeon.hero.heroClass==HeroClass.ROGUE && Dungeon.hero.lvl>14){
-		  actions.add(AC_SEEKINGBOMB);
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.lvl > 9) {
+			actions.add(AC_SMARTBOMB);
 		}
-         if (Dungeon.hero.heroClass==HeroClass.ROGUE && Dungeon.hero.lvl>19){
-		  actions.add(AC_CLUSTERBOMB);
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.lvl > 14) {
+			actions.add(AC_SEEKINGBOMB);
 		}
-          if (Dungeon.hero.heroClass==HeroClass.ROGUE && Dungeon.hero.lvl>29){
-		  actions.add(AC_SEEKINGCLUSTERBOMB);
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.lvl > 19) {
+			actions.add(AC_CLUSTERBOMB);
 		}
-		
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.lvl > 29) {
+			actions.add(AC_SEEKINGCLUSTERBOMB);
+		}
+
 		return actions;
 	}
 
@@ -104,86 +104,86 @@ public class Bomb extends Item {
 		} else {
 			lightingFuse = false;
 		}
-		
+
 		if (action.equals(AC_DIZZYBOMB)) {
 
 			hero.spend(TIME_TO_COOK_BOMB);
 			hero.busy();
 
 			hero.sprite.operate(hero.pos);
-			
+
 			DizzyBomb dbomb = new DizzyBomb();
 			if (dbomb.doPickUp(Dungeon.hero)) {
 				GLog.i(Messages.get(Hero.class, "have"), dbomb.name());
-				} else {
-				Dungeon.level.drop(dbomb, Dungeon.hero.pos).sprite.drop();	
-				}
-			  detach(Dungeon.hero.belongings.backpack);
-		   }
-		
+			} else {
+				Dungeon.level.drop(dbomb, Dungeon.hero.pos).sprite.drop();
+			}
+			detach(Dungeon.hero.belongings.backpack);
+		}
+
 		if (action.equals(AC_SMARTBOMB)) {
 
 			hero.spend(TIME_TO_COOK_BOMB);
 			hero.busy();
 
 			hero.sprite.operate(hero.pos);
-			
+
 			SmartBomb smbomb = new SmartBomb();
 			if (smbomb.doPickUp(Dungeon.hero)) {
 				GLog.i(Messages.get(Hero.class, "have"), smbomb.name());
-				} else {
-				Dungeon.level.drop(smbomb, Dungeon.hero.pos).sprite.drop();	
-				}
-			  detach(Dungeon.hero.belongings.backpack);
-		   }
-		
+			} else {
+				Dungeon.level.drop(smbomb, Dungeon.hero.pos).sprite.drop();
+			}
+			detach(Dungeon.hero.belongings.backpack);
+		}
+
 		if (action.equals(AC_SEEKINGBOMB)) {
 
 			hero.spend(TIME_TO_COOK_BOMB);
 			hero.busy();
 
 			hero.sprite.operate(hero.pos);
-			
+
 			SeekingBombItem sbomb = new SeekingBombItem();
 			if (sbomb.doPickUp(Dungeon.hero)) {
 				GLog.i(Messages.get(Hero.class, "have"), sbomb.name());
-				} else {
-				Dungeon.level.drop(sbomb, Dungeon.hero.pos).sprite.drop();	
-				}
-			  detach(Dungeon.hero.belongings.backpack);
-		   }
-		
+			} else {
+				Dungeon.level.drop(sbomb, Dungeon.hero.pos).sprite.drop();
+			}
+			detach(Dungeon.hero.belongings.backpack);
+		}
+
 		if (action.equals(AC_CLUSTERBOMB)) {
 
 			hero.spend(TIME_TO_COOK_BOMB);
 			hero.busy();
 
 			hero.sprite.operate(hero.pos);
-			
+
 			ClusterBomb cbomb = new ClusterBomb();
 			if (cbomb.doPickUp(Dungeon.hero)) {
 				GLog.i(Messages.get(Hero.class, "have"), cbomb.name());
-				} else {
-				Dungeon.level.drop(cbomb, Dungeon.hero.pos).sprite.drop();	
-				}
-			  detach(Dungeon.hero.belongings.backpack);
-		   }
-	
-	if (action.equals(AC_SEEKINGCLUSTERBOMB)) {
-
-		hero.spend(TIME_TO_COOK_BOMB);
-		hero.busy();
-
-		hero.sprite.operate(hero.pos);
-		
-		SeekingClusterBombItem scbomb = new SeekingClusterBombItem();
-		if (scbomb.doPickUp(Dungeon.hero)) {
-			GLog.i(Messages.get(Hero.class, "have"), scbomb.name());
 			} else {
-			Dungeon.level.drop(scbomb, Dungeon.hero.pos).sprite.drop();	
+				Dungeon.level.drop(cbomb, Dungeon.hero.pos).sprite.drop();
 			}
-		  detach(Dungeon.hero.belongings.backpack);
-	   }
+			detach(Dungeon.hero.belongings.backpack);
+		}
+
+		if (action.equals(AC_SEEKINGCLUSTERBOMB)) {
+
+			hero.spend(TIME_TO_COOK_BOMB);
+			hero.busy();
+
+			hero.sprite.operate(hero.pos);
+
+			SeekingClusterBombItem scbomb = new SeekingClusterBombItem();
+			if (scbomb.doPickUp(Dungeon.hero)) {
+				GLog.i(Messages.get(Hero.class, "have"), scbomb.name());
+			} else {
+				Dungeon.level.drop(scbomb, Dungeon.hero.pos).sprite.drop();
+			}
+			detach(Dungeon.hero.belongings.backpack);
+		}
 
 		super.execute(hero, action);
 	}
@@ -209,7 +209,7 @@ public class Bomb extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(this,"snuff_fuse"));
+			GLog.w(Messages.get(this, "snuff_fuse"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -269,11 +269,11 @@ public class Bomb extends Item {
 		if (terrainAffected) {
 			Dungeon.observe();
 		}
-		
+
 	}
-	
-	public void genBomb(){
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(1) == 0){
+
+	public void genBomb() {
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(1) == 0) {
 			Dungeon.level.drop(new Bomb(), Dungeon.level.randomDestination()).sprite.drop();
 		}
 	}
@@ -291,11 +291,11 @@ public class Bomb extends Item {
 	@Override
 	public Item random() {
 		switch (Random.Int(2)) {
-		case 0:
-		default:
-			return this;
-		case 1:
-			return new DoubleBomb();
+			case 0:
+			default:
+				return this;
+			case 1:
+				return new DoubleBomb();
 		}
 	}
 
@@ -311,8 +311,8 @@ public class Bomb extends Item {
 
 	@Override
 	public String info() {
-		return (fuse != null ? Messages.get(this,"desc_burning")
-						: Messages.get(this,"desc"));
+		return (fuse != null ? Messages.get(this, "desc_burning")
+				: Messages.get(this, "desc"));
 	}
 
 	private static final String FUSE = "fuse";
@@ -367,7 +367,7 @@ public class Bomb extends Item {
 			}
 
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}
@@ -375,14 +375,14 @@ public class Bomb extends Item {
 	public static class DoubleBomb extends Bomb {
 
 		{
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.DBL_BOMB;
 			stackable = false;
 		}
 
 		@Override
 		public String info() {
-			return Messages.get(this,"desc");
+			return Messages.get(this, "desc");
 		}
 
 		@Override
@@ -391,7 +391,7 @@ public class Bomb extends Item {
 			bomb.quantity(2);
 			if (bomb.doPickUp(hero)) {
 				// isaaaaac....
-				hero.sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Bomb.class,"free"));
+				hero.sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Bomb.class, "free"));
 				return true;
 			}
 			return false;

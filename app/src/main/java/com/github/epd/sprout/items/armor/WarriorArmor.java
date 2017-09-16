@@ -28,7 +28,6 @@ import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.CellSelector;
@@ -44,12 +43,12 @@ public class WarriorArmor extends ClassArmor {
 	private static int LEAP_TIME = 1;
 	private static int SHOCK_TIME = 3;
 
-	private static final String AC_SPECIAL = Messages.get(WarriorArmor.class,"ac_special");
+	private static final String AC_SPECIAL = Messages.get(WarriorArmor.class, "ac_special");
 
-	private static final String TXT_NOT_WARRIOR = Messages.get(WarriorArmor.class,"not_warrior");
+	private static final String TXT_NOT_WARRIOR = Messages.get(WarriorArmor.class, "not_warrior");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_WARRIOR;
 	}
 
@@ -75,7 +74,7 @@ public class WarriorArmor extends ClassArmor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	protected static CellSelector.Listener leaper = new CellSelector.Listener() {
@@ -88,8 +87,8 @@ public class WarriorArmor extends ClassArmor {
 				int cell = route.collisionPos;
 
 				//can't occupy the same cell as another char, so move back one.
-				if (Actor.findChar( cell ) != null && cell != curUser.pos)
-					cell = route.path.get(route.dist-1);
+				if (Actor.findChar(cell) != null && cell != curUser.pos)
+					cell = route.path.get(route.dist - 1);
 
 				curUser.HP -= (curUser.HP / 3);
 				if (curUser.subClass == HeroSubClass.BERSERKER
@@ -127,7 +126,7 @@ public class WarriorArmor extends ClassArmor {
 
 		@Override
 		public String prompt() {
-			return Messages.get(WarriorArmor.class,"prompt");
+			return Messages.get(WarriorArmor.class, "prompt");
 		}
 	};
 }

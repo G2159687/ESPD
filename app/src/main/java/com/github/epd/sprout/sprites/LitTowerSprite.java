@@ -38,17 +38,17 @@ public class LitTowerSprite extends MobSprite {
 		attack = idle.clone();
 
 		zap = attack.clone();
-		
+
 		idle();
 	}
 
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (LitTower)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (LitTower) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);
 	}
-	
+
 }

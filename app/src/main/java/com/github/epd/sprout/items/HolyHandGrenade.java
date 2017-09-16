@@ -53,11 +53,11 @@ import java.util.ArrayList;
 public class HolyHandGrenade extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.HOLY_HAND_GRENADE;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Fuse fuse;
@@ -65,7 +65,7 @@ public class HolyHandGrenade extends Item {
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(HolyHandGrenade.class,"ac");
+	private static final String AC_LIGHTTHROW = Messages.get(HolyHandGrenade.class, "ac");
 
 	@Override
 	public boolean isSimilar(Item item) {
@@ -83,11 +83,11 @@ public class HolyHandGrenade extends Item {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_LIGHTTHROW)) {
-			
-				CellEmitter.get(hero.pos).start(Speck.factory(Speck.LIGHT),	0.2f, 3);
-				lightingFuse = true;
-				action = AC_THROW;			
-	
+
+			CellEmitter.get(hero.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+			lightingFuse = true;
+			action = AC_THROW;
+
 		} else
 			lightingFuse = false;
 
@@ -100,7 +100,7 @@ public class HolyHandGrenade extends Item {
 			Actor.addDelayed(fuse = new Fuse().ignite(this), 2);
 		}
 		if ((Actor.findChar(cell) != null
-				&& !(Actor.findChar(cell) instanceof Hero))|| 
+				&& !(Actor.findChar(cell) instanceof Hero)) ||
 				Dungeon.level.heaps.get(cell) != null) {
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS9DIST2)
@@ -116,7 +116,7 @@ public class HolyHandGrenade extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(HolyHandGrenade.class,"stop"));
+			GLog.w(Messages.get(HolyHandGrenade.class, "stop"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -125,13 +125,13 @@ public class HolyHandGrenade extends Item {
 	public void explode(int cell) {
 		// We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
-	    Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
 		//if (Dungeon.visible[cell]) {
 		//	CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
 		//}
 
-	     	for (int n: PathFinder.NEIGHBOURS9DIST2) {
+		for (int n : PathFinder.NEIGHBOURS9DIST2) {
 			int c = cell + n;
 			if (c >= 0 && c < Level.getLength()) {
 				if (Dungeon.visible[c]) {
@@ -139,28 +139,34 @@ public class HolyHandGrenade extends Item {
 				}
 
 				Heap heap = Dungeon.level.heaps.get(c);
-				if (heap != null){heap.holyexplode();}
+				if (heap != null) {
+					heap.holyexplode();
+				}
 
 				Char ch = Actor.findChar(c);
-				if (ch instanceof MossySkeleton || 	ch instanceof Skeleton ||  ch instanceof RedWraith
-					||  ch instanceof BlueWraith ||  ch instanceof Wraith ||  ch instanceof DwarfLich
-					||  ch instanceof SpectralRat ||  ch instanceof RedWraith ||  ch instanceof DwarfKingTomb
-					||  ch instanceof King ||  ch instanceof Warlock ||  ch instanceof Undead) {
-                   if(Random.Int(2)==0){
-					Buff.affect(ch, Terror.class, Terror.DURATION).object = curUser.id();
-					int dmg = Random.NormalIntRange(75, 300 - Random.Int(ch.dr()));
-					if (dmg > 0) {ch.damage(dmg, this);}
-                   } else {
-                	 Buff.affect(ch, Terror.class, Terror.DURATION).object = curUser.id();
-                	 int dmg = Random.NormalIntRange(75, 300);
- 					if (dmg > 0) {ch.damage(dmg, this);}
-                   }
-					
+				if (ch instanceof MossySkeleton || ch instanceof Skeleton || ch instanceof RedWraith
+						|| ch instanceof BlueWraith || ch instanceof Wraith || ch instanceof DwarfLich
+						|| ch instanceof SpectralRat || ch instanceof RedWraith || ch instanceof DwarfKingTomb
+						|| ch instanceof King || ch instanceof Warlock || ch instanceof Undead) {
+					if (Random.Int(2) == 0) {
+						Buff.affect(ch, Terror.class, Terror.DURATION).object = curUser.id();
+						int dmg = Random.NormalIntRange(75, 300 - Random.Int(ch.dr()));
+						if (dmg > 0) {
+							ch.damage(dmg, this);
+						}
+					} else {
+						Buff.affect(ch, Terror.class, Terror.DURATION).object = curUser.id();
+						int dmg = Random.NormalIntRange(75, 300);
+						if (dmg > 0) {
+							ch.damage(dmg, this);
+						}
+					}
+
 				}
 			}
 		}
-	     	
-	     Dungeon.observe();
+
+		Dungeon.observe();
 	}
 
 	@Override
@@ -186,9 +192,9 @@ public class HolyHandGrenade extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc1")
-				+ (fuse != null ? Messages.get(this,"desc2")
-						: Messages.get(this,"desc3"));
+		return Messages.get(this, "desc1")
+				+ (fuse != null ? Messages.get(this, "desc2")
+				: Messages.get(this, "desc3"));
 	}
 
 	private static final String FUSE = "fuse";
@@ -239,14 +245,14 @@ public class HolyHandGrenade extends Item {
 					Actor.remove(this);
 					return true;
 				}
-				
+
 			}
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}
-	
+
 	public HolyHandGrenade() {
 		this(1);
 	}
@@ -254,5 +260,5 @@ public class HolyHandGrenade extends Item {
 	public HolyHandGrenade(int value) {
 		this.quantity = value;
 	}
-	
+
 }

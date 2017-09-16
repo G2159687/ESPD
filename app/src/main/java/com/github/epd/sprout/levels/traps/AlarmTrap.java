@@ -40,7 +40,7 @@ public class AlarmTrap {
 		}
 
 		if (Dungeon.visible[pos]) {
-			GLog.w(Messages.get(AlarmTrap.class,"alarm"));
+			GLog.w(Messages.get(AlarmTrap.class, "alarm"));
 			CellEmitter.center(pos).start(Speck.factory(Speck.SCREAM), 0.3f, 3);
 		}
 

@@ -45,7 +45,7 @@ public class MonsterBox extends Mob {
 	private int level;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MonsterBoxSprite.class;
 	}
 
@@ -79,8 +79,8 @@ public class MonsterBox extends Mob {
 	public int attackSkill(Char target) {
 		return 9 + level;
 	}
-	
-		
+
+
 	public void adjustStats(int level) {
 		this.level = level;
 
@@ -99,7 +99,7 @@ public class MonsterBox extends Mob {
 	//	}
 	//	return rooted;
 	//}
-	
+
 	@Override
 	public void die(Object cause) {
 
@@ -120,7 +120,7 @@ public class MonsterBox extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static MonsterBox spawnAt(int pos, List<Item> items) {
@@ -170,6 +170,7 @@ public class MonsterBox extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(ScrollOfPsionicBlast.class);
 	}

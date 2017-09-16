@@ -30,88 +30,79 @@ import com.github.epd.sprout.sprites.RatKingSprite;
 
 public class RatKing extends NPC {
 
-    {
-        name = Messages.get(RatKing.class, "name");
-        spriteClass = RatKingSprite.class;
+	{
+		name = Messages.get(RatKing.class, "name");
+		spriteClass = RatKingSprite.class;
 
-        state = SLEEPING;
-    }
+		state = SLEEPING;
+	}
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
 
-    @Override
-    public float speed() {
-        return 2f;
-    }
+	@Override
+	public float speed() {
+		return 2f;
+	}
 
-    @Override
-    protected Char chooseEnemy() {
-        return null;
-    }
+	@Override
+	protected Char chooseEnemy() {
+		return null;
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public boolean reset() {
-        return true;
-    }
+	@Override
+	public boolean reset() {
+		return true;
+	}
 
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean interact() {
 
-        int checkChests = 0;
-        int length = Level.getLength();
-        for (int i = 0; i < length; i++) {
-            Heap chest = Dungeon.level.heaps.get(i);
-            if (chest != null && chest.chestCheck()) {
-                checkChests++;
-            }
-        }
+		int checkChests = 0;
+		int length = Level.getLength();
+		for (int i = 0; i < length; i++) {
+			Heap chest = Dungeon.level.heaps.get(i);
+			if (chest != null && chest.chestCheck()) {
+				checkChests++;
+			}
+		}
 
-        Spork spork = Dungeon.hero.belongings.getItem(Spork.class);
-        //RoyalSpork royalspork = Dungeon.hero.belongings.getItem(RoyalSpork.class);
+		Spork spork = Dungeon.hero.belongings.getItem(Spork.class);
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
-        if (state == SLEEPING) {
-            notice();
-            yell(Messages.get(RatKing.class, "yone"));
-            yell(Messages.get(RatKing.class, "ytwo"));
-            state = WANDERING;
-            //} else if (Statistics.deepestFloor>9 && checkChests >= Dungeon.ratChests && spork==null && royalspork==null){
-        } else if (Statistics.deepestFloor > 10 && checkChests >= Dungeon.ratChests && spork == null) {
-            yell(Messages.get(RatKing.class, "notsteal"));
-            Dungeon.sporkAvail = true;
-        } else if (checkChests < Dungeon.ratChests) {
-            Dungeon.sporkAvail = false;
-            yell(Messages.get(RatKing.class, "steal"));
-        } else if (spork != null) {
-            //yell("You found my spork! Here, trade me for this old one.");
-            yell(Messages.get(RatKing.class, "found"));
-            //if (spork.isEquipped(Dungeon.hero)) {
-            //	spork.doUnequip(Dungeon.hero, false);
-            //}
-            //spork.detach(Dungeon.hero.belongings.backpack);
-            //Dungeon.level.drop(new RoyalSpork().enchantNom(), pos).sprite.drop();
-            //Dungeon.limitedDrops.royalspork.drop();
+		sprite.turnTo(pos, Dungeon.hero.pos);
+		if (state == SLEEPING) {
+			notice();
+			yell(Messages.get(RatKing.class, "yone"));
+			yell(Messages.get(RatKing.class, "ytwo"));
+			state = WANDERING;
+		} else if (Statistics.deepestFloor > 10 && checkChests >= Dungeon.ratChests && spork == null) {
+			yell(Messages.get(RatKing.class, "notsteal"));
+			Dungeon.sporkAvail = true;
+		} else if (checkChests < Dungeon.ratChests) {
+			Dungeon.sporkAvail = false;
+			yell(Messages.get(RatKing.class, "steal"));
+		} else if (spork != null) {
+			yell(Messages.get(RatKing.class, "found"));
 
-        } else {
-            yell(Messages.get(RatKing.class, "yell"));
-        }
-        return true;
-    }
+		} else {
+			yell(Messages.get(RatKing.class, "yell"));
+		}
+		return true;
+	}
 
-    @Override
-    public String description() {
-        return ((RatKingSprite) sprite).festive ? Messages.get(RatKing.class, "descone") : Messages.get(RatKing.class, "desctwo");
-    }
+	@Override
+	public String description() {
+		return ((RatKingSprite) sprite).festive ? Messages.get(RatKing.class, "descone") : Messages.get(RatKing.class, "desctwo");
+	}
 }

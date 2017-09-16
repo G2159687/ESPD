@@ -30,11 +30,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class Firebloom extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Firebloom.class,"desc");
+	private static final String TXT_DESC = Messages.get(Firebloom.class, "desc");
 
 	{
 		image = 0;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
@@ -55,9 +55,9 @@ public class Firebloom extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Firebloom.class,"name");
+			plantName = Messages.get(Firebloom.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_FIREBLOOM;
 
 			plantClass = Firebloom.class;
@@ -66,6 +66,7 @@ public class Firebloom extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 }

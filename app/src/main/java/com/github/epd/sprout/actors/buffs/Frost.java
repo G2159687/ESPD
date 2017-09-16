@@ -40,8 +40,8 @@ public class Frost extends FlavourBuff {
 		if (super.attachTo(target)) {
 
 			target.paralysed++;
-			Buff.detach( target, Burning.class );
-			Buff.detach( target, Chill.class );
+			Buff.detach(target, Burning.class);
+			Buff.detach(target, Chill.class);
 
 			if (target instanceof Hero) {
 
@@ -50,7 +50,7 @@ public class Frost extends FlavourBuff {
 				if (item instanceof Potion) {
 
 					item = item.detach(hero.belongings.backpack);
-					GLog.w(Messages.get(this,"item"), item.toString());
+					GLog.w(Messages.get(this, "item"), item.toString());
 					((Potion) item).shatter(hero.pos);
 
 				} else if (item instanceof MysteryMeat) {
@@ -60,7 +60,7 @@ public class Frost extends FlavourBuff {
 					if (!carpaccio.collect(hero.belongings.backpack)) {
 						Dungeon.level.drop(carpaccio, target.pos).sprite.drop();
 					}
-					GLog.w(Messages.get(this,"item"), item.toString());
+					GLog.w(Messages.get(this, "item"), item.toString());
 
 				}
 			} else if (target instanceof Thief
@@ -82,7 +82,7 @@ public class Frost extends FlavourBuff {
 		super.detach();
 		if (target.paralysed > 0)
 			target.paralysed--;
-		if (Level.water[target.pos]){
+		if (Level.water[target.pos]) {
 			Buff.prolong(target, Chill.class, 6f);
 		}
 	}
@@ -94,7 +94,7 @@ public class Frost extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	public static float duration(Char ch) {

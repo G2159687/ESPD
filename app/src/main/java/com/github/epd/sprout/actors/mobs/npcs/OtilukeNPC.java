@@ -19,6 +19,7 @@ package com.github.epd.sprout.actors.mobs.npcs;
 
 import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
@@ -31,115 +32,121 @@ import com.github.epd.sprout.sprites.OtilukeNPCSprite;
 import com.github.epd.sprout.utils.Utils;
 import com.github.epd.sprout.windows.WndQuest;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 public class OtilukeNPC extends NPC {
 
-    {
-        name = Messages.get(this, "name");
-        spriteClass = OtilukeNPCSprite.class;
-    }
+	{
+		name = Messages.get(this, "name");
+		spriteClass = OtilukeNPCSprite.class;
 
-    protected static final float SPAWN_DELAY = 2f;
+		properties.add(Property.IMMOVABLE);
+	}
 
-    private static final String TXT_DUNGEON = Messages.get(OtilukeNPC.class, "one");
+	protected static final float SPAWN_DELAY = 2f;
 
-    private static final String TXT_DUNGEON2 = Messages.get(OtilukeNPC.class, "two");
+	private static final String TXT_DUNGEON = Messages.get(OtilukeNPC.class, "one");
 
-    private static final String TXT_DUNGEON4 = Messages.get(OtilukeNPC.class, "four");
+	private static final String TXT_DUNGEON2 = Messages.get(OtilukeNPC.class, "two");
 
-
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
-
-    private boolean first = true;
-
-    private static final String FIRST = "first";
-
-    @Override
-    public void storeInBundle(Bundle bundle) {
-        super.storeInBundle(bundle);
-        bundle.put(FIRST, first);
-    }
-
-    @Override
-    public void restoreFromBundle(Bundle bundle) {
-        super.restoreFromBundle(bundle);
-        first = bundle.getBoolean(FIRST);
-    }
-
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
-
-    @Override
-    public String defenseVerb() {
-        return Messages.get(OtilukeNPC.class, "def");
-    }
-
-    @Override
-    protected Char chooseEnemy() {
-        return null;
-    }
-
-    @Override
-    public void damage(int dmg, Object src) {
-    }
-
-    @Override
-    public void add(Buff buff) {
-    }
-
-    public static OtilukeNPC spawnAt(int pos) {
-        if (Level.passable[pos] && Actor.findChar(pos) == null) {
-
-            OtilukeNPC w = new OtilukeNPC();
-            w.pos = pos;
-            GameScene.add(w, SPAWN_DELAY);
-
-            return w;
-
-        } else {
-            return null;
-        }
-    }
+	private static final String TXT_DUNGEON4 = Messages.get(OtilukeNPC.class, "four");
 
 
-    @Override
-    public boolean interact() {
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
+	private boolean first = true;
 
-        TownReturnBeacon beacon = Dungeon.hero.belongings.getItem(TownReturnBeacon.class);
+	private static final String FIRST = "first";
 
-        if (Badges.checkOtilukeRescued()) {
-                tell(TXT_DUNGEON4);
-                Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
-        } else if (first && beacon == null) {
-            Badges.validateOtilukeRescued();
-            first = false;
-            tell(TXT_DUNGEON2);
-            Dungeon.level.drop(new TownReturnBeacon(), Dungeon.hero.pos).sprite.drop();
-            Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
-        } else {
-            Badges.validateOtilukeRescued();
-            tell(TXT_DUNGEON);
-            Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
-        }
-        return false;
-    }
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(FIRST, first);
+	}
 
-    private void tell(String format, Object... args) {
-        GameScene.show(new WndQuest(this, Utils.format(format, args)));
-    }
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		first = bundle.getBoolean(FIRST);
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(OtilukeNPC.class, "desc");
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
+
+	@Override
+	public String defenseVerb() {
+		return Messages.get(OtilukeNPC.class, "def");
+	}
+
+	@Override
+	protected Char chooseEnemy() {
+		return null;
+	}
+
+	@Override
+	public void damage(int dmg, Object src) {
+	}
+
+	@Override
+	public void add(Buff buff) {
+	}
+
+	public static OtilukeNPC spawnAt(int pos) {
+		if (Level.passable[pos] && Actor.findChar(pos) == null) {
+
+			OtilukeNPC w = new OtilukeNPC();
+			w.pos = pos;
+			GameScene.add(w, SPAWN_DELAY);
+
+			return w;
+
+		} else {
+			return null;
+		}
+	}
+
+
+	@Override
+	public boolean interact() {
+
+		sprite.turnTo(pos, Dungeon.hero.pos);
+
+		TownReturnBeacon beacon = Dungeon.hero.belongings.getItem(TownReturnBeacon.class);
+
+		if (Badges.checkOtilukeRescued()) {
+			tell(TXT_DUNGEON4);
+			if (!Statistics.orbObtained)
+				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
+		} else if (first && beacon == null) {
+			Badges.validateOtilukeRescued();
+			first = false;
+			tell(TXT_DUNGEON2);
+			Dungeon.level.drop(new TownReturnBeacon(), Dungeon.hero.pos).sprite.drop();
+			if (!Statistics.orbObtained)
+				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
+		} else {
+			Badges.validateOtilukeRescued();
+			tell(TXT_DUNGEON);
+			if (!Statistics.orbObtained)
+				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
+		}
+
+		Statistics.orbObtained = true;
+		return false;
+	}
+
+	private void tell(String format, Object... args) {
+		GameScene.show(new WndQuest(this, Utils.format(format, args)));
+	}
+
+	@Override
+	public String description() {
+		return Messages.get(OtilukeNPC.class, "desc");
+	}
 
 }

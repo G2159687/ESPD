@@ -29,14 +29,14 @@ import java.util.HashSet;
 public class GreyOni extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = GreyOniSprite.class;
 		state = SLEEPING;
 
 		HP = HT = 500;
 		defenseSkill = 35;
 
-		EXP = 22;		
+		EXP = 22;
 	}
 
 	@Override
@@ -61,15 +61,16 @@ public class GreyOni extends Mob {
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 	}
 
@@ -79,6 +80,7 @@ public class GreyOni extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Amok.class);
 		IMMUNITIES.add(Terror.class);

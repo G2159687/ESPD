@@ -43,7 +43,7 @@ public class WndChallenges extends Window {
 
 		this.editable = editable;
 
-		RenderedText title = PixelScene.renderText( Messages.get(this, "title"), 9 );
+		RenderedText title = PixelScene.renderText(Messages.get(this, "title"), 9);
 		title.hardlight(TITLE_COLOR);
 		title.x = PixelScene.align(camera, (WIDTH - title.width()) / 2);
 		title.y = PixelScene.align(camera, (TTL_HEIGHT - title.height()) / 2);

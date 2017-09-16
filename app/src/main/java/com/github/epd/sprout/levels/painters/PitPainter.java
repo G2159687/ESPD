@@ -59,15 +59,15 @@ public class PitPainter extends Painter {
 		while (level.map[remains] == Terrain.EMPTY_WELL) {
 			remains = room.random();
 		}
-		
+
 		int sign = room.random();
 		while (level.map[sign] == Terrain.EMPTY_WELL || sign == remains) {
 			sign = room.random();
 		}
 
 		level.map[sign] = Terrain.SIGN;
-		level.pitSign=sign;
-		
+		level.pitSign = sign;
+
 		level.drop(new ScrollOfTeleportation(), remains).type = Type.SKELETON;
 		int loot = Random.Int(3);
 		if (loot == 0) {

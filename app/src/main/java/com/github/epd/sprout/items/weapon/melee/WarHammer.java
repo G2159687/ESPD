@@ -23,7 +23,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class WarHammer extends MeleeWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAR_HAMMER;
 	}
 
@@ -33,6 +33,6 @@ public class WarHammer extends MeleeWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

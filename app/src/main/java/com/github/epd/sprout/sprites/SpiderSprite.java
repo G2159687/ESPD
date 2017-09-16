@@ -27,7 +27,7 @@ import com.watabou.noosa.TextureFilm;
 
 public class SpiderSprite extends MobSprite {
 
-	private HealthBar hpBar;
+	public HealthBar hpBar;
 
 	public SpiderSprite() {
 		super();
@@ -54,14 +54,14 @@ public class SpiderSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof Spider){
+		if (ch instanceof Spider) {
 			final Char finalCH = ch;
-			hpBar = new HealthBar(){
+			hpBar = new HealthBar() {
 				@Override
 				public synchronized void update() {
 					super.update();
-					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
-					hpBar.level( finalCH );
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y - 3, finalCH.sprite.width, hpBar.height());
+					hpBar.level(finalCH);
 					visible = finalCH.sprite.visible;
 				}
 			};
@@ -72,5 +72,14 @@ public class SpiderSprite extends MobSprite {
 	@Override
 	public int blood() {
 		return 0xFFBFE5B8;
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
 	}
 }

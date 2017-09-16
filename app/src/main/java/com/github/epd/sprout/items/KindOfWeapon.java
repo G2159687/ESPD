@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class KindOfWeapon extends EquipableItem {
 
-	private static final String TXT_EQUIP_CURSED = Messages.get(KindOfWeapon.class,"cursed");
+	private static final String TXT_EQUIP_CURSED = Messages.get(KindOfWeapon.class, "cursed");
 
 	protected static final float TIME_TO_EQUIP = 1f;
 
@@ -104,10 +104,10 @@ public class KindOfWeapon extends EquipableItem {
 		return 1f;
 	}
 
-	public int reachFactor( Hero hero ){
+	public int reachFactor(Hero hero) {
 		return 1;
 	}
-	
+
 	public void proc(Char attacker, Char defender, int damage) {
 	}
 

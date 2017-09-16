@@ -29,13 +29,13 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class AnkhChain extends Bag {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.CHAIN;
 
 		size = 24;
 	}
 
-	
+
 	@Override
 	public boolean grab(Item item) {
 		return item instanceof Ankh || item instanceof Ring || item instanceof RingOfDisintegration
@@ -44,7 +44,7 @@ public class AnkhChain extends Bag {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }
 

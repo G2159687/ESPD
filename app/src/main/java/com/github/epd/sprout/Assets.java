@@ -35,7 +35,7 @@ public class Assets {
 	public static final String XP_BAR = "exp_bar.png";
 	public static final String TOOLBAR = "toolbar.png";
 	public static final String SHADOW = "shadow.png";
-	public static final String BOSSHP   = "boss_hp.png";
+	public static final String BOSSHP = "boss_hp.png";
 
 	public static final String WARRIOR = "warrior.png";
 	public static final String MAGE = "mage.png";
@@ -141,7 +141,7 @@ public class Assets {
 
 	public static final String ITEMS = "items.png";
 	public static final String PLANTS = "plants.png";
-	public static final String CONS_ICONS   = "consumable_icons.png";
+	public static final String CONS_ICONS = "consumable_icons.png";
 
 
 	public static final String TILES_SEWERS = "tiles0.png";
@@ -155,7 +155,7 @@ public class Assets {
 	public static final String TILES_VAULT = "tiles_vault.png";
 	public static final String TILES_FOREST = "tiles_forest.png";
 	public static final String TILES_TOWN = "tiles_town.png";
-	
+
 	public static final String WATER_SEWERS = "water0.png";
 	public static final String WATER_PRISON = "water1.png";
 	public static final String WATER_CAVES = "water2.png";

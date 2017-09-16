@@ -34,13 +34,13 @@ import java.util.HashMap;
 
 public class HuntressArmor extends ClassArmor {
 
-	private static final String TXT_NO_ENEMIES = Messages.get(HuntressArmor.class,"no_enemies");
-	private static final String TXT_NOT_HUNTRESS = Messages.get(HuntressArmor.class,"not_huntress");
+	private static final String TXT_NO_ENEMIES = Messages.get(HuntressArmor.class, "no_enemies");
+	private static final String TXT_NOT_HUNTRESS = Messages.get(HuntressArmor.class, "not_huntress");
 
-	private static final String AC_SPECIAL = Messages.get(HuntressArmor.class,"ac_special");
+	private static final String AC_SPECIAL = Messages.get(HuntressArmor.class, "ac_special");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_HUNTRESS;
 	}
 
@@ -101,6 +101,6 @@ public class HuntressArmor extends ClassArmor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

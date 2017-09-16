@@ -5,15 +5,15 @@ import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 
-public class BugSolve extends Item{
+public class BugSolve extends Item {
 
-    {
-        name = Messages.get(this,"name");
-        image = ItemSpriteSheet.REMAINS;
-    }
+	{
+		name = Messages.get(this, "name");
+		image = ItemSpriteSheet.REMAINS;
+	}
 
-    @Override
-    public String info() {
-        return Messages.get(this,"desc");
-    }
+	@Override
+	public String info() {
+		return Messages.get(this, "desc");
+	}
 }

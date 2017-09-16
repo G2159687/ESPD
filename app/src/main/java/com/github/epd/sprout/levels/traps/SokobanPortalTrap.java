@@ -24,18 +24,18 @@ import com.github.epd.sprout.messages.Messages;
 
 public class SokobanPortalTrap {
 
-	private static final String name = Messages.get(SokobanPortalTrap.class,"name");
+	private static final String name = Messages.get(SokobanPortalTrap.class, "name");
 	public static int portPos = 0;
-	
+
 	// 00x66CCEE
 
 	public static void trigger(int pos, Char ch, int dest) {
 
-		if (ch instanceof Hero ){
+		if (ch instanceof Hero) {
 			//teleport ch to dest from pos teleport scroll
-			ScrollOfTeleportation.teleportHeroLocation((Hero) ch,dest);
+			ScrollOfTeleportation.teleportHeroLocation((Hero) ch, dest);
 			//GLog.i("teleport to,  %s",dest);
-				
+
 		}
 	}
 }

@@ -39,7 +39,6 @@ import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.TouchArea;
 import com.watabou.noosa.Visual;
-import com.watabou.noosa.audio.Music;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
@@ -165,7 +164,7 @@ public class SurfaceScene extends PixelScene {
 			frame.hardlight(0xDDEEFF);
 		}
 
-		NewRedButton gameOver = new NewRedButton(Messages.get(SurfaceScene.class,"exit")) {
+		NewRedButton gameOver = new NewRedButton(Messages.get(SurfaceScene.class, "exit")) {
 			@Override
 			protected void onClick() {
 				Game.switchScene(TitleScene.class);
@@ -192,8 +191,8 @@ public class SurfaceScene extends PixelScene {
 
 	private static class Sky extends Visual {
 
-		private static final int[] day = { 0xFF4488FF, 0xFFCCEEFF };
-		private static final int[] night = { 0xFF001155, 0xFF335980 };
+		private static final int[] day = {0xFF4488FF, 0xFFCCEEFF};
+		private static final int[] night = {0xFF001155, 0xFF335980};
 
 		private SmartTexture texture;
 		private FloatBuffer verticesBuffer;
@@ -201,7 +200,7 @@ public class SurfaceScene extends PixelScene {
 		public Sky(boolean dayTime) {
 			super(0, 0, 1, 1);
 
-			texture = TextureCache.createGradient( dayTime ? day : night );
+			texture = TextureCache.createGradient(dayTime ? day : night);
 
 			float[] vertices = new float[16];
 			verticesBuffer = Quad.create();
@@ -263,15 +262,15 @@ public class SurfaceScene extends PixelScene {
 			} while (index == lastIndex);
 
 			switch (index) {
-			case 0:
-				frame(88, 0, 49, 20);
-				break;
-			case 1:
-				frame(88, 20, 49, 22);
-				break;
-			case 2:
-				frame(88, 42, 50, 18);
-				break;
+				case 0:
+					frame(88, 0, 49, 20);
+					break;
+				case 1:
+					frame(88, 20, 49, 22);
+					break;
+				case 2:
+					frame(88, 42, 50, 18);
+					break;
 			}
 
 			lastIndex = index;

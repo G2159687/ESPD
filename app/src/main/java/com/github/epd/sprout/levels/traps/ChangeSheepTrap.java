@@ -29,40 +29,36 @@ import com.github.epd.sprout.scenes.GameScene;
 
 public class ChangeSheepTrap {
 
-	private static final String name = Messages.get(ChangeSheepTrap.class,"name");
-	
+	private static final String name = Messages.get(ChangeSheepTrap.class, "name");
+
 	private static final float SPAWN_DELAY = 0.2f;
 
 	// 00x66CCEE
 
 	public static void trigger(int pos, Char ch) {
 
-		if (ch instanceof SheepSokoban)	{
+		if (ch instanceof SheepSokoban) {
 			ch.destroy();
 			ch.sprite.killAndErase();
-			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6); 
-			SheepSokobanCorner s = new SheepSokobanCorner();  
-	    	s.pos = pos;
+			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
+			SheepSokobanCorner s = new SheepSokobanCorner();
+			s.pos = pos;
 			GameScene.add(s, SPAWN_DELAY);
-			}
-		
-		else if (ch instanceof SheepSokobanCorner)	{
+		} else if (ch instanceof SheepSokobanCorner) {
 			ch.destroy();
 			ch.sprite.killAndErase();
-			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6); 
-			SheepSokobanStop s = new SheepSokobanStop();  
-	    	s.pos = pos;
+			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
+			SheepSokobanStop s = new SheepSokobanStop();
+			s.pos = pos;
 			GameScene.add(s, SPAWN_DELAY);
-			
+
+		} else if (ch instanceof SheepSokobanSwitch) {
+			ch.destroy();
+			ch.sprite.killAndErase();
+			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
+			SheepSokoban s = new SheepSokoban();
+			s.pos = pos;
+			GameScene.add(s, SPAWN_DELAY);
 		}
-		
-        else if (ch instanceof SheepSokobanSwitch)	{
-        	ch.destroy();
-			ch.sprite.killAndErase();
-			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6); 
-			SheepSokoban s = new SheepSokoban();  
-	    	s.pos = pos;
-			GameScene.add(s, SPAWN_DELAY);
-		}      		
 	}
 }

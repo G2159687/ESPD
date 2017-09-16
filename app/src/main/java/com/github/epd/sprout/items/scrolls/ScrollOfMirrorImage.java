@@ -40,17 +40,17 @@ public class ScrollOfMirrorImage extends Scroll {
 	private static final int NIMAGES = 3;
 
 	{
-		initials=4;
-		name = Messages.get(this,"name");
+		initials = 4;
+		name = Messages.get(this, "name");
 		consumedValue = 5;
 	}
-	
-	private static final String TXT_PREVENTING = Messages.get(ScrollOfMirrorImage.class,"prevent");
+
+	private static final String TXT_PREVENTING = Messages.get(ScrollOfMirrorImage.class, "prevent");
 
 	@Override
 	protected void doRead() {
-		
-		if (Dungeon.depth>50){
+
+		if (Dungeon.depth > 50) {
 			GLog.w(TXT_PREVENTING);
 			Sample.INSTANCE.play(Assets.SND_READ);
 			Invisibility.dispel();
@@ -76,7 +76,7 @@ public class ScrollOfMirrorImage extends Scroll {
 			int index = Random.index(respawnPoints);
 
 			MirrorImage mob = new MirrorImage();
-			mob.duplicate( hero );
+			mob.duplicate(hero);
 			GameScene.add(mob);
 			WandOfBlink.appear(mob, respawnPoints.get(index));
 
@@ -96,6 +96,6 @@ public class ScrollOfMirrorImage extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

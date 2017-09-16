@@ -37,11 +37,11 @@ import java.util.HashSet;
 public class Elemental extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ElementalSprite.class;
 
-		HP = HT = 80+(adj(0)*Random.NormalIntRange(4, 7));
-		defenseSkill = 21+adj(0);
+		HP = HT = 80 + (adj(0) * Random.NormalIntRange(4, 7));
+		defenseSkill = 21 + adj(0);
 
 		EXP = 10;
 		maxLvl = 20;
@@ -50,19 +50,19 @@ public class Elemental extends Mob {
 
 		loot = new PotionOfLiquidFlame();
 		lootChance = 0.1f;
-		
+
 		lootOther = new ChargrilledMeat();
 		lootChanceOther = 0.5f; // by default, see die()
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(16, 20+adj(1));
+		return Random.NormalIntRange(16, 20 + adj(1));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 25+adj(1);
+		return 25 + adj(1);
 	}
 
 	@Override
@@ -98,10 +98,11 @@ public class Elemental extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Burning.class);
 		IMMUNITIES.add(Fire.class);

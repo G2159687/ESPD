@@ -39,7 +39,7 @@ public class ZotPhaseSprite extends MobSprite {
 
 		attack = new Animation(8, false);
 		attack.frames(frames, 0, 2, 2);
-		
+
 		zap = new Animation(8, false);
 		zap.frames(frames, 2, 3, 4);
 
@@ -52,7 +52,7 @@ public class ZotPhaseSprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (ZotPhase)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (ZotPhase) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);

@@ -27,13 +27,13 @@ import com.watabou.noosa.TextureFilm;
 
 public class SteelBeeSprite extends MobSprite {
 
-	private HealthBar hpBar;
+	public HealthBar hpBar;
 
 	public SteelBeeSprite() {
 		super();
 
 		texture(Assets.BEE);
-		
+
 		TextureFilm frames = new TextureFilm(texture, 16, 16);
 
 		idle = new Animation(12, true);
@@ -48,21 +48,21 @@ public class SteelBeeSprite extends MobSprite {
 		die = new Animation(20, false);
 		die.frames(frames, 23, 24, 25, 26);
 
-	
+
 		play(idle);
 	}
 
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof SteelBee){
+		if (ch instanceof SteelBee) {
 			final Char finalCH = ch;
-			hpBar = new HealthBar(){
+			hpBar = new HealthBar() {
 				@Override
 				public synchronized void update() {
 					super.update();
-					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
-					hpBar.level( finalCH );
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y - 3, finalCH.sprite.width, hpBar.height());
+					hpBar.level(finalCH);
 					visible = finalCH.sprite.visible;
 				}
 			};
@@ -73,5 +73,14 @@ public class SteelBeeSprite extends MobSprite {
 	@Override
 	public int blood() {
 		return 0xffd500;
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
 	}
 }

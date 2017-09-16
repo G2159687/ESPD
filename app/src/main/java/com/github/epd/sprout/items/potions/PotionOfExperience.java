@@ -25,7 +25,7 @@ public class PotionOfExperience extends Potion {
 	{
 		initials = 0;
 
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 
 		bones = true;
 	}
@@ -38,7 +38,7 @@ public class PotionOfExperience extends Potion {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

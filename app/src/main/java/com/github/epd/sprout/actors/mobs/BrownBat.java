@@ -32,7 +32,7 @@ import com.watabou.utils.Random;
 public class BrownBat extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BrownBatSprite.class;
 
 		HP = HT = 6;
@@ -43,8 +43,7 @@ public class BrownBat extends Mob {
 
 		flying = true;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))
-		{
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
 			loot = Generator.Category.BERRY;
 			lootChance = 0.75f;
 
@@ -58,7 +57,7 @@ public class BrownBat extends Mob {
 			lootOther = Generator.Category.BERRY;
 			lootChanceOther = 0.05f; // by default, see die()
 		}
-		
+
 	}
 
 	@Override
@@ -68,20 +67,21 @@ public class BrownBat extends Mob {
 
 	@Override
 	public int attackSkill(Char target) {
-		return 5+Dungeon.depth;
+		return 5 + Dungeon.depth;
 	}
 
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(10) == 0) {
 			Buff.prolong(enemy, Blindness.class, Random.Int(3, 10));
-			GLog.n(Messages.get(BrownBat.class,"blind"));
+			GLog.n(Messages.get(BrownBat.class, "blind"));
 			Dungeon.observe();
 			state = FLEEING;
 		}
-		
+
 		return damage;
 	}
+
 	@Override
 	public int dr() {
 		return 1;
@@ -89,28 +89,30 @@ public class BrownBat extends Mob {
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
-	
+
 	@Override
 	public void die(Object cause) {
-		
+
 		if (Random.Int(5) == 0) {
-			  for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-				  if (Random.Int(2) == 0 && enemy!=null){mob.beckon(enemy.pos);}
-			      }
-			  GLog.n(Messages.get(BrownBat.class,"die"));
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+				if (Random.Int(2) == 0 && enemy != null) {
+					mob.beckon(enemy.pos);
+				}
 			}
+			GLog.n(Messages.get(BrownBat.class, "die"));
+		}
 
 		super.die(cause);
 
 	}
 
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
+
 }

@@ -21,11 +21,13 @@ import android.content.Context;
 
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.utils.Utils;
+import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.SystemTime;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -122,6 +124,8 @@ public enum Rankings {
 			OutputStream output = Game.instance.openFileOutput(RANKINGS_FILE,
 					Context.MODE_PRIVATE);
 			Bundle.write(bundle, output);
+			File file = new File(TextureCache.context.getExternalFilesDir(null), RANKINGS_FILE);
+			Bundle.writeext(bundle, file);
 			output.close();
 		} catch (IOException e) {
 		}

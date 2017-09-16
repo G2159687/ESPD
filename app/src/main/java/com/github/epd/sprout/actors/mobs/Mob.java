@@ -31,7 +31,6 @@ import com.github.epd.sprout.actors.buffs.Sleep;
 import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
-import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.effects.Surprise;
 import com.github.epd.sprout.effects.Wound;
 import com.github.epd.sprout.items.DewVial;
@@ -67,11 +66,11 @@ public abstract class Mob extends Char {
 		actPriority = 2; //hero gets priority over mobs.
 	}
 
-	private static final String TXT_DIED = Messages.get(Mob.class,"died");
+	private static final String TXT_DIED = Messages.get(Mob.class, "died");
 
 	protected static final String TXT_NOTICE1 = "?!";
-	protected static final String TXT_RAGE = Messages.get(Mob.class,"rage");
-	protected static final String TXT_EXP = Messages.get(Mob.class,"exp");
+	protected static final String TXT_RAGE = Messages.get(Mob.class, "rage");
+	protected static final String TXT_EXP = Messages.get(Mob.class, "exp");
 
 	public AiState SLEEPING = new Sleeping();
 	public AiState HUNTING = new Hunting();
@@ -104,15 +103,15 @@ public abstract class Mob extends Char {
 	private static final String SEEN = "seen";
 	private static final String TARGET = "target";
 	private static final String ORIGINAL = "originalgen";
-	
-	public int getExp(){
+
+	public int getExp() {
 		return EXP;
 	}
 
-	public boolean isPassive(){
-		return state==PASSIVE;
+	public boolean isPassive() {
+		return state == PASSIVE;
 	}
-	
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 
@@ -155,7 +154,7 @@ public abstract class Mob extends Char {
 		enemySeen = bundle.getBoolean(SEEN);
 
 		target = bundle.getInt(TARGET);
-		
+
 		originalgen = bundle.getBoolean(ORIGINAL);
 	}
 
@@ -185,7 +184,7 @@ public abstract class Mob extends Char {
 		}
 
 		enemy = chooseEnemy();
-		
+
 		/*
 		boolean invisibleCheck=false;
 
@@ -195,7 +194,7 @@ public abstract class Mob extends Char {
 			invisibleCheck=true;
 		}
 		*/
-		boolean enemyInFOV = enemy != null && enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible<=0 ;
+		boolean enemyInFOV = enemy != null && enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0;
 
 		return state.act(enemyInFOV, justAlerted);
 	}
@@ -257,10 +256,10 @@ public abstract class Mob extends Char {
 
 				//go after the closest enemy, preferring the hero if two are equidistant
 				Char closest = null;
-				for (Char curr : enemies){
+				for (Char curr : enemies) {
 					if (closest == null
 							|| Level.distance(pos, curr.pos) < Level.distance(pos, closest.pos)
-							|| Level.distance(pos, curr.pos) == Level.distance(pos, closest.pos) && curr == Dungeon.hero){
+							|| Level.distance(pos, curr.pos) == Level.distance(pos, closest.pos) && curr == Dungeon.hero) {
 						closest = curr;
 					}
 				}
@@ -311,10 +310,10 @@ public abstract class Mob extends Char {
 	}
 
 	protected boolean canAttack(Char enemy) {
-		return Level.adjacent( pos, enemy.pos );
+		return Level.adjacent(pos, enemy.pos);
 	}
 
-	protected boolean getCloser( int target ) {
+	protected boolean getCloser(int target) {
 
 		if (rooted || target == pos) {
 			return false;
@@ -322,11 +321,11 @@ public abstract class Mob extends Char {
 
 		int step = -1;
 
-		if (Level.adjacent( pos, target )) {
+		if (Level.adjacent(pos, target)) {
 
 			path = null;
 
-			if (Actor.findChar( target ) == null && Level.passable[target]) {
+			if (Actor.findChar(target) == null && Level.passable[target]) {
 				step = target;
 			}
 
@@ -335,7 +334,7 @@ public abstract class Mob extends Char {
 			boolean newPath = false;
 			if (path == null || path.isEmpty()
 					|| !Level.adjacent(pos, path.getFirst())
-					|| path.size() > 2*Level.distance(pos, target))
+					|| path.size() > 2 * Level.distance(pos, target))
 				newPath = true;
 			else if (path.getLast() != target) {
 				//if the new target is adjacent to the end of the path, adjust for that
@@ -379,10 +378,10 @@ public abstract class Mob extends Char {
 
 			if (!newPath) {
 				//looks ahead for path validity, up to length-1 or 4, but always at least 1.
-				int lookAhead = (int) GameMath.gate(1, path.size()-1, 4);
+				int lookAhead = (int) GameMath.gate(1, path.size() - 1, 4);
 				for (int i = 0; i < lookAhead; i++) {
 					int cell = path.get(i);
-					if (!Level.passable[cell] || ( Dungeon.visible[cell] && Actor.findChar(cell) != null)) {
+					if (!Level.passable[cell] || (Dungeon.visible[cell] && Actor.findChar(cell) != null)) {
 						newPath = true;
 						break;
 					}
@@ -396,14 +395,14 @@ public abstract class Mob extends Char {
 			}
 
 			if (path == null ||
-					(state == HUNTING && path.size() > Math.max(9, 2*Level.distance(pos, target)))) {
+					(state == HUNTING && path.size() > Math.max(9, 2 * Level.distance(pos, target)))) {
 				return false;
 			}
 
 			step = path.removeFirst();
 		}
 		if (step != -1) {
-			move( step );
+			move(step);
 			return true;
 		} else {
 			return false;
@@ -481,7 +480,7 @@ public abstract class Mob extends Char {
 	@Override
 	public int defenseProc(Char enemy, int damage) {
 		if (!enemySeen && enemy == Dungeon.hero) {
-			if (((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
+			if (((Hero) enemy).subClass == HeroSubClass.ASSASSIN) {
 				damage *= 1.34f;
 				Wound.hit(this);
 			} else {
@@ -495,34 +494,34 @@ public abstract class Mob extends Char {
 			aggro(enemy);
 			target = enemy.pos;
 		}
-			return damage;
+		return damage;
 	}
 
 	public void aggro(Char ch) {
 		enemy = ch;
-		if (state != PASSIVE){
+		if (state != PASSIVE) {
 			state = HUNTING;
 		}
 	}
-	
-	public int adj(int type){
-		
+
+	public int adj(int type) {
+
 		int adjustment = 1;
-				
-			switch (type){
-			  case 0:
-				  adjustment = Dungeon.depth;
-			  case 1:
-				  adjustment = Dungeon.depth /2;
-			  case 2:
-				  adjustment = Dungeon.depth /4;
-			  case 3:
-				  adjustment = Dungeon.depth *2;
-		      default:
-		    	  adjustment = 1;		
-			  
-		    }
-		
+
+		switch (type) {
+			case 0:
+				adjustment = Dungeon.depth;
+			case 1:
+				adjustment = Dungeon.depth / 2;
+			case 2:
+				adjustment = Dungeon.depth / 4;
+			case 3:
+				adjustment = Dungeon.depth * 2;
+			default:
+				adjustment = 1;
+
+		}
+
 		return adjustment;
 	}
 
@@ -558,18 +557,20 @@ public abstract class Mob extends Char {
 				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, TXT_EXP, EXP);
 				Dungeon.hero.earnExp(EXP);
 
-				if (Dungeon.hero.checkpet() != null){
+				if (Dungeon.hero.checkpet() != null) {
 					Dungeon.hero.checkpet().sprite.showStatus(CharSprite.POSITIVE, TXT_EXP, EXP);
 					Dungeon.hero.checkpet().earnExp(EXP);
 				}
 			}
 		}
 	}
-	
-	public boolean checkOriginalGenMobs (){
+
+	public boolean checkOriginalGenMobs() {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (mob.originalgen){return true;}
-		 }	
+			if (mob.originalgen) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -616,31 +617,30 @@ public abstract class Mob extends Char {
 		lootChanceOther *= Math.pow(1.1, bonus);
 
 
+		if (Random.Float() < lootChance && Dungeon.hero.lvl <= maxLvl + 8000000) {
+			Item loot = createLoot();
 
-			if (Random.Float() < lootChance && Dungeon.hero.lvl <= maxLvl + 8000000) {
-				Item loot = createLoot();
-
-				if (loot != null)
-					if (loot instanceof Dewdrop || loot instanceof YellowDewdrop || loot instanceof RedDewdrop || loot instanceof  VioletDewdrop) {
-						Dungeon.level.drop(loot, pos).sprite.drop();
-					}
+			if (loot != null)
+				if (loot instanceof Dewdrop || loot instanceof YellowDewdrop || loot instanceof RedDewdrop || loot instanceof VioletDewdrop) {
+					Dungeon.level.drop(loot, pos).sprite.drop();
+				}
 
 
-			} else if (Random.Float() < lootChanceOther
-					&& Dungeon.hero.lvl <= maxLvl + 8000000) {
-				Item lootOther = createLootOther();
-				if (lootOther != null)
-					if (lootOther instanceof Dewdrop || lootOther instanceof YellowDewdrop || lootOther instanceof RedDewdrop || lootOther instanceof  VioletDewdrop) {
-						Dungeon.level.drop(lootOther, pos).sprite.drop();
-					}
-			} else if (Random.Float() < lootChanceThird
-					&& Dungeon.hero.lvl <= maxLvl + 8000000) {
-				Item lootThird = createLootThird();
-				if (lootThird != null)
-					if (lootThird instanceof Dewdrop || lootThird instanceof YellowDewdrop || lootThird instanceof RedDewdrop || lootThird instanceof  VioletDewdrop) {
-						Dungeon.level.drop(lootThird, pos).sprite.drop();
-					}
-			}
+		} else if (Random.Float() < lootChanceOther
+				&& Dungeon.hero.lvl <= maxLvl + 8000000) {
+			Item lootOther = createLootOther();
+			if (lootOther != null)
+				if (lootOther instanceof Dewdrop || lootOther instanceof YellowDewdrop || lootOther instanceof RedDewdrop || lootOther instanceof VioletDewdrop) {
+					Dungeon.level.drop(lootOther, pos).sprite.drop();
+				}
+		} else if (Random.Float() < lootChanceThird
+				&& Dungeon.hero.lvl <= maxLvl + 8000000) {
+			Item lootThird = createLootThird();
+			if (lootThird != null)
+				if (lootThird instanceof Dewdrop || lootThird instanceof YellowDewdrop || lootThird instanceof RedDewdrop || lootThird instanceof VioletDewdrop) {
+					Dungeon.level.drop(lootThird, pos).sprite.drop();
+				}
+		}
 
 		QuickSlotButton.refresh();
 
@@ -668,23 +668,29 @@ public abstract class Mob extends Char {
 
 			item = Generator.random((Class<? extends Item>) loot);
 
-		} else {item = (Item) loot;}
+		} else {
+			item = (Item) loot;
+		}
 
 		if (ShatteredPixelDungeon.autocollect()) {
 			if (item instanceof Gold) {
 				Dungeon.gold += item.quantity;
 				MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
-				if (thievery != null) thievery.collect(item.quantity);}
-			else {
-				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop))
-				{ if (item.doPickUp(Dungeon.hero)){GLog.i("\n" + Messages.get(Hero.class,"have", item.name()));}
-				else {Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();}
+				if (thievery != null) thievery.collect(item.quantity);
+			} else {
+				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop)) {
+					if (item.doPickUp(Dungeon.hero)) {
+						GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
+					} else {
+						Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
+					}
 				}
 
 			}
 
+		} else {
+			Dungeon.level.drop(item, pos).sprite.drop();
 		}
-		else { Dungeon.level.drop(item, pos).sprite.drop(); }
 
 
 		return item;
@@ -715,22 +721,26 @@ public abstract class Mob extends Char {
 
 				MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
 				if (thievery != null)
-					thievery.collect(item.quantity);}
-
-			else {
+					thievery.collect(item.quantity);
+			} else {
 				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop))
 
-				{if (item.doPickUp(Dungeon.hero)) {GLog.i("\n" + Messages.get(Hero.class,"have", item.name()));}
-				else {Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();}}}
+				{
+					if (item.doPickUp(Dungeon.hero)) {
+						GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
+					} else {
+						Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
+					}
+				}
 			}
-			else Dungeon.level.drop(item, pos).sprite.drop();
+		} else Dungeon.level.drop(item, pos).sprite.drop();
 
 		return item;
 	}
 
 	DewVial vial = Dungeon.hero.belongings.getItem(DewVial.class);
 	Level level = Dungeon.level;
-	
+
 	@SuppressWarnings("unchecked")
 	protected Item createLootThird() {
 		Item item;
@@ -752,98 +762,94 @@ public abstract class Mob extends Char {
 				Dungeon.gold += item.quantity;
 				MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
 				if (thievery != null)
-					thievery.collect(item.quantity);}
-			else {
+					thievery.collect(item.quantity);
+			} else {
 				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop))
 
-				{if (item.doPickUp(Dungeon.hero))	{GLog.i("\n" + Messages.get(Hero.class,"have", item.name()));}
-				else Dungeon.level.drop(item, pos).sprite.drop();}}
-		}
-		else Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
+				{
+					if (item.doPickUp(Dungeon.hero)) {
+						GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
+					} else Dungeon.level.drop(item, pos).sprite.drop();
+				}
+			}
+		} else Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
 		return item;
 	}
 
 	public void explodeDew(int cell) {
-		
-		if (Dungeon.dewDraw){
-		  Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
-		  for (int n : PathFinder.NEIGHBOURS9) {
-			 int c = cell + n;
-			 if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
-				if (Random.Int(10)==1){
-                    if (ShatteredPixelDungeon.autocollect() && vial != null) {
-                        if (!vial.isFull()) {
-                            vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
-							GLog.i(Messages.get(HighGrass.class, "red"));
-							if (vial.isFull()) {
-								vial.volume = DewVial.MAX_VOLUME();
-								Messages.get(DewVial.class,"full");
-							}
-                        }
-                        else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-                    }
-                    else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-				}
-				else if (Random.Int(3)==1){
-                    if (ShatteredPixelDungeon.autocollect() && vial != null) {
-                        if (!vial.isFull()) {
-                            vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
-							GLog.i(Messages.get(HighGrass.class, "yellow"));
-							if (vial.isFull()) {
-								vial.volume = DewVial.MAX_VOLUME();
-								Messages.get(DewVial.class,"full");
-							}                        }
-                        else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
-                    }
-                    else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
-				}
-			}
-		  }
-		  QuickSlotButton.refresh();
-		}
-	}
-	
-public void explodeDewHigh(int cell) {
-		
-		if (Dungeon.dewDraw){
-            Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+		if (Dungeon.dewDraw) {
+			Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
-		    for (int n : PathFinder.NEIGHBOURS9) {
-			    int c = cell + n;
-			    if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
-				    if (Random.Int(8)==1){
-                        if (ShatteredPixelDungeon.autocollect() && vial != null) {
-                            if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
-                                vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 200 : 50);
-								GLog.i(Messages.get(HighGrass.class, "violet"));
-								if (vial.isFull()) {
-									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class,"full");
-								}                            }
-                            else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
-                        }
-                        else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
-				    }
-				    else if (Random.Int(2)==1){
-                        if (ShatteredPixelDungeon.autocollect() && vial != null) {
-                            if (!vial.isFull()) {
-                                vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
+			for (int n : PathFinder.NEIGHBOURS9) {
+				int c = cell + n;
+				if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+					if (Random.Int(10) == 1) {
+						if (ShatteredPixelDungeon.autocollect() && vial != null) {
+							if (!vial.isFull()) {
+								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
 								GLog.i(Messages.get(HighGrass.class, "red"));
 								if (vial.isFull()) {
 									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class,"full");
-								}                            }
-                            else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-                        }
-                        else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-				    }
-			    }
-		    }
-		    QuickSlotButton.refresh();
+									Messages.get(DewVial.class, "full");
+								}
+							} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+						} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+					} else if (Random.Int(3) == 1) {
+						if (ShatteredPixelDungeon.autocollect() && vial != null) {
+							if (!vial.isFull()) {
+								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
+								GLog.i(Messages.get(HighGrass.class, "yellow"));
+								if (vial.isFull()) {
+									vial.volume = DewVial.MAX_VOLUME();
+									Messages.get(DewVial.class, "full");
+								}
+							} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
+						} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
+					}
+				}
+			}
+			QuickSlotButton.refresh();
 		}
 	}
-	
+
+	public void explodeDewHigh(int cell) {
+
+		if (Dungeon.dewDraw) {
+			Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+
+			for (int n : PathFinder.NEIGHBOURS9) {
+				int c = cell + n;
+				if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+					if (Random.Int(8) == 1) {
+						if (ShatteredPixelDungeon.autocollect() && vial != null) {
+							if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
+								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 200 : 50);
+								GLog.i(Messages.get(HighGrass.class, "violet"));
+								if (vial.isFull()) {
+									vial.volume = DewVial.MAX_VOLUME();
+									Messages.get(DewVial.class, "full");
+								}
+							} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
+						} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
+					} else if (Random.Int(2) == 1) {
+						if (ShatteredPixelDungeon.autocollect() && vial != null) {
+							if (!vial.isFull()) {
+								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
+								GLog.i(Messages.get(HighGrass.class, "red"));
+								if (vial.isFull()) {
+									vial.volume = DewVial.MAX_VOLUME();
+									Messages.get(DewVial.class, "full");
+								}
+							} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+						} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+					}
+				}
+			}
+			QuickSlotButton.refresh();
+		}
+	}
+
 	public boolean reset() {
 		return false;
 	}
@@ -859,7 +865,7 @@ public void explodeDewHigh(int cell) {
 	}
 
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public void notice() {
@@ -889,7 +895,7 @@ public void explodeDewHigh(int cell) {
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			if (enemyInFOV
 					&& Random.Int(distance(enemy) + enemy.stealth()
-							+ (enemy.flying ? 2 : 0)) == 0) {
+					+ (enemy.flying ? 2 : 0)) == 0) {
 
 				enemySeen = true;
 
@@ -912,7 +918,7 @@ public void explodeDewHigh(int cell) {
 
 		@Override
 		public String status() {
-			return Messages.get(this,"status",name);
+			return Messages.get(this, "status", name);
 		}
 	}
 
@@ -924,7 +930,7 @@ public void explodeDewHigh(int cell) {
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			if (enemyInFOV
 					&& (justAlerted || Random.Int(distance(enemy) / 2
-							+ enemy.stealth()) == 0)) {
+					+ enemy.stealth()) == 0)) {
 
 				enemySeen = true;
 
@@ -951,7 +957,7 @@ public void explodeDewHigh(int cell) {
 
 		@Override
 		public String status() {
-			return Messages.get(this,"status",name);
+			return Messages.get(this, "status", name);
 		}
 	}
 
@@ -962,7 +968,7 @@ public void explodeDewHigh(int cell) {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			enemySeen = enemyInFOV;
-			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
+			if (enemyInFOV && !isCharmedBy(enemy) && canAttack(enemy)) {
 
 				return doAttack(enemy);
 
@@ -990,7 +996,7 @@ public void explodeDewHigh(int cell) {
 
 		@Override
 		public String status() {
-			return Messages.get(this,"status",name);
+			return Messages.get(this, "status", name);
 		}
 	}
 
@@ -1025,7 +1031,7 @@ public void explodeDewHigh(int cell) {
 
 		@Override
 		public String status() {
-			return Messages.get(this,"status",name);
+			return Messages.get(this, "status", name);
 		}
 	}
 
@@ -1042,9 +1048,9 @@ public void explodeDewHigh(int cell) {
 
 		@Override
 		public String status() {
-			return Messages.get(this,"status",name);
+			return Messages.get(this, "status", name);
 		}
 	}
-	
-	
+
+
 }

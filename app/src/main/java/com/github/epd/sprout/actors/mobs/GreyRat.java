@@ -43,19 +43,18 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class GreyRat extends Mob {
-	
+
 
 	private static final float SPAWN_DELAY = 2f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = GreyRatSprite.class;
 
-		HP = HT = 12 + (Dungeon.depth*Random.NormalIntRange(1, 3));
-		defenseSkill = 3+(Math.round((Dungeon.depth)/2));
+		HP = HT = 12 + (Dungeon.depth * Random.NormalIntRange(1, 3));
+		defenseSkill = 3 + (Math.round((Dungeon.depth) / 2));
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))
-		{
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
 			loot = Generator.Category.SEED;
 			lootChance = 0.75f;
 
@@ -73,15 +72,14 @@ public class GreyRat extends Mob {
 	}
 
 
-	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(2, 5+Dungeon.depth);
+		return Random.NormalIntRange(2, 5 + Dungeon.depth);
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 5+Dungeon.depth;
+		return 5 + Dungeon.depth;
 	}
 
 	@Override
@@ -91,9 +89,9 @@ public class GreyRat extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	public static void spawnAround(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
 			int cell = pos + n;
@@ -102,20 +100,21 @@ public class GreyRat extends Mob {
 			}
 		}
 	}
-	
-	public static GreyRat spawnAt(int pos) {
-		
-        GreyRat b = new GreyRat();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-	
+	public static GreyRat spawnAt(int pos) {
+
+		GreyRat b = new GreyRat();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Death.class);
@@ -128,6 +127,7 @@ public class GreyRat extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Amok.class);
 		IMMUNITIES.add(Sleep.class);
@@ -143,7 +143,6 @@ public class GreyRat extends Mob {
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
 	}
-	
 
-	
+
 }

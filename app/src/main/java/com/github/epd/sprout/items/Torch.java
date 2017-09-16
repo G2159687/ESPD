@@ -29,12 +29,12 @@ import java.util.ArrayList;
 
 public class Torch extends Item {
 
-	public static final String AC_LIGHT = Messages.get(Torch.class,"ac_light");
+	public static final String AC_LIGHT = Messages.get(Torch.class, "ac_light");
 
 	public static final float TIME_TO_LIGHT = 1;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.TORCH;
 
 		stackable = true;
@@ -89,6 +89,6 @@ public class Torch extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

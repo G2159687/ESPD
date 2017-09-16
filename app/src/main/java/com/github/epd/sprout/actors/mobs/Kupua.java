@@ -33,14 +33,14 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class Kupua extends Mob {
-  //Gullin
-	
+	//Gullin
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = KupuaSprite.class;
 
-		HP = HT = 525+(adj(0)*Random.NormalIntRange(3, 7));
-		defenseSkill = 15+adj(1);
+		HP = HT = 525 + (adj(0) * Random.NormalIntRange(3, 7));
+		defenseSkill = 15 + adj(1);
 		baseSpeed = 2f;
 
 		EXP = 10;
@@ -52,45 +52,46 @@ public class Kupua extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(70+adj(0), 160+adj(0));
+		return Random.NormalIntRange(70 + adj(0), 160 + adj(0));
 	}
-		
+
 	@Override
 	public int attackSkill(Char target) {
-		return 120+adj(0);
+		return 120 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 50+adj(0);
+		return 50 + adj(0);
 	}
 
 	@Override
 	public void damage(int dmg, Object src) {
-		
-		if(!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)){
-			int max = Math.round(dmg*.5f);
-			dmg = Random.Int(1,max);
+
+		if (!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)) {
+			int max = Math.round(dmg * .5f);
+			dmg = Random.Int(1, max);
 		}
-		
-		if (dmg > HT/8){
-		GameScene.add(Blob.seed(pos, 30, CorruptGas.class));
+
+		if (dmg > HT / 8) {
+			GameScene.add(Blob.seed(pos, 30, CorruptGas.class));
 		}
-		
+
 		super.damage(dmg, src);
 	}
-	
+
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Death.class);
 		IMMUNITIES.add(ToxicGas.class);

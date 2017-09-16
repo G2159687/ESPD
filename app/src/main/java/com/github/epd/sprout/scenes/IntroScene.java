@@ -23,7 +23,7 @@ import com.watabou.noosa.Game;
 
 public class IntroScene extends PixelScene {
 
-	private static final String TEXT = Messages.get(IntroScene.class,"text");
+	private static final String TEXT = Messages.get(IntroScene.class, "text");
 
 	@Override
 	public void create() {

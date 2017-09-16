@@ -71,7 +71,7 @@ import com.watabou.noosa.audio.Sample;
 public class WndBag extends WndTabbed {
 
 	public enum Mode {
-		ALL, UNIDENTIFED, UPGRADEABLE, QUICKSLOT, FOR_SALE, WEAPON, ARMOR, ENCHANTABLE, 
+		ALL, UNIDENTIFED, UPGRADEABLE, QUICKSLOT, FOR_SALE, WEAPON, ARMOR, ENCHANTABLE,
 		WAND, SEED, FOOD, POTION, SCROLL, EQUIPMENT, ADAMANT, REINFORCED, UPGRADEABLESIMPLE,
 		NOTREINFORCED, UPGRADEDEW, JOURNALPAGES
 	}
@@ -128,11 +128,11 @@ public class WndBag extends WndTabbed {
 		resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
 
 		Belongings stuff = Dungeon.hero.belongings;
-		Bag[] bags = { stuff.backpack, stuff.getItem(SeedPouch.class),
+		Bag[] bags = {stuff.backpack, stuff.getItem(SeedPouch.class),
 				stuff.getItem(ScrollHolder.class),
 				stuff.getItem(PotionBandolier.class),
-				stuff.getItem(WandHolster.class), 
-				stuff.getItem(KeyRing.class), 
+				stuff.getItem(WandHolster.class),
+				stuff.getItem(KeyRing.class),
 				stuff.getItem(AnkhChain.class)};
 
 		for (Bag b : bags) {
@@ -162,7 +162,7 @@ public class WndBag extends WndTabbed {
 	}
 
 	public static WndBag getBag(Class<? extends Bag> bagClass,
-			Listener listener, Mode mode, String title) {
+	                            Listener listener, Mode mode, String title) {
 		Bag bag = Dungeon.hero.belongings.getItem(bagClass);
 		return bag != null ? new WndBag(bag, listener, mode, title) : lastBag(
 				listener, mode, title);
@@ -180,6 +180,10 @@ public class WndBag extends WndTabbed {
 				ItemSpriteSheet.RING));
 		placeItem(stuff.misc2 != null ? stuff.misc2 : new Placeholder(
 				ItemSpriteSheet.RING));
+		placeItem(stuff.misc3 != null ? stuff.misc3 : new Placeholder(
+				ItemSpriteSheet.RING));
+		placeItem(stuff.misc4 != null ? stuff.misc4 : new Placeholder(
+				ItemSpriteSheet.RING));
 
 		boolean backpack = (container == Dungeon.hero.belongings.backpack);
 		if (!backpack) {
@@ -191,12 +195,12 @@ public class WndBag extends WndTabbed {
 		// Items in the bag
 		for (Item item : container.items) {
 			if (!(item instanceof Bag))
-			placeItem(item);
+				placeItem(item);
 		}
 
 		// Free Space
 		if (container == Dungeon.hero.belongings.backpack) {
-			while (count - (backpack ? 4 : nCols) < container.size - 6) {
+			while (count - (backpack ? 4 : nCols) < container.size - 4) {
 				placeItem(null);
 			}
 		} else {
@@ -363,14 +367,16 @@ public class WndBag extends WndTabbed {
 			bg.y = y;
 
 			Integer iconInt;
-			if (item instanceof Scroll){
+			if (item instanceof Scroll) {
 				iconInt = ((Scroll) item).initials();
 			} else if (item instanceof Potion) {
 				iconInt = ((Potion) item).initials();
-			} else {iconInt = null;}
+			} else {
+				iconInt = null;
+			}
 			if (iconInt != null && iconVisible) {
 				bottomRightIcon = new Image(Assets.CONS_ICONS);
-				int left = iconInt*7;
+				int left = iconInt * 7;
 				int top = item instanceof Potion ? 0 : 8;
 				bottomRightIcon.frame(left, top, 7, 8);
 				add(bottomRightIcon);
@@ -398,31 +404,33 @@ public class WndBag extends WndTabbed {
 				if (item.name() == null) {
 					enable(false);
 				} else {
-					
-					 int levelLimit = Math.max(5, 5+Math.round(Statistics.deepestFloor/3));
-				     if (Dungeon.hero.heroClass == HeroClass.MAGE){levelLimit++;}
-					
+
+					int levelLimit = Math.max(5, 5 + Math.round(Statistics.deepestFloor / 3));
+					if (Dungeon.hero.heroClass == HeroClass.MAGE) {
+						levelLimit++;
+					}
+
 					enable(mode == Mode.FOR_SALE && (item.price() > 0 && !(item instanceof BookOfTranscendence || item instanceof BookOfLife || item instanceof BookOfDead || item instanceof OtilukesJournal))
 							&& (!item.isEquipped(Dungeon.hero) || !item.cursed)
-						|| mode == Mode.UPGRADEABLE && ((item.isUpgradable() && item.level<15 && !item.isReinforced()) ||  item.isUpgradable() && item.isReinforced())
-						|| mode == Mode.UPGRADEDEW && (item.isUpgradable() && item.level < levelLimit && !(item instanceof Artifact))
-						|| mode == Mode.UPGRADEABLESIMPLE && item.isUpgradable()
-						|| mode == Mode.ADAMANT && (item instanceof AdamantArmor || item instanceof AdamantRing || item instanceof AdamantWand || item instanceof AdamantWeapon)
-						|| mode == Mode.REINFORCED && item.isReinforced()
-						|| mode == Mode.NOTREINFORCED && (!item.isReinforced() && item.isUpgradable())
-						|| mode == Mode.UNIDENTIFED && !item.isIdentified()
-						|| mode == Mode.QUICKSLOT && (item.defaultAction != null)
-						|| mode == Mode.WEAPON && (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof JupitersWraith)
-						|| mode == Mode.ARMOR && (item instanceof Armor)
-						|| mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon	|| item instanceof Boomerang || item instanceof Armor)
-						|| mode == Mode.JOURNALPAGES && (item instanceof JournalPage)
-						|| mode == Mode.WAND && (item instanceof Wand)
-						|| mode == Mode.SEED && (item instanceof Seed)
-						|| mode == Mode.FOOD && (item instanceof Food)
-						|| mode == Mode.POTION && (item instanceof Potion)
-						|| mode == Mode.SCROLL && (item instanceof Scroll)
-						|| mode == Mode.EQUIPMENT && (item instanceof EquipableItem)
-						|| mode == Mode.ALL);
+							|| mode == Mode.UPGRADEABLE && ((item.isUpgradable() && item.level < 15 && !item.isReinforced()) || item.isUpgradable() && item.isReinforced())
+							|| mode == Mode.UPGRADEDEW && (item.isUpgradable() && item.level < levelLimit && !(item instanceof Artifact))
+							|| mode == Mode.UPGRADEABLESIMPLE && item.isUpgradable()
+							|| mode == Mode.ADAMANT && (item instanceof AdamantArmor || item instanceof AdamantRing || item instanceof AdamantWand || item instanceof AdamantWeapon)
+							|| mode == Mode.REINFORCED && item.isReinforced()
+							|| mode == Mode.NOTREINFORCED && (!item.isReinforced() && item.isUpgradable())
+							|| mode == Mode.UNIDENTIFED && !item.isIdentified()
+							|| mode == Mode.QUICKSLOT && (item.defaultAction != null)
+							|| mode == Mode.WEAPON && (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof JupitersWraith)
+							|| mode == Mode.ARMOR && (item instanceof Armor)
+							|| mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof Armor)
+							|| mode == Mode.JOURNALPAGES && (item instanceof JournalPage)
+							|| mode == Mode.WAND && (item instanceof Wand)
+							|| mode == Mode.SEED && (item instanceof Seed)
+							|| mode == Mode.FOOD && (item instanceof Food)
+							|| mode == Mode.POTION && (item instanceof Potion)
+							|| mode == Mode.SCROLL && (item instanceof Scroll)
+							|| mode == Mode.EQUIPMENT && (item instanceof EquipableItem)
+							|| mode == Mode.ALL);
 				}
 			} else {
 				bg.color(NORMAL);
@@ -442,7 +450,7 @@ public class WndBag extends WndTabbed {
 
 		@Override
 		protected void onClick() {
-			if (!lastBag.contains(item) && !item.isEquipped(Dungeon.hero)){
+			if (!lastBag.contains(item) && !item.isEquipped(Dungeon.hero)) {
 
 				hide();
 

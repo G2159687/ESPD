@@ -23,12 +23,12 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class InactiveMrDestructo extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.INACTIVEMRD;
 		stackable = true;
 	}
 
-		@Override
+	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
@@ -38,13 +38,11 @@ public class InactiveMrDestructo extends Item {
 		return true;
 	}
 
-	
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
-		
-	
+
 }

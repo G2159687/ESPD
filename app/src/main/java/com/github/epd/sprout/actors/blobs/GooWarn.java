@@ -23,9 +23,9 @@ public class GooWarn extends Blob {
 
 		int cell;
 
-		for (int i = area.left; i < area.right; i++){
-			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*WIDTH;
+		for (int i = area.left; i < area.right; i++) {
+			for (int j = area.top; j < area.bottom; j++) {
+				cell = i + j * WIDTH;
 				off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
 
 				if (off[cell] > 0) {
@@ -44,6 +44,6 @@ public class GooWarn extends Blob {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

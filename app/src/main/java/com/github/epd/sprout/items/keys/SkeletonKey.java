@@ -24,7 +24,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class SkeletonKey extends Key {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SKELETON_KEY;
 		stackable = false;
 	}
@@ -45,6 +45,6 @@ public class SkeletonKey extends Key {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

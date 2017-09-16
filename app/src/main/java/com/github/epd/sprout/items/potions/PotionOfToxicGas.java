@@ -28,8 +28,8 @@ import com.watabou.noosa.audio.Sample;
 public class PotionOfToxicGas extends Potion {
 
 	{
-		initials=11;
-		name = Messages.get(this,"name");
+		initials = 11;
+		name = Messages.get(this, "name");
 		if (isKnown()) {
 			defaultAction = AC_THROW;
 		}
@@ -51,7 +51,7 @@ public class PotionOfToxicGas extends Potion {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

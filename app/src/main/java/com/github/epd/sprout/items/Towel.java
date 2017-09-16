@@ -25,7 +25,6 @@ import com.github.epd.sprout.actors.buffs.Ooze;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.pets.PET;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
@@ -39,47 +38,46 @@ public class Towel extends Item {
 		defaultAction = AC_TOWEL;
 	}
 
-	private static final String TXT_PREVENTING = Messages.get(Towel.class,"prevent");
-	private static final String TXT_APPLY = Messages.get(Towel.class,"apply");
-	private static final String TXT_END = Messages.get(Towel.class,"end");
-	
+	private static final String TXT_PREVENTING = Messages.get(Towel.class, "prevent");
+	private static final String TXT_APPLY = Messages.get(Towel.class, "apply");
+	private static final String TXT_END = Messages.get(Towel.class, "end");
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_TOWEL = Messages.get(Towel.class,"ac_apply");
-	public static final String AC_TOWEL_PET = Messages.get(Towel.class,"ac_pet");
+	public static final String AC_TOWEL = Messages.get(Towel.class, "ac_apply");
+	public static final String AC_TOWEL_PET = Messages.get(Towel.class, "ac_pet");
 
-		{
-		name = Messages.get(this,"name");
+	{
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.TOWEL;
-		unique = true;
 		level = 10;
 
-		}
+	}
 
-	
+
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		
+
 		actions.add(AC_TOWEL);
-		
-		if(checkpet()!=null && checkpetNear()){
+
+		if (checkpet() != null && checkpetNear()) {
 			actions.add(AC_TOWEL_PET);
 		}
-		
+
 		return actions;
 	}
 
-	private PET checkpet(){
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		Hero hero = Dungeon.hero;
 		for (int n : PathFinder.NEIGHBOURS8) {
 			int c = hero.pos + n;
@@ -89,46 +87,46 @@ public class Towel extends Item {
 		}
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public void execute(Hero hero, String action) {
 
-		
+
 		if (action == AC_TOWEL) {
-           	  		  		 
-			  Buff.detach(hero, Bleeding.class);
-			  Buff.detach(hero, Ooze.class);
-			  Dungeon.observe();
-			  			  
-			  GLog.i(TXT_APPLY);
-			  
-		//	  level -= 1;
-			  if (level==0){
-			     detach(Dungeon.hero.belongings.backpack);	
-			     GLog.n(TXT_END);
-			  }
-				  
-	
+
+			Buff.detach(hero, Bleeding.class);
+			Buff.detach(hero, Ooze.class);
+			Dungeon.observe();
+
+			GLog.i(TXT_APPLY);
+
+			//	  level -= 1;
+			if (level == 0) {
+				detach(Dungeon.hero.belongings.backpack);
+				GLog.n(TXT_END);
+			}
+
+
 		} else if (action == AC_TOWEL_PET) {
-			
+
 			PET pet = checkpet();
-			
-			  Buff.detach(pet, Bleeding.class);
-			  Buff.detach(pet, Ooze.class);
-			  Dungeon.observe();
-			  			  
-			  GLog.i(TXT_APPLY);
-			  
-			  level -= 1;
-			  if (level==0){
-			     detach(Dungeon.hero.belongings.backpack);	
-			     GLog.n(TXT_END);
-			  }
-			
-				
+
+			Buff.detach(pet, Bleeding.class);
+			Buff.detach(pet, Ooze.class);
+			Dungeon.observe();
+
+			GLog.i(TXT_APPLY);
+
+			level -= 1;
+			if (level == 0) {
+				detach(Dungeon.hero.belongings.backpack);
+				GLog.n(TXT_END);
+			}
+
+
 		} else {
-			
+
 			super.execute(hero, action);
 		}
 	}
@@ -137,8 +135,8 @@ public class Towel extends Item {
 	public int price() {
 		return 500 * quantity;
 	}
-	
-	
+
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -149,10 +147,10 @@ public class Towel extends Item {
 		return true;
 	}
 
-		
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 }

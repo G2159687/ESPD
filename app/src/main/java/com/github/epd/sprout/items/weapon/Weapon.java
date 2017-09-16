@@ -57,7 +57,7 @@ public class Weapon extends KindOfWeapon {
 
 	private static final int HITS_TO_KNOW = 20;
 
-	private static final String TXT_IDENTIFY = Messages.get(Weapon.class,"identify");
+	private static final String TXT_IDENTIFY = Messages.get(Weapon.class, "identify");
 	//private static final String TXT_INCOMPATIBLE = "Interaction of different types of magic has negated the enchantment on this weapon!";
 	private static final String TXT_TO_STRING = "%s :%d";
 
@@ -79,7 +79,7 @@ public class Weapon extends KindOfWeapon {
 	public void proc(Char attacker, Char defender, int damage) {
 
 		if (enchantment != null) {
-			enchantment.proc(this, attacker, defender, damage);	
+			enchantment.proc(this, attacker, defender, damage);
 		}
 
 		if (!levelKnown) {
@@ -121,13 +121,13 @@ public class Weapon extends KindOfWeapon {
 
 		if (this instanceof MissileWeapon) {
 			switch (hero.heroClass) {
-			case WARRIOR:
-				encumbrance += 3;
-				break;
-			case HUNTRESS:
-				encumbrance -= 2;
-				break;
-			default:
+				case WARRIOR:
+					encumbrance += 3;
+					break;
+				case HUNTRESS:
+					encumbrance -= 2;
+					break;
+				default:
 			}
 			int bonus = 0;
 			for (Buff buff : hero.buffs(RingOfSharpshooting.Aim.class)) {
@@ -151,7 +151,7 @@ public class Weapon extends KindOfWeapon {
 
 		float DLY = this.DLY
 				* (imbue == Imbue.LIGHT ? 0.667f
-						: (imbue == Imbue.HEAVY ? 1.667f : 1.0f));
+				: (imbue == Imbue.HEAVY ? 1.667f : 1.0f));
 
 		int bonus = 0;
 		for (Buff buff : hero.buffs(RingOfFuror.Furor.class)) {
@@ -176,33 +176,33 @@ public class Weapon extends KindOfWeapon {
 			}
 		}
 		if (this instanceof MissileWeapon && hero.heroClass == HeroClass.HUNTRESS) {
-			int exStr = Math.max(Math.round((hero.STR() - STR)/5),0);
-			int lvlBonus = Math.round(hero.lvl/10);
-			int totBonus = exStr+lvlBonus+1;
+			int exStr = Math.max(Math.round((hero.STR() - STR) / 5), 0);
+			int lvlBonus = Math.round(hero.lvl / 10);
+			int totBonus = exStr + lvlBonus + 1;
 			if (totBonus > 0) {
-				damage += damage*(Random.IntRange(exStr, totBonus)/4);
+				damage += damage * (Random.IntRange(exStr, totBonus) / 4);
 			}
 		}
 		if (this instanceof MissileWeapon && hero.heroClass != HeroClass.HUNTRESS) {
-			int exStr = Math.max(Math.round((hero.STR() - STR)/5),0);
-			int lvlBonus = Math.round(hero.lvl/10);
-			int totBonus = exStr+lvlBonus;
+			int exStr = Math.max(Math.round((hero.STR() - STR) / 5), 0);
+			int lvlBonus = Math.round(hero.lvl / 10);
+			int totBonus = exStr + lvlBonus;
 			if (totBonus > 0) {
-				damage = damage*Random.IntRange(lvlBonus, totBonus);
+				damage = damage * Random.IntRange(lvlBonus, totBonus);
 			}
 		}
 
-		return Math.round(damage* (imbue == Imbue.LIGHT ? 0.7f : (imbue == Imbue.HEAVY ? 1.5f: 1f)));
+		return Math.round(damage * (imbue == Imbue.LIGHT ? 0.7f : (imbue == Imbue.HEAVY ? 1.5f : 1f)));
 	}
 
 	public Item upgrade(boolean enchant) {
-		
-		if (enchant){
-		   if (enchantment != null) {
+
+		if (enchant) {
+			if (enchantment != null) {
 				enchantAdv();
-		   } else {
+			} else {
 				enchant();
-		   }
+			}
 		}
 
 		return super.upgrade();
@@ -244,7 +244,7 @@ public class Weapon extends KindOfWeapon {
 		return this;
 	}
 
-	
+
 	public Weapon enchant() {
 
 		Class<? extends Enchantment> oldEnchantment = enchantment != null ? enchantment.getClass() : null;
@@ -252,10 +252,10 @@ public class Weapon extends KindOfWeapon {
 		while (ench.getClass() == oldEnchantment) {
 			ench = Enchantment.random();
 		}
-		
+
 		return enchant(ench);
 	}
-	
+
 	public Weapon enchantAdv() {
 
 		Class<? extends Enchantment> oldEnchantment = enchantment != null ? enchantment.getClass() : null;
@@ -263,10 +263,10 @@ public class Weapon extends KindOfWeapon {
 		while (ench.getClass() == oldEnchantment) {
 			ench = Enchantment.randomAdv();
 		}
-		
+
 		return enchant(ench);
 	}
-	
+
 	public Weapon enchantLow() {
 
 		Class<? extends Enchantment> oldEnchantment = enchantment != null ? enchantment.getClass() : null;
@@ -274,7 +274,7 @@ public class Weapon extends KindOfWeapon {
 		while (ench.getClass() == oldEnchantment) {
 			ench = Enchantment.randomLow();
 		}
-		
+
 		return enchant(ench);
 	}
 
@@ -283,43 +283,44 @@ public class Weapon extends KindOfWeapon {
 		Enchantment ench = Enchantment.randomNom();
 		return enchant(ench);
 	}
-	
+
 	public Weapon enchantLuck() {
 
 		Enchantment ench = Enchantment.randomLuck();
 		return enchant(ench);
 	}
-	
+
 	public Weapon enchantBuzz() {
 
 		Enchantment ench = Enchantment.randomBuzz();
 		return enchant(ench);
 	}
-	
+
 	public Weapon enchantNeptune() {
 
 		Enchantment ench = Enchantment.randomNeptune();
 		return enchant(ench);
 	}
-	
+
 	public Weapon enchantAres() {
 
 		Enchantment ench = Enchantment.Ares();
 		return enchant(ench);
 	}
-	
+
 
 	public Weapon enchantJupiter() {
 
 		Enchantment ench = Enchantment.Jupiter();
 		return enchant(ench);
 	}
+
 	public Weapon enchantLoki() {
 
 		Enchantment ench = Enchantment.Loki();
 		return enchant(ench);
 	}
-	
+
 	public boolean isEnchanted() {
 		return enchantment != null;
 	}
@@ -331,53 +332,53 @@ public class Weapon extends KindOfWeapon {
 
 	public static abstract class Enchantment implements Bundlable {
 
-		private static final Class<?>[] enchants = new Class<?>[] { Fire.class,
+		private static final Class<?>[] enchants = new Class<?>[]{Fire.class,
 				Poison.class, Death.class, Paralysis.class, Leech.class,
 				Slow.class, Shock.class, Instability.class, Horror.class,
 				Luck.class, Nomnom.class, BuzzSaw.class, NeptuneShock.class,
 				CromLuck.class, AresLeech.class};
-		private static final float[] chances = new float[] { 10, 10, 1, 2, 1,
-				2, 6, 3, 2, 2, 0, 0, 0, 0, 0 };
-		
-		private static final float[] chancesLow = new float[] { 10, 10, 0, 0, 1,
-			2, 6, 0, 0, 2, 0, 0, 0, 0, 0 };
-		
-		private static final float[] chancesAdv = new float[] { 2, 2, 2, 2, 2,
-			2, 2, 2, 2, 2, 0, 0,0, 0, 0 };
-		
-		private static final float[] chancesNom = new float[] { 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 1, 0,0, 0, 0 };
-		
-		private static final float[] chancesBuzz = new float[] { 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 1,0, 0, 0 };
-		
-		private static final float[] chancesNeptune = new float[] { 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 1, 0, 0 };
-		
-		private static final float[] chancesLuck = new float[] { 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 1, 0 };
-		
-		private static final Class<?>[] relicenchants = new Class<?>[] {  NeptuneShock.class,
-			CromLuck.class, AresLeech.class, JupitersHorror.class, LokisPoison.class};
-		
-		private static final float[] chancesAres = new float[] { 0, 0, 1, 0, 0 };
-		private static final float[] chancesJupiter = new float[] { 0, 0, 0, 1, 0 };
-		private static final float[] chancesLoki = new float[] { 0, 0, 0, 0, 1 };
-		
+		private static final float[] chances = new float[]{10, 10, 1, 2, 1,
+				2, 6, 3, 2, 2, 0, 0, 0, 0, 0};
+
+		private static final float[] chancesLow = new float[]{10, 10, 0, 0, 1,
+				2, 6, 0, 0, 2, 0, 0, 0, 0, 0};
+
+		private static final float[] chancesAdv = new float[]{2, 2, 2, 2, 2,
+				2, 2, 2, 2, 2, 0, 0, 0, 0, 0};
+
+		private static final float[] chancesNom = new float[]{0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 1, 0, 0, 0, 0};
+
+		private static final float[] chancesBuzz = new float[]{0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+
+		private static final float[] chancesNeptune = new float[]{0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
+
+		private static final float[] chancesLuck = new float[]{0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
+
+		private static final Class<?>[] relicenchants = new Class<?>[]{NeptuneShock.class,
+				CromLuck.class, AresLeech.class, JupitersHorror.class, LokisPoison.class};
+
+		private static final float[] chancesAres = new float[]{0, 0, 1, 0, 0};
+		private static final float[] chancesJupiter = new float[]{0, 0, 0, 1, 0};
+		private static final float[] chancesLoki = new float[]{0, 0, 0, 0, 1};
+
 		public abstract boolean proc(Weapon weapon, Char attacker,
-				Char defender, int damage);
+		                             Char defender, int damage);
 
 		public String name() {
-			return name( Messages.get(this, "enchant"));
+			return name(Messages.get(this, "enchant"));
 		}
 
 		public String desc() {
 			return Messages.get(this, "desc");
 		}
-		
+
 
 		public abstract boolean proc(RelicMeleeWeapon weapon, Char attacker,
-				Char defender, int damage);
+		                             Char defender, int damage);
 
 		public String name(String weaponName) {
 			return weaponName;
@@ -404,6 +405,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment randomAdv() {
 			try {
@@ -413,6 +415,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment randomLow() {
 			try {
@@ -422,6 +425,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment randomNom() {
 			try {
@@ -431,6 +435,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment randomBuzz() {
 			try {
@@ -440,7 +445,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment randomLuck() {
 			try {
@@ -460,7 +465,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment Jupiter() {
 			try {
@@ -470,7 +475,7 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment Loki() {
 			try {
@@ -480,8 +485,8 @@ public class Weapon extends KindOfWeapon {
 				return null;
 			}
 		}
-		
-		
+
+
 		@SuppressWarnings("unchecked")
 		public static Enchantment randomNeptune() {
 			try {

@@ -31,7 +31,7 @@ import com.watabou.utils.Random;
 
 public class Metabolism extends Glyph {
 
-	private static final String TXT_METABOLISM = Messages.get(Metabolism.class,"name");
+	private static final String TXT_METABOLISM = Messages.get(Metabolism.class, "name");
 
 	private static ItemSprite.Glowing RED = new ItemSprite.Glowing(0xCC0000);
 

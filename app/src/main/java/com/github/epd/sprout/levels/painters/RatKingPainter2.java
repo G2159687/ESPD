@@ -43,7 +43,7 @@ public class RatKingPainter2 extends Painter {
 		Room.Door entrance = room.entrance();
 		entrance.set(Room.Door.Type.HIDDEN);
 		int door = entrance.x + entrance.y * Level.getWidth();
-		
+
 		//Dungeon.ratChests=0;
 
 		for (int i = room.left + 1; i < room.right; i++) {
@@ -79,27 +79,27 @@ public class RatKingPainter2 extends Painter {
 
 		Item prize;
 		switch (Random.Int(10)) {
-		case 0:
-			prize = new Egg();
-			break;
-		case 1:
-			prize = new Phaseshift.Seed();
-			break;
-		case 2:
-			prize = Generator.random(Generator.Category.BERRY);
-			break;
-		case 3:
-			prize =  new Starflower.Seed();
-			break;
-		case 5:
-			prize =  new ActiveMrDestructo();
-			break;
-		case 6:
-			prize =  new SeekingClusterBombItem();
-			break;
-		default:
-			prize = new Gold(Random.IntRange(1, 5));
-			break;
+			case 0:
+				prize = new Egg();
+				break;
+			case 1:
+				prize = new Phaseshift.Seed();
+				break;
+			case 2:
+				prize = Generator.random(Generator.Category.BERRY);
+				break;
+			case 3:
+				prize = new Starflower.Seed();
+				break;
+			case 5:
+				prize = new ActiveMrDestructo();
+				break;
+			case 6:
+				prize = new SeekingClusterBombItem();
+				break;
+			default:
+				prize = new Gold(Random.IntRange(1, 5));
+				break;
 		}
 
 		level.drop(prize, pos).type = Heap.Type.CHEST;

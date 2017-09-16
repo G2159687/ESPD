@@ -30,17 +30,16 @@ import com.watabou.utils.Random;
 public class Gnoll extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = GnollSprite.class;
 
-		HP = HT = 14 + (Dungeon.depth*Random.NormalIntRange(1, 3));
-		defenseSkill = 4+(Math.round((Dungeon.depth)/2));
+		HP = HT = 14 + (Dungeon.depth * Random.NormalIntRange(1, 3));
+		defenseSkill = 4 + (Math.round((Dungeon.depth) / 2));
 
 		EXP = 2;
 		maxLvl = 8;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))
-		{
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
 			loot = Generator.Category.SCROLL;
 			lootChance = 0.75f;
 
@@ -61,12 +60,12 @@ public class Gnoll extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(2, 5+(Dungeon.depth));
+		return Random.NormalIntRange(2, 5 + (Dungeon.depth));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 11+(Dungeon.depth);
+		return 11 + (Dungeon.depth);
 	}
 
 	@Override
@@ -76,6 +75,6 @@ public class Gnoll extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

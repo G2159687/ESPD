@@ -34,7 +34,7 @@ public class Ooze extends Buff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class Ooze extends Buff {
 				target.damage(1, this);
 			if (!target.isAlive() && target == Dungeon.hero) {
 				Dungeon.fail(ResultDescriptions.OOZE);
-				GLog.n(Messages.get(this,"die"), toString());
+				GLog.n(Messages.get(this, "die"), toString());
 			}
 			spend(TICK);
 		}

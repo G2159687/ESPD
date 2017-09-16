@@ -31,11 +31,11 @@ import java.util.HashSet;
 public class Golem extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = GolemSprite.class;
 
-		HP = HT = 100+(adj(0)*Random.NormalIntRange(4, 7));
-		defenseSkill = 18+adj(1);
+		HP = HT = 100 + (adj(0) * Random.NormalIntRange(4, 7));
+		defenseSkill = 18 + adj(1);
 
 		EXP = 12;
 		maxLvl = 22;
@@ -43,12 +43,12 @@ public class Golem extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(20+adj(1), 60+adj(0));
+		return Random.NormalIntRange(20 + adj(1), 60 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 28+adj(1);
+		return 28 + adj(1);
 	}
 
 	@Override
@@ -58,12 +58,12 @@ public class Golem extends Mob {
 
 	@Override
 	public int dr() {
-		return 12+adj(0);
+		return 12 + adj(0);
 	}
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
@@ -75,10 +75,11 @@ public class Golem extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 	}
 
@@ -88,6 +89,7 @@ public class Golem extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Amok.class);
 		IMMUNITIES.add(Terror.class);

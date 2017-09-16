@@ -88,81 +88,81 @@ public class MeleeWeapon extends Weapon {
 
 		StringBuilder info = new StringBuilder(desc());
 
-		String quality = levelKnown && level != 0 ? (level > 0 ? Messages.get(MeleeWeapon.class,"upgraded")
-				: Messages.get(this,"degraded")) : "";
+		String quality = levelKnown && level != 0 ? (level > 0 ? Messages.get(MeleeWeapon.class, "upgraded")
+				: Messages.get(this, "degraded")) : "";
 		info.append(p);
-		info.append(Messages.get(MeleeWeapon.class,"this", name, quality, tier));
+		info.append(Messages.get(MeleeWeapon.class, "this", name, quality, tier));
 
 		if (levelKnown) {
-			info.append(Messages.get(RelicMeleeWeapon.class,"avgdmg",
+			info.append(Messages.get(RelicMeleeWeapon.class, "avgdmg",
 					Math.round((MIN) * (imbue == Imbue.LIGHT ? 0.75f : (imbue == Imbue.HEAVY ? 1.5f : 1))), Math.round((MAX) * (imbue == Imbue.LIGHT ? 0.75f : (imbue == Imbue.HEAVY ? 1.5f : 1)))));
 
 		} else {
-			info.append(Messages.get(RelicMeleeWeapon.class,"typicaldmg",min(), max(),typicalSTR() ));
+			info.append(Messages.get(RelicMeleeWeapon.class, "typicaldmg", min(), max(), typicalSTR()));
 			if (typicalSTR() > Dungeon.hero.STR()) {
-				info.append(Messages.get(RelicMeleeWeapon.class,"pheavy"));
+				info.append(Messages.get(RelicMeleeWeapon.class, "pheavy"));
 			}
 		}
 
 		if (DLY != 1f) {
-			info.append(Messages.get(RelicMeleeWeapon.class,"rather")+ (DLY < 1f ? Messages.get(RelicMeleeWeapon.class,"fast") : Messages.get(RelicMeleeWeapon.class,"slow")));
+			info.append(Messages.get(RelicMeleeWeapon.class, "rather") + (DLY < 1f ? Messages.get(RelicMeleeWeapon.class, "fast") : Messages.get(RelicMeleeWeapon.class, "slow")));
 			if (ACU != 1f) {
 				if ((ACU > 1f) == (DLY < 1f)) {
-					info.append(Messages.get(RelicMeleeWeapon.class,"and"));
+					info.append(Messages.get(RelicMeleeWeapon.class, "and"));
 				} else {
-					info.append(Messages.get(RelicMeleeWeapon.class,"but"));
+					info.append(Messages.get(RelicMeleeWeapon.class, "but"));
 				}
-				info.append(ACU > 1f ? Messages.get(RelicMeleeWeapon.class,"ac"): Messages.get(RelicMeleeWeapon.class,"inac"));
+				info.append(ACU > 1f ? Messages.get(RelicMeleeWeapon.class, "ac") : Messages.get(RelicMeleeWeapon.class, "inac"));
 			}
-			info.append(Messages.get(RelicMeleeWeapon.class,"weapon"));
+			info.append(Messages.get(RelicMeleeWeapon.class, "weapon"));
 		} else if (ACU != 1f) {
-			info.append(Messages.get(RelicMeleeWeapon.class,"rather")
-					+ (ACU > 1f ? Messages.get(RelicMeleeWeapon.class,"ac") : Messages.get(RelicMeleeWeapon.class,"inac")) + Messages.get(RelicMeleeWeapon.class,"weapon"));
+			info.append(Messages.get(RelicMeleeWeapon.class, "rather")
+					+ (ACU > 1f ? Messages.get(RelicMeleeWeapon.class, "ac") : Messages.get(RelicMeleeWeapon.class, "inac")) + Messages.get(RelicMeleeWeapon.class, "weapon"));
 		}
 		switch (imbue) {
 			case LIGHT:
-				info.append(Messages.get(RelicMeleeWeapon.class,"lighter"));
+				info.append(Messages.get(RelicMeleeWeapon.class, "lighter"));
 				break;
 			case HEAVY:
-				info.append(Messages.get(RelicMeleeWeapon.class,"heavier"));
+				info.append(Messages.get(RelicMeleeWeapon.class, "heavier"));
 				break;
 			case NONE:
 		}
 
 		if (enchantment != null) {
-			info.append(Messages.get(RelicMeleeWeapon.class,"enchanted"));
+			info.append(Messages.get(RelicMeleeWeapon.class, "enchanted"));
 		}
 
 		if (reinforced) {
-			info.append(Messages.get(RelicMeleeWeapon.class,"reinforced"));
+			info.append(Messages.get(RelicMeleeWeapon.class, "reinforced"));
 		}
 
-		if (levelKnown 
-				//&& Dungeon.hero.belongings.backpack.items.contains(this)
+		if (levelKnown
+			//&& Dungeon.hero.belongings.backpack.items.contains(this)
 				) {
 			if (STR > Dungeon.hero.STR()) {
 				info.append(p);
-				info.append(Messages.get(RelicMeleeWeapon.class,"decreased", name));
+				info.append(Messages.get(RelicMeleeWeapon.class, "decreased", name));
 			}
 			if (STR < Dungeon.hero.STR()) {
 				info.append(p);
-				info.append(Messages.get(RelicMeleeWeapon.class,"increased", name));
+				info.append(Messages.get(RelicMeleeWeapon.class, "increased", name));
 			}
 		}
 
-		if (enchantment != null){
+		if (enchantment != null) {
 			info.append("\n\n" + Messages.get(Weapon.class, "enchanted", enchantment.name()));
 			info.append(Messages.get(enchantment, "desc"));
 		}
 
 		if (isEquipped(Dungeon.hero)) {
 			info.append(p);
-			info.append(Messages.get(RelicMeleeWeapon.class,"atready", name)
-					+ (cursed ? Messages.get(RelicMeleeWeapon.class,"equipcursed") : ""));
+			info.append(Messages.get(RelicMeleeWeapon.class, "atready", name)
+					+ (cursed ? Messages.get(RelicMeleeWeapon.class, "equipcursed") : ""));
 		} else {
 			if (cursedKnown && cursed) {
 				info.append(p);
-				info.append(Messages.get(RelicMeleeWeapon.class,"knowncursed", name));
+				info.append(Messages.get(RelicMeleeWeapon.class, "knowncursed", name));
 			}
 		}
 

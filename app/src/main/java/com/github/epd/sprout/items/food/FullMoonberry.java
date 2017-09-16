@@ -32,14 +32,14 @@ import com.watabou.utils.Random;
 public class FullMoonberry extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEED_FULLMOONBERRY;
-		energy = (Hunger.STARVING - Hunger.HUNGRY)/10;
-		message = Messages.get(Blackberry.class,"eat");
+		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
+		message = Messages.get(Blackberry.class, "eat");
 		hornValue = 10;
 		bones = false;
 	}
-		
+
 	@Override
 	public void execute(Hero hero, String action) {
 
@@ -47,34 +47,34 @@ public class FullMoonberry extends Food {
 
 		if (action.equals(AC_EAT)) {
 
-				switch (Random.Int(2)) {
+			switch (Random.Int(2)) {
 				case 0:
-					GLog.p(Messages.get(this,"effect"));
+					GLog.p(Messages.get(this, "effect"));
 					Buff.affect(hero, Strength.class);
 					Buff.affect(hero, FullMoonStrength.class);
 					Buff.affect(hero, Light.class, Light.DURATION);
 					break;
 				case 1:
-					GLog.p(Messages.get(this,"effect"));
+					GLog.p(Messages.get(this, "effect"));
 					Buff.affect(hero, Strength.class);
 					Buff.affect(hero, FullMoonStrength.class);
-					Buff.affect(hero, Barkskin.class).level(hero.HT*2);
+					Buff.affect(hero, Barkskin.class).level(hero.HT * 2);
 					Buff.affect(hero, Light.class, Light.DURATION);
 					break;
-				}
 			}
-	}	
-	
+		}
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
-	
+
 	public FullMoonberry() {
 		this(1);
 	}

@@ -74,7 +74,8 @@ public class SewerBossLevel extends RegularLevel {
 				return false;
 			}
 			roomEntrance = Random.element(rooms);
-		} while (roomEntrance.width() != 8 || roomEntrance.height() < 5 || roomEntrance.top == 0 || roomEntrance.top >= 8);
+		}
+		while (roomEntrance.width() != 8 || roomEntrance.height() < 5 || roomEntrance.top == 0 || roomEntrance.top >= 8);
 
 		roomEntrance.type = Type.ENTRANCE;
 		roomExit = roomEntrance;
@@ -96,7 +97,8 @@ public class SewerBossLevel extends RegularLevel {
 					curRoom = Random.element(rooms);
 					Graph.buildDistanceMap(rooms, curRoom);
 					distance = lastRoom.distance();
-				} while (curRoom.type != Type.NULL || distance != 3 || curRoom.neigbours.contains(roomEntrance));
+				}
+				while (curRoom.type != Type.NULL || distance != 3 || curRoom.neigbours.contains(roomEntrance));
 
 				curRoom.type = Type.STANDARD;
 
@@ -169,9 +171,9 @@ public class SewerBossLevel extends RegularLevel {
 		map[exit] = Terrain.LOCKED_EXIT;
 
 		int count = 0;
-		for (int i : PathFinder.NEIGHBOURS8){
+		for (int i : PathFinder.NEIGHBOURS8) {
 			//exit must have exactly 3 non-wall tiles around it.
-			if (map[exit+i] != Terrain.WALL)
+			if (map[exit + i] != Terrain.WALL)
 				count++;
 		}
 		if (count > 3)
@@ -247,11 +249,12 @@ public class SewerBossLevel extends RegularLevel {
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
 	}
-	
+
 	@Override
 	public int randomRespawnCell() {
 		return -1;
 	}
+
 	public void seal() {
 		if (entrance != 0) {
 
@@ -297,20 +300,20 @@ public class SewerBossLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 }

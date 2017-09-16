@@ -30,11 +30,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class Fadeleaf extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Fadeleaf.class,"desc");
+	private static final String TXT_DESC = Messages.get(Fadeleaf.class, "desc");
 
 	{
 		image = 6;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class Fadeleaf extends Plant {
 			ScrollOfTeleportation.teleportHero((Hero) ch);
 			((Hero) ch).curAction = null;
 
-		} else if (ch instanceof Mob) {
+		} else if (ch instanceof Mob && !ch.properties().contains(Char.Property.IMMOVABLE)) {
 
 			int count = 10;
 			int newPos;
@@ -79,9 +79,9 @@ public class Fadeleaf extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Fadeleaf.class,"name");
+			plantName = Messages.get(Fadeleaf.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_FADELEAF;
 
 			plantClass = Fadeleaf.class;
@@ -90,7 +90,7 @@ public class Fadeleaf extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
+			return Messages.get(Plant.class, "seeddesc", plantName);
 		}
 	}
 }

@@ -24,11 +24,10 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class DwarfToken extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.TOKEN;
 
 		stackable = true;
-		unique = true;
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class DwarfToken extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

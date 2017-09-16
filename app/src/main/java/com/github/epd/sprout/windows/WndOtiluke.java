@@ -36,12 +36,11 @@ import com.watabou.noosa.Game;
 
 public class WndOtiluke extends Window {
 
-	
 
-	private static final String TXT_FARAWELL = Messages.get(WndOtiluke.class,"where");
+	private static final String TXT_FARAWELL = Messages.get(WndOtiluke.class, "where");
 	public static final float TIME_TO_USE = 1;
 
-    
+
 	private static final int PAGES = 10;
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -50,17 +49,17 @@ public class WndOtiluke extends Window {
 	public WndOtiluke(final boolean[] rooms, final OtilukesJournal item) {
 
 		super();
-		
+
 		String[] roomNames = new String[PAGES];
-		roomNames[0] = Messages.get(WndOtiluke.class,"s0");
-		roomNames[1] = Messages.get(WndOtiluke.class,"s1");
-		roomNames[2] = Messages.get(WndOtiluke.class,"s2");
-		roomNames[3] = Messages.get(WndOtiluke.class,"s3");
-		roomNames[4] = Messages.get(WndOtiluke.class,"s4");
-		roomNames[5] = Messages.get(WndOtiluke.class,"s5");
-		roomNames[6] = Messages.get(WndOtiluke.class,"s6");
-		roomNames[7] = Messages.get(WndOtiluke.class,"s7");
-	
+		roomNames[0] = Messages.get(WndOtiluke.class, "s0");
+		roomNames[1] = Messages.get(WndOtiluke.class, "s1");
+		roomNames[2] = Messages.get(WndOtiluke.class, "s2");
+		roomNames[3] = Messages.get(WndOtiluke.class, "s3");
+		roomNames[4] = Messages.get(WndOtiluke.class, "s4");
+		roomNames[5] = Messages.get(WndOtiluke.class, "s5");
+		roomNames[6] = Messages.get(WndOtiluke.class, "s6");
+		roomNames[7] = Messages.get(WndOtiluke.class, "s7");
+
 		IconTitle titlebar = new IconTitle();
 		titlebar.icon(new ItemSprite(item.image(), null));
 		titlebar.label(Utils.capitalize(item.name()));
@@ -69,36 +68,36 @@ public class WndOtiluke extends Window {
 
 		RenderedTextMultiline message = PixelScene.renderMultiline(TXT_FARAWELL, 6);
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
-		
+
 		//add each button
-		  //after n*BTN_HEIGHT+GAP
+		//after n*BTN_HEIGHT+GAP
 		//add port function
-		
-		if (rooms[0]){
-		NewRedButton btn1 = new NewRedButton(roomNames[0]) {
-			@Override
-			protected void onClick() {
-				item.returnDepth = Dungeon.depth;
-				item.returnPos = Dungeon.hero.pos;
-				port(0, item.firsts[0]);
-				if (!Dungeon.playtest){
-				   item.firsts[0]=false;
+
+		if (rooms[0]) {
+			NewRedButton btn1 = new NewRedButton(roomNames[0]) {
+				@Override
+				protected void onClick() {
+					item.returnDepth = Dungeon.depth;
+					item.returnPos = Dungeon.hero.pos;
+					port(0, item.firsts[0]);
+					if (!Dungeon.playtest) {
+						item.firsts[0] = false;
+					}
+					item.charge = 0;
 				}
-				item.charge=0;
-			}
-		};
-		btn1.setRect(0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
-		add(btn1);
-		resize(WIDTH, (int) btn1.bottom());
+			};
+			btn1.setRect(0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
+			add(btn1);
+			resize(WIDTH, (int) btn1.bottom());
 		}
-		
-		int buttons=1;
-		
-		for (int i=1; i<PAGES; i++) {	
-			final int portnum=i;
-			if (rooms[i]){
+
+		int buttons = 1;
+
+		for (int i = 1; i < PAGES; i++) {
+			final int portnum = i;
+			if (rooms[i]) {
 				buttons++;
 				NewRedButton btn = new NewRedButton(roomNames[i]) {
 					@Override
@@ -106,25 +105,25 @@ public class WndOtiluke extends Window {
 						item.returnDepth = Dungeon.depth;
 						item.returnPos = Dungeon.hero.pos;
 						port(portnum, item.firsts[portnum]);
-						item.firsts[portnum]=false;
-						item.charge=0;
+						item.firsts[portnum] = false;
+						item.charge = 0;
 					}
 				};
-				
-				btn.setRect(0, buttons*BTN_HEIGHT + (buttons+2)*GAP, WIDTH, BTN_HEIGHT);	
-				
+
+				btn.setRect(0, buttons * BTN_HEIGHT + (buttons + 2) * GAP, WIDTH, BTN_HEIGHT);
+
 				add(btn);
 				resize(WIDTH, (int) btn.bottom());
 			}
-		}		
+		}
 	}
 
-	
-	public void port(int room, boolean first){
-		
-		 Hero hero = Dungeon.hero;
-		 hero.spend(TIME_TO_USE);
-		 
+
+	public void port(int room, boolean first) {
+
+		Hero hero = Dungeon.hero;
+		hero.spend(TIME_TO_USE);
+
 		Buff buff = Dungeon.hero
 				.buff(TimekeepersHourglass.timeFreeze.class);
 		if (buff != null)
@@ -133,17 +132,16 @@ public class WndOtiluke extends Window {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 			if (mob instanceof DriedRose.GhostHero)
 				mob.destroy();
-		       	
-    	  
+
+
 		InterlevelScene.mode = InterlevelScene.Mode.JOURNAL;
-		
+
 		InterlevelScene.returnDepth = Dungeon.depth;
 		InterlevelScene.returnPos = Dungeon.hero.pos;
 		InterlevelScene.journalpage = room;
 		InterlevelScene.first = first;
 		Game.switchScene(InterlevelScene.class);
-		
-		
-	  
+
+
 	}
 }

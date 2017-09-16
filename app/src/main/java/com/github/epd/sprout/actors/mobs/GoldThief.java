@@ -36,23 +36,23 @@ import com.watabou.utils.Random;
 
 public class GoldThief extends Mob {
 
-	protected static final String TXT_STOLE = Messages.get(GoldThief.class,"steal");
-	private static final String TXT_KILLCOUNT = Messages.get(GoldThief.class,"count");
+	protected static final String TXT_STOLE = Messages.get(GoldThief.class, "steal");
+	private static final String TXT_KILLCOUNT = Messages.get(GoldThief.class, "count");
 
 	public Item item;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = GoldThiefSprite.class;
 
-		HP = HT = 30+Statistics.goldThievesKilled;
+		HP = HT = 30 + Statistics.goldThievesKilled;
 		defenseSkill = 26;
 
 		EXP = 1;
-		
+
 		loot = new Shuriken(3);
 		lootChance = 1f;
-		
+
 		//lootOther = new Cloudberry();
 		//lootChanceOther = 0.1f; // by default, see die()
 
@@ -60,7 +60,7 @@ public class GoldThief extends Mob {
 	}
 
 	private int goldtodrop = 0;
-	
+
 	private static final String GOLDTODROP = "goldtodrop";
 
 	@Override
@@ -77,7 +77,7 @@ public class GoldThief extends Mob {
 
 	@Override
 	public float speed() {
-		if (item != null) return (5*super.speed())/6;
+		if (item != null) return (5 * super.speed()) / 6;
 		else return super.speed();
 	}
 
@@ -93,21 +93,21 @@ public class GoldThief extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		
-		if (!Dungeon.limitedDrops.citykey.dropped() && Dungeon.depth<27) {
+
+		if (!Dungeon.limitedDrops.citykey.dropped() && Dungeon.depth < 27) {
 			Dungeon.limitedDrops.citykey.drop();
 			Dungeon.level.drop(new CityKey(), pos).sprite.drop();
-			explodeDew(pos);				
+			explodeDew(pos);
 		} else {
 			explodeDew(pos);
 		}
-		
-		if(!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 50 && Random.Int(10)==0) {
+
+		if (!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 50 && Random.Int(10) == 0) {
 			Dungeon.limitedDrops.ancientcoin.drop();
 			Dungeon.level.drop(new AncientCoin(), pos).sprite.drop();
 		}
-		
-		if(!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 100) {
+
+		if (!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 100) {
 			Dungeon.limitedDrops.ancientcoin.drop();
 			Dungeon.level.drop(new AncientCoin(), pos).sprite.drop();
 		}
@@ -123,7 +123,7 @@ public class GoldThief extends Mob {
 
 	@Override
 	protected Item createLoot() {
-		return new Gold(Random.NormalIntRange(goldtodrop+50, goldtodrop+100));
+		return new Gold(Random.NormalIntRange(goldtodrop + 50, goldtodrop + 100));
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class GoldThief extends Mob {
 
 	@Override
 	public int dr() {
-		return 13+Math.round((Statistics.goldThievesKilled+1/10)+1);
+		return 13 + Math.round((Statistics.goldThievesKilled + 1 / 10) + 1);
 	}
 
 	@Override
@@ -156,22 +156,21 @@ public class GoldThief extends Mob {
 
 	protected boolean steal(Hero hero) {
 
-							
-			Gold gold = new Gold(Random.Int(100, 500));
-			if (gold.quantity() > 0) {
-				goldtodrop = Math.min((gold.quantity()+100),Dungeon.gold);
-				Dungeon.gold -= goldtodrop;
-				GLog.w(TXT_STOLE, this.name, gold.quantity());
-				return true;
-			} else {
-			   return false;
+
+		Gold gold = new Gold(Random.Int(100, 500));
+		if (gold.quantity() > 0) {
+			goldtodrop = Math.min((gold.quantity() + 100), Dungeon.gold);
+			Dungeon.gold -= goldtodrop;
+			GLog.w(TXT_STOLE, this.name, gold.quantity());
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	@Override
 	public String description() {
-		String desc = Messages.get(this,"desc");
-		return desc;
+		return Messages.get(this, "desc");
 	}
 
 	private class Fleeing extends Mob.Fleeing {

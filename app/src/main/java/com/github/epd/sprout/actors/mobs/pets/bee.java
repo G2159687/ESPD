@@ -30,88 +30,93 @@ import com.watabou.utils.Random;
 
 public class bee extends PET {
 
-    {
-        name = Messages.get(bee.class, "name");
-        spriteClass = SteelBeeSprite.class;
-        flying = true;
-        state = HUNTING;
-        level = 1;
-        type = 2;
+	{
+		name = Messages.get(bee.class, "name");
+		spriteClass = SteelBeeSprite.class;
+		flying = true;
+		state = HUNTING;
+		level = 1;
+		type = 2;
 
-    }
+	}
 
-    protected int regen = 1;
-    protected float regenChance = 0.1f;
-
-
-    @Override
-    public int dr() {
-        return level * 3;
-    }
-
-    @Override
-    public void restoreFromBundle(Bundle bundle) {
-        super.restoreFromBundle(bundle);
-        adjustStats(level);
-    }
-
-    @Override
-    public void adjustStats(int level) {
-        this.level = level;
-        defenseSkill = 1 + level * 2;
-        HT = (2 + level) * 6;
-    }
+	protected int regen = 1;
+	protected float regenChance = 0.1f;
 
 
-    @Override
-    public int attackSkill(Char target) {
-        return defenseSkill;
-    }
+	@Override
+	public int dr() {
+		return level * 3;
+	}
 
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange(HT / 5, HT / 2);
-    }
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		adjustStats(level);
+	}
 
-    @Override
-    protected boolean act() {
+	@Override
+	public void adjustStats(int level) {
+		this.level = level;
+		defenseSkill = 1 + level * 2;
+		HT = (2 + level) * 6;
+	}
 
-        if (Random.Float() < regenChance && HP < HT) {
-            HP += regen;
-        }
+	@Override
+	public void flee() {
+		((SteelBeeSprite) sprite).hpBar.killAndErase();
+		super.flee();
+	}
 
-        return super.act();
-    }
+	@Override
+	public int attackSkill(Char target) {
+		return defenseSkill;
+	}
+
+	@Override
+	public int damageRoll() {
+		return Random.NormalIntRange(HT / 5, HT / 2);
+	}
+
+	@Override
+	protected boolean act() {
+
+		if (Random.Float() < regenChance && HP < HT) {
+			HP += regen;
+		}
+
+		return super.act();
+	}
 
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean interact() {
 
-        if (this.buff(MagicalSleep.class) != null) {
-            Buff.detach(this, MagicalSleep.class);
-        }
+		if (this.buff(MagicalSleep.class) != null) {
+			Buff.detach(this, MagicalSleep.class);
+		}
 
-        if (state == SLEEPING) {
-            state = HUNTING;
-        }
-        if (buff(Paralysis.class) != null) {
-            Buff.detach(this, Paralysis.class);
-            GLog.i(Messages.get(bee.class, "shake"), name);
-        }
+		if (state == SLEEPING) {
+			state = HUNTING;
+		}
+		if (buff(Paralysis.class) != null) {
+			Buff.detach(this, Paralysis.class);
+			GLog.i(Messages.get(bee.class, "shake"), name);
+		}
 
-        int curPos = pos;
+		int curPos = pos;
 
-        moveSprite(pos, Dungeon.hero.pos);
-        move(Dungeon.hero.pos);
+		moveSprite(pos, Dungeon.hero.pos);
+		move(Dungeon.hero.pos);
 
-        Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-        Dungeon.hero.move(curPos);
+		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+		Dungeon.hero.move(curPos);
 
-        Dungeon.hero.spend(1 / Dungeon.hero.speed());
-        Dungeon.hero.busy();
+		Dungeon.hero.spend(1 / Dungeon.hero.speed());
+		Dungeon.hero.busy();
 
-        return true;
-    }
+		return true;
+	}
 /*
     @Override
 	protected Char chooseEnemy() {
@@ -136,10 +141,10 @@ public class bee extends PET {
 */
 
 
-    @Override
-    public String description() {
-        return Messages.get(bee.class, "desc");
-    }
+	@Override
+	public String description() {
+		return Messages.get(bee.class, "desc");
+	}
 
 
 }

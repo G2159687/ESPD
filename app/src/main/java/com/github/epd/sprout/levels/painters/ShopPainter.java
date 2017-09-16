@@ -18,7 +18,6 @@
 package com.github.epd.sprout.levels.painters;
 
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.hero.Belongings;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.npcs.ImpShopkeeper;
 import com.github.epd.sprout.actors.mobs.npcs.Shopkeeper;
@@ -36,20 +35,16 @@ import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.Stylus;
 import com.github.epd.sprout.items.Torch;
 import com.github.epd.sprout.items.Weightstone;
-import com.github.epd.sprout.items.armor.LeatherArmor;
 import com.github.epd.sprout.items.armor.MailArmor;
 import com.github.epd.sprout.items.armor.PlateArmor;
 import com.github.epd.sprout.items.armor.ScaleArmor;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
-import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.potions.PotionOfHealing;
 import com.github.epd.sprout.items.potions.PotionOfOverHealing;
-import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.items.scrolls.ScrollOfIdentify;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicMapping;
 import com.github.epd.sprout.items.scrolls.ScrollOfRegrowth;
 import com.github.epd.sprout.items.scrolls.ScrollOfRemoveCurse;
-import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.melee.BattleAxe;
 import com.github.epd.sprout.items.weapon.melee.Longsword;
 import com.github.epd.sprout.items.weapon.melee.Mace;
@@ -64,7 +59,6 @@ import com.github.epd.sprout.levels.LastShopLevel;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Room;
 import com.github.epd.sprout.levels.Terrain;
-import com.github.epd.sprout.plants.Plant;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
@@ -116,51 +110,52 @@ public class ShopPainter extends Painter {
 
 		itemsToSpawn = null;
 	}
-//TODO:Change this
+
+	//TODO:Change this
 	private static void generateItems() {
 
 		itemsToSpawn = new ArrayList<Item>();
 
 		switch (Dungeon.depth) {
-		case 6:
-			itemsToSpawn.add(new OtilukesJournal().identify());
-			Dungeon.limitedDrops.journal.drop();
-			itemsToSpawn.add((Random.Int(2) == 0 ? new Quarterstaff()
-					: new Spear()).identify());
-			itemsToSpawn.add(Random.Int(2) == 0 ? new IncendiaryDart()
-					.quantity(Random.NormalIntRange(2, 4)) : new CurareDart()
-					.quantity(Random.NormalIntRange(1, 3)));
-			itemsToSpawn.add(new MailArmor().identify());
-			break;
+			case 6:
+				itemsToSpawn.add(new OtilukesJournal().identify());
+				Dungeon.limitedDrops.journal.drop();
+				itemsToSpawn.add((Random.Int(2) == 0 ? new Quarterstaff()
+						: new Spear()).identify());
+				itemsToSpawn.add(Random.Int(2) == 0 ? new IncendiaryDart()
+						.quantity(Random.NormalIntRange(2, 4)) : new CurareDart()
+						.quantity(Random.NormalIntRange(1, 3)));
+				itemsToSpawn.add(new MailArmor().identify());
+				break;
 
-		case 11:
-			itemsToSpawn.add((Random.Int(2) == 0 ? new Sword() : new Mace())
-					.identify());
-			itemsToSpawn.add(Random.Int(2) == 0 ? new CurareDart()
-					.quantity(Random.NormalIntRange(2, 5)) : new Shuriken()
-					.quantity(Random.NormalIntRange(3, 6)));
-			itemsToSpawn.add(new ScaleArmor().identify());
-			break;
+			case 11:
+				itemsToSpawn.add((Random.Int(2) == 0 ? new Sword() : new Mace())
+						.identify());
+				itemsToSpawn.add(Random.Int(2) == 0 ? new CurareDart()
+						.quantity(Random.NormalIntRange(2, 5)) : new Shuriken()
+						.quantity(Random.NormalIntRange(3, 6)));
+				itemsToSpawn.add(new ScaleArmor().identify());
+				break;
 
-		case 16:
-			itemsToSpawn.add((Random.Int(2) == 0 ? new Longsword()
-					: new BattleAxe()).identify());
-			itemsToSpawn.add(Random.Int(2) == 0 ? new Shuriken()
-					.quantity(Random.NormalIntRange(4, 7)) : new Javelin()
-					.quantity(Random.NormalIntRange(3, 6)));
-			itemsToSpawn.add(new PlateArmor().identify());
-			break;
+			case 16:
+				itemsToSpawn.add((Random.Int(2) == 0 ? new Longsword()
+						: new BattleAxe()).identify());
+				itemsToSpawn.add(Random.Int(2) == 0 ? new Shuriken()
+						.quantity(Random.NormalIntRange(4, 7)) : new Javelin()
+						.quantity(Random.NormalIntRange(3, 6)));
+				itemsToSpawn.add(new PlateArmor().identify());
+				break;
 
-		case 21:
-			itemsToSpawn.add(new Torch());
-			itemsToSpawn.add(new Torch());
-			itemsToSpawn.add(new Torch());
-			itemsToSpawn.add(new BookOfDead());
-			itemsToSpawn.add(new BookOfLife());
-			itemsToSpawn.add(new BookOfTranscendence());
-			itemsToSpawn.add(new DwarfHammer());
-			itemsToSpawn.add(new DwarfHammer());
-			break;
+			case 21:
+				itemsToSpawn.add(new Torch());
+				itemsToSpawn.add(new Torch());
+				itemsToSpawn.add(new Torch());
+				itemsToSpawn.add(new BookOfDead());
+				itemsToSpawn.add(new BookOfLife());
+				itemsToSpawn.add(new BookOfTranscendence());
+				itemsToSpawn.add(new DwarfHammer());
+				itemsToSpawn.add(new DwarfHammer());
+				break;
 		}
 
 		itemsToSpawn.add(Random.Int(3) == 0 ? new PotionOfOverHealing() : new PotionOfHealing());
@@ -176,19 +171,19 @@ public class ShopPainter extends Painter {
 			itemsToSpawn.add(Random.Int(2) == 0 ? Generator
 					.random(Generator.Category.POTION) : Generator
 					.random(Generator.Category.SCROLL));
-		
+
 		itemsToSpawn.add(new Bomb().random());
 		switch (Random.Int(5)) {
-		case 1:
-			itemsToSpawn.add(new Bomb());
-			break;
-		case 2:
-			itemsToSpawn.add(new Bomb().random());
-			break;
-		case 3:
-		case 4:
-			itemsToSpawn.add(new Honeypot());
-			break;
+			case 1:
+				itemsToSpawn.add(new Bomb());
+				break;
+			case 2:
+				itemsToSpawn.add(new Bomb().random());
+				break;
+			case 3:
+			case 4:
+				itemsToSpawn.add(new Honeypot());
+				break;
 		}
 
 		if (Dungeon.depth == 6) {
@@ -208,18 +203,18 @@ public class ShopPainter extends Painter {
 			// this way players who get the hourglass late can still max it,
 			// usually.
 			switch (Dungeon.depth) {
-			case 6:
-				bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.20f);
-				break;
-			case 11:
-				bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.25f);
-				break;
-			case 16:
-				bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.50f);
-				break;
-			case 21:
-				bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.80f);
-				break;
+				case 6:
+					bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.20f);
+					break;
+				case 11:
+					bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.25f);
+					break;
+				case 16:
+					bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.50f);
+					break;
+				case 21:
+					bags = (int) Math.ceil((5 - hourglass.sandBags) * 0.80f);
+					break;
 			}
 
 			for (int i = 1; i <= bags; i++) {
@@ -230,22 +225,22 @@ public class ShopPainter extends Painter {
 
 		Item rare;
 		switch (Random.Int(10)) {
-		case 0:
-			rare = Generator.random(Generator.Category.WAND);
-			rare.level = 0;
-			break;
-		case 1:
-			rare = Generator.random(Generator.Category.RING);
-			rare.level = 1;
-			break;
-		case 2:
-			rare = Generator.random(Generator.Category.ARTIFACT).identify();
-			break;
-		case 3:
-			rare = Generator.random(Generator.Category.ARTIFACT).identify();
-			break;
-		default:
-			rare = new Stylus();
+			case 0:
+				rare = Generator.random(Generator.Category.WAND);
+				rare.level = 0;
+				break;
+			case 1:
+				rare = Generator.random(Generator.Category.RING);
+				rare.level = 1;
+				break;
+			case 2:
+				rare = Generator.random(Generator.Category.ARTIFACT).identify();
+				break;
+			case 3:
+				rare = Generator.random(Generator.Category.ARTIFACT).identify();
+				break;
+			default:
+				rare = new Stylus();
 		}
 		rare.cursed = rare.cursedKnown = false;
 		itemsToSpawn.add(rare);

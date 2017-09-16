@@ -37,8 +37,8 @@ import com.watabou.utils.Random;
 public class ScrollOfPsionicBlast extends Scroll {
 
 	{
-		initials=5;
-		name = Messages.get(this,"name");
+		initials = 5;
+		name = Messages.get(this, "name");
 		consumedValue = 10;
 
 		bones = true;
@@ -53,7 +53,7 @@ public class ScrollOfPsionicBlast extends Scroll {
 		Invisibility.dispel();
 
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (Level.fieldOfView[mob.pos] && mob.hostile ) {
+			if (Level.fieldOfView[mob.pos] && mob.hostile) {
 				mob.damage(mob.HT, this);
 			}
 		}
@@ -68,37 +68,40 @@ public class ScrollOfPsionicBlast extends Scroll {
 		curUser.spendAndNext(TIME_TO_READ);
 
 		if (!checkOriginalGenMobs() &&
-				!Dungeon.level.cleared && Dungeon.dewDraw && Dungeon.depth>2 && Dungeon.depth<25 && !Dungeon.bossLevel(Dungeon.depth)
-				){
-				Dungeon.level.cleared=true;
-				GameScene.levelCleared();		
-				if(Dungeon.depth>0){Statistics.prevfloormoves=Math.max(Dungeon.pars[Dungeon.depth]-Dungeon.level.currentmoves,0);
-				   if (Statistics.prevfloormoves>1){
-				     GLog.h(Messages.get(Mob.class,"draw1", Statistics.prevfloormoves));
-				   } else if (Statistics.prevfloormoves==1){
-				     GLog.h(Messages.get(Mob.class,"draw2"));
-				   } else if (Statistics.prevfloormoves==0){
-					 GLog.h(Messages.get(Mob.class,"draw3"));
-				   }
-				} 
+				!Dungeon.level.cleared && Dungeon.dewDraw && Dungeon.depth > 2 && Dungeon.depth < 25 && !Dungeon.bossLevel(Dungeon.depth)
+				) {
+			Dungeon.level.cleared = true;
+			GameScene.levelCleared();
+			if (Dungeon.depth > 0) {
+				Statistics.prevfloormoves = Math.max(Dungeon.pars[Dungeon.depth] - Dungeon.level.currentmoves, 0);
+				if (Statistics.prevfloormoves > 1) {
+					GLog.h(Messages.get(Mob.class, "draw1", Statistics.prevfloormoves));
+				} else if (Statistics.prevfloormoves == 1) {
+					GLog.h(Messages.get(Mob.class, "draw2"));
+				} else if (Statistics.prevfloormoves == 0) {
+					GLog.h(Messages.get(Mob.class, "draw3"));
+				}
+			}
 		}
-		
+
 		if (!curUser.isAlive()) {
 			Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
-			GLog.n(Messages.get(this,"ondeath"));
+			GLog.n(Messages.get(this, "ondeath"));
 		}
 	}
-	
-	public boolean checkOriginalGenMobs (){
+
+	public boolean checkOriginalGenMobs() {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (mob.originalgen){return true;}
-		 }	
+			if (mob.originalgen) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

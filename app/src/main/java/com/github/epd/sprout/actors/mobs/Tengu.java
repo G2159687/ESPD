@@ -30,6 +30,7 @@ import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.TomeOfMastery;
+import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban2;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicMapping;
@@ -42,6 +43,7 @@ import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.TenguSprite;
 import com.github.epd.sprout.ui.BossHealthBar;
+import com.github.epd.sprout.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -53,7 +55,7 @@ public class Tengu extends Mob {
 	private static final int JUMP_DELAY = 5;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = TenguSprite.class;
 		baseSpeed = 2f;
 
@@ -63,8 +65,8 @@ public class Tengu extends Mob {
 	}
 
 	private int timeToJump = JUMP_DELAY;
-	
-	
+
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(15, 18);
@@ -86,44 +88,49 @@ public class Tengu extends Mob {
 		//note
 		Badges.Badge badgeToCheck = null;
 		switch (Dungeon.hero.heroClass) {
-		case WARRIOR:
-			badgeToCheck = Badge.MASTERY_WARRIOR;
-			break;
-		case MAGE:
-			badgeToCheck = Badge.MASTERY_MAGE;
-			break;
-		case ROGUE:
-			badgeToCheck = Badge.MASTERY_ROGUE;
-			break;
-		case HUNTRESS:
-			badgeToCheck = Badge.MASTERY_HUNTRESS;
-			break;
+			case WARRIOR:
+				badgeToCheck = Badge.MASTERY_WARRIOR;
+				break;
+			case MAGE:
+				badgeToCheck = Badge.MASTERY_MAGE;
+				break;
+			case ROGUE:
+				badgeToCheck = Badge.MASTERY_ROGUE;
+				break;
+			case HUNTRESS:
+				badgeToCheck = Badge.MASTERY_HUNTRESS;
+				break;
 		}
 		if (!Badges.isUnlocked(badgeToCheck)) {
 			Dungeon.level.drop(new TomeOfMastery(), pos).sprite.drop();
 		} else {
 			Dungeon.level.drop(new Egg(), pos).sprite.drop();
 		}
-		
-		if (!Dungeon.limitedDrops.journal.dropped()){ 
-		  Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-		  Dungeon.limitedDrops.journal.drop();
+
+		if (!Dungeon.limitedDrops.journal.dropped()) {
+			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
+			Dungeon.limitedDrops.journal.drop();
 		}
-		
+
+		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
+		if (beacon != null) {
+			beacon.upgrade();
+			GLog.p(Messages.get(LloydsBeacon.class, "stronger"));
+		}
+
 		Dungeon.level.drop(new Sokoban2(), pos).sprite.drop();
-       
-		
+
+
 		GameScene.bossSlain();
 		Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
-			
+
 		super.die(cause);
 
-		Badges.validateBossSlain();
-		Dungeon.tengukilled=true;
+		Dungeon.tengukilled = true;
 
-		yell(Messages.get(this,"flee"));
+		yell(Messages.get(this, "flee"));
 		TenguEscape.spawnAt(pos);
-					
+
 	}
 
 	@Override
@@ -138,7 +145,7 @@ public class Tengu extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -190,21 +197,22 @@ public class Tengu extends Mob {
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice",Dungeon.hero.givenName()));
+		yell(Messages.get(this, "notice", Dungeon.hero.givenName()));
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

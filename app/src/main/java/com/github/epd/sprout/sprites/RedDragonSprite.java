@@ -30,9 +30,9 @@ import com.watabou.utils.Callback;
 
 public class RedDragonSprite extends MobSprite {
 
-	private HealthBar hpBar;
-	
-	//Frames 1-4 are idle, 5-8 are moving, 9-12 are attack and the last are for death 
+	public HealthBar hpBar;
+
+	//Frames 1-4 are idle, 5-8 are moving, 9-12 are attack and the last are for death
 
 	public RedDragonSprite() {
 		super();
@@ -51,7 +51,7 @@ public class RedDragonSprite extends MobSprite {
 		attack.frames(frames, 8, 9, 10, 11);
 
 		zap = attack.clone();
-		
+
 		die = new Animation(8, false);
 		die.frames(frames, 12, 13, 14, 15);
 
@@ -76,23 +76,32 @@ public class RedDragonSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof RedDragon){
+		if (ch instanceof RedDragon) {
 			final Char finalCH = ch;
-			hpBar = new HealthBar(){
+			hpBar = new HealthBar() {
 				@Override
 				public synchronized void update() {
 					super.update();
-					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
-					hpBar.level( finalCH );
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y - 3, finalCH.sprite.width, hpBar.height());
+					hpBar.level(finalCH);
 					visible = finalCH.sprite.visible;
 				}
 			};
 			((GameScene) ShatteredPixelDungeon.scene()).ghostHP.add(hpBar);
 		}
 	}
-	
+
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
 	}
 }

@@ -83,8 +83,8 @@ public class FloatingText extends RenderedText {
 		if (cameraZoom != Camera.main.zoom) {
 			cameraZoom = Camera.main.zoom;
 			PixelScene.chooseFont(9, cameraZoom);
-			size( 9 * (int)cameraZoom);
-			scale.set( 1 /cameraZoom );
+			size(9 * (int) cameraZoom);
+			scale.set(1 / cameraZoom);
 		}
 
 		text(text);

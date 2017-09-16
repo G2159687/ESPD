@@ -30,11 +30,11 @@ import com.watabou.utils.PathFinder;
 
 public class Icecap extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Icecap.class,"desc");
+	private static final String TXT_DESC = Messages.get(Icecap.class, "desc");
 
 	{
 		image = 1;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
@@ -60,9 +60,9 @@ public class Icecap extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Icecap.class,"name");
+			plantName = Messages.get(Icecap.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_ICECAP;
 
 			plantClass = Icecap.class;
@@ -71,6 +71,7 @@ public class Icecap extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 }

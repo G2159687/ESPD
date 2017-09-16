@@ -39,13 +39,14 @@ public class AttackIndicator extends Tag {
 
 	private CharSprite sprite = null;
 
-	private static Mob lastTarget = null;
+	private static Mob lastTarget;
 	private ArrayList<Mob> candidates = new ArrayList<Mob>();
 
 	public AttackIndicator() {
 		super(DangerIndicator.COLOR);
 
 		instance = this;
+		lastTarget = null;
 
 		setSize(24, 24);
 		visible(false);
@@ -101,8 +102,8 @@ public class AttackIndicator extends Tag {
 		for (int i = 0; i < v; i++) {
 			Mob mob = Dungeon.hero.visibleEnemy(i);
 			if (Dungeon.hero.belongings.weapon != null ?
-					Level.distance( heroPos, mob.pos ) <= Dungeon.hero.belongings.weapon.reachFactor(Dungeon.hero)
-					: Level.adjacent( heroPos, mob.pos )) {
+					Level.distance(heroPos, mob.pos) <= Dungeon.hero.belongings.weapon.reachFactor(Dungeon.hero)
+					: Level.adjacent(heroPos, mob.pos)) {
 				candidates.add(mob);
 			}
 		}
@@ -168,7 +169,7 @@ public class AttackIndicator extends Tag {
 	@Override
 	protected void onClick() {
 		if (enabled) {
-			if (Dungeon.hero.handle( lastTarget.pos )) {
+			if (Dungeon.hero.handle(lastTarget.pos)) {
 				Dungeon.hero.next();
 			}
 		}

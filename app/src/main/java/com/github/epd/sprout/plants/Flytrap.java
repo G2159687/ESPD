@@ -29,19 +29,19 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class Flytrap extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Flytrap.class,"desc");
+	private static final String TXT_DESC = Messages.get(Flytrap.class, "desc");
 
 	{
 		image = 15;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
 	public void activate(Char ch) {
-		if (ch==null){
-		 if (WellWater.affectCellPlant(pos)){
-			super.activate(null);	
-		    }
+		if (ch == null) {
+			if (WellWater.affectCellPlant(pos)) {
+				super.activate(null);
+			}
 		}
 	}
 
@@ -52,32 +52,33 @@ public class Flytrap extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Flytrap.class,"name");
+			plantName = Messages.get(Flytrap.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_FLYTRAP;
 
 			plantClass = Flytrap.class;
-			alchemyClass = PotionOfOverHealing.class;				
+			alchemyClass = PotionOfOverHealing.class;
 		}
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
+			return Messages.get(Plant.class, "seeddesc", plantName);
 		}
+
 		@Override
 		public Plant couch(int pos) {
-			GameScene.add(Blob.seed(pos, 1, WaterOfUpgradeEating.class));	
-		    return super.couch(pos);		    
+			GameScene.add(Blob.seed(pos, 1, WaterOfUpgradeEating.class));
+			return super.couch(pos);
 		}
 	}
-	
-		
-	public static boolean checkWater(){
-		
-	WellWater water = (WellWater) Dungeon.level.blobs.get(WaterOfUpgradeEating.class);
-	  if (water == null) {
-		return false;
+
+
+	public static boolean checkWater() {
+
+		WellWater water = (WellWater) Dungeon.level.blobs.get(WaterOfUpgradeEating.class);
+		if (water == null) {
+			return false;
 		} else return !(water != null && water.volume == 0);
-	 } 
+	}
 }

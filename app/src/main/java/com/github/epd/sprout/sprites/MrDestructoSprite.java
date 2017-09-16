@@ -54,7 +54,7 @@ public class MrDestructoSprite extends MobSprite {
 		attackPos = pos;
 		super.attack(pos);
 	}
-	
+
 
 	@Override
 	public void onComplete(Animation anim) {

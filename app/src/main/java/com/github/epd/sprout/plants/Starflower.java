@@ -29,22 +29,24 @@ import com.watabou.utils.Random;
 
 public class Starflower extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Starflower.class,"desc");
+	private static final String TXT_DESC = Messages.get(Starflower.class, "desc");
 
 	{
 		image = 11;
-		plantName = Messages.get(Starflower.class,"name");
+		plantName = Messages.get(Starflower.class, "name");
 	}
-	
+
 	@Override
 	public void activate(Char ch) {
-		if (ch==null){
+		if (ch == null) {
 			super.activate(ch);
 		}
 		if (ch instanceof Hero) {
-		  Buff.affect(ch, Strength.class);
+			Buff.affect(ch, Strength.class);
 		}
-		if (Random.Int(3)==0){super.activate(ch);}
+		if (Random.Int(3) == 0) {
+			super.activate(ch);
+		}
 	}
 
 	@Override
@@ -52,12 +54,12 @@ public class Starflower extends Plant {
 		return TXT_DESC;
 	}
 
-	public static class Seed extends Plant.Seed{
+	public static class Seed extends Plant.Seed {
 
 		{
-			plantName = Messages.get(Starflower.class,"name");
+			plantName = Messages.get(Starflower.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_STARFLOWER;
 
 			plantClass = Starflower.class;
@@ -66,6 +68,7 @@ public class Starflower extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 }

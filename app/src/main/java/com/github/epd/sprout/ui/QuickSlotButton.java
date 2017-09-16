@@ -23,16 +23,12 @@ import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.armor.Armor;
 import com.github.epd.sprout.items.keys.Key;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.scrolls.Scroll;
-import com.github.epd.sprout.items.weapon.Weapon;
-import com.github.epd.sprout.items.weapon.melee.MeleeWeapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.items.weapon.missiles.JupitersWraith;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -45,7 +41,7 @@ import com.watabou.utils.PathFinder;
 
 public class QuickSlotButton extends Button implements WndBag.Listener {
 
-	private static final String TXT_SELECT_ITEM = Messages.get(QuickSlotButton.class,"select_item");
+	private static final String TXT_SELECT_ITEM = Messages.get(QuickSlotButton.class, "select_item");
 	public static final String TXT_CHARGE = "%d%%";
 
 	private static QuickSlotButton[] instance = new QuickSlotButton[4];
@@ -88,16 +84,16 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 			@Override
 			protected void onClick() {
 				if (targeting) {
-                    int cell = autoAim(lastTarget);
-                    if (cell != -1){
-                        GameScene.handleCell(cell);
-                    } else {
-                        GameScene.handleCell( lastTarget.pos );
-                    }
+					int cell = autoAim(lastTarget);
+					if (cell != -1) {
+						GameScene.handleCell(cell);
+					} else {
+						GameScene.handleCell(lastTarget.pos);
+					}
 
 				} else {
 					Item item = select(slotNum);
-                    if (item.usesTargeting)
+					if (item.usesTargeting)
 						useTargeting();
 					item.execute(Dungeon.hero);
 				}
@@ -124,7 +120,7 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 
 					active = false;
 					icon.visible = topLeft.visible = topRight.visible = bottomRight.visible = false;
-					if (bottomRightIcon!=null) remove(bottomRightIcon);
+					if (bottomRightIcon != null) remove(bottomRightIcon);
 
 				} else {
 
@@ -161,20 +157,22 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 						bottomRight.text(null);
 					}
 
-			Integer iconInt;
-			if (bottomRightIcon!=null) remove(bottomRightIcon);
-			if (item instanceof Scroll){
-				iconInt = ((Scroll) item).initials();
-			} else if (item instanceof Potion) {
-				iconInt = ((Potion) item).initials();
-			} else {iconInt = null;}
-			if (iconInt != null && iconVisible) {
-				bottomRightIcon = new Image(Assets.CONS_ICONS);
-				int left = iconInt*7;
-				int top = item instanceof Potion ? 0 : 8;
-				bottomRightIcon.frame(left, top, 7, 8);
-				add(bottomRightIcon);
-			}
+					Integer iconInt;
+					if (bottomRightIcon != null) remove(bottomRightIcon);
+					if (item instanceof Scroll) {
+						iconInt = ((Scroll) item).initials();
+					} else if (item instanceof Potion) {
+						iconInt = ((Potion) item).initials();
+					} else {
+						iconInt = null;
+					}
+					if (iconInt != null && iconVisible) {
+						bottomRightIcon = new Image(Assets.CONS_ICONS);
+						int left = iconInt * 7;
+						int top = item instanceof Potion ? 0 : 8;
+						bottomRightIcon.frame(left, top, 7, 8);
+						add(bottomRightIcon);
+					}
 
 					layout();
 				}
@@ -261,18 +259,18 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 		}
 	}
 
-    public static int autoAim(Char target){
-        if (new Ballistica(Dungeon.hero.pos, target.pos, Ballistica.PROJECTILE).collisionPos == target.pos) {
-            return target.pos;
-        }
-        for (int i : PathFinder.NEIGHBOURS9DIST2) {
-            if (new Ballistica(Dungeon.hero.pos, target.pos+i, Ballistica.PROJECTILE).collisionPos ==target.pos){
-                return target.pos+i;
-            }
-        }
-        return -1;
-    }
-	
+	public static int autoAim(Char target) {
+		if (new Ballistica(Dungeon.hero.pos, target.pos, Ballistica.PROJECTILE).collisionPos == target.pos) {
+			return target.pos;
+		}
+		for (int i : PathFinder.NEIGHBOURS9DIST2) {
+			if (new Ballistica(Dungeon.hero.pos, target.pos + i, Ballistica.PROJECTILE).collisionPos == target.pos) {
+				return target.pos + i;
+			}
+		}
+		return -1;
+	}
+
 	public static void refresh() {
 		for (int i = 0; i < instance.length; i++) {
 			if (instance[i] != null) {

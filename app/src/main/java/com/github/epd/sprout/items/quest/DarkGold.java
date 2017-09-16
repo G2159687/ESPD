@@ -24,11 +24,10 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class DarkGold extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ORE;
 
 		stackable = true;
-		unique = true;
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class DarkGold extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

@@ -42,31 +42,31 @@ public class VaultPainter extends Painter {
 
 		switch (Random.Int(3)) {
 
-		case 0:
-			//if (Random.Int(1)==2){
-			level.drop(prizeUncursed(level), c).type = Type.LOCKED_CHEST;
-			//} else {
-			//level.drop(prize(level), c).type = Type.MONSTERBOX;	
-			//}
-			level.addItemToSpawn(new GoldenKey(Dungeon.depth));
-			break;
+			case 0:
+				//if (Random.Int(1)==2){
+				level.drop(prizeUncursed(level), c).type = Type.LOCKED_CHEST;
+				//} else {
+				//level.drop(prize(level), c).type = Type.MONSTERBOX;
+				//}
+				level.addItemToSpawn(new GoldenKey(Dungeon.depth));
+				break;
 
-		case 1:
-			Item i1,
-			i2;
-			do {
-				i1 = prizeUncursed(level);
-				i2 = prizeUncursed(level);
-			} while (i1.getClass() == i2.getClass());
-			level.drop(i1, c).type = Type.CRYSTAL_CHEST;
-			level.drop(i2, c + PathFinder.NEIGHBOURS8[Random.Int(8)]).type = Type.CRYSTAL_CHEST;
-			level.addItemToSpawn(new GoldenKey(Dungeon.depth));
-			break;
+			case 1:
+				Item i1,
+						i2;
+				do {
+					i1 = prizeUncursed(level);
+					i2 = prizeUncursed(level);
+				} while (i1.getClass() == i2.getClass());
+				level.drop(i1, c).type = Type.CRYSTAL_CHEST;
+				level.drop(i2, c + PathFinder.NEIGHBOURS8[Random.Int(8)]).type = Type.CRYSTAL_CHEST;
+				level.addItemToSpawn(new GoldenKey(Dungeon.depth));
+				break;
 
-		case 2:
-			level.drop(prizeUncursed(level), c);
-			set(level, c, Terrain.PEDESTAL);
-			break;
+			case 2:
+				level.drop(prizeUncursed(level), c);
+				set(level, c, Terrain.PEDESTAL);
+				break;
 		}
 
 		room.entrance().set(Room.Door.Type.LOCKED);
@@ -77,18 +77,20 @@ public class VaultPainter extends Painter {
 		return Generator.random(Random.oneOf(Generator.Category.WAND,
 				Generator.Category.RING, Generator.Category.ARTIFACT));
 	}
-	
-	
+
+
 	private static Item prizeUncursed(Level level) {
-				
-	   Item item = Generator.random(Random.oneOf(Generator.Category.WAND, Generator.Category.RING, Generator.Category.ARTIFACT));
-			
-	   if (item != null && item.cursed && item.isUpgradable()) {	
+
+		Item item = Generator.random(Random.oneOf(Generator.Category.WAND, Generator.Category.RING, Generator.Category.ARTIFACT));
+
+		if (item != null && item.cursed && item.isUpgradable()) {
 			item.cursed = false;
-			if(item.level<0){item.upgrade(-item.level);} //upgrade to even	
-		}	
-	   
-	   return item;
+			if (item.level < 0) {
+				item.upgrade(-item.level);
+			} //upgrade to even
+		}
+
+		return item;
 	}
-	
+
 }

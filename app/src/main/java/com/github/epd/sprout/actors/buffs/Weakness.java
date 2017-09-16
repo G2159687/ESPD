@@ -35,7 +35,7 @@ public class Weakness extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class Weakness extends FlavourBuff {
 
 	@Override
 	public boolean attachTo(Char target) {
-		if (super.attachTo(target) && target==Dungeon.hero) {
+		if (super.attachTo(target) && target == Dungeon.hero) {
 			Hero hero = (Hero) target;
 			hero.weakened = true;
 			hero.belongings.discharge();
@@ -59,8 +59,8 @@ public class Weakness extends FlavourBuff {
 	@Override
 	public void detach() {
 		super.detach();
-		if  (target==Dungeon.hero){
-		((Hero) target).weakened = false;
+		if (target == Dungeon.hero) {
+			((Hero) target).weakened = false;
 		}
 	}
 

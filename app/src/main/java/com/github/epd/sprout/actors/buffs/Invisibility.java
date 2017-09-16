@@ -40,7 +40,7 @@ public class Invisibility extends FlavourBuff {
 
 	@Override
 	public void detach() {
-		if (target.invisible > 0)  target.invisible--;
+		if (target.invisible > 0) target.invisible--;
 		super.detach();
 	}
 
@@ -51,7 +51,7 @@ public class Invisibility extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	public static void dispel() {

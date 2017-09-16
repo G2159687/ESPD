@@ -62,9 +62,9 @@ public class Halo extends Image {
 		radius(radius);
 	}
 
-	public Halo point( float x, float y ) {
-		this.x = x - (width()/2f);
-		this.y = y - (height()/2f);
+	public Halo point(float x, float y) {
+		this.x = x - (width() / 2f);
+		this.y = y - (height() / 2f);
 		PixelScene.align(this);
 		return this;
 	}

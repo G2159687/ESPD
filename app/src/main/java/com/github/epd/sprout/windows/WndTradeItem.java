@@ -43,17 +43,17 @@ public class WndTradeItem extends Window {
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 16;
 
-	private static final String TXT_SALE = Messages.get(WndTradeItem.class,"sale");
-	private static final String TXT_BUY = Messages.get(WndTradeItem.class,"buy");
-	private static final String TXT_STEAL = Messages.get(WndTradeItem.class,"steal");
-	private static final String TXT_SELL = Messages.get(WndTradeItem.class,"sell");
-	private static final String TXT_SELL_1 = Messages.get(WndTradeItem.class,"sell1");
-	private static final String TXT_SELL_ALL = Messages.get(WndTradeItem.class,"sellall");
-	private static final String TXT_CANCEL = Messages.get(WndTradeItem.class,"cancel");
+	private static final String TXT_SALE = Messages.get(WndTradeItem.class, "sale");
+	private static final String TXT_BUY = Messages.get(WndTradeItem.class, "buy");
+	private static final String TXT_STEAL = Messages.get(WndTradeItem.class, "steal");
+	private static final String TXT_SELL = Messages.get(WndTradeItem.class, "sell");
+	private static final String TXT_SELL_1 = Messages.get(WndTradeItem.class, "sell1");
+	private static final String TXT_SELL_ALL = Messages.get(WndTradeItem.class, "sellall");
+	private static final String TXT_CANCEL = Messages.get(WndTradeItem.class, "cancel");
 
-	private static final String TXT_SOLD = Messages.get(WndTradeItem.class,"sold");
-	private static final String TXT_BOUGHT = Messages.get(WndTradeItem.class,"bought");
-	private static final String TXT_STOLE = Messages.get(WndTradeItem.class,"stole");
+	private static final String TXT_SOLD = Messages.get(WndTradeItem.class, "sold");
+	private static final String TXT_BOUGHT = Messages.get(WndTradeItem.class, "bought");
+	private static final String TXT_STOLE = Messages.get(WndTradeItem.class, "stole");
 
 	private WndBag owner;
 
@@ -228,10 +228,10 @@ public class WndTradeItem extends Window {
 		}
 
 		// Description
-		RenderedTextMultiline info = PixelScene.renderMultiline( item.info(), 6 );
+		RenderedTextMultiline info = PixelScene.renderMultiline(item.info(), 6);
 		info.maxWidth(WIDTH);
 		info.setPos(titlebar.left(), titlebar.bottom() + GAP);
-		add( info );
+		add(info);
 
 		return info.bottom();
 
@@ -270,8 +270,7 @@ public class WndTradeItem extends Window {
 	}
 
 	private int price(Item item) {
-		int price = Dungeon.isChallenged( Challenges.NO_ARMOR ) ? 1 : item.price() * 5 * (Dungeon.depth / 5 + 1);
-		return price;
+		return Dungeon.isChallenged(Challenges.NO_ARMOR) ? 1 : item.price() * 5 * (Dungeon.depth / 5 + 1);
 	}
 
 	private void buy(Heap heap) {

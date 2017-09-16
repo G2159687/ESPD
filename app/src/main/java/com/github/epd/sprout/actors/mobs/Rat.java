@@ -31,7 +31,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class Rat extends Mob {
-	
+
 
 	private static final float SPAWN_DELAY = 2f;
 
@@ -39,17 +39,16 @@ public class Rat extends Mob {
 		name = Messages.get(this, "name");
 		spriteClass = RatSprite.class;
 
-		HP = HT = 10 + Dungeon.depth*Random.NormalIntRange(1, 3);
-		defenseSkill = 3+(Math.round((Dungeon.depth)/2));
+		HP = HT = 10 + Dungeon.depth * Random.NormalIntRange(1, 3);
+		defenseSkill = 3 + (Math.round((Dungeon.depth) / 2));
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM))
-			{
-				loot = Generator.Category.MUSHROOM;
-				lootChance = 0.5f;
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			loot = Generator.Category.MUSHROOM;
+			lootChance = 0.5f;
 
-				lootOther = Generator.Category.SEED;
-				lootChanceOther = 1f;
-			} else {
+			lootOther = Generator.Category.SEED;
+			lootChanceOther = 1f;
+		} else {
 			loot = new Meat();
 			lootChance = 0.5f;
 		}
@@ -57,15 +56,14 @@ public class Rat extends Mob {
 	}
 
 
-	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(1, 5+Dungeon.depth);
+		return Random.NormalIntRange(1, 5 + Dungeon.depth);
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 5+Dungeon.depth;
+		return 5 + Dungeon.depth;
 	}
 
 	@Override
@@ -77,7 +75,7 @@ public class Rat extends Mob {
 	public String description() {
 		return Messages.get(this, "desc");
 	}
-	
+
 	public static void spawnAround(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
 			int cell = pos + n;
@@ -86,19 +84,18 @@ public class Rat extends Mob {
 			}
 		}
 	}
-	
+
 	public static Rat spawnAt(int pos) {
-		
-        Rat b = new Rat();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-	
+		Rat b = new Rat();
 
-	
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
+
 }

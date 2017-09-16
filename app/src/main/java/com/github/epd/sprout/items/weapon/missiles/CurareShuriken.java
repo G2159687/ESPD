@@ -26,11 +26,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
 public class CurareShuriken extends MissileWeapon {
-	
+
 	public static final float DURATION = 3f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SHURIKEN;
 
 		STR = 13;
@@ -49,7 +49,7 @@ public class CurareShuriken extends MissileWeapon {
 		super();
 		quantity = number;
 	}
-	
+
 	@Override
 	public void proc(Char attacker, Char defender, int damage) {
 		Buff.prolong(defender, Paralysis.class, DURATION);
@@ -58,7 +58,7 @@ public class CurareShuriken extends MissileWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(Shuriken.class,"desc");
+		return Messages.get(Shuriken.class, "desc");
 	}
 
 	@Override

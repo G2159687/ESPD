@@ -35,37 +35,37 @@ public class PotionOfInvisibility extends Potion {
 
 	{
 		initials = 3;
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
-	private static final String TXT_PREVENTING = Messages.get(PotionOfInvisibility.class,"prevent");
-	
+	private static final String TXT_PREVENTING = Messages.get(PotionOfInvisibility.class, "prevent");
+
 	@Override
 	public void apply(Hero hero) {
 		setKnown();
-		Buff.affect(hero, Invisibility.class,  Dungeon.hero.buff(AutoHealPotion.class) != null ? Invisibility.DURATION*2 : Invisibility.DURATION);
-		GLog.i(Messages.get(this,"invisible"));
+		Buff.affect(hero, Invisibility.class, Dungeon.hero.buff(AutoHealPotion.class) != null ? Invisibility.DURATION * 2 : Invisibility.DURATION);
+		GLog.i(Messages.get(this, "invisible"));
 		Sample.INSTANCE.play(Assets.SND_MELD);
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	@Override
 	public void execute(final Hero hero, String action) {
 		if (action.equals(AC_DRINK)) {
-			
-		  if (Dungeon.depth==29) {
+
+			if (Dungeon.depth == 29) {
 				GLog.w(TXT_PREVENTING);
 				return;
-		
-		   } 
+
+			}
 		}
-		
-	   super.execute(hero, action);
-		 	
+
+		super.execute(hero, action);
+
 	}
 
 	@Override

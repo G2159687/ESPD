@@ -18,8 +18,6 @@
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Badges;
-import com.github.epd.sprout.Badges.Badge;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.actors.Actor;
@@ -35,6 +33,7 @@ import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.artifacts.CapeOfThorns;
+import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban3;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
@@ -59,13 +58,13 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class DM300 extends Mob implements Callback {
-	
+
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(DM300.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(DM300.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = DM300Sprite.class;
 
 		HP = HT = 500;
@@ -78,11 +77,11 @@ public class DM300 extends Mob implements Callback {
 
 	private int bossAlive = 0;
 	private int towerAlive = 1;
-	
+
 	@Override
 	public int damageRoll() {
-		
-		return Random.NormalIntRange(18, 24)*towerAlive;
+
+		return Random.NormalIntRange(18, 24) * towerAlive;
 	}
 
 	@Override
@@ -92,30 +91,30 @@ public class DM300 extends Mob implements Callback {
 
 	@Override
 	public int dr() {
-		return 10+(4*towerAlive);
+		return 10 + (4 * towerAlive);
 	}
 
 	@Override
 	public boolean act() {
 		towerAlive = 1;
-        for (Mob mob : Dungeon.level.mobs) {
-			
-			if (mob instanceof Tower){
-				   towerAlive++;
-				 }
+		for (Mob mob : Dungeon.level.mobs) {
+
+			if (mob instanceof Tower) {
+				towerAlive++;
 			}
-        
+		}
+
 		GameScene.add(Blob.seed(pos, 30, ToxicGas.class));
 
 		return super.act();
 	}
-	
+
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
-	
+
 	@Override
 	protected boolean doAttack(Char enemy) {
 
@@ -162,7 +161,7 @@ public class DM300 extends Mob implements Callback {
 		}
 	}
 
-	
+
 	@Override
 	public void move(int step) {
 		super.move(step);
@@ -173,14 +172,14 @@ public class DM300 extends Mob implements Callback {
 			sprite.emitter().burst(ElmoParticle.FACTORY, 5);
 
 			if (Dungeon.visible[step] && Dungeon.hero.isAlive()) {
-				GLog.n(Messages.get(DM300.class,"heal"));
+				GLog.n(Messages.get(DM300.class, "heal"));
 			}
 		}
 
-		int[] cells = { step - 1, step + 1, step - Level.getWidth(),
+		int[] cells = {step - 1, step + 1, step - Level.getWidth(),
 				step + Level.getWidth(), step - 1 - Level.getWidth(),
 				step - 1 + Level.getWidth(), step + 1 - Level.getWidth(),
-				step + 1 + Level.getWidth() };
+				step + 1 + Level.getWidth()};
 		int cell = cells[Random.Int(cells.length)];
 
 		if (Dungeon.visible[cell]) {
@@ -207,68 +206,54 @@ public class DM300 extends Mob implements Callback {
 
 		super.die(cause);
 
-           for (Mob mob : Dungeon.level.mobs) {
-			
-			  if (mob instanceof Tower){
-				   bossAlive++;
-				   }
-			
-			}
-			
-			 if(bossAlive==0){
-				 
-					GameScene.bossSlain();
-					Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
-					Badges.validateBossSlain();
-			 }
-			 
-			 if (!Dungeon.limitedDrops.journal.dropped()){ 
-				  Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-				  Dungeon.limitedDrops.journal.drop();
-				}
-			 
-			 Badges.Badge badgeToCheck = null;
-				switch (Dungeon.hero.heroClass) {
-				case WARRIOR:
-					badgeToCheck = Badge.MASTERY_WARRIOR;
-					break;
-				case MAGE:
-					badgeToCheck = Badge.MASTERY_MAGE;
-					break;
-				case ROGUE:
-					badgeToCheck = Badge.MASTERY_ROGUE;
-					break;
-				case HUNTRESS:
-					badgeToCheck = Badge.MASTERY_HUNTRESS;
-					break;
-				}
-				
-				
-				Dungeon.level.drop(new Sokoban3(), pos).sprite.drop();
-		       
+		for (Mob mob : Dungeon.level.mobs) {
 
-		yell(Messages.get(DM300.class,"die"));
+			if (mob instanceof Tower) {
+				bossAlive++;
+			}
+		}
+
+		if (bossAlive == 0) {
+			GameScene.bossSlain();
+			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
+		}
+
+		if (!Dungeon.limitedDrops.journal.dropped()) {
+			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
+			Dungeon.limitedDrops.journal.drop();
+		}
+
+		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
+		if (beacon != null) {
+			beacon.upgrade();
+			GLog.p(Messages.get(LloydsBeacon.class, "stronger"));
+		}
+
+		Dungeon.level.drop(new Sokoban3(), pos).sprite.drop();
+
+		yell(Messages.get(DM300.class, "die"));
 	}
 
 	@Override
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(DM300.class,"notice"));
+		yell(Messages.get(DM300.class, "notice"));
 	}
-	
+
 	@Override
 	public void call() {
 		next();
 	}
-		
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 		RESISTANCES.add(ScrollOfPsionicBlast.class);
@@ -280,6 +265,7 @@ public class DM300 extends Mob implements Callback {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(ToxicGas.class);
 		IMMUNITIES.add(Terror.class);
@@ -291,7 +277,7 @@ public class DM300 extends Mob implements Callback {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}

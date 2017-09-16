@@ -45,7 +45,7 @@ public class Tag extends Button {
 		super.createChildren();
 
 		bg = Chrome.get(Chrome.Type.TAG);
-		bg.hardlight( r, g, b );
+		bg.hardlight(r, g, b);
 		add(bg);
 	}
 
@@ -61,6 +61,10 @@ public class Tag extends Button {
 
 	public void flash() {
 		lightness = 1f;
+	}
+
+	public void flip(boolean value) {
+		bg.flipHorizontal(value);
 	}
 
 	@Override

@@ -33,7 +33,7 @@ import com.watabou.utils.Random;
 
 public class AresLeech extends Weapon.Enchantment {
 
-	private static final String TXT_DRAWING = Messages.get(AresLeech.class,"drawing");
+	private static final String TXT_DRAWING = Messages.get(AresLeech.class, "drawing");
 
 	private static ItemSprite.Glowing PURPLE = new ItemSprite.Glowing(0x660066);
 
@@ -41,35 +41,35 @@ public class AresLeech extends Weapon.Enchantment {
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 
 		int level = Math.max(0, weapon.level);
-		
+
 		int drains = 0;
-		
+
 		boolean procced = false;
-		int distance = 1 + level*2;	
-		
+		int distance = 1 + level * 2;
+
 		int maxValue = damage * (level + 2) / (level + 6);
 		int effValue = Math.min(Random.IntRange(0, maxValue), attacker.HT - attacker.HP);
-		
+
 		for (Mob mob : Dungeon.level.mobs) {
-			
+
 			boolean visible = Level.fieldOfView[mob.pos];
-		
-		if (Level.distance(attacker.pos, mob.pos) < distance && mob.isAlive() && !mob.isPassive()){
-			  if(effValue<mob.HP){	
-				   mob.damage(effValue, weapon);
-				   weapon.charge++;
-				   drains++;
-				}	
-		  }
+
+			if (Level.distance(attacker.pos, mob.pos) < distance && mob.isAlive() && !mob.isPassive()) {
+				if (effValue < mob.HP) {
+					mob.damage(effValue, weapon);
+					weapon.charge++;
+					drains++;
+				}
+			}
 		}
-		
-        if (drains>0){
-			GLog.i(Messages.get(AresLeech.class,"effect", drains));
+
+		if (drains > 0) {
+			GLog.i(Messages.get(AresLeech.class, "effect", drains));
 		}
 		// lvl 0 - 33%
 		// lvl 1 - 43%
@@ -89,8 +89,8 @@ public class AresLeech extends Weapon.Enchantment {
 		} else {
 			return false;
 		}
-		
-		
+
+
 	}
 
 	@Override

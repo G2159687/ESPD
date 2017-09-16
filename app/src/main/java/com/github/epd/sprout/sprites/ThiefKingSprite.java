@@ -34,7 +34,6 @@ public class ThiefKingSprite extends MobSprite {
 
 	private static final float DURATION = 2f;
 	private Animation cast;
-	
 
 
 	public ThiefKingSprite() {
@@ -61,7 +60,7 @@ public class ThiefKingSprite extends MobSprite {
 
 		play(run.clone());
 	}
-	
+
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
@@ -87,34 +86,33 @@ public class ThiefKingSprite extends MobSprite {
 		if (Level.water[to]) {
 			GameScene.ripple(to);
 		}
-		
-		
+
 
 		ch.onMotionComplete();
 	}
-	
-	
+
+
 	@Override
 	public void attack(int cell) {
 		if (!Level.adjacent(cell, ch.pos)) {
 			Char enemy = Actor.findChar(cell);
-				  ((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
+			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new Dart(), new Callback() {
 						@Override
 						public void call() {
 							ch.onAttackComplete();
 						}
-				});
-		 	  
-		  		
-		  		if(Random.Int(10)==0){
-		  			Buff.affect(enemy, Slow.class, Slow.duration(enemy) / 2);
-		  		}
-		  				  		
-		  		if(Random.Int(10)==0){
-		  			Buff.affect(enemy, Poison.class).set(Random.Int(7, 9) * Poison.durationFactor(enemy));
-		  		}
-		  		
+					});
+
+
+			if (Random.Int(10) == 0) {
+				Buff.affect(enemy, Slow.class, Slow.duration(enemy) / 2);
+			}
+
+			if (Random.Int(10) == 0) {
+				Buff.affect(enemy, Poison.class).set(Random.Int(7, 9) * Poison.durationFactor(enemy));
+			}
+
 			play(cast);
 			turnTo(ch.pos, cell);
 
@@ -128,7 +126,7 @@ public class ThiefKingSprite extends MobSprite {
 	@Override
 	public void onComplete(Animation anim) {
 		if (anim == run) {
-			synchronized (this){
+			synchronized (this) {
 				isMoving = false;
 				idle();
 				notifyAll();

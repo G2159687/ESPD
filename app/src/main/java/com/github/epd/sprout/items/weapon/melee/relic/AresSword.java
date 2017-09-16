@@ -34,9 +34,9 @@ public class AresSword extends RelicMeleeWeapon {
 
 	}
 
-	
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARESSWORD;
 
 		level = 0;
@@ -50,9 +50,9 @@ public class AresSword extends RelicMeleeWeapon {
 		bones = false;
 
 		defaultAction = AC_REGEN;
-  }
-		
-	public static final String AC_REGEN = Messages.get(AresSword.class,"ac_regen");
+	}
+
+	public static final String AC_REGEN = Messages.get(AresSword.class, "ac_regen");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -65,33 +65,33 @@ public class AresSword extends RelicMeleeWeapon {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_REGEN)) {
-			GLog.p(Messages.get(this,"ready"));
+			GLog.p(Messages.get(this, "ready"));
 			charge = 0;
-			Buff.affect(hero, BerryRegeneration.class).level(level*2);
+			Buff.affect(hero, BerryRegeneration.class).level(level * 2);
 		} else
 			super.execute(hero, action);
 	}
 
-	
+
 	public class RegenCounter extends WeaponBuff {
 
 		@Override
 		public boolean act() {
 			if (charge < chargeCap) {
-				charge+=level;
+				charge += level;
 				if (charge >= chargeCap) {
 					charge = chargeCap;
-					GLog.p(Messages.get(AresSword.class,"buffdesc"));
+					GLog.p(Messages.get(AresSword.class, "buffdesc"));
 				}
 				updateQuickslot();
 			}
 			spend(TICK);
 			return true;
 		}
-		
+
 		@Override
 		public String toString() {
-			return Messages.get(AresSword.class,"buffname");
+			return Messages.get(AresSword.class, "buffname");
 		}
 
 		@Override
@@ -110,15 +110,13 @@ public class AresSword extends RelicMeleeWeapon {
 		}
 
 	}
-	
-	
-	
-	
+
+
 	@Override
 	protected WeaponBuff passiveBuff() {
 		return new RegenCounter();
 	}
-	
+
 }
 
 

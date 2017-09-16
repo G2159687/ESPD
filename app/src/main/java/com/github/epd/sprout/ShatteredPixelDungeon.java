@@ -56,7 +56,7 @@ public class ShatteredPixelDungeon extends Game {
 		super.onCreate(savedInstanceState);
 
 		/*
-		 * if (android.os.Build.VERSION.SDK_INT >= 19) {
+	     * if (android.os.Build.VERSION.SDK_INT >= 19) {
 		 * getWindow().getDecorView().setSystemUiVisibility(
 		 * View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
 		 * View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
@@ -100,10 +100,9 @@ public class ShatteredPixelDungeon extends Game {
 		if (classicFont()) {
 			RenderedText.setFont("pixelfont.ttf");
 		} else {
-			RenderedText.setFont( null );
+			RenderedText.setFont(null);
 		}
 	}
-
 
 
 	@Override
@@ -123,7 +122,7 @@ public class ShatteredPixelDungeon extends Game {
 
 	public static void switchNoFade(Class<? extends PixelScene> c, SceneChangeCallback callback) {
 		PixelScene.noFade = true;
-		switchScene( c, callback );
+		switchScene(c, callback);
 	}
 
 	/*
@@ -173,26 +172,26 @@ public class ShatteredPixelDungeon extends Game {
 		}
 	}
 
-	private void updateDisplaySize(){
+	private void updateDisplaySize() {
 		DisplayMetrics m = new DisplayMetrics();
 		if (immersed() && Build.VERSION.SDK_INT >= 19)
-			getWindowManager().getDefaultDisplay().getRealMetrics( m );
+			getWindowManager().getDefaultDisplay().getRealMetrics(m);
 		else
-			getWindowManager().getDefaultDisplay().getMetrics( m );
+			getWindowManager().getDefaultDisplay().getMetrics(m);
 		dispHeight = m.heightPixels;
 		dispWidth = m.widthPixels;
 
-		float dispRatio = dispWidth / (float)dispHeight;
+		float dispRatio = dispWidth / (float) dispHeight;
 
 		float renderWidth = dispRatio > 1 ? PixelScene.MIN_WIDTH_L : PixelScene.MIN_WIDTH_P;
 		float renderHeight = dispRatio > 1 ? PixelScene.MIN_HEIGHT_L : PixelScene.MIN_HEIGHT_P;
 
 		runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					view.getHolder().setSizeFromLayout();
-				}
-			});
+			@Override
+			public void run() {
+				view.getHolder().setSizeFromLayout();
+			}
+		});
 
 	}
 
@@ -280,33 +279,32 @@ public class ShatteredPixelDungeon extends Game {
 	}
 
 	public static void language(Languages lang) {
-		Preferences.INSTANCE.put( Preferences.KEY_LANG, lang.code());
+		Preferences.INSTANCE.put(Preferences.KEY_LANG, lang.code());
 	}
 
 	public static Languages language() {
 		String code = Preferences.INSTANCE.getString(Preferences.KEY_LANG, null);
-		if (code == null){
+		if (code == null) {
 			Languages lang = Languages.matchLocale(Locale.getDefault());
 			if (lang.status() == Languages.Status.REVIEWED)
 				return lang;
 			else
 				return Languages.ENGLISH;
-		}
-		else return Languages.matchCode(code);
+		} else return Languages.matchCode(code);
 	}
 
-	public static void classicFont(boolean classic){
+	public static void classicFont(boolean classic) {
 		Preferences.INSTANCE.put(Preferences.KEY_CLASSICFONT, classic);
 		if (classic) {
 			RenderedText.setFont("pixelfont.ttf");
 		} else {
-			RenderedText.setFont( null );
+			RenderedText.setFont(null);
 		}
 	}
 
-	public static boolean classicFont(){
+	public static boolean classicFont() {
 		return Preferences.INSTANCE.getBoolean(Preferences.KEY_CLASSICFONT,
-				(language() != Languages.CHINESE ));
+				(language() != Languages.CHINESE));
 	}
 
 	public static void lastClass(int value) {
@@ -331,6 +329,30 @@ public class ShatteredPixelDungeon extends Game {
 
 	public static int quickSlots() {
 		return Preferences.INSTANCE.getInt(Preferences.KEY_QUICKSLOTS, 3, 0, 4);
+	}
+
+	public static void flipToolbar(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_FLIPTOOLBAR, value);
+	}
+
+	public static boolean flipToolbar() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_FLIPTOOLBAR, false);
+	}
+
+	public static void flipTags(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_FLIPTAGS, value);
+	}
+
+	public static boolean flipTags() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_FLIPTAGS, false);
+	}
+
+	public static void toolbarMode(String value) {
+		Preferences.INSTANCE.put(Preferences.KEY_BARMODE, value);
+	}
+
+	public static String toolbarMode() {
+		return Preferences.INSTANCE.getString(Preferences.KEY_BARMODE, !landscape() ? "SPLIT" : "GROUPED");
 	}
 
 	public static void intro(boolean value) {

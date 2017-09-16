@@ -44,7 +44,7 @@ public class SkeletonHand1Sprite extends MobSprite {
 
 		play(idle);
 	}
-	
+
 	@Override
 	public void link(Char ch) {
 		super.link(ch);

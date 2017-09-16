@@ -24,7 +24,6 @@ import com.github.epd.sprout.actors.buffs.Shadows;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.BlobEmitter;
 import com.github.epd.sprout.effects.particles.ShaftParticle;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;

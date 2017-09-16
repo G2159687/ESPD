@@ -37,7 +37,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class ScrollHolder extends Bag {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.HOLDER;
 
 		size = 24;
@@ -62,6 +62,6 @@ public class ScrollHolder extends Bag {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

@@ -28,9 +28,9 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndOtilukeMessage extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndOtilukeMessage.class,"msg");
-	private static final String TXT_REWARD = Messages.get(WndOtilukeMessage.class,"ok");
-	
+	private static final String TXT_MESSAGE = Messages.get(WndOtilukeMessage.class, "msg");
+	private static final String TXT_REWARD = Messages.get(WndOtilukeMessage.class, "ok");
+
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
 	private static final int GAP = 2;
@@ -38,7 +38,7 @@ public class WndOtilukeMessage extends Window {
 	public WndOtilukeMessage() {
 
 		super();
-		
+
 		Palantir palantir = new Palantir();
 
 		IconTitle titlebar = new IconTitle();
@@ -50,12 +50,12 @@ public class WndOtilukeMessage extends Window {
 		RenderedTextMultiline message = PixelScene
 				.renderMultiline(TXT_MESSAGE, 6);
 		message.maxWidth(WIDTH);
-		message.setPos(0,titlebar.bottom() + GAP);
+		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
 		NewRedButton btnReward = new NewRedButton(TXT_REWARD) {
 			@Override
-			protected void onClick() {				
+			protected void onClick() {
 				hide();
 			}
 		};
@@ -66,5 +66,5 @@ public class WndOtilukeMessage extends Window {
 		resize(WIDTH, (int) btnReward.bottom());
 	}
 
-	
+
 }

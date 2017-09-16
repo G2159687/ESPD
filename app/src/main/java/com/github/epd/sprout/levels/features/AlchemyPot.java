@@ -31,11 +31,11 @@ import java.util.Iterator;
 
 public class AlchemyPot {
 
-	private static final String TXT_SELECT_SEED = Messages.get(AlchemyPot.class,"select_seed");
-	private static final String TXT_POT = Messages.get(AlchemyPot.class,"pot");
-	private static final String TXT_FRUIT = Messages.get(AlchemyPot.class,"fruit");
-	private static final String TXT_POTION = Messages.get(AlchemyPot.class,"potion");
-	private static final String TXT_OPTIONS = Messages.get(AlchemyPot.class,"options");
+	private static final String TXT_SELECT_SEED = Messages.get(AlchemyPot.class, "select_seed");
+	private static final String TXT_POT = Messages.get(AlchemyPot.class, "pot");
+	private static final String TXT_FRUIT = Messages.get(AlchemyPot.class, "fruit");
+	private static final String TXT_POTION = Messages.get(AlchemyPot.class, "potion");
+	private static final String TXT_OPTIONS = Messages.get(AlchemyPot.class, "options");
 
 	public static Hero hero;
 	public static int pos;

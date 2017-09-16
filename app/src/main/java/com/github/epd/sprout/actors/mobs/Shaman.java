@@ -42,34 +42,37 @@ public class Shaman extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(Shaman.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(Shaman.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ShamanSprite.class;
 
-		HP = HT = 22+(adj(0)*Random.NormalIntRange(2, 5));
-		defenseSkill = 8+adj(1);
+		HP = HT = 22 + (adj(0) * Random.NormalIntRange(2, 5));
+		defenseSkill = 8 + adj(1);
 
 		EXP = 6;
 		maxLvl = 14;
 
 		loot = Generator.Category.SCROLL;
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {lootChance = 0.8f;}
-			else {lootChance = 0.33f;}
-		
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			lootChance = 0.8f;
+		} else {
+			lootChance = 0.33f;
+		}
+
 		lootOther = new Meat();
-		lootChanceOther = Dungeon.isChallenged(Challenges.NO_HERBALISM)?1f : 0.1f;
+		lootChanceOther = Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 1f : 0.1f;
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(2, 6+adj(1));
+		return Random.NormalIntRange(2, 6 + adj(1));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 11+adj(0);
+		return 11 + adj(0);
 	}
 
 	@Override
@@ -79,7 +82,7 @@ public class Shaman extends Mob implements Callback {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -100,7 +103,7 @@ public class Shaman extends Mob implements Callback {
 			spend(TIME_TO_ZAP);
 
 			if (hit(this, enemy, true)) {
-				int dmg = Random.Int(2+adj(0), 12+adj(3));
+				int dmg = Random.Int(2 + adj(0), 12 + adj(3));
 				if (Level.water[enemy.pos] && !enemy.flying) {
 					dmg *= 1.5f;
 				}
@@ -135,10 +138,11 @@ public class Shaman extends Mob implements Callback {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}

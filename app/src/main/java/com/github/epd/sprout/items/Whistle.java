@@ -51,21 +51,20 @@ public class Whistle extends Item {
 		defaultAction = AC_CALL;
 	}
 
-	
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_CALL = Messages.get(Whistle.class,"ac");
-	public static final String TXT_ARRIVE = Messages.get(Whistle.class,"arrive");
-	public static final String TXT_TWEET = Messages.get(Whistle.class,"tweet");
-	
-		{
-		name = Messages.get(this,"name");
+	public static final String AC_CALL = Messages.get(Whistle.class, "ac");
+	public static final String TXT_ARRIVE = Messages.get(Whistle.class, "arrive");
+	public static final String TXT_TWEET = Messages.get(Whistle.class, "tweet");
+
+	{
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WHISTLE;
-		unique = true;
 		stackable = false;
-		}
-	
-				
+	}
+
+
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
@@ -76,163 +75,163 @@ public class Whistle extends Item {
 	@Override
 	public void execute(Hero hero, String action) {
 
-		
-		if (action == AC_CALL) {	
+
+		if (action == AC_CALL) {
 			petCall();
 			GLog.i(TXT_TWEET);
-									  				
+
 		} else {
 
 			super.execute(hero, action);
 
 		}
-			
-	}	
-	
-	public int getSpawnPos(){
+
+	}
+
+	public int getSpawnPos() {
 		int newPos = -1;
 		int pos = Dungeon.hero.pos;
-			ArrayList<Integer> candidates = new ArrayList<Integer>();
-			boolean[] passable = Level.passable;
+		ArrayList<Integer> candidates = new ArrayList<Integer>();
+		boolean[] passable = Level.passable;
 
-			for (int n : PathFinder.NEIGHBOURS8) {
-				int c = pos + n;
-				if (passable[c] && Actor.findChar(c) == null) {
-					candidates.add(c);
-				}
+		for (int n : PathFinder.NEIGHBOURS8) {
+			int c = pos + n;
+			if (passable[c] && Actor.findChar(c) == null) {
+				candidates.add(c);
 			}
+		}
 
-			newPos = candidates.size() > 0 ? Random.element(candidates) : -1;
-			
+		newPos = candidates.size() > 0 ? Random.element(candidates) : -1;
+
 		return newPos;
 	}
-	
-	
-	public boolean petCall () {	
-		
-	      boolean callResult = false;		
-		  int spawnPos = getSpawnPos();
-		  if (spawnPos != -1 && Dungeon.hero.haspet) {
-				
-			  int petpos = -1;
-				int heropos = Dungeon.hero.pos;
-				if (Actor.findChar(heropos) != null) {
-					//GLog.i("Check Pet 2");
-					ArrayList<Integer> candidates = new ArrayList<Integer>();
-					boolean[] passable = Level.passable;
 
-					for (int n : PathFinder.NEIGHBOURS8) {
-						int c = heropos + n;
-						if (passable[c] && Actor.findChar(c) == null) {
-							candidates.add(c);
-						}
+
+	public boolean petCall() {
+
+		boolean callResult = false;
+		int spawnPos = getSpawnPos();
+		if (spawnPos != -1 && Dungeon.hero.haspet) {
+
+			int petpos = -1;
+			int heropos = Dungeon.hero.pos;
+			if (Actor.findChar(heropos) != null) {
+				//GLog.i("Check Pet 2");
+				ArrayList<Integer> candidates = new ArrayList<Integer>();
+				boolean[] passable = Level.passable;
+
+				for (int n : PathFinder.NEIGHBOURS8) {
+					int c = heropos + n;
+					if (passable[c] && Actor.findChar(c) == null) {
+						candidates.add(c);
 					}
-
-					petpos = candidates.size() > 0 ? Random.element(candidates) : -1;
 				}
 
-				if (petpos != -1 && Dungeon.hero.haspet) {
-					
-					 PET petCheck = checkpet();
-					  if(petCheck!=null){
-						  
-						  petCheck.destroy();
-					      petCheck.sprite.killAndErase();
-					  }  
-										
-				   if (Dungeon.hero.petType==1){
-						 Spider pet = new Spider();
-						  spawnPet(pet,petpos,heropos);					 
-						}
-				   if (Dungeon.hero.petType==2){
-					  bee pet = new bee();
-					  spawnPet(pet,petpos,heropos);					 
-					}
-				   if (Dungeon.hero.petType==3){
-					      Velocirooster pet = new Velocirooster();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==4){
-						  RedDragon pet = new RedDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==5){
-					   GreenDragon pet = new GreenDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==6){
-						  VioletDragon pet = new VioletDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==7){
-					   BlueDragon pet = new BlueDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==8){
-					   Scorpion pet = new Scorpion();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==9){
-					   Bunny pet = new Bunny();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==10){
-					   Fairy pet = new Fairy();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==11){
-					   SugarplumFairy pet = new SugarplumFairy();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==12){
-					   ShadowDragon pet = new ShadowDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-					
-				   callResult = true;
-				   GLog.p(TXT_ARRIVE);
-				  
-				   Dungeon.hero.spend(Whistle.TIME_TO_USE);
-				}
-				
-		  } else {
-			  
-			  Dungeon.hero.spend(Whistle.TIME_TO_USE);
+				petpos = candidates.size() > 0 ? Random.element(candidates) : -1;
+			}
 
-		  }
-		  
-		  return callResult;
+			if (petpos != -1 && Dungeon.hero.haspet) {
+
+				PET petCheck = checkpet();
+				if (petCheck != null) {
+
+					petCheck.destroy();
+					petCheck.sprite.killAndErase();
+				}
+
+				if (Dungeon.hero.petType == 1) {
+					Spider pet = new Spider();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 2) {
+					bee pet = new bee();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 3) {
+					Velocirooster pet = new Velocirooster();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 4) {
+					RedDragon pet = new RedDragon();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 5) {
+					GreenDragon pet = new GreenDragon();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 6) {
+					VioletDragon pet = new VioletDragon();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 7) {
+					BlueDragon pet = new BlueDragon();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 8) {
+					Scorpion pet = new Scorpion();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 9) {
+					Bunny pet = new Bunny();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 10) {
+					Fairy pet = new Fairy();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 11) {
+					SugarplumFairy pet = new SugarplumFairy();
+					spawnPet(pet, petpos, heropos);
+				}
+				if (Dungeon.hero.petType == 12) {
+					ShadowDragon pet = new ShadowDragon();
+					spawnPet(pet, petpos, heropos);
+				}
+
+				callResult = true;
+				GLog.p(TXT_ARRIVE);
+
+				Dungeon.hero.spend(Whistle.TIME_TO_USE);
+			}
+
+		} else {
+
+			Dungeon.hero.spend(Whistle.TIME_TO_USE);
+
+		}
+
+		return callResult;
 	}
-	
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	public void spawnPet(PET pet, Integer petpos, Integer heropos){
-		  pet.spawn(Dungeon.hero.petLevel);
-		  pet.HP = Dungeon.hero.petHP;
-		  pet.pos = petpos;
-		  pet.state = pet.HUNTING;
-		  pet.kills = Dungeon.hero.petKills;
-		  pet.experience = Dungeon.hero.petExperience;
-		  pet.cooldown = Dungeon.hero.petCooldown;
 
-			GameScene.add(pet);
-			Actor.addDelayed(new Pushing(pet, heropos, petpos), -1f);
+	public void spawnPet(PET pet, Integer petpos, Integer heropos) {
+		pet.spawn(Dungeon.hero.petLevel);
+		pet.HP = Dungeon.hero.petHP;
+		pet.pos = petpos;
+		pet.state = pet.HUNTING;
+		pet.kills = Dungeon.hero.petKills;
+		pet.experience = Dungeon.hero.petExperience;
+		pet.cooldown = Dungeon.hero.petCooldown;
+
+		GameScene.add(pet);
+		Actor.addDelayed(new Pushing(pet, heropos, petpos), -1f);
 	}
-	
-		
+
+
 	@Override
 	public int price() {
 		return 500 * quantity;
 	}
-	
-	
+
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -243,10 +242,10 @@ public class Whistle extends Item {
 		return true;
 	}
 
-		
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 }

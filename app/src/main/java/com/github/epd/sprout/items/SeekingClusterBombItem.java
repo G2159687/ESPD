@@ -32,18 +32,17 @@ import java.util.ArrayList;
 public class SeekingClusterBombItem extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEEKING_CLUSTER_BOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
 	}
 
-	
 
 	private static boolean seek = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(SeekingBombItem.class,"ac");
-	
+	private static final String AC_LIGHTTHROW = Messages.get(SeekingBombItem.class, "ac");
+
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -72,23 +71,22 @@ public class SeekingClusterBombItem extends Item {
 					candidates.add(cell + i);
 			int newCell = candidates.isEmpty() ? cell : Random
 					.element(candidates);
-			
-			   if (!Level.pit[newCell] && seek) {
-				  SeekingClusterBombNPC.spawnAt(newCell);
-				   } else {
-			  Dungeon.level.drop(this, newCell).sprite.drop(cell);
-			   }
-			   
+
+			if (!Level.pit[newCell] && seek) {
+				SeekingClusterBombNPC.spawnAt(newCell);
+			} else {
+				Dungeon.level.drop(this, newCell).sprite.drop(cell);
+			}
+
 		} else if (!Level.pit[cell] && seek) {
-			   SeekingClusterBombNPC.spawnAt(cell);
-			
+			SeekingClusterBombNPC.spawnAt(cell);
+
 		} else {
-			
+
 			super.onThrow(cell);
 		}
 	}
 
-	
 
 	@Override
 	public boolean isUpgradable() {
@@ -108,8 +106,8 @@ public class SeekingClusterBombItem extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
+
 }

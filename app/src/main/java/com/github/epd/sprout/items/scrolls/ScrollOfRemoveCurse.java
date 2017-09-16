@@ -32,12 +32,12 @@ import com.watabou.noosa.audio.Sample;
 
 public class ScrollOfRemoveCurse extends Scroll {
 
-	private static final String TXT_PROCCED = Messages.get(ScrollOfRemoveCurse.class,"cleansed");
-	private static final String TXT_NOT_PROCCED = Messages.get(ScrollOfRemoveCurse.class,"not_cleansed");
+	private static final String TXT_PROCCED = Messages.get(ScrollOfRemoveCurse.class, "cleansed");
+	private static final String TXT_NOT_PROCCED = Messages.get(ScrollOfRemoveCurse.class, "not_cleansed");
 
 	{
-		initials=8;
-		name = Messages.get(this,"name");
+		initials = 8;
+		name = Messages.get(this, "name");
 		consumedValue = 15;
 	}
 
@@ -52,7 +52,8 @@ public class ScrollOfRemoveCurse extends Scroll {
 				curUser.belongings.backpack.items.toArray(new Item[0]));
 		procced = uncurse(curUser, curUser.belongings.weapon,
 				curUser.belongings.armor, curUser.belongings.misc1,
-				curUser.belongings.misc2)
+				curUser.belongings.misc2, curUser.belongings.misc3,
+				curUser.belongings.misc4)
 				|| procced;
 
 		Buff.detach(curUser, Weakness.class);
@@ -70,7 +71,7 @@ public class ScrollOfRemoveCurse extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static boolean uncurse(Hero hero, Item... items) {
@@ -80,16 +81,24 @@ public class ScrollOfRemoveCurse extends Scroll {
 			Item item = items[i];
 			if (item != null && item.cursed) {
 				item.uncurse();
-				if(item.level<0){item.upgrade((-item.level)*2);} //upgrade to reverse of negatives
-         	   if (item.cursed==false) {procced = true;}
+				if (item.level < 0) {
+					item.upgrade((-item.level) * 2);
+				} //upgrade to reverse of negatives
+				if (!item.cursed) {
+					procced = true;
+				}
 			}
 			if (item instanceof Bag) {
-				for (Item bagItem: ((Bag)item).items){
-                   if (bagItem != null && bagItem.cursed) {
-                	   bagItem.uncurse();
-                	   if(bagItem.level<0){bagItem.upgrade((-bagItem.level)*2);}
-                	   if (bagItem.cursed==false) {procced = true;}
-                     }
+				for (Item bagItem : ((Bag) item).items) {
+					if (bagItem != null && bagItem.cursed) {
+						bagItem.uncurse();
+						if (bagItem.level < 0) {
+							bagItem.upgrade((-bagItem.level) * 2);
+						}
+						if (!bagItem.cursed) {
+							procced = true;
+						}
+					}
 				}
 			}
 		}

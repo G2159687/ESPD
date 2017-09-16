@@ -25,8 +25,6 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.weapon.enchantments.Death;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.SkeletonSprite;
 import com.github.epd.sprout.utils.GLog;
@@ -35,18 +33,16 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import java.util.HashSet;
-
 public class Skeleton extends Mob {
 
-	private static final String TXT_HERO_KILLED = Messages.get(Skeleton.class,"kill");
+	private static final String TXT_HERO_KILLED = Messages.get(Skeleton.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SkeletonSprite.class;
 
-		HP = HT = 25+(adj(0)*Random.NormalIntRange(3, 7));
-		defenseSkill = 9+adj(1);
+		HP = HT = 25 + (adj(0) * Random.NormalIntRange(3, 7));
+		defenseSkill = 9 + adj(1);
 
 		EXP = 5;
 		maxLvl = 10;
@@ -58,10 +54,10 @@ public class Skeleton extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(8+adj(0), 16+adj(0));
+		return Random.NormalIntRange(8 + adj(0), 16 + adj(0));
 	}
 
-		
+
 	@Override
 	public void die(Object cause) {
 
@@ -102,29 +98,29 @@ public class Skeleton extends Mob {
 		}
 		if (ShatteredPixelDungeon.autocollect()) {
 			if (loot.doPickUp(Dungeon.hero))
-			GLog.i("\n" + Messages.get(Hero.class,"have", loot.name()));
-			else Dungeon.level.drop(loot, Dungeon.hero.pos).sprite.drop();}
-		else Dungeon.level.drop(loot, pos).sprite.drop();
+				GLog.i("\n" + Messages.get(Hero.class, "have", loot.name()));
+			else Dungeon.level.drop(loot, Dungeon.hero.pos).sprite.drop();
+		} else Dungeon.level.drop(loot, pos).sprite.drop();
 		return loot;
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 12+adj(0);
+		return 12 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 5+adj(0);
+		return 5 + adj(0);
 	}
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

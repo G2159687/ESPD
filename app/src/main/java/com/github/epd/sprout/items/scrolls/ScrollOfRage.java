@@ -34,8 +34,8 @@ import com.watabou.noosa.audio.Sample;
 public class ScrollOfRage extends Scroll {
 
 	{
-		initials=6;
-		name = Messages.get(this,"name");
+		initials = 6;
+		name = Messages.get(this, "name");
 		consumedValue = 5;
 	}
 
@@ -59,7 +59,7 @@ public class ScrollOfRage extends Scroll {
 			}
 		}
 
-		GLog.w(Messages.get(this,"roar"));
+		GLog.w(Messages.get(this, "roar"));
 		setKnown();
 
 		curUser.sprite.centerEmitter().start(Speck.factory(Speck.SCREAM), 0.3f,
@@ -72,6 +72,6 @@ public class ScrollOfRage extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

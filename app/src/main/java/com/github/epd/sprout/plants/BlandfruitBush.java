@@ -8,11 +8,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class BlandfruitBush extends Plant {
 
-	private static final String TXT_DESC = Messages.get(BlandfruitBush.class,"desc");
+	private static final String TXT_DESC = Messages.get(BlandfruitBush.class, "desc");
 
 	{
 		image = 8;
-		plantName = Messages.get(BlandfruitBush.class,"name");
+		plantName = Messages.get(BlandfruitBush.class, "name");
 	}
 
 	@Override
@@ -29,9 +29,9 @@ public class BlandfruitBush extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(BlandfruitBush.class,"name");
+			plantName = Messages.get(BlandfruitBush.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_BLANDFRUIT;
 
 			plantClass = BlandfruitBush.class;
@@ -40,6 +40,7 @@ public class BlandfruitBush extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 }

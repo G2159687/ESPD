@@ -17,12 +17,12 @@ public class StenchGas extends Blob {
 		Char ch;
 		int cell;
 
-		for (int i = area.left; i < area.right; i++){
-			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*WIDTH;
-				if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
+		for (int i = area.left; i < area.right; i++) {
+			for (int j = area.top; j < area.bottom; j++) {
+				cell = i + j * WIDTH;
+				if (cur[cell] > 0 && (ch = Actor.findChar(cell)) != null) {
 					if (!ch.immunities().contains(this.getClass()))
-						Buff.prolong( ch, Paralysis.class, Paralysis.duration( ch )/5 );
+						Buff.prolong(ch, Paralysis.class, Paralysis.duration(ch) / 5);
 				}
 			}
 		}
@@ -37,7 +37,7 @@ public class StenchGas extends Blob {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
-		
+		return Messages.get(this, "desc");
+
 	}
 }

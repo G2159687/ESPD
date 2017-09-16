@@ -45,20 +45,20 @@ import java.util.HashSet;
 
 public class Potion extends Item {
 
-	public static final String AC_DRINK = Messages.get(Potion.class,"ac_drink");
+	public static final String AC_DRINK = Messages.get(Potion.class, "ac_drink");
 
-	private static final String TXT_HARMFUL = Messages.get(Potion.class,"harmful");
-	private static final String TXT_BENEFICIAL = Messages.get(Potion.class,"beneficial");
-	private static final String TXT_YES = Messages.get(Potion.class,"yes");
-	private static final String TXT_NO = Messages.get(Potion.class,"no");
-	private static final String TXT_R_U_SURE_DRINK = Messages.get(Potion.class,"sure_drink");
-	private static final String TXT_R_U_SURE_THROW = Messages.get(Potion.class,"sure_throw");
+	private static final String TXT_HARMFUL = Messages.get(Potion.class, "harmful");
+	private static final String TXT_BENEFICIAL = Messages.get(Potion.class, "beneficial");
+	private static final String TXT_YES = Messages.get(Potion.class, "yes");
+	private static final String TXT_NO = Messages.get(Potion.class, "no");
+	private static final String TXT_R_U_SURE_DRINK = Messages.get(Potion.class, "sure_drink");
+	private static final String TXT_R_U_SURE_THROW = Messages.get(Potion.class, "sure_throw");
 
 	private static final float TIME_TO_DRINK = 1f;
 	protected Integer initials;
 
 
-	private static final Class<?>[] potions = { PotionOfHealing.class,
+	private static final Class<?>[] potions = {PotionOfHealing.class,
 			PotionOfExperience.class, PotionOfToxicGas.class,
 			PotionOfLiquidFlame.class, PotionOfStrength.class,
 			PotionOfParalyticGas.class, PotionOfLevitation.class,
@@ -66,30 +66,30 @@ public class Potion extends Item {
 			PotionOfInvisibility.class, PotionOfMight.class,
 			PotionOfFrost.class, PotionOfMending.class,
 			PotionOfOverHealing.class};
-	
+
 	private static final String[] colors = {
-			Messages.get(Potion.class,"turquoise"),
-			Messages.get(Potion.class,"crimson"),
-			Messages.get(Potion.class,"azure"),
-			Messages.get(Potion.class,"jade"),
-			Messages.get(Potion.class,"golden"),
-			Messages.get(Potion.class,"magenta"),
-			Messages.get(Potion.class,"charcoal"),
-			Messages.get(Potion.class,"ivory"),
-			Messages.get(Potion.class,"amber"),
-			Messages.get(Potion.class,"bistre"),
-			Messages.get(Potion.class,"indigo"),
-			Messages.get(Potion.class,"silver"),
-			Messages.get(Potion.class,"aqua"),
-			Messages.get(Potion.class,"violet")};
-	private static final Integer[] images = { ItemSpriteSheet.POTION_TURQUOISE,
+			Messages.get(Potion.class, "turquoise"),
+			Messages.get(Potion.class, "crimson"),
+			Messages.get(Potion.class, "azure"),
+			Messages.get(Potion.class, "jade"),
+			Messages.get(Potion.class, "golden"),
+			Messages.get(Potion.class, "magenta"),
+			Messages.get(Potion.class, "charcoal"),
+			Messages.get(Potion.class, "ivory"),
+			Messages.get(Potion.class, "amber"),
+			Messages.get(Potion.class, "bistre"),
+			Messages.get(Potion.class, "indigo"),
+			Messages.get(Potion.class, "silver"),
+			Messages.get(Potion.class, "aqua"),
+			Messages.get(Potion.class, "violet")};
+	private static final Integer[] images = {ItemSpriteSheet.POTION_TURQUOISE,
 			ItemSpriteSheet.POTION_CRIMSON, ItemSpriteSheet.POTION_AZURE,
 			ItemSpriteSheet.POTION_JADE, ItemSpriteSheet.POTION_GOLDEN,
 			ItemSpriteSheet.POTION_MAGENTA, ItemSpriteSheet.POTION_CHARCOAL,
 			ItemSpriteSheet.POTION_IVORY, ItemSpriteSheet.POTION_AMBER,
 			ItemSpriteSheet.POTION_BISTRE, ItemSpriteSheet.POTION_INDIGO,
 			ItemSpriteSheet.POTION_SILVER, ItemSpriteSheet.POTION_AQUA,
-		    ItemSpriteSheet.POTION_VIOLET};
+			ItemSpriteSheet.POTION_VIOLET};
 
 	private static ItemStatusHandler<Potion> handler;
 
@@ -142,7 +142,7 @@ public class Potion extends Item {
 
 			if (isKnown()
 					&& (this instanceof PotionOfLiquidFlame
-							|| this instanceof PotionOfToxicGas || this instanceof PotionOfParalyticGas)) {
+					|| this instanceof PotionOfToxicGas || this instanceof PotionOfParalyticGas)) {
 
 				GameScene.show(new WndOptions(TXT_HARMFUL, TXT_R_U_SURE_DRINK,
 						TXT_YES, TXT_NO) {
@@ -170,13 +170,13 @@ public class Potion extends Item {
 
 		if (isKnown()
 				&& (this instanceof PotionOfExperience
-						|| this instanceof PotionOfHealing
-						|| this instanceof PotionOfMindVision
-						|| this instanceof PotionOfStrength
-						|| this instanceof PotionOfInvisibility 
-						|| this instanceof PotionOfMight
-						|| this instanceof PotionOfOverHealing
-						|| this instanceof PotionOfMending)) {
+				|| this instanceof PotionOfHealing
+				|| this instanceof PotionOfMindVision
+				|| this instanceof PotionOfStrength
+				|| this instanceof PotionOfInvisibility
+				|| this instanceof PotionOfMight
+				|| this instanceof PotionOfOverHealing
+				|| this instanceof PotionOfMending)) {
 
 			GameScene.show(new WndOptions(TXT_BENEFICIAL, TXT_R_U_SURE_THROW,
 					TXT_YES, TXT_NO) {
@@ -225,7 +225,7 @@ public class Potion extends Item {
 
 	public void shatter(int cell) {
 		if (Dungeon.visible[cell]) {
-			GLog.i(Messages.get(this,"shatter", color()));
+			GLog.i(Messages.get(this, "shatter", color()));
 			Sample.INSTANCE.play(Assets.SND_SHATTER);
 			splash(cell);
 		}
@@ -261,12 +261,12 @@ public class Potion extends Item {
 
 	@Override
 	public String name() {
-		return isKnown() ? name :Messages.get(this,"unknown_name", color);
+		return isKnown() ? name : Messages.get(this, "unknown_name", color);
 	}
 
 	@Override
 	public String info() {
-		return isKnown() ? desc() : Messages.get(this,"unknown_desc", color);
+		return isKnown() ? desc() : Messages.get(this, "unknown_desc", color);
 	}
 
 	@Override
@@ -309,7 +309,7 @@ public class Potion extends Item {
 		return 20 * quantity;
 	}
 
-	public Integer initials(){
+	public Integer initials() {
 		return isKnown() ? initials : null;
 	}
 }

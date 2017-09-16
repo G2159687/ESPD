@@ -42,11 +42,11 @@ public class Statistics {
 	public static int prevfloormoves;
 	public static int moves;
 	public static float prevfloorduration;
-	
-	
+
+
 	public static boolean qualifiedForNoKilling = false;
 	public static boolean completedWithNoKilling = false;
-	
+
 
 	public static boolean amuletObtained = false;
 	public static boolean orbObtained = false;
@@ -86,7 +86,7 @@ public class Statistics {
 	private static final String REALDEEPEST = "maxDepthReal";
 	private static final String SLAIN = "enemiesSlain";
 	private static final String WATERS = "waters";
-	
+
 	private static final String ARCHERS = "archers";
 	private static final String SKELETONS = "skeletons";
 	private static final String APIRANHAS = "apiranhas";
@@ -133,8 +133,8 @@ public class Statistics {
 		waters = bundle.getInt(WATERS);
 		sewerKills = bundle.getInt(SEWERKILLS);
 		prisonKills = bundle.getInt(PRISONKILLS);
-		
-		
+
+
 		archersKilled = bundle.getInt(ARCHERS);
 		skeletonsKilled = bundle.getInt(SKELETONS);
 		albinoPiranhasKilled = bundle.getInt(APIRANHAS);
@@ -148,8 +148,8 @@ public class Statistics {
 		prevfloormoves = bundle.getInt(PREVFLOORMOVES);
 		moves = bundle.getInt(MOVES);
 		amuletObtained = bundle.getBoolean(AMULET);
-		orbObtained = bundle.getBoolean(ORB);	
-		
+		orbObtained = bundle.getBoolean(ORB);
+
 	}
 
 }

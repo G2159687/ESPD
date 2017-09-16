@@ -34,34 +34,33 @@ import java.util.HashSet;
 
 public class SeekingBomb extends Mob {
 
-	
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SeekingBombSprite.class;
 		hostile = false;
 		state = HUNTING;
-		HP = HT= 10;
-		defenseSkill = 3;	
+		HP = HT = 10;
+		defenseSkill = 3;
 	}
 
-	
+
 	private static final float SPAWN_DELAY = 0.1f;
-	
+
 	@Override
 	public int dr() {
 		return 1;
 	}
 
-	
+
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		int dmg = super.attackProc(enemy, damage);
 
 		Bomb bomb = new Bomb();
 		bomb.explode(pos);
-		yell(Messages.get(this,"atk"));
-		
+		yell(Messages.get(this, "atk"));
+
 		destroy();
 		sprite.die();
 
@@ -87,10 +86,9 @@ public class SeekingBomb extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
 
 	public void interact() {
 
@@ -105,41 +103,37 @@ public class SeekingBomb extends Mob {
 		Dungeon.hero.spend(1 / Dungeon.hero.speed());
 		Dungeon.hero.busy();
 	}
-	
-		
-	
-    public static SeekingBomb spawnAt(int pos) {
-		
-    	SeekingBomb b = new SeekingBomb();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-	
-	
-    @Override
+
+	public static SeekingBomb spawnAt(int pos) {
+
+		SeekingBomb b = new SeekingBomb();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
+
+	@Override
 	public void die(Object cause) {
 		Bomb bomb = new Bomb();
 		bomb.explode(pos);
 
 		super.die(cause);
 	}
-	
+
 
 	@Override
 	public void beckon(int cell) {
 	}
-	
-	
 
-	
-	
-			
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 		RESISTANCES.add(Leech.class);
@@ -151,6 +145,7 @@ public class SeekingBomb extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Terror.class);
 		IMMUNITIES.add(ToxicGas.class);

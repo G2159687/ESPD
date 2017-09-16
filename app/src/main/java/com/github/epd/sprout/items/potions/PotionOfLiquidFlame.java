@@ -33,9 +33,11 @@ import com.watabou.utils.PathFinder;
 public class PotionOfLiquidFlame extends Potion {
 
 	{
-		initials=5;
-		name = Messages.get(this,"name");
-		if (isKnown()) {defaultAction = AC_THROW;}
+		initials = 5;
+		name = Messages.get(this, "name");
+		if (isKnown()) {
+			defaultAction = AC_THROW;
+		}
 	}
 
 	@Override
@@ -65,7 +67,7 @@ public class PotionOfLiquidFlame extends Potion {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

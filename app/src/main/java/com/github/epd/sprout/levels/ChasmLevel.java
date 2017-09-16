@@ -43,10 +43,10 @@ public class ChasmLevel extends RegularLevel {
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
-		cleared=true;
+		cleared = true;
 	}
 
-	
+
 	@Override
 	public String tilesTex() {
 		return Assets.TILES_PRISON;
@@ -66,64 +66,66 @@ public class ChasmLevel extends RegularLevel {
 	protected boolean[] grass() {
 		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 4);
 	}
-	
+
 	@Override
 	protected void createItems() {
 		super.createItems();
 
 		spawn(this, roomEntrance);
-		
+
 	}
 
 	public static void spawn(ChasmLevel level, Room room) {
 		int pos;
-		do {pos = room.random();}
+		do {
+			pos = room.random();
+		}
 		while (level.heaps.get(pos) != null);
 		level.drop(new PotionOfLevitation(), pos);
 	}
-	
+
 	@Override
 	protected boolean assignRoomType() {
-		
+
 		specialsc = new ArrayList<Room.Type>(Room.SPECIALSTRANSCEND);
 
-		  
-		  int specialRooms = 0;
 
-			for (Room r : rooms) {
-				if (r.type == Type.NULL && r.connected.size() == 1) {
+		int specialRooms = 0;
 
-					if (specialsc.size() > 0 && r.width() > 3 && r.height() > 3
-							//&& Random.Int(specialRooms * specialRooms + 2) == 0
-							) {
+		for (Room r : rooms) {
+			if (r.type == Type.NULL && r.connected.size() == 1) {
 
-						
-						int n = specialsc.size();
-						r.type = specialsc.get(Math.min(Random.Int(n),Random.Int(n)));
-						
-						Room.useType(r.type);
-						//specialsc.remove(r.type);
-						specialRooms++;
+				if (specialsc.size() > 0 && r.width() > 3 && r.height() > 3
+					//&& Random.Int(specialRooms * specialRooms + 2) == 0
+						) {
 
-					} else if (Random.Int(2) == 0) {
 
-						HashSet<Room> neigbours = new HashSet<Room>();
-						for (Room n : r.neigbours) {
-							if (!r.connected.containsKey(n)
-									&& !Room.SPECIALSTRANSCEND.contains(n.type)
-									&& n.type != Type.PIT) {
+					int n = specialsc.size();
+					r.type = specialsc.get(Math.min(Random.Int(n), Random.Int(n)));
 
-								neigbours.add(n);
-							}
+					Room.useType(r.type);
+					//specialsc.remove(r.type);
+					specialRooms++;
+
+				} else if (Random.Int(2) == 0) {
+
+					HashSet<Room> neigbours = new HashSet<Room>();
+					for (Room n : r.neigbours) {
+						if (!r.connected.containsKey(n)
+								&& !Room.SPECIALSTRANSCEND.contains(n.type)
+								&& n.type != Type.PIT) {
+
+							neigbours.add(n);
 						}
-						if (neigbours.size() > 1) {
-							r.connect(Random.element(neigbours));
-						}
+					}
+					if (neigbours.size() > 1) {
+						r.connect(Random.element(neigbours));
 					}
 				}
 			}
+		}
 
-		
+
 		int count = 0;
 		for (Room r : rooms) {
 			if (r.type == Type.NULL) {
@@ -157,7 +159,6 @@ public class ChasmLevel extends RegularLevel {
 	}
 
 
-	
 	@Override
 	protected void decorate() {
 
@@ -190,30 +191,37 @@ public class ChasmLevel extends RegularLevel {
 				}
 			}
 		}
-		
-			
+
+
 		int length = Level.getLength();
-		
+
 		for (int i = 0; i < length; i++) {
-			
-					
-			if (map[i]==Terrain.ENTRANCE) {map[i] = Terrain.EMPTY;}
-			if (map[i]==Terrain.EXIT) { map[i] = Terrain.PEDESTAL;  if (!Dungeon.sanchikarahtranscend)  drop( new SanChikarahTranscend(), i );}
-			if (map[i]==Terrain.EMPTY_SP && heaps.get(i) == null && Random.Float()<.25){map[i] = Terrain.CHASM;}
-			if (map[i]==Terrain.EMPTY_SP && heaps.get(i) == null && Random.Float()<.05){
+
+
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.EMPTY;
+			}
+			if (map[i] == Terrain.EXIT) {
+				map[i] = Terrain.PEDESTAL;
+				if (!Dungeon.sanchikarahtranscend) drop(new SanChikarahTranscend(), i);
+			}
+			if (map[i] == Terrain.EMPTY_SP && heaps.get(i) == null && Random.Float() < .25) {
+				map[i] = Terrain.CHASM;
+			}
+			if (map[i] == Terrain.EMPTY_SP && heaps.get(i) == null && Random.Float() < .05) {
 				Sentinel sentinel = new Sentinel();
 				sentinel.pos = i;
-				mobs.add(sentinel);	
+				mobs.add(sentinel);
 			}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.02){
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .02) {
 				drop(new Phaseshift.Seed(), i);
 			}
-			
-			
+
+
 		}
 	}
 
-	
+
 	@Override
 	public void addVisuals(Scene scene) {
 		super.addVisuals(scene);
@@ -227,7 +235,7 @@ public class ChasmLevel extends RegularLevel {
 			}
 		}
 	}
-	
+
 	//@Override
 	//public int randomRespawnCell() {
 	//	return -1;
@@ -236,22 +244,22 @@ public class ChasmLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(SewerLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(SewerLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

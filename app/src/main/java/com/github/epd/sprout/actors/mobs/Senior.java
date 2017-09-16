@@ -27,13 +27,13 @@ import com.watabou.utils.Random;
 public class Senior extends Monk {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SeniorSprite.class;
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(32, 56+adj(0));
+		return Random.NormalIntRange(32, 56 + adj(0));
 	}
 
 	@Override

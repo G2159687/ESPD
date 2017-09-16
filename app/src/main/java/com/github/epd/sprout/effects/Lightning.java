@@ -21,7 +21,6 @@ import android.opengl.GLES20;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.DungeonTilemap;
-import com.github.epd.sprout.levels.Level;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
@@ -45,11 +44,11 @@ public class Lightning extends Group {
 
 	private Callback callback;
 
-	public Lightning(int from, int to, Callback callback){
+	public Lightning(int from, int to, Callback callback) {
 		this(Arrays.asList(new Arc(from, to)), callback);
 	}
 
-	public Lightning( List<Arc> arcs, Callback callback ) {
+	public Lightning(List<Arc> arcs, Callback callback) {
 
 		super();
 
@@ -61,7 +60,7 @@ public class Lightning extends Group {
 
 		life = DURATION;
 
-		Sample.INSTANCE.play( Assets.SND_LIGHTNING );
+		Sample.INSTANCE.play(Assets.SND_LIGHTNING);
 	}
 
 	private static final double A = 180 / Math.PI;
@@ -89,9 +88,9 @@ public class Lightning extends Group {
 
 	@Override
 	public void draw() {
-		GLES20.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE );
+		GLES20.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 		super.draw();
-		GLES20.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
+		GLES20.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	//A lightning object is meant to be loaded up with arcs.
@@ -103,19 +102,19 @@ public class Lightning extends Group {
 		//starting and ending x/y values
 		private PointF start, end;
 
-		public Arc(int from, int to){
+		public Arc(int from, int to) {
 			start = DungeonTilemap.tileCenterToWorld(from);
 			end = DungeonTilemap.tileCenterToWorld(to);
 
 			arc1 = new Image(Effects.get(Effects.Type.LIGHTNING));
 			arc1.x = start.x - arc1.origin.x;
 			arc1.y = start.y - arc1.origin.y;
-			arc1.origin.set( 0, arc1.height()/2 );
-			add( arc1 );
+			arc1.origin.set(0, arc1.height() / 2);
+			add(arc1);
 
 			arc2 = new Image(Effects.get(Effects.Type.LIGHTNING));
-			arc2.origin.set( 0, arc2.height()/2 );
-			add( arc2 );
+			arc2.origin.set(0, arc2.height() / 2);
+			add(arc2);
 
 		}
 
@@ -125,18 +124,18 @@ public class Lightning extends Group {
 
 		@Override
 		public void update() {
-			float x2 = (start.x + end.x) / 2 + Random.Float( -4, +4 );
-			float y2 = (start.y + end.y) / 2 + Random.Float( -4, +4 );
+			float x2 = (start.x + end.x) / 2 + Random.Float(-4, +4);
+			float y2 = (start.y + end.y) / 2 + Random.Float(-4, +4);
 
 			float dx = x2 - start.x;
 			float dy = y2 - start.y;
-			arc1.angle = (float)(Math.atan2( dy, dx ) * A);
-			arc1.scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / arc1.width;
+			arc1.angle = (float) (Math.atan2(dy, dx) * A);
+			arc1.scale.x = (float) Math.sqrt(dx * dx + dy * dy) / arc1.width;
 
 			dx = end.x - x2;
 			dy = end.y - y2;
-			arc2.angle = (float)(Math.atan2( dy, dx ) * A);
-			arc2.scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / arc2.width;
+			arc2.angle = (float) (Math.atan2(dy, dx) * A);
+			arc2.scale.x = (float) Math.sqrt(dx * dx + dy * dy) / arc2.width;
 			arc2.x = x2 - arc2.origin.x;
 			arc2.y = y2 - arc2.origin.x;
 		}

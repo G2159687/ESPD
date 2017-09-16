@@ -26,11 +26,11 @@ import com.github.epd.sprout.windows.WndBag;
 public class ScrollOfIdentify extends InventoryScroll {
 
 	{
-		name = Messages.get(this,"name");
-		inventoryTitle = Messages.get(this,"inv_title");
+		name = Messages.get(this, "name");
+		inventoryTitle = Messages.get(this, "inv_title");
 		mode = WndBag.Mode.UNIDENTIFED;
 		consumedValue = 10;
-		initials=0;
+		initials = 0;
 
 		bones = true;
 	}
@@ -42,12 +42,12 @@ public class ScrollOfIdentify extends InventoryScroll {
 				.offset(0, -16)));
 
 		item.identify();
-		GLog.i(Messages.get(this,"it_is", item));
+		GLog.i(Messages.get(this, "it_is", item));
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

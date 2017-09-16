@@ -140,7 +140,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 	public void move(int from, int to) {
 
 		turnTo(from, to);
-		
+
 		play(run);
 
 		motion = new PosTweener(this, worldToCamera(to), MOVE_INTERVAL);
@@ -255,74 +255,74 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 
 	public void add(State state) {
 		switch (state) {
-		case BURNING:
-			burning = emitter();
-			burning.pour(FlameParticle.FACTORY, 0.06f);
-			if (visible) {
-				Sample.INSTANCE.play(Assets.SND_BURNING);
-			}
-			break;
-		case LEVITATING:
-			levitation = emitter();
-			levitation.pour(Speck.factory(Speck.JET), 0.02f);
-			break;
-		case INVISIBLE:
-			PotionOfInvisibility.melt(ch);
-			break;
-		case PARALYSED:
-			paused = true;
-			break;
-		case FROZEN:
-			iceBlock = IceBlock.freeze(this);
-			paused = true;
-			break;
-		case ILLUMINATED:
-			GameScene.effect(halo = new TorchHalo(this));
-			break;
-		case CHILLED:
-			chilled = emitter();
-			chilled.pour(SnowParticle.FACTORY, 0.1f);
-			break;
+			case BURNING:
+				burning = emitter();
+				burning.pour(FlameParticle.FACTORY, 0.06f);
+				if (visible) {
+					Sample.INSTANCE.play(Assets.SND_BURNING);
+				}
+				break;
+			case LEVITATING:
+				levitation = emitter();
+				levitation.pour(Speck.factory(Speck.JET), 0.02f);
+				break;
+			case INVISIBLE:
+				PotionOfInvisibility.melt(ch);
+				break;
+			case PARALYSED:
+				paused = true;
+				break;
+			case FROZEN:
+				iceBlock = IceBlock.freeze(this);
+				paused = true;
+				break;
+			case ILLUMINATED:
+				GameScene.effect(halo = new TorchHalo(this));
+				break;
+			case CHILLED:
+				chilled = emitter();
+				chilled.pour(SnowParticle.FACTORY, 0.1f);
+				break;
 		}
 	}
 
 	public void remove(State state) {
 		switch (state) {
-		case BURNING:
-			if (burning != null) {
-				burning.on = false;
-				burning = null;
-			}
-			break;
-		case LEVITATING:
-			if (levitation != null) {
-				levitation.on = false;
-				levitation = null;
-			}
-			break;
-		case INVISIBLE:
-			alpha(1f);
-			break;
-		case PARALYSED:
-			paused = false;
-			break;
-		case FROZEN:
-			if (iceBlock != null) {
-				iceBlock.melt();
-				iceBlock = null;
-			}
-			paused = false;
-			break;
-		case ILLUMINATED:
-			if (halo != null) {
-				halo.putOut();
-			}
-			break;
-		case CHILLED:
-			if (chilled != null){
-				chilled.on = false;
-				chilled = null;
-			}
+			case BURNING:
+				if (burning != null) {
+					burning.on = false;
+					burning = null;
+				}
+				break;
+			case LEVITATING:
+				if (levitation != null) {
+					levitation.on = false;
+					levitation = null;
+				}
+				break;
+			case INVISIBLE:
+				alpha(1f);
+				break;
+			case PARALYSED:
+				paused = false;
+				break;
+			case FROZEN:
+				if (iceBlock != null) {
+					iceBlock.melt();
+					iceBlock = null;
+				}
+				paused = false;
+				break;
+			case ILLUMINATED:
+				if (halo != null) {
+					halo.putOut();
+				}
+				break;
+			case CHILLED:
+				if (chilled != null) {
+					chilled.on = false;
+					chilled = null;
+				}
 		}
 	}
 
@@ -368,7 +368,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 			if (emo != null) {
 				emo.killAndErase();
 			}
-			emo = new EmoIcon.Sleep( this );
+			emo = new EmoIcon.Sleep(this);
 			emo.visible = visible;
 		}
 		idle();
@@ -388,7 +388,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 			if (emo != null) {
 				emo.killAndErase();
 			}
-			emo = new EmoIcon.Alert( this );
+			emo = new EmoIcon.Alert(this);
 			emo.visible = visible;
 		}
 	}

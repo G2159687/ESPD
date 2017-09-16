@@ -42,13 +42,13 @@ import java.util.Locale;
 
 public class WndRanking extends WndTabbed {
 
-	private static final String TXT_ERROR = Messages.get(WndRanking.class,"error");
+	private static final String TXT_ERROR = Messages.get(WndRanking.class, "error");
 
-	private static final String TXT_STATS = Messages.get(WndRanking.class,"stats");
-	private static final String TXT_ITEMS = Messages.get(WndRanking.class,"items");
+	private static final String TXT_STATS = Messages.get(WndRanking.class, "stats");
+	private static final String TXT_ITEMS = Messages.get(WndRanking.class, "items");
 
 	private static final int WIDTH = 115;
-	private static final int HEIGHT = 165;
+	private static final int HEIGHT = 202;
 
 	private Thread thread;
 	private String error = null;
@@ -98,8 +98,8 @@ public class WndRanking extends WndTabbed {
 
 	private void createControls() {
 
-		String[] labels = { TXT_STATS, TXT_ITEMS };
-		Group[] pages = { new StatsTab(), new ItemsTab() };
+		String[] labels = {TXT_STATS, TXT_ITEMS};
+		Group[] pages = {new StatsTab(), new ItemsTab()};
 
 		for (int i = 0; i < pages.length; i++) {
 
@@ -136,21 +136,21 @@ public class WndRanking extends WndTabbed {
 
 		private static final int GAP = 4;
 
-		private final String TXT_TITLE = Messages.get(WndRanking.class,"title");
+		private final String TXT_TITLE = Messages.get(WndRanking.class, "title");
 
-		private final String TXT_CHALLENGES = Messages.get(WndRanking.class,"challenges");
+		private final String TXT_CHALLENGES = Messages.get(WndRanking.class, "challenges");
 
-		private final String TXT_HEALTH = Messages.get(WndRanking.class,"health");
-		private final String TXT_STR = Messages.get(WndRanking.class,"str");
-		private final String TXT_TEST = Messages.get(WndRanking.class,"test");
+		private final String TXT_HEALTH = Messages.get(WndRanking.class, "health");
+		private final String TXT_STR = Messages.get(WndRanking.class, "str");
+		private final String TXT_TEST = Messages.get(WndRanking.class, "test");
 
-		private final String TXT_DURATION = Messages.get(WndRanking.class,"duration");
+		private final String TXT_DURATION = Messages.get(WndRanking.class, "duration");
 
-		private final String TXT_DEPTH = Messages.get(WndRanking.class,"depth");
-		private final String TXT_ENEMIES = Messages.get(WndRanking.class,"enemies");
-		private final String TXT_ANKHS = Messages.get(WndRanking.class,"ankhs");
-		private final String TXT_WATERS = Messages.get(WndRanking.class,"waters");
-		private final String TXT_SHADOW = Messages.get(WndRanking.class,"shadow");
+		private final String TXT_DEPTH = Messages.get(WndRanking.class, "depth");
+		private final String TXT_ENEMIES = Messages.get(WndRanking.class, "enemies");
+		private final String TXT_ANKHS = Messages.get(WndRanking.class, "ankhs");
+		private final String TXT_WATERS = Messages.get(WndRanking.class, "waters");
+		private final String TXT_SHADOW = Messages.get(WndRanking.class, "shadow");
 
 		public StatsTab() {
 			super();
@@ -192,7 +192,7 @@ public class WndRanking extends WndTabbed {
 
 			pos += GAP;
 
-			pos = statSlot(this, (Dungeon.playtest ? TXT_TEST:TXT_DURATION),
+			pos = statSlot(this, (Dungeon.playtest ? TXT_TEST : TXT_DURATION),
 					Integer.toString((int) Statistics.duration), pos);
 
 			pos += GAP;
@@ -206,7 +206,7 @@ public class WndRanking extends WndTabbed {
 
 			pos = statSlot(this, TXT_ANKHS,
 					Integer.toString(Statistics.ankhsUsed), pos);
-			
+
 			pos += GAP;
 			pos = statSlot(this, TXT_WATERS,
 					Integer.toString(Statistics.waters), pos);
@@ -215,7 +215,7 @@ public class WndRanking extends WndTabbed {
 		}
 
 		private float statSlot(Group parent, String label, String value,
-				float pos) {
+		                       float pos) {
 
 			RenderedText txt = PixelScene.renderText(label, 7);
 			txt.y = pos;
@@ -250,6 +250,12 @@ public class WndRanking extends WndTabbed {
 			if (stuff.misc2 != null) {
 				addItem(stuff.misc2);
 			}
+			if (stuff.misc3 != null) {
+				addItem(stuff.misc3);
+			}
+			if (stuff.misc4 != null) {
+				addItem(stuff.misc4);
+			}
 
 			pos = 0;
 			for (int i = 0; i < 4; i++) {
@@ -257,14 +263,14 @@ public class WndRanking extends WndTabbed {
 					QuickSlotButton slot = new QuickSlotButton(
 							Dungeon.quickslot.getItem(i));
 
-					slot.setRect(pos, 116, 28, 28);
+					slot.setRect(pos, 173, 28, 28);
 
 					add(slot);
 
 				} else {
 					ColorBlock bg = new ColorBlock(28, 28, 0xFF4A4D44);
 					bg.x = pos;
-					bg.y = 116;
+					bg.y = 173;
 					add(bg);
 				}
 				pos += 29;

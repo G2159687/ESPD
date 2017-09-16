@@ -40,7 +40,7 @@ import java.util.HashSet;
 public class SkeletonKing extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SkeletonKingSprite.class;
 
 		HP = HT = 550;
@@ -84,51 +84,52 @@ public class SkeletonKing extends Mob {
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(2) == 0) {
-			if(enemy == Dungeon.hero){
-			 Buff.prolong(enemy, Weakness.class, Weakness.duration(enemy));
-			state = FLEEING;
+			if (enemy == Dungeon.hero) {
+				Buff.prolong(enemy, Weakness.class, Weakness.duration(enemy));
+				state = FLEEING;
 			}
 		}
 
 		return damage;
 	}
-	
-	
+
+
 	@Override
 	public void die(Object cause) {
 
 		GameScene.bossSlain();
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
 		Dungeon.level.drop(new AdamantWeapon(), pos).sprite.drop();
-		Dungeon.skeletonkingkilled=true;
-			
+		Dungeon.skeletonkingkilled = true;
+
 		super.die(cause);
-		
-		yell(Messages.get(this,"die"));
-					
+
+		yell(Messages.get(this, "die"));
+
 	}
-	
+
 
 	@Override
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice",Dungeon.hero.givenName()) );
+		yell(Messages.get(this, "notice", Dungeon.hero.givenName()));
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}
 
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Burning.class);
 		IMMUNITIES.add(Fire.class);

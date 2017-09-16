@@ -44,9 +44,9 @@ public class TenguDen extends Mob {
 
 	private static final int JUMP_DELAY = 5;
 	protected static final float SPAWN_DELAY = 2f;
-	
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = TenguSprite.class;
 		baseSpeed = 2f;
 
@@ -56,8 +56,8 @@ public class TenguDen extends Mob {
 	}
 
 	private int timeToJump = JUMP_DELAY;
-	
-	
+
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(15, 25);
@@ -73,22 +73,20 @@ public class TenguDen extends Mob {
 		return 20;
 	}
 
-	
-	
-	
+
 	@Override
 	public void die(Object cause) {
 
-		
-		    GameScene.bossSlain();
-	        Dungeon.tengudenkilled=true;	
-	    	yell(Messages.get(this,"die"));
-	   	
-	    	Dungeon.level.drop(new AdamantRing(), pos).sprite.drop();
-			Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
-	    	
-	    	super.die(cause); 	
-					
+
+		GameScene.bossSlain();
+		Dungeon.tengudenkilled = true;
+		yell(Messages.get(this, "die"));
+
+		Dungeon.level.drop(new AdamantRing(), pos).sprite.drop();
+		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
+
+		super.die(cause);
+
 	}
 
 	@Override
@@ -103,13 +101,13 @@ public class TenguDen extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
 	protected boolean doAttack(Char enemy) {
 		timeToJump--;
-		if (timeToJump <= 0 ) {
+		if (timeToJump <= 0) {
 			jump();
 			return true;
 		} else {
@@ -136,17 +134,17 @@ public class TenguDen extends Mob {
 		}
 
 		spend(1 / speed());
-		
-		if (Dungeon.level.mobs.size()<7){
-		 Assassin.spawnAt(pos);
+
+		if (Dungeon.level.mobs.size() < 7) {
+			Assassin.spawnAt(pos);
 		}
-		
-		
+
+
 	}
 
 	public static TenguDen spawnAt(int pos) {
 		if (Level.passable[pos] && Actor.findChar(pos) == null) {
-          
+
 			TenguDen w = new TenguDen();
 			w.pos = pos;
 			w.state = w.WANDERING;
@@ -156,25 +154,26 @@ public class TenguDen extends Mob {
 			//w.sprite.parent.add(new AlphaTweener(w.sprite, 1, 0.5f));
 
 			return w;
-  			
+
 		} else {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice"));
+		yell(Messages.get(this, "notice"));
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(Tengu.class,"desc");
+		return Messages.get(Tengu.class, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

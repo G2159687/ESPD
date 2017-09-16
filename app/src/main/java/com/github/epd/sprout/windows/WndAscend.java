@@ -29,8 +29,8 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndAscend extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndAscend.class,"message");
-	private static final String TXT_REWARD = Messages.get(WndAscend.class,"ok");
+	private static final String TXT_MESSAGE = Messages.get(WndAscend.class, "message");
+	private static final String TXT_REWARD = Messages.get(WndAscend.class, "ok");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -39,7 +39,7 @@ public class WndAscend extends Window {
 	public WndAscend() {
 
 		super();
-		
+
 		DewVial dewvial = new DewVial();
 
 		IconTitle titlebar = new IconTitle();
@@ -57,7 +57,7 @@ public class WndAscend extends Window {
 		NewRedButton btnReward = new NewRedButton(TXT_REWARD) {
 			@Override
 			protected void onClick() {
-				Dungeon.level.forcedone=true;
+				Dungeon.level.forcedone = true;
 				hide();
 			}
 		};
@@ -68,5 +68,5 @@ public class WndAscend extends Window {
 		resize(WIDTH, (int) btnReward.bottom());
 	}
 
-	
+
 }

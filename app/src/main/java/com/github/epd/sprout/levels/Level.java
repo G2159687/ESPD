@@ -110,13 +110,13 @@ public abstract class Level implements Bundlable {
 	public enum Feeling {
 		NONE, CHASM, WATER, GRASS, DARK
 	}
-	
+
 	/*  -W-1 -W  -W+1
 	 *  -1    P  +1
 	 *  W-1   W  W+1
 	 * 
 	 */
-	
+
 	public static int WIDTH = 48;
 	public static int HEIGHT = 48;
 	public static int LENGTH = WIDTH * HEIGHT;
@@ -125,19 +125,19 @@ public abstract class Level implements Bundlable {
 	protected static final int REGROW_TIMER = 10;
 	protected static final int DROP_TIMER = 10;
 	protected static final int PET_TICK = 1;
-		
-	private static final String TXT_HIDDEN_PLATE_CLICKS = Messages.get(Level.class,"hidden_plate");
+
+	private static final String TXT_HIDDEN_PLATE_CLICKS = Messages.get(Level.class, "hidden_plate");
 
 	public static boolean resizingNeeded;
 	public static boolean first;
 	public static int loadedMapSize;
-	
+
 	public int[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
-	
-	public int movepar=0;
-	public int currentmoves=0;
+
+	public int movepar = 0;
+	public int currentmoves = 0;
 	public boolean genpetnext = false;
 
 	public int viewDistance = 8;
@@ -154,7 +154,7 @@ public abstract class Level implements Bundlable {
 	public static boolean[] pit = new boolean[getLength()];
 
 	public static boolean[] discoverable = new boolean[getLength()];
-	
+
 	public Feeling feeling = Feeling.NONE;
 
 
@@ -202,11 +202,11 @@ public abstract class Level implements Bundlable {
 	private static final String GENPETNEXT = "genpetnext";
 	private static final String SEALEDLEVEL = "sealedlevel";
 
-	
+
 	public void create() {
 
-		resizingNeeded = false;		
-		
+		resizingNeeded = false;
+
 		map = new int[getLength()];
 		visited = new boolean[getLength()];
 		Arrays.fill(visited, false);
@@ -252,68 +252,70 @@ public abstract class Level implements Bundlable {
 				if (Dungeon.depth == 4 && !Dungeon.earlygrass) {
 					feeling = Feeling.GRASS;
 				} else {
-				  switch (Random.Int(10)) {
-				  case 0:
-				  	if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
-				 		feeling = Feeling.CHASM;
+					switch (Random.Int(10)) {
+						case 0:
+							if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
+								feeling = Feeling.CHASM;
+							}
+							break;
+						case 1:
+							feeling = Feeling.WATER;
+							break;
+						case 2:
+						case 3:
+						case 4:
+							feeling = Feeling.GRASS;
+							Dungeon.earlygrass = true;
+							break;
 					}
-					break;
-				  case 1:
-					feeling = Feeling.WATER;
-					break;
-				  case 2: case 3: case 4: 
-					feeling = Feeling.GRASS;
-					Dungeon.earlygrass = true;
-					break;
-				 }
 				}
 			} else if (Dungeon.depth > 5 && Dungeon.depth < 22) {
 				switch (Random.Int(10)) {
-				case 0:
-					if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
-						feeling = Feeling.CHASM;
-					}
-					break;
-				case 1:
-					feeling = Feeling.WATER;
-					break;
-				case 2: 
-					feeling = Feeling.GRASS;
-					break;
-				case 3:
-					feeling = Feeling.DARK;
-					addItemToSpawn(new Torch());
-					addItemToSpawn(new Torch());
-					addItemToSpawn(new Torch());
-					viewDistance = (int) Math.ceil(viewDistance / 3f);
-					break;
+					case 0:
+						if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
+							feeling = Feeling.CHASM;
+						}
+						break;
+					case 1:
+						feeling = Feeling.WATER;
+						break;
+					case 2:
+						feeling = Feeling.GRASS;
+						break;
+					case 3:
+						feeling = Feeling.DARK;
+						addItemToSpawn(new Torch());
+						addItemToSpawn(new Torch());
+						addItemToSpawn(new Torch());
+						viewDistance = (int) Math.ceil(viewDistance / 3f);
+						break;
 				}
 			} else if (Dungeon.depth > 21 && Dungeon.depth < 27) {
 				switch (Random.Int(10)) {
-				case 1:
-					feeling = Feeling.WATER;
-					break;
-				case 2: 
-					feeling = Feeling.GRASS;
-					break;
-				case 3:
-				case 0:
-					feeling = Feeling.DARK;
-					addItemToSpawn(new Torch());
-					addItemToSpawn(new Torch());
-					addItemToSpawn(new Torch());
-					viewDistance = (int) Math.ceil(viewDistance / 3f);
-					break;
+					case 1:
+						feeling = Feeling.WATER;
+						break;
+					case 2:
+						feeling = Feeling.GRASS;
+						break;
+					case 3:
+					case 0:
+						feeling = Feeling.DARK;
+						addItemToSpawn(new Torch());
+						addItemToSpawn(new Torch());
+						addItemToSpawn(new Torch());
+						viewDistance = (int) Math.ceil(viewDistance / 3f);
+						break;
 				}
-			} else if (Dungeon.depth==29) {
+			} else if (Dungeon.depth == 29) {
 				feeling = Feeling.WATER;
-			} else if (Dungeon.depth==31) {
+			} else if (Dungeon.depth == 31) {
 				feeling = Feeling.DARK;
 				addItemToSpawn(new Torch());
 				addItemToSpawn(new Torch());
 				addItemToSpawn(new Torch());
 				viewDistance = (int) Math.ceil(viewDistance / 3f);
-			} else if (Dungeon.depth>55) {			
+			} else if (Dungeon.depth > 55) {
 				addItemToSpawn(new StoneOre());
 				addItemToSpawn(new StoneOre());
 				addItemToSpawn(new StoneOre());
@@ -324,12 +326,12 @@ public abstract class Level implements Bundlable {
 				addItemToSpawn(new StoneOre());
 				addItemToSpawn(new StoneOre());
 				viewDistance = (int) Math.ceil(viewDistance / 3f);
-			}else if (Dungeon.depth==32) {
+			} else if (Dungeon.depth == 32) {
 				feeling = Feeling.WATER;
-			} else if (Dungeon.depth==33) {
-				feeling = Feeling.CHASM;			
+			} else if (Dungeon.depth == 33) {
+				feeling = Feeling.CHASM;
 			}
-			
+
 		}
 
 		boolean pitNeeded = Dungeon.depth > 1 && weakFloorCreated;
@@ -364,7 +366,7 @@ public abstract class Level implements Bundlable {
 			}
 		}
 		createMobs();
-		reset=true;
+		reset = true;
 	}
 
 	@Override
@@ -385,7 +387,7 @@ public abstract class Level implements Bundlable {
 		currentmoves = bundle.getInt(MOVES);
 
 		locked = bundle.getBoolean(LOCKED);
-		
+
 		cleared = bundle.getBoolean(CLEARED);
 		reset = bundle.getBoolean(RESET);
 		forcedone = bundle.getBoolean(FORCEDONE);
@@ -538,12 +540,6 @@ public abstract class Level implements Bundlable {
 	public int nMobs() {
 		return 0;
 	}
-	
-
-	public int movepar(){
-		return movepar+Statistics.prevfloormoves;
-	}
-
 
 	public Actor respawner() {
 		return new Actor() {
@@ -571,7 +567,7 @@ public abstract class Level implements Bundlable {
 			}
 		};
 	}
-	
+
 	public Actor respawnerPet() {
 		return new Actor() {
 
@@ -600,97 +596,102 @@ public abstract class Level implements Bundlable {
 				}
 
 				if (petpos != -1 && Dungeon.hero.haspet && Dungeon.hero.petfollow) {
-					
-					  PET petCheck = checkpet();
-					  if(petCheck!=null){petCheck.destroy();petCheck.sprite.killAndErase();}
-					  
-					 if (Dungeon.hero.petType==1){
-						 Spider pet = new Spider();
-						  spawnPet(pet,petpos,heropos);					 
-						}
-				   if (Dungeon.hero.petType==2){
-					  bee pet = new bee();
-					  spawnPet(pet,petpos,heropos);					 
+
+					PET petCheck = checkpet();
+					if (petCheck != null) {
+						petCheck.destroy();
+						petCheck.sprite.killAndErase();
 					}
-				   if (Dungeon.hero.petType==3){
-					      Velocirooster pet = new Velocirooster();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==4){
-						  RedDragon pet = new RedDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==5){
-					   GreenDragon pet = new GreenDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==6){
-						  VioletDragon pet = new VioletDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==7){
-					   BlueDragon pet = new BlueDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==8){
-					   Scorpion pet = new Scorpion();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==9){
-					   Bunny pet = new Bunny();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==10){
-					   Fairy pet = new Fairy();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==11){
-					   SugarplumFairy pet = new SugarplumFairy();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-				   if (Dungeon.hero.petType==12){
-					   ShadowDragon pet = new ShadowDragon();
-						  spawnPet(pet,petpos,heropos);					 
-				   }
-					
+
+					if (Dungeon.hero.petType == 1) {
+						Spider pet = new Spider();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 2) {
+						bee pet = new bee();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 3) {
+						Velocirooster pet = new Velocirooster();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 4) {
+						RedDragon pet = new RedDragon();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 5) {
+						GreenDragon pet = new GreenDragon();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 6) {
+						VioletDragon pet = new VioletDragon();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 7) {
+						BlueDragon pet = new BlueDragon();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 8) {
+						Scorpion pet = new Scorpion();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 9) {
+						Bunny pet = new Bunny();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 10) {
+						Fairy pet = new Fairy();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 11) {
+						SugarplumFairy pet = new SugarplumFairy();
+						spawnPet(pet, petpos, heropos);
+					}
+					if (Dungeon.hero.petType == 12) {
+						ShadowDragon pet = new ShadowDragon();
+						spawnPet(pet, petpos, heropos);
+					}
+
 				}
-				
+
 				spend(PET_TICK);
 				return true;
 			}
 		};
 	}
 
-	private PET checkpet(){
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	public void spawnPet(PET pet, Integer petpos, Integer heropos){
-		  pet.spawn(Dungeon.hero.petLevel);
-		  pet.HP = Dungeon.hero.petHP;
-		  pet.pos = petpos;
-		  pet.state = pet.HUNTING;
-		  pet.kills = Dungeon.hero.petKills;
-		  pet.experience = Dungeon.hero.petExperience;
-		  pet.cooldown = Dungeon.hero.petCooldown;
 
-			GameScene.add(pet);
-			Actor.addDelayed(new Pushing(pet, heropos, petpos), -1f);
-			Dungeon.hero.petfollow = false;
+	public void spawnPet(PET pet, Integer petpos, Integer heropos) {
+		pet.spawn(Dungeon.hero.petLevel);
+		pet.HP = Dungeon.hero.petHP;
+		pet.pos = petpos;
+		pet.state = pet.HUNTING;
+		pet.kills = Dungeon.hero.petKills;
+		pet.experience = Dungeon.hero.petExperience;
+		pet.cooldown = Dungeon.hero.petCooldown;
+
+		GameScene.add(pet);
+		Actor.addDelayed(new Pushing(pet, heropos, petpos), -1f);
+		Dungeon.hero.petfollow = false;
 	}
-	
-	public boolean checkOriginalGenMobs (){
+
+	public boolean checkOriginalGenMobs() {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (mob.originalgen){return true;}
-		 }	
+			if (mob.originalgen) {
+				return true;
+			}
+		}
 		return false;
 	}
-	
+
 	public Actor regrower() {
 		return new Actor() {
 
@@ -700,30 +701,30 @@ public abstract class Level implements Bundlable {
 
 			@Override
 			protected boolean act() {
-				
+
 				int growPos = -1;
 				for (int i = 0; i < 20; i++) {
 					growPos = randomRegrowthCell();
-					
-				if (growPos != -1) {
-					break;
+
+					if (growPos != -1) {
+						break;
+					}
 				}
-			} 
-			if (growPos != -1) {
-				  if (map[growPos] == Terrain.GRASS){
-				  Level.set(growPos, Terrain.HIGH_GRASS);
-				  } 
-				  GameScene.updateMap();
-				  Dungeon.observe();
-			}		
-				
-			
+				if (growPos != -1) {
+					if (map[growPos] == Terrain.GRASS) {
+						Level.set(growPos, Terrain.HIGH_GRASS);
+					}
+					GameScene.updateMap();
+					Dungeon.observe();
+				}
+
+
 				spend(REGROW_TIMER);
 				return true;
 			}
 		};
 	}
-	
+
 	public int randomRegrowthCell() {
 		int cell;
 		int count = 1;
@@ -731,9 +732,9 @@ public abstract class Level implements Bundlable {
 			cell = Random.Int(getLength());
 			count++;
 		} while (map[cell] != Terrain.GRASS && count < 100);
-		     return cell;
+		return cell;
 	}
-	
+
 	public Actor floordropper() {
 		return new Actor() {
 
@@ -743,71 +744,68 @@ public abstract class Level implements Bundlable {
 
 			@Override
 			protected boolean act() {
-				
-							
+
+
 				int dropPos = -1;
 				for (int i = 0; i < 20; i++) {
 					dropPos = randomChasmCell();
-					
-				if (dropPos != -1) {
-					//GLog.i("one ");
-					break;
+
+					if (dropPos != -1) {
+						//GLog.i("one ");
+						break;
+					}
 				}
-			}
-			if (dropPos != -1) {
-				
-				//GLog.i("two %s",dropPos);
-				  if (map[dropPos] == Terrain.EMPTY && Actor.findChar(dropPos) == null){
-					  
-					  //GLog.i("three ");
-					  //if the tile above is not chasm then set to chasm floor. If is chasm then set to chasm
-					 
-					  if  (map[dropPos-getWidth()]==Terrain.WALL ||
-							  map[dropPos-getWidth()]==Terrain.WALL_DECO){
-						  
-							  set(dropPos, Terrain.CHASM_WALL); 
-							  //GLog.i("four ");
-						   }
-					  else if (map[dropPos-getWidth()]!=Terrain.CHASM && 
-						  map[dropPos-getWidth()]!=Terrain.CHASM_FLOOR &&
-						  map[dropPos-getWidth()]!=Terrain.CHASM_WALL)
-					        {
-								  set(dropPos, Terrain.CHASM_FLOOR); 
-					         }  
-						 else {
-						   set(dropPos, Terrain.CHASM);
-						  // GLog.i("five ");
-					   }
-					  	
-					  if (map[dropPos+getWidth()]==Terrain.CHASM_FLOOR){
-						  set(dropPos+getWidth(), Terrain.CHASM);
-						 // GLog.i("six ");
-					  }
-					  
-				
-				    } 
-				  GameScene.updateMap(dropPos);
-				  GameScene.updateMap(dropPos-getWidth());
-				  GameScene.updateMap(dropPos+getWidth());
-				  Dungeon.observe();				  
-			}				
-			
+				if (dropPos != -1) {
+
+					//GLog.i("two %s",dropPos);
+					if (map[dropPos] == Terrain.EMPTY && Actor.findChar(dropPos) == null) {
+
+						//GLog.i("three ");
+						//if the tile above is not chasm then set to chasm floor. If is chasm then set to chasm
+
+						if (map[dropPos - getWidth()] == Terrain.WALL ||
+								map[dropPos - getWidth()] == Terrain.WALL_DECO) {
+
+							set(dropPos, Terrain.CHASM_WALL);
+							//GLog.i("four ");
+						} else if (map[dropPos - getWidth()] != Terrain.CHASM &&
+								map[dropPos - getWidth()] != Terrain.CHASM_FLOOR &&
+								map[dropPos - getWidth()] != Terrain.CHASM_WALL) {
+							set(dropPos, Terrain.CHASM_FLOOR);
+						} else {
+							set(dropPos, Terrain.CHASM);
+							// GLog.i("five ");
+						}
+
+						if (map[dropPos + getWidth()] == Terrain.CHASM_FLOOR) {
+							set(dropPos + getWidth(), Terrain.CHASM);
+							// GLog.i("six ");
+						}
+
+
+					}
+					GameScene.updateMap(dropPos);
+					GameScene.updateMap(dropPos - getWidth());
+					GameScene.updateMap(dropPos + getWidth());
+					Dungeon.observe();
+				}
+
 				spend(DROP_TIMER);
 				return true;
 			}
 		};
 	}
-	
+
 	public int randomChasmCell() {
 		int cell;
 		int count = 1;
 		do {
-			cell = Random.Int(getWidth()+1, getLength()-(getWidth()+1));
+			cell = Random.Int(getWidth() + 1, getLength() - (getWidth() + 1));
 			count++;
 		} while (map[cell] != Terrain.EMPTY && count < 100);
-		     return cell;
+		return cell;
 	}
-	
+
 	public int randomRespawnCell() {
 		int cell;
 		do {
@@ -825,32 +823,32 @@ public abstract class Level implements Bundlable {
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}
-	
+
 	public int randomRespawnCellSheep(int start, int dist) {
 		int cell;
 		do {
 			cell = Random.Int(getLength());
-		} while (!avoid[cell] || Actor.findChar(cell) != null || map[cell]!=Terrain.FLEECING_TRAP
-				  || distance(start, cell) > dist);
+		} while (!avoid[cell] || Actor.findChar(cell) != null || map[cell] != Terrain.FLEECING_TRAP
+				|| distance(start, cell) > dist);
 		return cell;
 	}
-	
+
 	public int countFleeceTraps(int start, int dist) {
-		int count=0;
+		int count = 0;
 		for (int cell = 0; cell < getLength(); cell++) {
-		  if(avoid[cell] && Actor.findChar(cell) == null && map[cell]==Terrain.FLEECING_TRAP && distance(start, cell) < dist){
-			  count++;
-		  }
+			if (avoid[cell] && Actor.findChar(cell) == null && map[cell] == Terrain.FLEECING_TRAP && distance(start, cell) < dist) {
+				count++;
+			}
 		}
-		return count;		
+		return count;
 	}
-	
-	
+
+
 	public int randomRespawnCellFish() {
 		int cell;
 		do {
 			cell = Random.Int(getLength());
-		} while (!passable[cell] || Actor.findChar(cell) != null || map[cell]!=Terrain.EMPTY);
+		} while (!passable[cell] || Actor.findChar(cell) != null || map[cell] != Terrain.EMPTY);
 		return cell;
 	}
 
@@ -988,30 +986,30 @@ public abstract class Level implements Bundlable {
 		solid[cell] = (flags & Terrain.SOLID) != 0;
 		avoid[cell] = (flags & Terrain.AVOID) != 0;
 		pit[cell] = (flags & Terrain.PIT) != 0;
-		water[cell] = terrain == Terrain.WATER	|| (terrain >= Terrain.WATER_TILES && terrain<Terrain.WOOL_RUG);
+		water[cell] = terrain == Terrain.WATER || (terrain >= Terrain.WATER_TILES && terrain < Terrain.WOOL_RUG);
 	}
 
-	public int checkdew(){
-		int dewdrops=0;
+	public int checkdew() {
+		int dewdrops = 0;
 		for (int i = 0; i < LENGTH; i++) {
 			Heap heap = heaps.get(i);
 			if (heap != null)
 				dewdrops += heap.dewdrops();
-		 }
+		}
 		return dewdrops;
 	}
-	
-	
+
+
 	public Heap drop(Item item, int cell) {
 
 		if ((map[cell] == Terrain.ALCHEMY)
 				&& (!(item instanceof Plant.Seed || item instanceof Blandfruit)
-						|| item instanceof BlandfruitBush.Seed
-						|| (item instanceof Blandfruit && (((Blandfruit) item).potionAttrib != null || heaps
-								.get(cell) != null)) || Dungeon.hero
-						.buff(AlchemistsToolkit.alchemy.class) != null
-						&& Dungeon.hero.buff(AlchemistsToolkit.alchemy.class)
-								.isCursed())) {
+				|| item instanceof BlandfruitBush.Seed
+				|| (item instanceof Blandfruit && (((Blandfruit) item).potionAttrib != null || heaps
+				.get(cell) != null)) || Dungeon.hero
+				.buff(AlchemistsToolkit.alchemy.class) != null
+				&& Dungeon.hero.buff(AlchemistsToolkit.alchemy.class)
+				.isCursed())) {
 			int n;
 			do {
 				n = cell + PathFinder.NEIGHBOURS8[Random.Int(8)];
@@ -1036,8 +1034,7 @@ public abstract class Level implements Bundlable {
 
 		} else if (heap.type == Heap.Type.LOCKED_CHEST
 				|| heap.type == Heap.Type.CRYSTAL_CHEST
-				//|| heap.type == Heap.Type.MONSTERBOX
-				) {
+				|| heap.type == Heap.Type.HARD_TOMB){
 
 			int n;
 			do {
@@ -1104,104 +1101,104 @@ public abstract class Level implements Bundlable {
 
 		switch (map[cell]) {
 
-		case Terrain.SECRET_TOXIC_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.TOXIC_TRAP:
-			trap = true;
-			if (!frozen)
-				ToxicTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_TOXIC_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.TOXIC_TRAP:
+				trap = true;
+				if (!frozen)
+					ToxicTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_FIRE_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.FIRE_TRAP:
-			trap = true;
-			if (!frozen)
-				FireTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_FIRE_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.FIRE_TRAP:
+				trap = true;
+				if (!frozen)
+					FireTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_PARALYTIC_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.PARALYTIC_TRAP:
-			trap = true;
-			if (!frozen)
-				ParalyticTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_PARALYTIC_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.PARALYTIC_TRAP:
+				trap = true;
+				if (!frozen)
+					ParalyticTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_POISON_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.POISON_TRAP:
-			trap = true;
-			if (!frozen)
-				PoisonTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_POISON_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.POISON_TRAP:
+				trap = true;
+				if (!frozen)
+					PoisonTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_ALARM_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.ALARM_TRAP:
-			trap = true;
-			if (!frozen)
-				AlarmTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_ALARM_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.ALARM_TRAP:
+				trap = true;
+				if (!frozen)
+					AlarmTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_LIGHTNING_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.LIGHTNING_TRAP:
-			trap = true;
-			if (!frozen)
-				LightningTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_LIGHTNING_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.LIGHTNING_TRAP:
+				trap = true;
+				if (!frozen)
+					LightningTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_GRIPPING_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.GRIPPING_TRAP:
-			trap = true;
-			if (!frozen)
-				GrippingTrap.trigger(cell, ch);
-			break;
+			case Terrain.SECRET_GRIPPING_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.GRIPPING_TRAP:
+				trap = true;
+				if (!frozen)
+					GrippingTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.SECRET_SUMMONING_TRAP:
-			GLog.i(TXT_HIDDEN_PLATE_CLICKS);
-		case Terrain.SUMMONING_TRAP:
-			trap = true;
-			if (!frozen)
-				SummoningTrap.trigger(cell, ch);
-			break;
-			
-		case Terrain.FLEECING_TRAP:
-			trap = true;
-			if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner){
-				fleece=true;
-			}			
-			if (ch != null)
-				FleecingTrap.trigger(cell, ch);
-			break;
-			
-		case Terrain.CHANGE_SHEEP_TRAP:
-			trap = true;
-			if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner){
-				sheep=true;
-				ChangeSheepTrap.trigger(cell, ch);
-			}						
-			break;
+			case Terrain.SECRET_SUMMONING_TRAP:
+				GLog.i(TXT_HIDDEN_PLATE_CLICKS);
+			case Terrain.SUMMONING_TRAP:
+				trap = true;
+				if (!frozen)
+					SummoningTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.HIGH_GRASS:
-			HighGrass.trample(this, cell, ch);
-			break;
+			case Terrain.FLEECING_TRAP:
+				trap = true;
+				if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner) {
+					fleece = true;
+				}
+				if (ch != null)
+					FleecingTrap.trigger(cell, ch);
+				break;
 
-		case Terrain.WELL:
-			WellWater.affectCell(cell);
-			break;
+			case Terrain.CHANGE_SHEEP_TRAP:
+				trap = true;
+				if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner) {
+					sheep = true;
+					ChangeSheepTrap.trigger(cell, ch);
+				}
+				break;
 
-		case Terrain.ALCHEMY:
-			if (ch == null) {
-				Alchemy.transmute(cell);
-			}
-			break;
+			case Terrain.HIGH_GRASS:
+				HighGrass.trample(this, cell, ch);
+				break;
 
-		case Terrain.DOOR:
-			Door.enter(cell, ch);
-			break;
+			case Terrain.WELL:
+				WellWater.affectCell(cell);
+				break;
+
+			case Terrain.ALCHEMY:
+				if (ch == null) {
+					Alchemy.transmute(cell);
+				}
+				break;
+
+			case Terrain.DOOR:
+				Door.enter(cell);
+				break;
 		}
 
 		if (trap && !frozen && !fleece) {
@@ -1232,7 +1229,7 @@ public abstract class Level implements Bundlable {
 			GameScene.updateMap(cell);
 
 			timeFreeze.setDelayedPress(cell);
-			
+
 		} else if (trap && !frozen && fleece) {
 
 			if (Dungeon.visible[cell])
@@ -1274,65 +1271,65 @@ public abstract class Level implements Bundlable {
 		boolean sheep = false;
 		switch (map[cell]) {
 
-		case Terrain.TOXIC_TRAP:
-			ToxicTrap.trigger(cell, mob);
-			break;
+			case Terrain.TOXIC_TRAP:
+				ToxicTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.FIRE_TRAP:
-			FireTrap.trigger(cell, mob);
-			break;
+			case Terrain.FIRE_TRAP:
+				FireTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.PARALYTIC_TRAP:
-			ParalyticTrap.trigger(cell, mob);
-			break;
-			
-		case Terrain.FLEECING_TRAP:
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner){
-				fleece=true;
-			}
-			FleecingTrap.trigger(cell, mob);
-			break;
-			
-		case Terrain.CHANGE_SHEEP_TRAP:
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner){
-				sheep=true;
-				ChangeSheepTrap.trigger(cell, mob);
-			}						
-			break;
-			
-		case Terrain.SOKOBAN_ITEM_REVEAL:
-			trap=false;
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner){
-				HeapGenTrap.trigger(cell, mob);
-				sheep=true;
-			}						
-			break;
+			case Terrain.PARALYTIC_TRAP:
+				ParalyticTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.POISON_TRAP:
-			PoisonTrap.trigger(cell, mob);
-			break;
+			case Terrain.FLEECING_TRAP:
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner) {
+					fleece = true;
+				}
+				FleecingTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.ALARM_TRAP:
-			AlarmTrap.trigger(cell, mob);
-			break;
+			case Terrain.CHANGE_SHEEP_TRAP:
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner) {
+					sheep = true;
+					ChangeSheepTrap.trigger(cell, mob);
+				}
+				break;
 
-		case Terrain.LIGHTNING_TRAP:
-			LightningTrap.trigger(cell, mob);
-			break;
+			case Terrain.SOKOBAN_ITEM_REVEAL:
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner) {
+					HeapGenTrap.trigger(cell, mob);
+					sheep = true;
+				}
+				break;
 
-		case Terrain.GRIPPING_TRAP:
-			GrippingTrap.trigger(cell, mob);
-			break;
+			case Terrain.POISON_TRAP:
+				PoisonTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.SUMMONING_TRAP:
-			SummoningTrap.trigger(cell, mob);
-			break;
+			case Terrain.ALARM_TRAP:
+				AlarmTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.DOOR:
-			Door.enter(cell, mob);
+			case Terrain.LIGHTNING_TRAP:
+				LightningTrap.trigger(cell, mob);
+				break;
 
-		default:
-			trap = false;
+			case Terrain.GRIPPING_TRAP:
+				GrippingTrap.trigger(cell, mob);
+				break;
+
+			case Terrain.SUMMONING_TRAP:
+				SummoningTrap.trigger(cell, mob);
+				break;
+
+			case Terrain.DOOR:
+				Door.enter(cell);
+
+			default:
+				trap = false;
 		}
 
 		if (trap && !fleece) {
@@ -1342,15 +1339,15 @@ public abstract class Level implements Bundlable {
 			set(cell, Terrain.INACTIVE_TRAP);
 			GameScene.updateMap(cell);
 		}
-		
+
 		if (trap && fleece) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
 			}
 			set(cell, Terrain.WOOL_RUG);
 			GameScene.updateMap(cell);
-		} 	
-		
+		}
+
 		if (trap && sheep) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -1358,7 +1355,7 @@ public abstract class Level implements Bundlable {
 			set(cell, Terrain.INACTIVE_TRAP);
 			GameScene.updateMap(cell);
 		}
-		
+
 		if (!trap && sheep) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -1366,14 +1363,14 @@ public abstract class Level implements Bundlable {
 			set(cell, Terrain.EMPTY);
 			GameScene.updateMap(cell);
 		}
-		
+
 		Plant plant = plants.get(cell);
 		if (plant != null) {
 			plant.activate(mob);
 		}
 	}
 
-	public void updateFieldOfView( Char c, boolean[] fieldOfView ) {
+	public void updateFieldOfView(Char c, boolean[] fieldOfView) {
 
 		int cx = c.pos % getWidth();
 		int cy = c.pos / getWidth();
@@ -1393,7 +1390,7 @@ public abstract class Level implements Bundlable {
 			for (Buff b : c.buffs(MindVision.class)) {
 				sense = Math.max(((MindVision) b).distance, sense);
 			}
-			if (c.buff(TalismanOfForesight.Foresight.class) != null){
+			if (c.buff(TalismanOfForesight.Foresight.class) != null) {
 				if (c.buff(TalismanOfForesight.Foresight.class).level() > 39)
 					sense = (c.buff(TalismanOfForesight.Foresight.class).level() < 50) ? 2 : 3;
 			}
@@ -1415,35 +1412,35 @@ public abstract class Level implements Bundlable {
 
 		if (c.isAlive() && c == Dungeon.hero) {
 			Dungeon.hero.mindVisionEnemies.clear();
-			if (c.buff( MindVision.class ) != null) {
+			if (c.buff(MindVision.class) != null) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
 
-					if (!fieldOfView[p]){
+					if (!fieldOfView[p]) {
 						Dungeon.hero.mindVisionEnemies.add(mob);
 					}
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p+i] = true;
+						fieldOfView[p + i] = true;
 
 				}
-			} else if (((Hero)c).heroClass == HeroClass.HUNTRESS) {
+			} else if (((Hero) c).heroClass == HeroClass.HUNTRESS) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
-					if (distance( c.pos, p) == 2) {
+					if (distance(c.pos, p) == 2) {
 
-						if (!fieldOfView[p]){
+						if (!fieldOfView[p]) {
 							Dungeon.hero.mindVisionEnemies.add(mob);
 						}
 						for (int i : PathFinder.NEIGHBOURS9)
-							fieldOfView[p+i] = true;
+							fieldOfView[p + i] = true;
 					}
 				}
 			}
-			if (c.buff( Awareness.class ) != null) {
+			if (c.buff(Awareness.class) != null) {
 				for (Heap heap : heaps.values()) {
 					int p = heap.pos;
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p+i] = true;
+						fieldOfView[p + i] = true;
 				}
 			}
 		}
@@ -1470,17 +1467,17 @@ public abstract class Level implements Bundlable {
 	}
 
 	//returns true if the input is a valid tile within the level
-	public boolean insideMap( int tile ){
+	public boolean insideMap(int tile) {
 		//top and bottom row and beyond
 		return !((tile < WIDTH || tile >= LENGTH - WIDTH) ||
 				//left and right column
-				(tile % WIDTH == 0 || tile % WIDTH == WIDTH-1));
+				(tile % WIDTH == 0 || tile % WIDTH == WIDTH - 1));
 	}
 
-    public boolean insideMapPermissive( int tile ){
-        //top and bottom row and beyond
-        return !(tile < 0 || tile >= LENGTH);
-    }
+	public boolean insideMapPermissive(int tile) {
+		//top and bottom row and beyond
+		return !(tile < 0 || tile >= LENGTH);
+	}
 
 	public String tileName(int tile) {
 
@@ -1494,167 +1491,167 @@ public abstract class Level implements Bundlable {
 		}
 
 		switch (tile) {
-		case Terrain.CHASM:
-			return Messages.get(Level.class,"chasm_name");
-		case Terrain.EMPTY:
-		case Terrain.EMPTY_SP:
-		case Terrain.EMPTY_DECO:
-		case Terrain.SECRET_TOXIC_TRAP:
-		case Terrain.SECRET_FIRE_TRAP:
-		case Terrain.SECRET_PARALYTIC_TRAP:
-		case Terrain.SECRET_POISON_TRAP:
-		case Terrain.SECRET_ALARM_TRAP:
-		case Terrain.SECRET_LIGHTNING_TRAP:
-			return Messages.get(Level.class,"floor_name");
-		case Terrain.GRASS:
-			return Messages.get(Level.class,"grass_name");
-		case Terrain.WATER:
-			return Messages.get(Level.class,"water_name");
-		case Terrain.WALL:
-		case Terrain.WALL_DECO:
-		case Terrain.SECRET_DOOR:
-			return Messages.get(Level.class,"wall_name");
-		case Terrain.DOOR:
-			return Messages.get(Level.class,"closed_door_name");
-		case Terrain.OPEN_DOOR:
-			return Messages.get(Level.class,"open_door_name");
-		case Terrain.ENTRANCE:
-			return Messages.get(Level.class,"entrance_name");
-		case Terrain.EXIT:
-			return Messages.get(Level.class,"exit_name");
-		case Terrain.EMBERS:
-			return Messages.get(Level.class,"embers_name");
-		case Terrain.LOCKED_DOOR:
-			return Messages.get(Level.class,"locked_door_name");
-		case Terrain.PEDESTAL:
-			return Messages.get(Level.class,"pedestal_name");
-		case Terrain.BARRICADE:
-			return Messages.get(Level.class,"barricade_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(Level.class,"high_grass_name");
-		case Terrain.LOCKED_EXIT:
-			return Messages.get(Level.class,"locked_exit_name");
-		case Terrain.UNLOCKED_EXIT:
-			return Messages.get(Level.class,"unlocked_exit_name");
-		case Terrain.SIGN:
-			return Messages.get(Level.class,"sign_name");
-		case Terrain.WELL:
-			return Messages.get(Level.class,"well_name");
-		case Terrain.EMPTY_WELL:
-			return Messages.get(Level.class,"empty_well_name");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(Level.class,"statue_name");
-		case Terrain.TOXIC_TRAP:
-			return Messages.get(ToxicTrap.class,"name");
-		case Terrain.FIRE_TRAP:
-			return Messages.get(FireTrap.class,"name");
-		case Terrain.PARALYTIC_TRAP:
-			return Messages.get(ParalyticTrap.class,"name");
-		//case Terrain.WOOL_RUG:
+			case Terrain.CHASM:
+				return Messages.get(Level.class, "chasm_name");
+			case Terrain.EMPTY:
+			case Terrain.EMPTY_SP:
+			case Terrain.EMPTY_DECO:
+			case Terrain.SECRET_TOXIC_TRAP:
+			case Terrain.SECRET_FIRE_TRAP:
+			case Terrain.SECRET_PARALYTIC_TRAP:
+			case Terrain.SECRET_POISON_TRAP:
+			case Terrain.SECRET_ALARM_TRAP:
+			case Terrain.SECRET_LIGHTNING_TRAP:
+				return Messages.get(Level.class, "floor_name");
+			case Terrain.GRASS:
+				return Messages.get(Level.class, "grass_name");
+			case Terrain.WATER:
+				return Messages.get(Level.class, "water_name");
+			case Terrain.WALL:
+			case Terrain.WALL_DECO:
+			case Terrain.SECRET_DOOR:
+				return Messages.get(Level.class, "wall_name");
+			case Terrain.DOOR:
+				return Messages.get(Level.class, "closed_door_name");
+			case Terrain.OPEN_DOOR:
+				return Messages.get(Level.class, "open_door_name");
+			case Terrain.ENTRANCE:
+				return Messages.get(Level.class, "entrance_name");
+			case Terrain.EXIT:
+				return Messages.get(Level.class, "exit_name");
+			case Terrain.EMBERS:
+				return Messages.get(Level.class, "embers_name");
+			case Terrain.LOCKED_DOOR:
+				return Messages.get(Level.class, "locked_door_name");
+			case Terrain.PEDESTAL:
+				return Messages.get(Level.class, "pedestal_name");
+			case Terrain.BARRICADE:
+				return Messages.get(Level.class, "barricade_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(Level.class, "high_grass_name");
+			case Terrain.LOCKED_EXIT:
+				return Messages.get(Level.class, "locked_exit_name");
+			case Terrain.UNLOCKED_EXIT:
+				return Messages.get(Level.class, "unlocked_exit_name");
+			case Terrain.SIGN:
+				return Messages.get(Level.class, "sign_name");
+			case Terrain.WELL:
+				return Messages.get(Level.class, "well_name");
+			case Terrain.EMPTY_WELL:
+				return Messages.get(Level.class, "empty_well_name");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(Level.class, "statue_name");
+			case Terrain.TOXIC_TRAP:
+				return Messages.get(ToxicTrap.class, "name");
+			case Terrain.FIRE_TRAP:
+				return Messages.get(FireTrap.class, "name");
+			case Terrain.PARALYTIC_TRAP:
+				return Messages.get(ParalyticTrap.class, "name");
+			//case Terrain.WOOL_RUG:
 			//return "Wool rug";
-		//case Terrain.FLEECING_TRAP:
+			//case Terrain.FLEECING_TRAP:
 			//return "Fleecing trap";
-		//case Terrain.CHANGE_SHEEP_TRAP:
+			//case Terrain.CHANGE_SHEEP_TRAP:
 			//return "Change sheep trap";
-		//case Terrain.SOKOBAN_ITEM_REVEAL:
+			//case Terrain.SOKOBAN_ITEM_REVEAL:
 			//return "Item creation switch";
-		//case Terrain.SOKOBAN_PORT_SWITCH:
+			//case Terrain.SOKOBAN_PORT_SWITCH:
 			//return "Portal switch";
-		//case Terrain.PORT_WELL:
+			//case Terrain.PORT_WELL:
 			//return "Portal";
-		case Terrain.POISON_TRAP:
-			return Messages.get(PoisonTrap.class,"name");
-		case Terrain.ALARM_TRAP:
-			return Messages.get(AlarmTrap.class,"name");
-		case Terrain.LIGHTNING_TRAP:
-			return Messages.get(LightningTrap.class,"name");
-		case Terrain.GRIPPING_TRAP:
-			return Messages.get(GrippingTrap.class,"name");
-		case Terrain.SUMMONING_TRAP:
-			return Messages.get(SummoningTrap.class,"name");
-		case Terrain.INACTIVE_TRAP:
-			return Messages.get(Level.class,"inactive_trap_name");
-		case Terrain.BOOKSHELF:
-			return Messages.get(Level.class,"bookshelf_name");
-		case Terrain.ALCHEMY:
-			return Messages.get(Level.class,"alchemy_name");
-		case Terrain.SHRUB:
-			return Messages.get(Level.class,"shrub_name");
-		default:
-			return "???";
+			case Terrain.POISON_TRAP:
+				return Messages.get(PoisonTrap.class, "name");
+			case Terrain.ALARM_TRAP:
+				return Messages.get(AlarmTrap.class, "name");
+			case Terrain.LIGHTNING_TRAP:
+				return Messages.get(LightningTrap.class, "name");
+			case Terrain.GRIPPING_TRAP:
+				return Messages.get(GrippingTrap.class, "name");
+			case Terrain.SUMMONING_TRAP:
+				return Messages.get(SummoningTrap.class, "name");
+			case Terrain.INACTIVE_TRAP:
+				return Messages.get(Level.class, "inactive_trap_name");
+			case Terrain.BOOKSHELF:
+				return Messages.get(Level.class, "bookshelf_name");
+			case Terrain.ALCHEMY:
+				return Messages.get(Level.class, "alchemy_name");
+			case Terrain.SHRUB:
+				return Messages.get(Level.class, "shrub_name");
+			default:
+				return "???";
 		}
 	}
 
 	public String tileDesc(int tile) {
 
 		switch (tile) {
-		case Terrain.CHASM:
-			return Messages.get(Level.class,"chasm_desc");
-		case Terrain.WATER:
-			return Messages.get(Level.class,"water_desc");
-		case Terrain.ENTRANCE:
-			return Messages.get(Level.class,"entrance_desc");
-		case Terrain.EXIT:
-		case Terrain.UNLOCKED_EXIT:
-			return Messages.get(Level.class,"exit_desc");
-		case Terrain.EMBERS:
-			return Messages.get(Level.class,"embers_desc");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(Level.class,"high_grass_desc");
-		case Terrain.SHRUB:
-			return Messages.get(Level.class,"shrub_desc");
-		case Terrain.LOCKED_DOOR:
-			return Messages.get(Level.class,"locked_door_desc");
-		case Terrain.LOCKED_EXIT:
-			return Messages.get(Level.class,"locked_exit_desc");
-		case Terrain.BARRICADE:
-			return Messages.get(Level.class,"barricade_desc");
-		case Terrain.SIGN:
-			return Messages.get(Level.class,"sign_desc");
-		case Terrain.TOXIC_TRAP:
-		case Terrain.FIRE_TRAP:
-		case Terrain.PARALYTIC_TRAP:
-		case Terrain.POISON_TRAP:
-		case Terrain.ALARM_TRAP:
-		case Terrain.LIGHTNING_TRAP:
-		case Terrain.GRIPPING_TRAP:
-		case Terrain.SUMMONING_TRAP:
-			return Messages.get(Level.class,"actrap_desc");
-		//case Terrain.FLEECING_TRAP:
+			case Terrain.CHASM:
+				return Messages.get(Level.class, "chasm_desc");
+			case Terrain.WATER:
+				return Messages.get(Level.class, "water_desc");
+			case Terrain.ENTRANCE:
+				return Messages.get(Level.class, "entrance_desc");
+			case Terrain.EXIT:
+			case Terrain.UNLOCKED_EXIT:
+				return Messages.get(Level.class, "exit_desc");
+			case Terrain.EMBERS:
+				return Messages.get(Level.class, "embers_desc");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(Level.class, "high_grass_desc");
+			case Terrain.SHRUB:
+				return Messages.get(Level.class, "shrub_desc");
+			case Terrain.LOCKED_DOOR:
+				return Messages.get(Level.class, "locked_door_desc");
+			case Terrain.LOCKED_EXIT:
+				return Messages.get(Level.class, "locked_exit_desc");
+			case Terrain.BARRICADE:
+				return Messages.get(Level.class, "barricade_desc");
+			case Terrain.SIGN:
+				return Messages.get(Level.class, "sign_desc");
+			case Terrain.TOXIC_TRAP:
+			case Terrain.FIRE_TRAP:
+			case Terrain.PARALYTIC_TRAP:
+			case Terrain.POISON_TRAP:
+			case Terrain.ALARM_TRAP:
+			case Terrain.LIGHTNING_TRAP:
+			case Terrain.GRIPPING_TRAP:
+			case Terrain.SUMMONING_TRAP:
+				return Messages.get(Level.class, "actrap_desc");
+			//case Terrain.FLEECING_TRAP:
 			//return "Stepping onto a fleecing trap will destroy your armor or eject you from the level.";
-		//case Terrain.CHANGE_SHEEP_TRAP:
+			//case Terrain.CHANGE_SHEEP_TRAP:
 			//return "This trap will change the form of any sheep.";
-		//case Terrain.SOKOBAN_ITEM_REVEAL:
+			//case Terrain.SOKOBAN_ITEM_REVEAL:
 			//return "This switch creates an item somewhere on the level.";
-		//case Terrain.SOKOBAN_PORT_SWITCH:
+			//case Terrain.SOKOBAN_PORT_SWITCH:
 			//return "This switch turns on and off a portal somewhere.";
-		//case Terrain.PORT_WELL:
+			//case Terrain.PORT_WELL:
 			//return "This is a portal to another location on this level.";
-		case Terrain.INACTIVE_TRAP:
-			return Messages.get(Level.class,"inactive_trap_desc");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(Level.class,"statue_desc");
-		case Terrain.ALCHEMY:
-			return Messages.get(Level.class,"alchemy_desc");
-		case Terrain.EMPTY_WELL:
-			return Messages.get(Level.class,"empty_well_desc");
-		//case Terrain.WOOL_RUG:
+			case Terrain.INACTIVE_TRAP:
+				return Messages.get(Level.class, "inactive_trap_desc");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(Level.class, "statue_desc");
+			case Terrain.ALCHEMY:
+				return Messages.get(Level.class, "alchemy_desc");
+			case Terrain.EMPTY_WELL:
+				return Messages.get(Level.class, "empty_well_desc");
+			//case Terrain.WOOL_RUG:
 			//return "A plush wool rug. Very nice!";
-		default:
+			default:
 			/*
 			if(tile >= Terrain.WOOL_RUG){
 				return "???";
 			}
-			*/			
-			if (tile >= Terrain.WATER_TILES) {
-				return tileDesc(Terrain.WATER);
-			}
-			if ((Terrain.flags[tile] & Terrain.PIT) != 0) {
-				return tileDesc(Terrain.CHASM);
-			}
-			return "";
+			*/
+				if (tile >= Terrain.WATER_TILES) {
+					return tileDesc(Terrain.WATER);
+				}
+				if ((Terrain.flags[tile] & Terrain.PIT) != 0) {
+					return tileDesc(Terrain.CHASM);
+				}
+				return "";
 		}
 	}
 	

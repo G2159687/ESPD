@@ -39,14 +39,14 @@ import java.util.ArrayList;
 
 public class Honeypot extends Item {
 
-	public static final String AC_SHATTER = Messages.get(Honeypot.class,"ac_shatter");
+	public static final String AC_SHATTER = Messages.get(Honeypot.class, "ac_shatter");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.HONEYPOT;
 		defaultAction = AC_THROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class Honeypot extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	// The bee's broken 'home', all this item does is let its bee know where it
@@ -149,7 +149,7 @@ public class Honeypot extends Item {
 	public static class ShatteredPot extends Item {
 
 		{
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SHATTPOT;
 			stackable = false;
 		}
@@ -214,7 +214,7 @@ public class Honeypot extends Item {
 
 		@Override
 		public String info() {
-			return Messages.get(this,"desc");
+			return Messages.get(this, "desc");
 		}
 
 		private static final String MYBEE = "mybee";

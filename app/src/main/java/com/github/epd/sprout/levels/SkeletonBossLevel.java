@@ -43,10 +43,10 @@ public class SkeletonBossLevel extends Level {
 	{
 		color1 = 0x6a723d;
 		color2 = 0x88924c;
-        cleared=true;
+		cleared = true;
 		viewDistance = 8;
 	}
-	
+
 	private static final int TOP = 2;
 	private static final int HALL_WIDTH = 13;
 	private static final int HALL_HEIGHT = 15;
@@ -101,7 +101,7 @@ public class SkeletonBossLevel extends Level {
 			map[y * getWidth() + CENTER + 2] = Terrain.STATUE;
 			y += 2;
 		}
-		
+
 		exit = (TOP - 1) * getWidth() + CENTER;
 		map[exit] = Terrain.LOCKED_EXIT;
 
@@ -134,24 +134,32 @@ public class SkeletonBossLevel extends Level {
 				map[i] = Terrain.WALL_DECO;
 			}
 		}
-		
+
 		int shrub1 = arenaDoor + getWidth();
 		int shrub2 = arenaDoor + getWidth() + 1;
 		int shrub3 = arenaDoor + getWidth() - 1;
-		int potionpos = arenaDoor + 2*getWidth();
+		int potionpos = arenaDoor + 2 * getWidth();
 		map[shrub1] = Terrain.SHRUB;
 		map[shrub2] = Terrain.SHRUB;
 		map[shrub3] = Terrain.SHRUB;
 		drop(new PotionOfLiquidFlame(), potionpos);
-		
+
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
 				map[i] = Terrain.WALL_DECO;
 			}
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.EMPTY;}			
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.20){map[i] = Terrain.HIGH_GRASS;}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.25){map[i] = Terrain.GRASS;}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.30){map[i] = Terrain.SHRUB;}
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.EMPTY;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .20) {
+				map[i] = Terrain.HIGH_GRASS;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .25) {
+				map[i] = Terrain.GRASS;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .30) {
+				map[i] = Terrain.SHRUB;
+			}
 		}
 
 		//int sign = arenaDoor + WIDTH + 1;
@@ -183,7 +191,7 @@ public class SkeletonBossLevel extends Level {
 			do {
 				pos = Random.IntRange(LEFT + 1, LEFT + HALL_WIDTH - 2)
 						+ Random.IntRange(TOP + HALL_HEIGHT + 1, TOP
-								+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
+						+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
 			} while (pos == entrance || map[pos] == Terrain.SIGN);
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
@@ -214,17 +222,17 @@ public class SkeletonBossLevel extends Level {
 			do {
 				boss.pos = Random.Int(getLength());
 				hand1.pos = (TOP + 1) * getWidth() + CENTER;
-				hand2.pos = (TOP + 1) * getWidth() + CENTER+1;
-				
-			} while (!passable[boss.pos] 
+				hand2.pos = (TOP + 1) * getWidth() + CENTER + 1;
+
+			} while (!passable[boss.pos]
 					|| !outsideEntraceRoom(boss.pos)
 					|| (Dungeon.visible[boss.pos] && count++ < 20));
-			
+
 			GameScene.add(boss);
-			
+
 			GameScene.add(hand1);
 			GameScene.add(hand2);
-			
+
 
 			if (Dungeon.visible[boss.pos]) {
 				boss.notice();
@@ -260,26 +268,26 @@ public class SkeletonBossLevel extends Level {
 
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(SkeletonBossLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(SkeletonBossLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SkeletonBossLevel.class,"empty_deco_desc");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(SkeletonBossLevel.class,"high_grass_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(SewerLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SkeletonBossLevel.class, "empty_deco_desc");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(SkeletonBossLevel.class, "high_grass_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(SewerLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

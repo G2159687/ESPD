@@ -36,15 +36,15 @@ public class Stylus extends Item {
 		defaultAction = AC_INSCRIBE;
 	}
 
-	private static final String TXT_SELECT_ARMOR = Messages.get(Stylus.class,"prompt");
-	private static final String TXT_INSCRIBED = Messages.get(Stylus.class,"inscribed");
+	private static final String TXT_SELECT_ARMOR = Messages.get(Stylus.class, "prompt");
+	private static final String TXT_INSCRIBED = Messages.get(Stylus.class, "inscribed");
 
 	private static final float TIME_TO_INSCRIBE = 2;
 
-	private static final String AC_INSCRIBE = Messages.get(Stylus.class,"ac_inscribe");
+	private static final String AC_INSCRIBE = Messages.get(Stylus.class, "ac_inscribe");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.STYLUS;
 
 		stackable = true;
@@ -107,7 +107,7 @@ public class Stylus extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {

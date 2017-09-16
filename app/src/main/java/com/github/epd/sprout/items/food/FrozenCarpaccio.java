@@ -39,7 +39,7 @@ import com.watabou.utils.Random;
 public class FrozenCarpaccio extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.CARPACCIO;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
 		hornValue = 2;
@@ -53,40 +53,40 @@ public class FrozenCarpaccio extends Food {
 		if (action.equals(AC_EAT)) {
 
 			switch (Random.Int(5)) {
-			case 0:
-				if(Dungeon.depth != 29){
-				GLog.i(Messages.get(this,"invis"));
-				Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
-				}
-				break;
-			case 1:
-				GLog.i(Messages.get(this,"hard"));
-				Buff.affect(hero, Barkskin.class).level(hero.HT / 4);
-				break;
-			case 2:
-				GLog.i(Messages.get(this,"refresh"));
-				Buff.detach(hero, Poison.class);
-				Buff.detach(hero, Cripple.class);
-				Buff.detach(hero, Weakness.class);
-				Buff.detach(hero, Bleeding.class);
-				Buff.detach(hero, Drowsy.class);
-				Buff.detach(hero, Slow.class);
-				Buff.detach(hero, Vertigo.class);
-				break;
-			case 3:
-				GLog.i(Messages.get(this,"better"));
-				if (hero.HP < hero.HT) {
-					hero.HP = Math.min(hero.HP + hero.HT / 4, hero.HT);
-					hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				}
-				break;
+				case 0:
+					if (Dungeon.depth != 29) {
+						GLog.i(Messages.get(this, "invis"));
+						Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
+					}
+					break;
+				case 1:
+					GLog.i(Messages.get(this, "hard"));
+					Buff.affect(hero, Barkskin.class).level(hero.HT / 4);
+					break;
+				case 2:
+					GLog.i(Messages.get(this, "refresh"));
+					Buff.detach(hero, Poison.class);
+					Buff.detach(hero, Cripple.class);
+					Buff.detach(hero, Weakness.class);
+					Buff.detach(hero, Bleeding.class);
+					Buff.detach(hero, Drowsy.class);
+					Buff.detach(hero, Slow.class);
+					Buff.detach(hero, Vertigo.class);
+					break;
+				case 3:
+					GLog.i(Messages.get(this, "better"));
+					if (hero.HP < hero.HT) {
+						hero.HP = Math.min(hero.HP + hero.HT / 4, hero.HT);
+						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+					}
+					break;
 			}
 		}
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
@@ -99,6 +99,7 @@ public class FrozenCarpaccio extends Food {
 		result.quantity = ingredient.quantity();
 		return result;
 	}
+
 	public static Food cook(Meat ingredient) {
 		FrozenCarpaccio result = new FrozenCarpaccio();
 		result.quantity = ingredient.quantity();

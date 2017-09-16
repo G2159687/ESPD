@@ -61,13 +61,13 @@ public class Buff extends Actor {
 	public int icon() {
 		return BuffIndicator.NONE;
 	}
-	
-	public String desc(){
+
+	public String desc() {
 		return "";
 	}
 
 	//to handle the common case of showing how many turns are remaining in a buff description.
-	protected String dispTurns(float input){
+	protected String dispTurns(float input) {
 		return input == 1 ? "1" : new DecimalFormat("#.##").format(input);
 	}
 
@@ -82,7 +82,7 @@ public class Buff extends Actor {
 	}
 
 	public static <T extends FlavourBuff> T append(Char target,
-			Class<T> buffClass, float duration) {
+	                                               Class<T> buffClass, float duration) {
 		T buff = append(target, buffClass);
 		buff.spend(duration);
 		return buff;
@@ -98,14 +98,14 @@ public class Buff extends Actor {
 	}
 
 	public static <T extends FlavourBuff> T affect(Char target,
-			Class<T> buffClass, float duration) {
+	                                               Class<T> buffClass, float duration) {
 		T buff = affect(target, buffClass);
 		buff.spend(duration);
 		return buff;
 	}
 
 	public static <T extends FlavourBuff> T prolong(Char target,
-			Class<T> buffClass, float duration) {
+	                                                Class<T> buffClass, float duration) {
 		T buff = affect(target, buffClass);
 		buff.postpone(duration);
 		return buff;

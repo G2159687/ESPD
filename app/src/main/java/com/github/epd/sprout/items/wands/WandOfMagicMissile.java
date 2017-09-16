@@ -40,20 +40,20 @@ import java.util.ArrayList;
 
 public class WandOfMagicMissile extends Wand {
 
-	public static final String AC_DISENCHANT = Messages.get(WandOfMagicMissile.class,"ac_dis");
+	public static final String AC_DISENCHANT = Messages.get(WandOfMagicMissile.class, "ac_dis");
 
-	private static final String TXT_SELECT_WAND = Messages.get(WandOfMagicMissile.class,"title");
+	private static final String TXT_SELECT_WAND = Messages.get(WandOfMagicMissile.class, "title");
 
-	private static final String TXT_DISENCHANTED = Messages.get(WandOfMagicMissile.class,"dised");
+	private static final String TXT_DISENCHANTED = Messages.get(WandOfMagicMissile.class, "dised");
 
 	private static final float TIME_TO_DISENCHANT = 2f;
 
 	private boolean disenchantEquipped;
-	
+
 	private float upgradeChance = 0.5f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
 
 		bones = false;
@@ -75,16 +75,14 @@ public class WandOfMagicMissile extends Wand {
 		if (ch != null) {
 
 			int level = level();
-            int damage= Random.Int(level+3, 6 + level * 2);
-            if (Dungeon.hero.buff(Strength.class) != null){ damage *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
+			int damage = Random.Int(level + 3, 6 + level * 2);
+			if (Dungeon.hero.buff(Strength.class) != null) {
+				damage *= (int) 4f;
+				Buff.detach(Dungeon.hero, Strength.class);
+			}
 			ch.damage(damage, this);
 
 			ch.sprite.burst(0xFFFFFFFF, level < 7 ? level / 2 + 2 : 5);
-
-			/*if (ch == curUser && !ch.isAlive()) {
-				Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
-				GLog.n(Messages.get(this,"kill"));
-			}*/
 		}
 	}
 
@@ -119,7 +117,7 @@ public class WandOfMagicMissile extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc", 3 + level, 6 + level * 2);
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {
@@ -135,34 +133,34 @@ public class WandOfMagicMissile extends Wand {
 
 				Dungeon.quickslot.clearItem(WandOfMagicMissile.this);
 				WandOfMagicMissile.this.updateQuickslot();
-				
+
 				DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-				if (gold!=null){
-				upgradeChance = (upgradeChance + (gold.quantity()*0.01f));
+				if (gold != null) {
+					upgradeChance = (upgradeChance + (gold.quantity() * 0.01f));
 				}
 
-				 int i=0;
-					while(i<level) {
-						if (i<2){
-						  Sample.INSTANCE.play(Assets.SND_EVOKE);
-						  ScrollOfUpgrade.upgrade(curUser);
-						  evoke(curUser);
-						  item.upgrade();
-						} else if (Random.Float()<upgradeChance){
-							if (item.level<15 || item.reinforced){
-					            Sample.INSTANCE.play(Assets.SND_EVOKE);
-					            ScrollOfUpgrade.upgrade(curUser);
-					            evoke(curUser);
-					            item.upgrade();
-					            upgradeChance = Math.max(0.5f, upgradeChance-0.1f);
-							 } else {
-								 GLog.w(Messages.get(WandOfMagicMissile.class,"notenough", item.name()));
-								 i=level;
-							 }
-					  }
-					i++;
+				int i = 0;
+				while (i < level) {
+					if (i < 2) {
+						Sample.INSTANCE.play(Assets.SND_EVOKE);
+						ScrollOfUpgrade.upgrade(curUser);
+						evoke(curUser);
+						item.upgrade();
+					} else if (Random.Float() < upgradeChance) {
+						if (item.level < 15 || item.reinforced) {
+							Sample.INSTANCE.play(Assets.SND_EVOKE);
+							ScrollOfUpgrade.upgrade(curUser);
+							evoke(curUser);
+							item.upgrade();
+							upgradeChance = Math.max(0.5f, upgradeChance - 0.1f);
+						} else {
+							GLog.w(Messages.get(WandOfMagicMissile.class, "notenough", item.name()));
+							i = level;
+						}
 					}
-				
+					i++;
+				}
+
 				item.upgrade();
 				curUser.spendAndNext(TIME_TO_DISENCHANT);
 

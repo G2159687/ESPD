@@ -34,15 +34,15 @@ import java.util.ArrayList;
 
 public class ArmorKit extends Item {
 
-	private static final String TXT_SELECT_ARMOR = Messages.get(ArmorKit.class,"prompt");
-	private static final String TXT_UPGRADED = Messages.get(ArmorKit.class,"upgraded");
+	private static final String TXT_SELECT_ARMOR = Messages.get(ArmorKit.class, "prompt");
+	private static final String TXT_UPGRADED = Messages.get(ArmorKit.class, "upgraded");
 
 	private static final float TIME_TO_UPGRADE = 2;
 
-	private static final String AC_APPLY = Messages.get(ArmorKit.class,"ac_apply");
+	private static final String AC_APPLY = Messages.get(ArmorKit.class, "ac_apply");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.KIT;
 
 		unique = true;
@@ -110,7 +110,7 @@ public class ArmorKit extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {

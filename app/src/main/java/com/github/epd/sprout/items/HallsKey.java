@@ -27,7 +27,6 @@ import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.keys.SkeletonKey;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSprite;
@@ -41,26 +40,26 @@ import com.watabou.utils.PathFinder;
 import java.util.ArrayList;
 
 public class HallsKey extends Item {
-	
-	private static final String TXT_PREVENTING = Messages.get(CavesKey.class,"prevent");
-		
-	
+
+	private static final String TXT_PREVENTING = Messages.get(CavesKey.class, "prevent");
+
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_PORT = Messages.get(CavesKey.class,"ac");
+	public static final String AC_PORT = Messages.get(CavesKey.class, "ac");
 
 	private int specialLevel = 25;
 	private int returnDepth = -1;
 	private int returnPos;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ANCIENTKEY;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 
@@ -84,7 +83,7 @@ public class HallsKey extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_PORT);
-		
+
 		return actions;
 	}
 
@@ -94,19 +93,19 @@ public class HallsKey extends Item {
 		if (action == AC_PORT) {
 
 			/* 
-			if (Dungeon.bossLevel()) {
+	        if (Dungeon.bossLevel()) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
 			*/
-			
-			if (Dungeon.depth>25 || hero.petfollow) {
+
+			if (Dungeon.depth > 25 || hero.petfollow) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			if (Dungeon.depth==1) {
+			if (Dungeon.depth == 1) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
@@ -116,92 +115,97 @@ public class HallsKey extends Item {
 		}
 
 		if (action == AC_PORT) {
-			
-			 hero.spend(TIME_TO_USE);
 
-				Buff buff = Dungeon.hero
-						.buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null)
-					buff.detach();
+			hero.spend(TIME_TO_USE);
 
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
-					if (mob instanceof DriedRose.GhostHero)
-						mob.destroy();
-              if (Dungeon.depth<25 && !Dungeon.bossLevel()){
-            	
-            	returnDepth = Dungeon.depth;
-       			returnPos = hero.pos;
+			Buff buff = Dungeon.hero
+					.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null)
+				buff.detach();
+
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
+				if (mob instanceof DriedRose.GhostHero)
+					mob.destroy();
+			if (Dungeon.depth < 25 && !Dungeon.bossLevel()) {
+
+				returnDepth = Dungeon.depth;
+				returnPos = hero.pos;
 				InterlevelScene.mode = InterlevelScene.Mode.PORTHALLS;
 			} else {
-				 checkPetPort();
-				 removePet();
-				
-				if (Statistics.amuletObtained){this.detach(Dungeon.hero.belongings.backpack);}
+				checkPetPort();
+				removePet();
+
+				if (Statistics.amuletObtained) {
+					this.detach(Dungeon.hero.belongings.backpack);
+				}
 				SkeletonKey key = Dungeon.hero.belongings.getItem(SkeletonKey.class);
-				if (key!=null){key.detachAll(Dungeon.hero.belongings.backpack);}
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
-				
+				if (key != null) {
+					key.detachAll(Dungeon.hero.belongings.backpack);
+				}
+				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
+
 			}
-               
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-					
+
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+
 		} else {
 
 			super.execute(hero, action);
 
 		}
 	}
-	
 
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		  //GLog.i("I see pet");
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			//GLog.i("I see pet");
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
-	private void removePet(){
-		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow){
-		 for (Mob mob : Dungeon.level.mobs) {
-				if(mob instanceof PET) {				 
-					Dungeon.hero.haspet=false;
+
+	private void removePet() {
+		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow) {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob instanceof PET) {
+					Dungeon.hero.haspet = false;
 					Dungeon.hero.petCount++;
-					mob.destroy();				
+					mob.destroy();
 				}
-			  }
+			}
 		}
 	}
-	
-	
+
+
 	public void reset() {
 		returnDepth = -1;
 	}
@@ -218,7 +222,7 @@ public class HallsKey extends Item {
 
 
 	private static ItemSprite.Glowing RED = new ItemSprite.Glowing(0xCC0000);
-	
+
 	@Override
 	public Glowing glowing() {
 		return RED;
@@ -226,6 +230,6 @@ public class HallsKey extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

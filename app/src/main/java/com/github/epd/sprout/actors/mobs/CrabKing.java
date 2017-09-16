@@ -47,7 +47,7 @@ public class CrabKing extends Mob {
 	private static final int JUMP_DELAY = 5;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = CrabKingSprite.class;
 		baseSpeed = 2f;
 
@@ -57,8 +57,8 @@ public class CrabKing extends Mob {
 	}
 
 	private int timeToJump = JUMP_DELAY;
-	
-	
+
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(20, 50);
@@ -78,33 +78,32 @@ public class CrabKing extends Mob {
 	protected boolean act() {
 		boolean result = super.act();
 
-		int regen=Math.round(Dungeon.shellCharge/10);
-		
-		if (HP < HT && Dungeon.shellCharge>10) {
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+		int regen = Math.round(Dungeon.shellCharge / 10);
+
+		if (HP < HT && Dungeon.shellCharge > 10) {
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			HP = HP + regen;
-			Dungeon.shellCharge-=regen;
-			GLog.n(Messages.get(CrabKing.class,"heal"));
+			Dungeon.shellCharge -= regen;
+			GLog.n(Messages.get(CrabKing.class, "heal"));
 		}
 		return result;
 	}
-	
+
 	@Override
 	public void die(Object cause) {
 
-		
-		
+
 		GameScene.bossSlain();
-		
+
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
 		Dungeon.level.drop(new AdamantArmor(), pos).sprite.drop();
-		Dungeon.crabkingkilled=true;
-	
-		
+		Dungeon.crabkingkilled = true;
+
+
 		super.die(cause);
-		
-		yell(Messages.get(CrabKing.class,"die"));
-					
+
+		yell(Messages.get(CrabKing.class, "die"));
+
 	}
 
 	@Override
@@ -119,7 +118,7 @@ public class CrabKing extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -135,7 +134,7 @@ public class CrabKing extends Mob {
 
 	private void jump() {
 		timeToJump = JUMP_DELAY;
-		
+
 		int newPos;
 		do {
 			newPos = Random.Int(Level.getLength());
@@ -158,15 +157,16 @@ public class CrabKing extends Mob {
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(CrabKing.class,"notice", Dungeon.hero.givenName()));
+		yell(Messages.get(CrabKing.class, "notice", Dungeon.hero.givenName()));
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);
@@ -180,7 +180,7 @@ public class CrabKing extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}

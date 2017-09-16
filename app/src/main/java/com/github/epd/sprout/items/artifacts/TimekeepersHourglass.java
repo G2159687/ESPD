@@ -22,14 +22,14 @@ import java.util.ArrayList;
 
 public class TimekeepersHourglass extends Artifact {
 
-	public static final String AC_ACTIVATE = Messages.get(TimekeepersHourglass.class,"ac_activate");
-	private static final String TXT_HGLASS = Messages.get(TimekeepersHourglass.class,"name");
-	private static final String TXT_STASIS = Messages.get(TimekeepersHourglass.class,"stasis");
-	private static final String TXT_FREEZE = Messages.get(TimekeepersHourglass.class,"freeze");
-	private static final String TXT_DESC = Messages.get(TimekeepersHourglass.class,"prompt");
+	public static final String AC_ACTIVATE = Messages.get(TimekeepersHourglass.class, "ac_activate");
+	private static final String TXT_HGLASS = Messages.get(TimekeepersHourglass.class, "name");
+	private static final String TXT_STASIS = Messages.get(TimekeepersHourglass.class, "stasis");
+	private static final String TXT_FREEZE = Messages.get(TimekeepersHourglass.class, "freeze");
+	private static final String TXT_DESC = Messages.get(TimekeepersHourglass.class, "prompt");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_HOURGLASS;
 
 		level = 0;
@@ -58,27 +58,27 @@ public class TimekeepersHourglass extends Artifact {
 		if (action.equals(AC_ACTIVATE)) {
 
 			if (!isEquipped(hero))
-				GLog.i(Messages.get(TimekeepersHourglass.class,"equip"));
+				GLog.i(Messages.get(TimekeepersHourglass.class, "equip"));
 			else if (activeBuff != null)
-				GLog.i(Messages.get(TimekeepersHourglass.class,"in_use"));
+				GLog.i(Messages.get(TimekeepersHourglass.class, "in_use"));
 			else if (charge <= 1)
-				GLog.i(Messages.get(TimekeepersHourglass.class,"no_charge"));
+				GLog.i(Messages.get(TimekeepersHourglass.class, "no_charge"));
 			else if (cursed)
-				GLog.i(Messages.get(TimekeepersHourglass.class,"cursed"));
+				GLog.i(Messages.get(TimekeepersHourglass.class, "cursed"));
 			else
 				GameScene.show(new WndOptions(TXT_HGLASS, TXT_DESC, TXT_STASIS,
 						TXT_FREEZE) {
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0) {
-							GLog.i(Messages.get(TimekeepersHourglass.class,"onstasis"));
+							GLog.i(Messages.get(TimekeepersHourglass.class, "onstasis"));
 							GameScene.flash(0xFFFFFF);
 							Sample.INSTANCE.play(Assets.SND_TELEPORT);
 
 							activeBuff = new timeStasis();
 							activeBuff.attachTo(Dungeon.hero);
 						} else if (index == 1) {
-							GLog.i(Messages.get(TimekeepersHourglass.class,"onfreeze"));
+							GLog.i(Messages.get(TimekeepersHourglass.class, "onfreeze"));
 							GameScene.flash(0xFFFFFF);
 							Sample.INSTANCE.play(Assets.SND_TELEPORT);
 
@@ -128,17 +128,17 @@ public class TimekeepersHourglass extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(TimekeepersHourglass.class,"desc");
+		String desc = Messages.get(TimekeepersHourglass.class, "desc");
 
 
 		if (isEquipped(Dungeon.hero)) {
 			if (!cursed) {
-				desc += "\n\n" + Messages.get(TimekeepersHourglass.class,"desc1");
+				desc += "\n\n" + Messages.get(TimekeepersHourglass.class, "desc1");
 
 				if (level < levelCap)
-					desc += "\n\n" + Messages.get(TimekeepersHourglass.class,"desc2");
+					desc += "\n\n" + Messages.get(TimekeepersHourglass.class, "desc2");
 			} else
-				desc += "\n\n" + Messages.get(TimekeepersHourglass.class,"desc_cursed");
+				desc += "\n\n" + Messages.get(TimekeepersHourglass.class, "desc_cursed");
 
 		}
 		return desc;
@@ -332,7 +332,7 @@ public class TimekeepersHourglass extends Artifact {
 	public static class sandBag extends Item {
 
 		{
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SANDBAG;
 		}
 
@@ -344,20 +344,20 @@ public class TimekeepersHourglass extends Artifact {
 				hourglass.upgrade();
 				Sample.INSTANCE.play(Assets.SND_DEWDROP);
 				if (hourglass.level == hourglass.levelCap)
-					GLog.p(Messages.get(this,"maxlevel"));
+					GLog.p(Messages.get(this, "maxlevel"));
 				else
-					GLog.i(Messages.get(this,"levelup"));
+					GLog.i(Messages.get(this, "levelup"));
 				hero.spendAndNext(TIME_TO_PICK_UP);
 				return true;
 			} else {
-				GLog.w(Messages.get(this,"no_hourglass"));
+				GLog.w(Messages.get(this, "no_hourglass"));
 				return false;
 			}
 		}
 
 		@Override
 		public String desc() {
-			return Messages.get(this,"desc");
+			return Messages.get(this, "desc");
 		}
 
 		@Override

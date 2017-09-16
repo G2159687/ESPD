@@ -35,7 +35,7 @@ import java.util.HashSet;
 public class SkeletonHand2 extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SkeletonHand2Sprite.class;
 
 		HP = HT = 200;
@@ -48,8 +48,8 @@ public class SkeletonHand2 extends Mob {
 
 		loot = new PotionOfLiquidFlame();
 		lootChance = 0.1f;
-		
-		}
+
+	}
 
 	@Override
 	public int damageRoll() {
@@ -80,24 +80,23 @@ public class SkeletonHand2 extends Mob {
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(2) == 0) {
-			if(enemy == Dungeon.hero){
-			Buff.prolong(enemy, Roots.class, 20);
-			state = FLEEING;
+			if (enemy == Dungeon.hero) {
+				Buff.prolong(enemy, Roots.class, 20);
+				state = FLEEING;
 			}
 		}
 
 		return damage;
 	}
-	
-	
 
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Burning.class);
 		IMMUNITIES.add(Fire.class);

@@ -49,8 +49,8 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
-import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Beam;
+import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.particles.PoisonParticle;
 import com.github.epd.sprout.items.artifacts.CloakOfShadows;
 import com.github.epd.sprout.items.artifacts.RingOfDisintegration;
@@ -98,14 +98,14 @@ public abstract class Char extends Actor {
 
 	@Override
 	protected boolean act() {
-		Dungeon.level.updateFieldOfView( this, Level.fieldOfView );
+		Dungeon.level.updateFieldOfView(this, Level.fieldOfView);
 		return false;
 	}
 
 	private static final String POS = "pos";
 	private static final String TAG_HP = "HP";
 	private static final String TAG_HT = "HT";
-	private static final String TAG_SHLD    = "SHLD";
+	private static final String TAG_SHLD = "SHLD";
 	private static final String BUFFS = "buffs";
 
 	@Override
@@ -116,7 +116,7 @@ public abstract class Char extends Actor {
 		bundle.put(POS, pos);
 		bundle.put(TAG_HP, HP);
 		bundle.put(TAG_HT, HT);
-		bundle.put( TAG_SHLD, SHLD );
+		bundle.put(TAG_SHLD, SHLD);
 		bundle.put(BUFFS, buffs);
 	}
 
@@ -128,7 +128,7 @@ public abstract class Char extends Actor {
 		pos = bundle.getInt(POS);
 		HP = bundle.getInt(TAG_HP);
 		HT = bundle.getInt(TAG_HT);
-		SHLD = bundle.getInt( TAG_SHLD );
+		SHLD = bundle.getInt(TAG_SHLD);
 
 		for (Bundlable b : bundle.getCollection(BUFFS)) {
 			if (b != null) {
@@ -180,18 +180,18 @@ public abstract class Char extends Actor {
 			if (buff(EarthImbue.class) != null)
 				buff(EarthImbue.class).proc(enemy);
 
-			if (buff(RingOfDisintegration.ringRecharge.class) != null && enemy.isAlive()){
-				if (buff(RingOfDisintegration.ringRecharge.class).level() > 10){
-					if (Random.Float() < (float)(buff(RingOfDisintegration.ringRecharge.class).level()) / 150f){
+			if (buff(RingOfDisintegration.ringRecharge.class) != null && enemy.isAlive()) {
+				if (buff(RingOfDisintegration.ringRecharge.class).level() > 10) {
+					if (Random.Float() < (float) (buff(RingOfDisintegration.ringRecharge.class).level()) / 150f) {
 						this.sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.tileCenterToWorld(enemy.pos)));
 						enemy.damage(Random.NormalIntRange(2 * (buff(RingOfDisintegration.ringRecharge.class).level()), 4 * (buff(RingOfDisintegration.ringRecharge.class).level())), this);
 					}
 				}
 			}
 
-			if (buff(RingOfFrost.ringRecharge.class) != null && enemy.isAlive()){
-				if (buff(RingOfFrost.ringRecharge.class).level() > 10){
-					if (Random.Float() < (float)(buff(RingOfFrost.ringRecharge.class).level()) / 150f )
+			if (buff(RingOfFrost.ringRecharge.class) != null && enemy.isAlive()) {
+				if (buff(RingOfFrost.ringRecharge.class).level() > 10) {
+					if (Random.Float() < (float) (buff(RingOfFrost.ringRecharge.class).level()) / 150f)
 						Freezing.affect(enemy.pos, null);
 				}
 			}
@@ -202,9 +202,9 @@ public abstract class Char extends Actor {
 			if (!enemy.isAlive() && visibleFight) {
 				if (enemy == Dungeon.hero) {
 					Dungeon.fail(Utils.format(ResultDescriptions.MOB, Utils.indefinite(name)));
-					GLog.n(Messages.get(this,"kill"), name);
+					GLog.n(Messages.get(this, "kill"), name);
 				} else {
-					GLog.i(Messages.get(this,"defeat"), name, enemy.name);
+					GLog.i(Messages.get(this, "defeat"), name, enemy.name);
 				}
 			}
 
@@ -238,7 +238,7 @@ public abstract class Char extends Actor {
 	}
 
 	public String defenseVerb() {
-		return Messages.get(this,"dodged");
+		return Messages.get(this, "dodged");
 	}
 
 	public int dr() {
@@ -258,15 +258,15 @@ public abstract class Char extends Actor {
 	}
 
 	public float speed() {
-		if (buff(Cripple.class) != null){
+		if (buff(Cripple.class) != null) {
 			return baseSpeed * 0.5f;
-		} else if (buff(Haste.class) != null){
+		} else if (buff(Haste.class) != null) {
 			return baseSpeed * 2f;
 		} else {
 			return baseSpeed;
 		}
-		
-		
+
+
 	}
 
 	public void damage(int dmg, Object src) {
@@ -292,12 +292,12 @@ public abstract class Char extends Actor {
 			if (Random.Int(dmg) >= Random.Int(HP)) {
 				Buff.detach(this, Paralysis.class);
 				if (Dungeon.visible[pos]) {
-					GLog.i(Messages.get(this,"np"), name);
+					GLog.i(Messages.get(this, "np"), name);
 				}
 			}
 		}
 
-		if (SHLD >= dmg){
+		if (SHLD >= dmg) {
 			SHLD -= dmg;
 		} else if (SHLD > 0) {
 			HP -= (dmg - SHLD);
@@ -336,8 +336,8 @@ public abstract class Char extends Actor {
 		float timeScale = 1f;
 		if (buff(Slow.class) != null) {
 			timeScale *= 0.5f;
-		} else if (buff( Chill.class ) != null) {
-			timeScale *= buff( Chill.class ).speedFactor();
+		} else if (buff(Chill.class) != null) {
+			timeScale *= buff(Chill.class).speedFactor();
 		}
 		if (buff(Speed.class) != null) {
 			timeScale *= 2.0f;
@@ -354,7 +354,7 @@ public abstract class Char extends Actor {
 	}
 
 	@SuppressWarnings("unchecked")
-	public synchronized  <T extends Buff> HashSet<T> buffs(Class<T> c) {
+	public synchronized <T extends Buff> HashSet<T> buffs(Class<T> c) {
 		HashSet<T> filtered = new HashSet<T>();
 		for (Buff b : buffs) {
 			if (c.isInstance(b)) {
@@ -393,59 +393,57 @@ public abstract class Char extends Actor {
 			if (buff instanceof Poison) {
 
 				CellEmitter.center(pos).burst(PoisonParticle.SPLASH, 5);
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Poison.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Poison.class, "name"));
 
 			} else if (buff instanceof Amok) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Amok.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Amok.class, "name"));
 
 			} else if (buff instanceof Slow) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Slow.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Slow.class, "name"));
 
 			} else if (buff instanceof Chill) {
 
-				sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Chill.class, "name") );
-				sprite.add( CharSprite.State.CHILLED );
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Chill.class, "name"));
+				sprite.add(CharSprite.State.CHILLED);
 
-			}else if (buff instanceof MindVision) {
+			} else if (buff instanceof MindVision) {
 
-				sprite.showStatus(CharSprite.POSITIVE, Messages.get(MindVision.class,"name"));
+				sprite.showStatus(CharSprite.POSITIVE, Messages.get(MindVision.class, "name"));
 
 			} else if (buff instanceof Paralysis) {
 
 				sprite.add(CharSprite.State.PARALYSED);
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Paralysis.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Paralysis.class, "name"));
 
 			} else if (buff instanceof Terror) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Terror.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Terror.class, "name"));
 
 			} else if (buff instanceof Roots) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Roots.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Roots.class, "name"));
 
 			} else if (buff instanceof Cripple) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Cripple.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Cripple.class, "name"));
 
 			} else if (buff instanceof Bleeding) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Bleeding.class,"name"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Bleeding.class, "name"));
 
 			} else if (buff instanceof Vertigo) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Vertigo.class,"name"));
-			 
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Vertigo.class, "name"));
+
 			} else if (buff instanceof Haste) {
 
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Haste.class,"name"));
-				
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Haste.class, "name"));
+
 			} else if (buff instanceof Sleep) {
 				sprite.idle();
-			}
-
-			else if (buff instanceof Burning) {
+			} else if (buff instanceof Burning) {
 				sprite.add(CharSprite.State.BURNING);
 			} else if (buff instanceof Levitation) {
 				sprite.add(CharSprite.State.LEVITATING);
@@ -454,7 +452,7 @@ public abstract class Char extends Actor {
 			} else if (buff instanceof Invisibility
 					|| buff instanceof CloakOfShadows.cloakStealth) {
 				if (!(buff instanceof Shadows)) {
-					sprite.showStatus(CharSprite.POSITIVE, Messages.get(Invisibility.class,"name"));
+					sprite.showStatus(CharSprite.POSITIVE, Messages.get(Invisibility.class, "name"));
 				}
 				sprite.add(CharSprite.State.INVISIBLE);
 			}
@@ -478,7 +476,7 @@ public abstract class Char extends Actor {
 		} else if (buff instanceof Frost) {
 			sprite.remove(CharSprite.State.FROZEN);
 		} else if (buff instanceof Chill) {
-			sprite.remove( CharSprite.State.CHILLED );
+			sprite.remove(CharSprite.State.CHILLED);
 		}
 	}
 
@@ -511,7 +509,7 @@ public abstract class Char extends Actor {
 			} else if (buff instanceof Light) {
 				sprite.add(CharSprite.State.ILLUMINATED);
 			} else if (buff instanceof Chill) {
-				sprite.add( CharSprite.State.CHILLED );
+				sprite.add(CharSprite.State.CHILLED);
 			}
 		}
 	}
@@ -522,10 +520,10 @@ public abstract class Char extends Actor {
 
 	public void move(int step) {
 
-		if (Level.adjacent( step, pos ) && buff( Vertigo.class ) != null) {
+		if (Level.adjacent(step, pos) && buff(Vertigo.class) != null) {
 			sprite.interruptMotion();
-			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-			if (!(Level.passable[newPos] || Level.avoid[newPos]) || Actor.findChar( newPos ) != null)
+			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			if (!(Level.passable[newPos] || Level.avoid[newPos]) || Actor.findChar(newPos) != null)
 				return;
 			else {
 				sprite.move(pos, newPos);
@@ -534,13 +532,13 @@ public abstract class Char extends Actor {
 		}
 
 		if (Dungeon.level.map[pos] == Terrain.OPEN_DOOR) {
-			Door.leave( pos, this );
+			Door.leave(pos);
 		}
 
 		pos = step;
 
 		if (flying && Dungeon.level.map[pos] == Terrain.DOOR) {
-			Door.enter(pos, this);
+			Door.enter(pos);
 		}
 
 		if (this != Dungeon.hero) {
@@ -552,7 +550,8 @@ public abstract class Char extends Actor {
 		return Level.distance(pos, other.pos);
 	}
 
-	public void onMotionComplete() {}
+	public void onMotionComplete() {
+	}
 
 	public void onAttackComplete() {
 		next();
@@ -570,5 +569,21 @@ public abstract class Char extends Actor {
 
 	public HashSet<Class<?>> immunities() {
 		return EMPTY;
+	}
+
+	protected HashSet<Property> properties = new HashSet<>();
+
+	//TODO: implement more properties
+
+	public HashSet<Property> properties() {
+		return properties;
+	}
+
+	public enum Property {
+		BOSS,
+		MINIBOSS,
+		UNDEAD,
+		EVIL,
+		IMMOVABLE
 	}
 }

@@ -43,7 +43,7 @@ public class Alter extends Blob {
 	@Override
 	protected void evolve() {
 		volume = off[pos] = cur[pos];
-		area.union(pos%WIDTH, pos/WIDTH);
+		area.union(pos % WIDTH, pos / WIDTH);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class Alter extends Blob {
 		volume = cur[pos] = amount;
 
 		area.setEmpty();
-		area.union(cell%WIDTH, cell/WIDTH);
+		area.union(cell % WIDTH, cell / WIDTH);
 	}
 
 	public static void transmute(int cell) {

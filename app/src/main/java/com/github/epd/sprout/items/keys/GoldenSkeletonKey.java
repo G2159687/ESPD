@@ -24,7 +24,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class GoldenSkeletonKey extends Key {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.GOLDEN_KEY;
 	}
 
@@ -36,8 +36,8 @@ public class GoldenSkeletonKey extends Key {
 		super();
 		this.depth = depth;
 	}
-	
-    private static final Glowing WHITE = new Glowing(0xFFFFCC);	
+
+	private static final Glowing WHITE = new Glowing(0xFFFFCC);
 
 	@Override
 	public Glowing glowing() {
@@ -46,6 +46,6 @@ public class GoldenSkeletonKey extends Key {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

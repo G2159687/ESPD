@@ -40,21 +40,21 @@ import java.util.ArrayList;
 public class FishingBomb extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.RICEBOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Fuse fuse;
-	
-	public static final String TXT_NO_TELEPORT = Messages.get(FishingBomb.class,"no_tele");
+
+	public static final String TXT_NO_TELEPORT = Messages.get(FishingBomb.class, "no_tele");
 
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(FishingBomb.class,"ac");
+	private static final String AC_LIGHTTHROW = Messages.get(FishingBomb.class, "ac");
 
 	@Override
 	public boolean isSimilar(Item item) {
@@ -100,7 +100,7 @@ public class FishingBomb extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(FishingBomb.class,"stop"));
+			GLog.w(Messages.get(FishingBomb.class, "stop"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -109,13 +109,13 @@ public class FishingBomb extends Item {
 	public void explode(int cell) {
 		// We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
-	    Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
 		//if (Dungeon.visible[cell]) {
 		//	CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
 		//}
 
-	     	for (int n: PathFinder.NEIGHBOURS9DIST2) {
+		for (int n : PathFinder.NEIGHBOURS9DIST2) {
 			int c = cell + n;
 			if (c >= 0 && c < Level.getLength()) {
 				if (Dungeon.visible[c]) {
@@ -125,35 +125,35 @@ public class FishingBomb extends Item {
 				Heap heap = Dungeon.level.heaps.get(c);
 				if (heap != null)
 					heap.dumpexplode();
-				
+
 				Char ch = Actor.findChar(c);
 				if (ch instanceof AlbinoPiranha) {
 
-						int count = 20;
-						int pos;
-						do {
-							pos = Dungeon.level.randomRespawnCellFish();
-							if (count-- <= 0) {
-								break;
-							}
-						} while (pos == -1);
-
-						if (pos == -1) {
-
-							GLog.w(TXT_NO_TELEPORT);
-
-						} else {
-
-							ch.pos = pos;
-							ch.sprite.place(ch.pos);
-							ch.sprite.visible = Dungeon.visible[pos];
-							GLog.i(Messages.get(FishingBomb.class,"tele", curUser.name, ch.name));
-
+					int count = 20;
+					int pos;
+					do {
+						pos = Dungeon.level.randomRespawnCellFish();
+						if (count-- <= 0) {
+							break;
 						}
+					} while (pos == -1);
+
+					if (pos == -1) {
+
+						GLog.w(TXT_NO_TELEPORT);
+
+					} else {
+
+						ch.pos = pos;
+						ch.sprite.place(ch.pos);
+						ch.sprite.visible = Dungeon.visible[pos];
+						GLog.i(Messages.get(FishingBomb.class, "tele", curUser.name, ch.name));
 
 					}
+
 				}
-		 }
+			}
+		}
 
 	}
 
@@ -180,7 +180,7 @@ public class FishingBomb extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(FishingBomb.class,"desc1") + (fuse != null ? Messages.get(FishingBomb.class,"desc2") : Messages.get(FishingBomb.class,"desc3"));
+		return Messages.get(FishingBomb.class, "desc1") + (fuse != null ? Messages.get(FishingBomb.class, "desc2") : Messages.get(FishingBomb.class, "desc3"));
 	}
 
 	private static final String FUSE = "fuse";
@@ -233,11 +233,11 @@ public class FishingBomb extends Item {
 				}
 			}
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}
-	
+
 	public FishingBomb() {
 		this(1);
 	}

@@ -45,7 +45,7 @@ public class Alchemy extends Blob {
 	@Override
 	protected void evolve() {
 		volume = off[pos] = cur[pos];
-		area.union(pos%Level.WIDTH, pos/Level.WIDTH);
+		area.union(pos % Level.WIDTH, pos / Level.WIDTH);
 
 		if (Dungeon.visible[pos]) {
 			Journal.add(Journal.Feature.ALCHEMY);
@@ -62,7 +62,7 @@ public class Alchemy extends Blob {
 		volume = cur[pos] = amount;
 
 		area.setEmpty();
-		area.union(cell%Level.WIDTH, cell/ Level.WIDTH);
+		area.union(cell % Level.WIDTH, cell / Level.WIDTH);
 	}
 
 	public static void transmute(int cell) {

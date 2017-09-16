@@ -109,7 +109,7 @@ public class HallsBossLevel extends Level {
 
 		Painter.fill(this, ROOM_LEFT - 1, ROOM_TOP - 1, ROOM_RIGHT - ROOM_LEFT
 				+ 3, ROOM_BOTTOM - ROOM_TOP + 3, Terrain.WALL);
-		
+
 		Painter.fill(this, ROOM_LEFT, ROOM_TOP, ROOM_RIGHT - ROOM_LEFT + 1,
 				ROOM_BOTTOM - ROOM_TOP + 1, Terrain.EMPTY);
 
@@ -133,13 +133,15 @@ public class HallsBossLevel extends Level {
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.EMPTY && Random.Int(10) == 0) {
 				map[i] = Terrain.EMPTY_DECO;
-				if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.PEDESTAL;}
+				if (map[i] == Terrain.ENTRANCE) {
+					map[i] = Terrain.PEDESTAL;
+				}
 			}
-		}	
-		
-		sealedlevel=false;
-		
-		
+		}
+
+		sealedlevel = false;
+
+
 	}
 
 	@Override
@@ -168,7 +170,7 @@ public class HallsBossLevel extends Level {
 	public int randomRespawnCell() {
 		return -1;
 	}
-	
+
 
 	@Override
 	public void press(int cell, Char hero) {
@@ -228,30 +230,30 @@ public class HallsBossLevel extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(HallsLevel.class,"water_name");
-		case Terrain.GRASS:
-			return Messages.get(HallsLevel.class,"grass_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(HallsLevel.class,"high_grass_name");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(HallsLevel.class,"statue_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(HallsLevel.class, "water_name");
+			case Terrain.GRASS:
+				return Messages.get(HallsLevel.class, "grass_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(HallsLevel.class, "high_grass_name");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(HallsLevel.class, "statue_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(HallsLevel.class,"water_desc");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(HallsLevel.class,"statue_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.WATER:
+				return Messages.get(HallsLevel.class, "water_desc");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(HallsLevel.class, "statue_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

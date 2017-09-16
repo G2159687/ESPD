@@ -39,20 +39,20 @@ import java.util.HashSet;
 public class FlyingProtector extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
-	
-	private static final float SPAWN_DELAY = 0.2f;
-	
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(FlyingProtector.class,"kill");
+	private static final float SPAWN_DELAY = 0.2f;
+
+
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(FlyingProtector.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = FlyingProtectorSprite.class;
 
 		EXP = 18;
 		state = HUNTING;
 		flying = true;
-		
+
 		HP = HT = 15 + Dungeon.depth * 4;
 		defenseSkill = 4 + Dungeon.depth * 1;
 	}
@@ -74,7 +74,7 @@ public class FlyingProtector extends Mob implements Callback {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -122,16 +122,16 @@ public class FlyingProtector extends Mob implements Callback {
 			return !visible;
 		}
 	}
-	
-	 public static FlyingProtector spawnAt(int pos) {
-			
-		 FlyingProtector b = new FlyingProtector();  
-	    	
-				b.pos = pos;
-				b.state = b.HUNTING;
-				GameScene.add(b, SPAWN_DELAY);
-				return b;	     
-	     }
+
+	public static FlyingProtector spawnAt(int pos) {
+
+		FlyingProtector b = new FlyingProtector();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+		return b;
+	}
 
 	@Override
 	public void call() {
@@ -140,10 +140,11 @@ public class FlyingProtector extends Mob implements Callback {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}

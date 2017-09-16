@@ -42,7 +42,7 @@ public class TenguHideoutLevel extends Level {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
-		cleared=true;
+		cleared = true;
 	}
 
 	private static final int TOP = 2;
@@ -99,7 +99,7 @@ public class TenguHideoutLevel extends Level {
 			map[y * getWidth() + CENTER + 2] = Terrain.STATUE_SP;
 			y += 2;
 		}
-		
+
 		exit = (TOP - 1) * getWidth() + CENTER;
 		map[exit] = Terrain.LOCKED_EXIT;
 
@@ -162,7 +162,7 @@ public class TenguHideoutLevel extends Level {
 			do {
 				pos = Random.IntRange(LEFT + 1, LEFT + HALL_WIDTH - 2)
 						+ Random.IntRange(TOP + HALL_HEIGHT + 1, TOP
-								+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
+						+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
 			} while (pos == entrance || map[pos] == Terrain.SIGN);
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
@@ -194,17 +194,17 @@ public class TenguHideoutLevel extends Level {
 			do {
 				boss.pos = Random.Int(getLength());
 				shell.pos = (TOP + 1) * getWidth() + CENTER;
-				crab1.pos = (TOP + 1) * getWidth() + CENTER+1;
-				crab2.pos = (TOP + 1) * getWidth() + CENTER-1;
+				crab1.pos = (TOP + 1) * getWidth() + CENTER + 1;
+				crab2.pos = (TOP + 1) * getWidth() + CENTER - 1;
 				crab3.pos = (TOP + 2) * getWidth() + CENTER;
 				crab4.pos = (TOP + 0) * getWidth() + CENTER;
-			} while (!passable[boss.pos] 
+			} while (!passable[boss.pos]
 					|| !outsideEntraceRoom(boss.pos)
 					|| (Dungeon.visible[boss.pos] && count++ < 20));
-			
+
 			GameScene.add(boss);
 			GameScene.add(shell);
-			
+
 			GameScene.add(crab1);
 			GameScene.add(crab2);
 			GameScene.add(crab3);
@@ -245,34 +245,34 @@ public class TenguHideoutLevel extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return Messages.get(CityLevel.class,"entrance_desc");
-		case Terrain.EXIT:
-			return Messages.get(CityLevel.class,"exit_desc");
-		case Terrain.WALL_DECO:
-		case Terrain.EMPTY_DECO:
-			return Messages.get(CityLevel.class,"deco_desc");
-		case Terrain.EMPTY_SP:
-			return "";
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(CityLevel.class,"statue_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(CityLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return Messages.get(CityLevel.class, "entrance_desc");
+			case Terrain.EXIT:
+				return Messages.get(CityLevel.class, "exit_desc");
+			case Terrain.WALL_DECO:
+			case Terrain.EMPTY_DECO:
+				return Messages.get(CityLevel.class, "deco_desc");
+			case Terrain.EMPTY_SP:
+				return "";
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(CityLevel.class, "statue_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(CityLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

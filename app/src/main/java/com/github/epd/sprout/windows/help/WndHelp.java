@@ -8,29 +8,29 @@ import com.github.epd.sprout.ui.Window;
 import com.github.epd.sprout.utils.Utils;
 import com.github.epd.sprout.windows.IconTitle;
 
-public class WndHelp extends Window{
+public class WndHelp extends Window {
 
-    private static final float GAP = 2;
+	private static final float GAP = 2;
 
-    private static final int WIDTH = 120;
+	private static final int WIDTH = 120;
 
-    public WndHelp(Item item) {
-        super();
+	public WndHelp(Item item) {
+		super();
 
-        IconTitle titlebar = new IconTitle();
-        titlebar.icon(new ItemSprite(item));
-        titlebar.label(Utils.capitalize(item.toString()));
-        titlebar.setRect(0, 0, WIDTH, 0);
-        add(titlebar);
+		IconTitle titlebar = new IconTitle();
+		titlebar.icon(new ItemSprite(item));
+		titlebar.label(Utils.capitalize(item.toString()));
+		titlebar.setRect(0, 0, WIDTH, 0);
+		add(titlebar);
 
-        RenderedTextMultiline info = PixelScene.renderMultiline(item.info(), 6);
-        info.maxWidth(WIDTH);
-        info.setPos(titlebar.left(), titlebar.bottom() + GAP);
-        add(info);
+		RenderedTextMultiline info = PixelScene.renderMultiline(item.info(), 6);
+		info.maxWidth(WIDTH);
+		info.setPos(titlebar.left(), titlebar.bottom() + GAP);
+		add(info);
 
-        float y = info.top() + info.height() +GAP;
-        float x = 0;
+		float y = info.top() + info.height() + GAP;
+		float x = 0;
 
-        resize(WIDTH, (int) y);
-    }
+		resize(WIDTH, (int) y);
+	}
 }

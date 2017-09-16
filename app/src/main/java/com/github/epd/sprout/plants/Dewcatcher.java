@@ -37,19 +37,22 @@ import com.watabou.utils.Random;
 
 public class Dewcatcher extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Dewcatcher.class,"desc");
+	private static final String TXT_DESC = Messages.get(Dewcatcher.class, "desc");
+
 	{
 		image = 12;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
 	public void activate(Char ch) {
-		
+
 		explodeDew(pos);
-		if (Random.Int(2)==0){super.activate(ch);}	
-		    
-		
+		if (Random.Int(2) == 0) {
+			super.activate(ch);
+		}
+
+
 	}
 
 	@Override
@@ -59,77 +62,69 @@ public class Dewcatcher extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Dewcatcher.class,"name");
+			plantName = Messages.get(Dewcatcher.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_DEWCATCHER;
 
 			plantClass = Dewcatcher.class;
-			alchemyClass = PotionOfOverHealing.class;				
+			alchemyClass = PotionOfOverHealing.class;
 		}
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
+			return Messages.get(Plant.class, "seeddesc", plantName);
 		}
-		
+
 	}
-	
+
 	public void explodeDew(int cell) {
 
 		DewVial vial = Dungeon.hero.belongings.getItem(DewVial.class);
 
-		 for (int n : PathFinder.NEIGHBOURS8) {
-			 int c = cell + n;
-			 if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
-				 
-				if (Random.Int(10)==1){
-                    if (ShatteredPixelDungeon.autocollect() && vial != null) {
+		for (int n : PathFinder.NEIGHBOURS8) {
+			int c = cell + n;
+			if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+
+				if (Random.Int(10) == 1) {
+					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
 							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 200 : 50);
 							GLog.i(Messages.get(HighGrass.class, "violet"));
 							if (vial.isFull()) {
 								vial.volume = DewVial.MAX_VOLUME();
-								Messages.get(DewVial.class,"full");
+								Messages.get(DewVial.class, "full");
 							}
-						}
-						else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
-                    }
-                    else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
-				}
-			    else if (Random.Int(5)==1){
+						} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
+					} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
+				} else if (Random.Int(5) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (!vial.isFull()) {
 							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
 							GLog.i(Messages.get(HighGrass.class, "red"));
 							if (vial.isFull()) {
 								vial.volume = DewVial.MAX_VOLUME();
-								Messages.get(DewVial.class,"full");
+								Messages.get(DewVial.class, "full");
 							}
-						}
-						else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-					}
-					else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-			    }
-				else if (Random.Int(3)==1){
-						if (ShatteredPixelDungeon.autocollect() && vial != null) {
-							if (!vial.isFull()) {
-								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
-								GLog.i(Messages.get(HighGrass.class, "yellow"));
-								if (vial.isFull()) {
-									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class,"full");
-								}
+						} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+					} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+				} else if (Random.Int(3) == 1) {
+					if (ShatteredPixelDungeon.autocollect() && vial != null) {
+						if (!vial.isFull()) {
+							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
+							GLog.i(Messages.get(HighGrass.class, "yellow"));
+							if (vial.isFull()) {
+								vial.volume = DewVial.MAX_VOLUME();
+								Messages.get(DewVial.class, "full");
 							}
-							else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
-					}
-					else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
+						} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
+					} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
 				}
-				 QuickSlotButton.refresh();
-			 }
-		 }
-		
+				QuickSlotButton.refresh();
+			}
+		}
+
 	}
-		
-	
+
+
 }

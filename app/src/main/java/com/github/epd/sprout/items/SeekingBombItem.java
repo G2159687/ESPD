@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class SeekingBombItem extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEEKING_BOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
@@ -44,8 +44,8 @@ public class SeekingBombItem extends Item {
 
 	private static boolean seek = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(SeekingBombItem.class,"ac");
-	
+	private static final String AC_LIGHTTHROW = Messages.get(SeekingBombItem.class, "ac");
+
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -74,23 +74,22 @@ public class SeekingBombItem extends Item {
 					candidates.add(cell + i);
 			int newCell = candidates.isEmpty() ? cell : Random
 					.element(candidates);
-			
-			   if (!Level.pit[newCell] && seek) {
-				  SeekingBombNPC.spawnAt(newCell);
-				   } else {
-			  Dungeon.level.drop(this, newCell).sprite.drop(cell);
-			   }
-			   
+
+			if (!Level.pit[newCell] && seek) {
+				SeekingBombNPC.spawnAt(newCell);
+			} else {
+				Dungeon.level.drop(this, newCell).sprite.drop(cell);
+			}
+
 		} else if (!Level.pit[cell] && seek) {
-			   SeekingBombNPC.spawnAt(cell);
-			
+			SeekingBombNPC.spawnAt(cell);
+
 		} else {
-			
+
 			super.onThrow(cell);
 		}
 	}
 
-	
 
 	@Override
 	public boolean isUpgradable() {
@@ -110,8 +109,8 @@ public class SeekingBombItem extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
+
 }

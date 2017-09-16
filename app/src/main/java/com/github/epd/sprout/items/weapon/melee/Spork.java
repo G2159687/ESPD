@@ -32,9 +32,9 @@ import com.watabou.utils.Random;
 public class Spork extends MeleeWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SPORK;
-		reinforced=true;
+		reinforced = true;
 	}
 
 	public Spork() {
@@ -42,17 +42,17 @@ public class Spork extends MeleeWeapon {
 	}
 
 	@Override
-	public int min(){
+	public int min() {
 		return 3;
 	}
 
 	@Override
-	public int max(){
+	public int max() {
 		return 4;
 	}
 
 	@Override
-	public Item upgrade(boolean enchant){
+	public Item upgrade(boolean enchant) {
 		STR--;
 		MIN++;
 		MAX += 3;
@@ -62,27 +62,27 @@ public class Spork extends MeleeWeapon {
 
 	@Override
 	public void proc(Char attacker, Char defender, int damage) {
-		
-		if (defender instanceof Gullin 
-        		|| defender instanceof Kupua
-        		|| defender instanceof MineSentinel
-        		|| defender instanceof Otiluke
-        		|| defender instanceof Zot
-        		|| defender instanceof ZotPhase){
-        	
-        	//damage*=2;
-			
-			defender.damage(Random.Int(damage,damage*4), this);
+
+		if (defender instanceof Gullin
+				|| defender instanceof Kupua
+				|| defender instanceof MineSentinel
+				|| defender instanceof Otiluke
+				|| defender instanceof Zot
+				|| defender instanceof ZotPhase) {
+
+			//damage*=2;
+
+			defender.damage(Random.Int(damage, damage * 4), this);
 		}
-        
-		
+
+
 		if (enchantment != null) {
-			enchantment.proc(this, attacker, defender, damage);		
+			enchantment.proc(this, attacker, defender, damage);
 		}
 	}
-	
+
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

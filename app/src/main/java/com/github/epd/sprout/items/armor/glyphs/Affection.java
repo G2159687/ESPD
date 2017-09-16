@@ -32,7 +32,7 @@ import com.watabou.utils.Random;
 
 public class Affection extends Glyph {
 
-	private static final String TXT_AFFECTION = Messages.get(Affection.class,"name");
+	private static final String TXT_AFFECTION = Messages.get(Affection.class, "name");
 
 	private static ItemSprite.Glowing PINK = new ItemSprite.Glowing(0xFF4488);
 

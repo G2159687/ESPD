@@ -33,7 +33,7 @@ public class Bandit extends Thief {
 	public Item item;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BanditSprite.class;
 
 		// 1 in 30 chance to be a crazy bandit, equates to overall 1/90 chance.

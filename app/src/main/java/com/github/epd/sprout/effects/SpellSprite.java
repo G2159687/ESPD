@@ -79,30 +79,30 @@ public class SpellSprite extends Image {
 		y = target.sprite.y - SIZE;
 
 		switch (phase) {
-		case FADE_IN:
-			alpha(passed / duration);
-			scale.set(passed / duration);
-			break;
-		case STATIC:
-			break;
-		case FADE_OUT:
-			alpha(1 - passed / duration);
-			break;
+			case FADE_IN:
+				alpha(passed / duration);
+				scale.set(passed / duration);
+				break;
+			case STATIC:
+				break;
+			case FADE_OUT:
+				alpha(1 - passed / duration);
+				break;
 		}
 
 		if ((passed += Game.elapsed) > duration) {
 			switch (phase) {
-			case FADE_IN:
-				phase = Phase.STATIC;
-				duration = STATIC_TIME;
-				break;
-			case STATIC:
-				phase = Phase.FADE_OUT;
-				duration = FADE_OUT_TIME;
-				break;
-			case FADE_OUT:
-				kill();
-				break;
+				case FADE_IN:
+					phase = Phase.STATIC;
+					duration = STATIC_TIME;
+					break;
+				case STATIC:
+					phase = Phase.FADE_OUT;
+					duration = FADE_OUT_TIME;
+					break;
+				case FADE_OUT:
+					kill();
+					break;
 			}
 
 			passed = 0;

@@ -70,31 +70,31 @@ public class Banner extends Image {
 			float p = time / fadeTime;
 
 			switch (state) {
-			case FADE_IN:
-				tint(color, p);
-				alpha(1 - p);
-				break;
-			case STATIC:
-				break;
-			case FADE_OUT:
-				alpha(p);
-				break;
+				case FADE_IN:
+					tint(color, p);
+					alpha(1 - p);
+					break;
+				case STATIC:
+					break;
+				case FADE_OUT:
+					alpha(p);
+					break;
 			}
 
 		} else {
 
 			switch (state) {
-			case FADE_IN:
-				time = showTime;
-				state = State.STATIC;
-				break;
-			case STATIC:
-				time = fadeTime;
-				state = State.FADE_OUT;
-				break;
-			case FADE_OUT:
-				killAndErase();
-				break;
+				case FADE_IN:
+					time = showTime;
+					state = State.STATIC;
+					break;
+				case STATIC:
+					time = fadeTime;
+					state = State.FADE_OUT;
+					break;
+				case FADE_OUT:
+					killAndErase();
+					break;
 			}
 
 		}

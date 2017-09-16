@@ -17,15 +17,10 @@
  */
 package com.github.epd.sprout.ui;
 
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.items.DewVial;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.armor.Armor;
-import com.github.epd.sprout.items.journalpages.JournalPage;
 import com.github.epd.sprout.items.keys.Key;
 import com.github.epd.sprout.items.keys.SkeletonKey;
-import com.github.epd.sprout.items.weapon.Weapon;
-import com.github.epd.sprout.items.weapon.melee.MeleeWeapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.items.weapon.missiles.JupitersWraith;
 import com.github.epd.sprout.scenes.PixelScene;
@@ -49,10 +44,10 @@ public class ItemSlot extends Button {
 	protected BitmapText topLeft;
 	protected BitmapText topRight;
 	protected BitmapText bottomRight;
-	protected boolean    iconVisible = true;
-	protected Image      bottomRightIcon;
+	protected boolean iconVisible = true;
+	protected Image bottomRightIcon;
 
-//	public static final String TXT_STRENGTH = ":%d";
+	//	public static final String TXT_STRENGTH = ":%d";
 //	public static final String TXT_TYPICAL_STR = "%d?";
 	public static final String TXT_KEY_DEPTH = "\u007F%d";
 	public static final String TXT_CHARGE = "%d%%";
@@ -80,6 +75,12 @@ public class ItemSlot extends Button {
 		}
 	};
 	public static final Item TOMB = new Item() {
+		@Override
+		public int image() {
+			return ItemSpriteSheet.TOMB;
+		}
+	};
+	public static final Item GRAVE = new Item() {
 		@Override
 		public int image() {
 			return ItemSpriteSheet.TOMB;
@@ -134,7 +135,7 @@ public class ItemSlot extends Button {
 
 		if (topLeft != null) {
 			topLeft.measure();
-			if (topLeft.width > width){
+			if (topLeft.width > width) {
 				topLeft.scale.set(PixelScene.align(0.8f));
 			} else {
 				topLeft.scale.set(1f);
@@ -153,7 +154,7 @@ public class ItemSlot extends Button {
 			bottomRight.y = y + (height - bottomRight.height());
 		}
 		if (bottomRightIcon != null) {
-			bottomRightIcon.x = x + (width - bottomRightIcon.width()) -1;
+			bottomRightIcon.x = x + (width - bottomRightIcon.width()) - 1;
 			bottomRightIcon.y = y + (height - bottomRightIcon.height());
 		}
 	}
@@ -171,7 +172,7 @@ public class ItemSlot extends Button {
 			active = true;
 			icon.visible = topLeft.visible = topRight.visible = bottomRight.visible = true;
 
-			icon.view( item );
+			icon.view(item);
 
 			topLeft.text(item.status());
 
@@ -204,7 +205,7 @@ public class ItemSlot extends Button {
 				bottomRight.text(null);
 			}
 
-			if (item instanceof DewVial){
+			if (item instanceof DewVial) {
 				if (DewVial.MAX_VOLUME() < 5000) {
 					bottomRight.text(Utils.format("%d", DewVial.MAX_VOLUME()));
 					bottomRight.measure();
@@ -223,17 +224,17 @@ public class ItemSlot extends Button {
 		topLeft.alpha(alpha);
 		topRight.alpha(alpha);
 		bottomRight.alpha(alpha);
-		if (bottomRightIcon != null) bottomRightIcon.alpha( alpha );
+		if (bottomRightIcon != null) bottomRightIcon.alpha(alpha);
 	}
 
-	public void showParams( boolean TL, boolean TR, boolean BR ) {
-		if (TL) add( topLeft );
-		else remove( topLeft );
+	public void showParams(boolean TL, boolean TR, boolean BR) {
+		if (TL) add(topLeft);
+		else remove(topLeft);
 
-		if (TR) add( topRight );
-		else remove( topRight );
+		if (TR) add(topRight);
+		else remove(topRight);
 
-		if (BR) add( bottomRight );
-		else remove( bottomRight );
+		if (BR) add(bottomRight);
+		else remove(bottomRight);
 	}
 }

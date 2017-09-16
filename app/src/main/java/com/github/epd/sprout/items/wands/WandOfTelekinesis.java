@@ -50,145 +50,146 @@ import com.watabou.utils.Callback;
 
 public class WandOfTelekinesis extends Wand {
 
-    private static final String TXT_YOU_NOW_HAVE = Messages.get(WandOfTelekinesis.class, "have");
+	private static final String TXT_YOU_NOW_HAVE = Messages.get(WandOfTelekinesis.class, "have");
 
-    {
-        name = Messages.get(this, "name");
-        collisionProperties = Ballistica.STOP_CHARS | Ballistica.STOP_SOLID;
-        image = ItemSpriteSheet.WAND_TELEKINESIS;
-    }
+	{
+		name = Messages.get(this, "name");
+		collisionProperties = Ballistica.STOP_CHARS | Ballistica.STOP_SOLID;
+		image = ItemSpriteSheet.WAND_TELEKINESIS;
+	}
 
-    private static final String TXT_PREVENTING = Messages.get(WandOfTelekinesis.class, "prevent");
+	private static final String TXT_PREVENTING = Messages.get(WandOfTelekinesis.class, "prevent");
 
-    @Override
-    protected void onZap(Ballistica bolt) {
+	@Override
+	protected void onZap(Ballistica bolt) {
 
-        boolean mapUpdated = false;
+		boolean mapUpdated = false;
 
-        int maxDistance = level() + 4;
-        bolt.dist = Math.min(bolt.dist, maxDistance);
+		int maxDistance = level() + 4;
+		bolt.dist = Math.min(bolt.dist, maxDistance);
 
-        Char ch;
-        Heap heap = null;
+		Char ch;
+		Heap heap = null;
 
-        for (int c : bolt.subPath(1, bolt.dist)) {
-            int before = Dungeon.level.map[c];
+		for (int c : bolt.subPath(1, bolt.dist)) {
+			int before = Dungeon.level.map[c];
 
-            if ((ch = Actor.findChar(c)) != null) {
+			if ((ch = Actor.findChar(c)) != null) {
 
-                int next = bolt.path.get(bolt.dist + 1);
-                if ((Level.passable[next] || Level.avoid[next]) && Actor.findChar(next) == null) {
+				int next = bolt.path.get(bolt.dist + 1);
+				if ((Level.passable[next] || Level.avoid[next]) && Actor.findChar(next) == null) {
 
-                    //Sokoban
-                    if ((ch instanceof SheepSokoban || ch instanceof SheepSokobanCorner || ch instanceof SheepSokobanStop || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanBlack)
-                            && (Dungeon.level.map[next] == Terrain.FLEECING_TRAP || Dungeon.level.map[next] == Terrain.CHANGE_SHEEP_TRAP)) {
-                    } else {
-                        Actor.addDelayed(new Pushing(ch, ch.pos, next), -1f);
-                    }
+					//Sokoban
+					if ((ch instanceof SheepSokoban || ch instanceof SheepSokobanCorner || ch instanceof SheepSokobanStop || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanBlack)
+							&& (Dungeon.level.map[next] == Terrain.FLEECING_TRAP || Dungeon.level.map[next] == Terrain.CHANGE_SHEEP_TRAP)) {
+					} else {
+						Actor.addDelayed(new Pushing(ch, ch.pos, next), -1f);
+					}
 
-                    ch.pos = next;
-                    Actor.freeCell(next);
+					ch.pos = next;
+					Actor.freeCell(next);
 
-                    if (ch instanceof Shopkeeper){}
+					if (ch instanceof Shopkeeper) {
+					}
 
-                    if (ch instanceof SheepSokoban ||
-                            ch instanceof SheepSokobanCorner ||
-                            ch instanceof SheepSokobanStop ||
-                            ch instanceof SheepSokobanSwitch ||
-                            ch instanceof SheepSokobanBlack) {
-                        Dungeon.level.mobPress((NPC) ch);
-                    } else if (ch instanceof Mob) {
-                        Dungeon.level.mobPress((Mob) ch);
+					if (ch instanceof SheepSokoban ||
+							ch instanceof SheepSokobanCorner ||
+							ch instanceof SheepSokobanStop ||
+							ch instanceof SheepSokobanSwitch ||
+							ch instanceof SheepSokobanBlack) {
+						Dungeon.level.mobPress((NPC) ch);
+					} else if (ch instanceof Mob) {
+						Dungeon.level.mobPress((Mob) ch);
 
-                    } else {
-                        Dungeon.level.press(ch.pos, ch);
-                    }
+					} else {
+						Dungeon.level.press(ch.pos, ch);
+					}
 
-                } else {
-                    ch.damage(maxDistance - 1 - bolt.dist, this);
+				} else {
+					ch.damage(maxDistance - 1 - bolt.dist, this);
 
-                }
-            }
+				}
+			}
 
-            if (heap == null && (heap = Dungeon.level.heaps.get(c)) != null) {
-                switch (heap.type) {
-                    case HEAP:
-                        transport(heap);
-                        break;
-                    case CHEST:
-                        open(heap);
-                        break;
-                    default:
-                }
-            }
+			if (heap == null && (heap = Dungeon.level.heaps.get(c)) != null) {
+				switch (heap.type) {
+					case HEAP:
+						transport(heap);
+						break;
+					case CHEST:
+						open(heap);
+						break;
+					default:
+				}
+			}
 
-            Dungeon.level.press(c, null);
-            if (before == Terrain.OPEN_DOOR && Actor.findChar(c) == null) {
+			Dungeon.level.press(c, null);
+			if (before == Terrain.OPEN_DOOR && Actor.findChar(c) == null) {
 
-                Level.set(c, Terrain.DOOR);
-                GameScene.updateMap(c);
+				Level.set(c, Terrain.DOOR);
+				GameScene.updateMap(c);
 
-            } else if (Level.water[c]) {
+			} else if (Level.water[c]) {
 
-                GameScene.ripple(c);
+				GameScene.ripple(c);
 
-            }
+			}
 
-            if (!mapUpdated && Dungeon.level.map[c] != before) {
-                mapUpdated = true;
-            }
-        }
+			if (!mapUpdated && Dungeon.level.map[c] != before) {
+				mapUpdated = true;
+			}
+		}
 
-        if (mapUpdated) {
-            Dungeon.observe();
-            GameScene.updateFog();
-        }
-    }
+		if (mapUpdated) {
+			Dungeon.observe();
+			GameScene.updateFog();
+		}
+	}
 
-    private void transport(Heap heap) {
+	private void transport(Heap heap) {
 
-        if (Dungeon.depth > 50) {
-            GLog.w(TXT_PREVENTING);
-            Invisibility.dispel();
-            return;
-        }
+		if (Dungeon.depth > 50) {
+			GLog.w(TXT_PREVENTING);
+			Invisibility.dispel();
+			return;
+		}
 
-        Item item = heap.pickUp();
-        if (item.doPickUp(curUser)) {
+		Item item = heap.pickUp();
+		if (item.doPickUp(curUser)) {
 
-            if (item instanceof Dewdrop) {
+			if (item instanceof Dewdrop) {
 
-            } else {
+			} else {
 
-                if ((item instanceof ScrollOfUpgrade && ((ScrollOfUpgrade) item)
-                        .isKnown())
-                        || (item instanceof PotionOfStrength && ((PotionOfStrength) item)
-                        .isKnown())) {
-                    GLog.p(TXT_YOU_NOW_HAVE, item.name());
-                } else {
-                    GLog.i(TXT_YOU_NOW_HAVE, item.name());
-                }
-            }
+				if ((item instanceof ScrollOfUpgrade && ((ScrollOfUpgrade) item)
+						.isKnown())
+						|| (item instanceof PotionOfStrength && ((PotionOfStrength) item)
+						.isKnown())) {
+					GLog.p(TXT_YOU_NOW_HAVE, item.name());
+				} else {
+					GLog.i(TXT_YOU_NOW_HAVE, item.name());
+				}
+			}
 
-        } else {
-            Dungeon.level.drop(item, curUser.pos).sprite.drop();
-        }
-    }
+		} else {
+			Dungeon.level.drop(item, curUser.pos).sprite.drop();
+		}
+	}
 
-    private void open(Heap heap) {
-        heap.type = Type.HEAP;
-        heap.sprite.link();
-        heap.sprite.drop();
-    }
+	private void open(Heap heap) {
+		heap.type = Type.HEAP;
+		heap.sprite.link();
+		heap.sprite.drop();
+	}
 
-    @Override
-    protected void fx(Ballistica bolt, Callback callback) {
-        MagicMissile.force(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
-        Sample.INSTANCE.play(Assets.SND_ZAP);
-    }
+	@Override
+	protected void fx(Ballistica bolt, Callback callback) {
+		MagicMissile.force(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
 
-    @Override
-    public String desc() {
-        return Messages.get(this, "desc");
-    }
+	@Override
+	public String desc() {
+		return Messages.get(this, "desc");
+	}
 }

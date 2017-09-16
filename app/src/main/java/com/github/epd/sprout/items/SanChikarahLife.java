@@ -25,13 +25,13 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class SanChikarahLife extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SANCHIKARAH;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -47,8 +47,8 @@ public class SanChikarahLife extends Item {
 	public boolean doPickUp(Hero hero) {
 		if (super.doPickUp(hero)) {
 
-			if (Dungeon.level != null && Dungeon.depth==32) {
-				Dungeon.sanchikarahlife= true;							
+			if (Dungeon.level != null && Dungeon.depth == 32) {
+				Dungeon.sanchikarahlife = true;
 			}
 
 			return true;
@@ -59,6 +59,6 @@ public class SanChikarahLife extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(SanChikarahDeath.class,"desc");
+		return Messages.get(SanChikarahDeath.class, "desc");
 	}
 }

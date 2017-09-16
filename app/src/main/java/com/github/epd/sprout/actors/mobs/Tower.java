@@ -18,7 +18,6 @@
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.actors.Actor;
@@ -55,27 +54,29 @@ import java.util.HashSet;
 public class Tower extends Mob implements Callback {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = TowerSprite.class;
 
-		HP = HT = 300+(Dungeon.depth*Random.NormalIntRange(2, 5));
+		HP = HT = 300 + (Dungeon.depth * Random.NormalIntRange(2, 5));
 		defenseSkill = 0;
 
 		EXP = 25;
-		
+
 		hostile = false;
 		state = PASSIVE;
-		
+
 		loot = new RedDewdrop();
 		lootChance = 1f;
-		
+
+		properties.add(Property.IMMOVABLE);
+
 	}
-	
+
 	@Override
 	public void beckon(int cell) {
 		// Do nothing
 	}
-	
+
 	private int bossAlive = 0;
 
 	@Override
@@ -90,15 +91,15 @@ public class Tower extends Mob implements Callback {
 			mob.beckon(Dungeon.hero.pos);
 		}
 
-			GLog.w(Messages.get(this, "alert"));
-			CellEmitter.center(pos).start(
-					Speck.factory(Speck.SCREAM), 0.3f, 3);
-			Sample.INSTANCE.play(Assets.SND_CHALLENGE);
+		GLog.w(Messages.get(this, "alert"));
+		CellEmitter.center(pos).start(
+				Speck.factory(Speck.SCREAM), 0.3f, 3);
+		Sample.INSTANCE.play(Assets.SND_CHALLENGE);
 
 
 		super.damage(dmg, src);
 	}
-	
+
 	@Override
 	public int attackSkill(Char target) {
 		return 0;
@@ -108,30 +109,30 @@ public class Tower extends Mob implements Callback {
 	public int dr() {
 		return 10;
 	}
-	
+
 	@Override
 	protected boolean act() {
-		
+
 		switch (Random.Int(4)) {
-		case 1:
-		for (Mob mob : Dungeon.level.mobs) {
-			if (mob instanceof Tower && mob != this) {
-				mob.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
-				mob.sprite.flash();
-			}
+			case 1:
+				for (Mob mob : Dungeon.level.mobs) {
+					if (mob instanceof Tower && mob != this) {
+						mob.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
+						mob.sprite.flash();
+					}
+				}
+				break;
+			case 2:
+				if (Dungeon.level.mobs.size() < 10) {
+					BrokenRobot.spawnAround(pos);
+					GLog.n(Messages.get(this, "print"));
+				}
+				break;
 		}
-		break;
-		case 2:
-			if (Dungeon.level.mobs.size()<10){
-		 BrokenRobot.spawnAround(pos);
-		 GLog.n(Messages.get(this,"print"));
-			}
-		break;
-		}
-		
+
 		return super.act();
 	}
-	
+
 	@Override
 	public void call() {
 		next();
@@ -139,12 +140,12 @@ public class Tower extends Mob implements Callback {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	public void explode(int cell) {
 		// We're blowing up, so no need for a fuse anymore.
-	
+
 		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
 		if (Dungeon.visible[cell]) {
@@ -184,7 +185,7 @@ public class Tower extends Mob implements Callback {
 						Dungeon.fail(Utils.format(ResultDescriptions.ITEM,
 								"bomb"));
 				}
-						
+
 			}
 		}
 
@@ -192,39 +193,39 @@ public class Tower extends Mob implements Callback {
 			Dungeon.observe();
 		}
 	}
-	
-	
+
+
 	@Override
 	public void add(Buff buff) {
 	}
-	
+
 	@Override
 	public void die(Object cause) {
 
 		super.die(cause);
-		
+
 		explode(pos);
 
 		for (Mob mob : Dungeon.level.mobs) {
-			
-			if (mob instanceof Tower || mob instanceof DM300){
-				   bossAlive++;
-				 }
-			
-			}
-			
-			 if(bossAlive==0){
-				 
-					GameScene.bossSlain();
-					Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
-					Dungeon.level.drop(new Gold(Random.Int(3000, 6000)), pos).sprite.drop();
 
-					Badges.validateBossSlain();
-			 }
-			 explodeDew(pos);
+			if (mob instanceof Tower || mob instanceof DM300) {
+				bossAlive++;
+			}
+
+		}
+
+		if (bossAlive == 0) {
+
+			GameScene.bossSlain();
+			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
+			Dungeon.level.drop(new Gold(Random.Int(3000, 6000)), pos).sprite.drop();
+
+		}
+		explodeDew(pos);
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 		RESISTANCES.add(ScrollOfPsionicBlast.class);
@@ -237,6 +238,7 @@ public class Tower extends Mob implements Callback {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(ToxicGas.class);
 		IMMUNITIES.add(Terror.class);
@@ -248,5 +250,5 @@ public class Tower extends Mob implements Callback {
 		return IMMUNITIES;
 	}
 
-	
+
 }

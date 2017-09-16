@@ -38,13 +38,13 @@ import com.watabou.noosa.audio.Sample;
 
 public class RogueArmor extends ClassArmor {
 
-	private static final String TXT_FOV = Messages.get(RogueArmor.class,"fov");
-	private static final String TXT_NOT_ROGUE = Messages.get(RogueArmor.class,"not_rogue");
+	private static final String TXT_FOV = Messages.get(RogueArmor.class, "fov");
+	private static final String TXT_NOT_ROGUE = Messages.get(RogueArmor.class, "not_rogue");
 
-	private static final String AC_SPECIAL = Messages.get(RogueArmor.class,"ac_special");
+	private static final String AC_SPECIAL = Messages.get(RogueArmor.class, "ac_special");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_ROGUE;
 	}
 
@@ -70,7 +70,7 @@ public class RogueArmor extends ClassArmor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	protected static CellSelector.Listener teleporter = new CellSelector.Listener() {
@@ -110,7 +110,7 @@ public class RogueArmor extends ClassArmor {
 
 		@Override
 		public String prompt() {
-			return Messages.get(RogueArmor.class,"prompt");
+			return Messages.get(RogueArmor.class, "prompt");
 		}
 	};
 }

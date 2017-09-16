@@ -23,7 +23,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class MailArmor extends Armor {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_MAIL;
 	}
 
@@ -33,6 +33,6 @@ public class MailArmor extends Armor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

@@ -24,21 +24,21 @@ import com.github.epd.sprout.messages.Messages;
 public class Shield extends Buff {
 
 	public static float LEVEL = 0.4f;
-	
-	private int hits = (Dungeon.checkNight() ? Math.max(8, Math.round(Statistics.deepestFloor/5)+9) : Math.max(2, Math.round(Statistics.deepestFloor/5)+3));
+
+	private int hits = (Dungeon.checkNight() ? Math.max(8, Math.round(Statistics.deepestFloor / 5) + 9) : Math.max(2, Math.round(Statistics.deepestFloor / 5) + 3));
 
 	//private int hits = Math.max(2, Math.round(Statistics.deepestFloor/5)+3);
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
-	
+
 	@Override
 	public void detach() {
 		hits--;
-		if(hits==0){
-		super.detach();
+		if (hits == 0) {
+			super.detach();
 		}
 	}
-	
+
 }

@@ -33,14 +33,14 @@ import com.watabou.utils.Random;
 
 import java.util.HashSet;
 
-public class AdultDragonViolet extends Mob implements Callback{
+public class AdultDragonViolet extends Mob implements Callback {
 
 	private static final int JUMP_DELAY = 5;
 	private static final float TIME_TO_ZAP = 1f;
 
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = AdultDragonVioletSprite.class;
 		baseSpeed = 2f;
 
@@ -50,8 +50,8 @@ public class AdultDragonViolet extends Mob implements Callback{
 	}
 
 	private int timeToJump = JUMP_DELAY;
-	
-	
+
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(150, 300);
@@ -67,19 +67,19 @@ public class AdultDragonViolet extends Mob implements Callback{
 		return 75;
 	}
 
-	
+
 	@Override
-	public void die(Object cause) {	
-			
+	public void die(Object cause) {
+
 		super.die(cause);
-		
-		yell(Messages.get(AdultDragonViolet.class,"die"));
-					
+
+		yell(Messages.get(AdultDragonViolet.class, "die"));
+
 	}
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -103,24 +103,24 @@ public class AdultDragonViolet extends Mob implements Callback{
 		}
 	}
 
-	
+
 	private void zap() {
 		spend(TIME_TO_ZAP);
 
-		
-		yell(Messages.get(AdultDragonViolet.class,"atk"));
-		
-		if (hit(this, enemy, true)) {			
 
-			int dmg = damageRoll()*2;
+		yell(Messages.get(AdultDragonViolet.class, "atk"));
+
+		if (hit(this, enemy, true)) {
+
+			int dmg = damageRoll() * 2;
 			enemy.damage(dmg, this);
-			
-			Buff.affect(enemy,Poison.class).set(Poison.durationFactor(enemy));
-			
+
+			Buff.affect(enemy, Poison.class).set(Poison.durationFactor(enemy));
+
 		} else {
 			enemy.sprite.showStatus(CharSprite.NEUTRAL, enemy.defenseVerb());
 		}
-		
+
 	}
 
 	public void onZapComplete() {
@@ -132,13 +132,14 @@ public class AdultDragonViolet extends Mob implements Callback{
 	public void call() {
 		next();
 	}
-	
-		@Override
+
+	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

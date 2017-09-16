@@ -89,17 +89,17 @@ public class Tilemap extends Visual {
 	}
 
 
-	public synchronized void updateMap(){
-		updated.set( 0, 0, mapWidth, mapHeight );
+	public synchronized void updateMap() {
+		updated.set(0, 0, mapWidth, mapHeight);
 		fullUpdate = true;
 		camX = null;
 	}
 
-	public synchronized void updateMapCell(int cell){
-		updated.union( cell % mapWidth, cell / mapWidth );
+	public synchronized void updateMapCell(int cell) {
+		updated.union(cell % mapWidth, cell / mapWidth);
 	}
 
-	private synchronized void moveToUpdating(){
+	private synchronized void moveToUpdating() {
 		updating = new Rect(updated);
 		updated.setEmpty();
 	}
@@ -111,14 +111,14 @@ public class Tilemap extends Visual {
 		float y1 = cellH * updating.top;
 		float y2 = y1 + cellH;
 
-		for (int i=updating.top; i < updating.bottom; i++) {
+		for (int i = updating.top; i < updating.bottom; i++) {
 
 			float x1 = cellW * updating.left;
 			float x2 = x1 + cellW;
 
 			int pos = i * mapWidth + updating.left;
 
-			for (int j=updating.left; j < updating.right; j++) {
+			for (int j = updating.left; j < updating.right; j++) {
 
 				//Currently if a none-rendered tile becomes rendered it will mess with culling in draw()
 				//However shifting the whole array is expensive, even with selective updating
@@ -129,9 +129,9 @@ public class Tilemap extends Visual {
 				//performance cost of rendering them before they become visible
 				if (needsRender(pos) || bufferPositions[pos] != -1) {
 					int bufferPos = bufferPositions[pos];
-					if (bufferPos == -1){
+					if (bufferPos == -1) {
 						bufferPos = bufferPositions[pos] = bufferLength;
-						bufferLength ++;
+						bufferLength++;
 					}
 
 					if (topLeftUpdating == 0)
@@ -139,34 +139,34 @@ public class Tilemap extends Visual {
 
 					bottomRightUpdating = bufferPos + 1;
 
-					quads.position(bufferPos*16);
-					RectF uv = tileset.get( data[pos] );
+					quads.position(bufferPos * 16);
+					RectF uv = tileset.get(data[pos]);
 
-					vertices[0] 	= x1;
-					vertices[1] 	= y1;
+					vertices[0] = x1;
+					vertices[1] = y1;
 
-					vertices[2]		= uv.left;
-					vertices[3]		= uv.top;
+					vertices[2] = uv.left;
+					vertices[3] = uv.top;
 
-					vertices[4] 	= x2;
-					vertices[5] 	= y1;
+					vertices[4] = x2;
+					vertices[5] = y1;
 
-					vertices[6]		= uv.right;
-					vertices[7]		= uv.top;
+					vertices[6] = uv.right;
+					vertices[7] = uv.top;
 
-					vertices[8] 	= x2;
-					vertices[9] 	= y2;
+					vertices[8] = x2;
+					vertices[9] = y2;
 
-					vertices[10]	= uv.right;
-					vertices[11]	= uv.bottom;
+					vertices[10] = uv.right;
+					vertices[11] = uv.bottom;
 
-					vertices[12]	= x1;
-					vertices[13]	= y2;
+					vertices[12] = x1;
+					vertices[13] = y2;
 
-					vertices[14]	= uv.left;
-					vertices[15]	= uv.bottom;
+					vertices[14] = uv.left;
+					vertices[15] = uv.bottom;
 
-					quads.put( vertices );
+					quads.put(vertices);
 				}
 
 				pos++;
@@ -193,7 +193,7 @@ public class Tilemap extends Visual {
 
 		if (!updated.isEmpty()) {
 			updateVertices();
-			quads.limit(bufferLength*16);
+			quads.limit(bufferLength * 16);
 			if (buffer == null)
 				buffer = new Vertexbuffer(quads);
 			else {
@@ -213,14 +213,14 @@ public class Tilemap extends Visual {
 		Camera c = Camera.main;
 
 		if (camX == null || camY == null || camW == null || camH == null
-				|| camX != (int)c.scroll.x/16
-				|| camY != (int)c.scroll.y/16
-				|| camW != (int)Math.ceil(c.width/cellW)
-				|| camH != (int)Math.ceil(c.height/cellH)){
-			camX = (int)c.scroll.x/16;
-			camY = (int)c.scroll.y/16;
-			camW = (int)Math.ceil(c.width/cellW);
-			camH = (int)Math.ceil(c.height/cellH);
+				|| camX != (int) c.scroll.x / 16
+				|| camY != (int) c.scroll.y / 16
+				|| camW != (int) Math.ceil(c.width / cellW)
+				|| camH != (int) Math.ceil(c.height / cellH)) {
+			camX = (int) c.scroll.x / 16;
+			camY = (int) c.scroll.y / 16;
+			camW = (int) Math.ceil(c.width / cellW);
+			camH = (int) Math.ceil(c.height / cellH);
 
 			if (camX >= mapWidth
 					|| camY >= mapHeight
@@ -231,13 +231,13 @@ public class Tilemap extends Visual {
 			//determines the top-left visible tile, the bottom-right one, and the buffer length
 			//between them, this culls a good number of none-visible tiles while keeping to 1 draw
 			topLeft = Math.max(camX, 0)
-					+ Math.max(camY*mapWidth, 0);
-			while(topLeft < bufferPositions.length && bufferPositions[topLeft] == -1)
+					+ Math.max(camY * mapWidth, 0);
+			while (topLeft < bufferPositions.length && bufferPositions[topLeft] == -1)
 				topLeft++;
 
-			bottomRight = Math.min(camX+camW, mapWidth-1)
-					+ Math.min((camY+camH)*mapWidth, (mapHeight-1)*mapWidth);
-			while(bottomRight >= topLeft && bufferPositions[bottomRight] == -1)
+			bottomRight = Math.min(camX + camW, mapWidth - 1)
+					+ Math.min((camY + camH) * mapWidth, (mapHeight - 1) * mapWidth);
+			while (bottomRight >= topLeft && bufferPositions[bottomRight] == -1)
 				bottomRight--;
 
 			if (topLeft >= bufferPositions.length || bottomRight <= 0)
@@ -260,7 +260,7 @@ public class Tilemap extends Visual {
 		script.uModel.valueM4(matrix);
 
 		script.camera(camera);
-		script.drawQuadSet( buffer, length, bufferPositions[topLeft] );
+		script.drawQuadSet(buffer, length, bufferPositions[topLeft]);
 
 	}
 

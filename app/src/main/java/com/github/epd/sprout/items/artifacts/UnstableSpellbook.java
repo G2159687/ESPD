@@ -26,7 +26,7 @@ import java.util.Collections;
 public class UnstableSpellbook extends Artifact {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_SPELLBOOK;
 
 		reinforced = true;
@@ -42,12 +42,12 @@ public class UnstableSpellbook extends Artifact {
 		defaultAction = AC_READ;
 	}
 
-	public static final String AC_READ = Messages.get(UnstableSpellbook.class,"ac_read");
-	public static final String AC_ADD = Messages.get(UnstableSpellbook.class,"ac_add");
+	public static final String AC_READ = Messages.get(UnstableSpellbook.class, "ac_read");
+	public static final String AC_ADD = Messages.get(UnstableSpellbook.class, "ac_add");
 
 	private final ArrayList<Class> scrolls = new ArrayList<>();
 
-	protected String inventoryTitle = Messages.get(UnstableSpellbook.class,"prompt");
+	protected String inventoryTitle = Messages.get(UnstableSpellbook.class, "prompt");
 	protected WndBag.Mode mode = WndBag.Mode.SCROLL;
 
 	public UnstableSpellbook() {
@@ -85,18 +85,18 @@ public class UnstableSpellbook extends Artifact {
 		if (action.equals(AC_READ)) {
 
 			if (hero.buff(Blindness.class) != null)
-				GLog.w(Messages.get(this,"blinded"));
+				GLog.w(Messages.get(this, "blinded"));
 			else if (!isEquipped(hero))
-				GLog.i(Messages.get(this,"equip"));
+				GLog.i(Messages.get(this, "equip"));
 			else if (charge == 0)
-				GLog.i(Messages.get(this,"no_charge"));
+				GLog.i(Messages.get(this, "no_charge"));
 			else if (cursed)
-				GLog.i(Messages.get(this,"cursed"));
+				GLog.i(Messages.get(this, "cursed"));
 			else {
 				charge--;
 
 				Scroll scroll;
-				if (level < 50){
+				if (level < 50) {
 					do {
 						scroll = (Scroll) Generator
 								.random(Generator.Category.SCROLL);
@@ -137,7 +137,7 @@ public class UnstableSpellbook extends Artifact {
 	@Override
 	public Item upgrade() {
 		if (level < 34)
-		chargeCap = (((level + 1) / 2) + 3);
+			chargeCap = (((level + 1) / 2) + 3);
 
 		// for artifact transmutation.
 		while (scrolls.size() > (levelCap - 1 - level) && scrolls.size() > 0)
@@ -148,16 +148,16 @@ public class UnstableSpellbook extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 
 		desc += "\n\n";
 
 		if (isEquipped(Dungeon.hero)) {
 
 			if (!cursed)
-				desc += Messages.get(this,"desc2");
+				desc += Messages.get(this, "desc2");
 			else
-				desc += Messages.get(this,"desc_cursed");
+				desc += Messages.get(this, "desc_cursed");
 
 			desc += "\n\n";
 
@@ -173,9 +173,9 @@ public class UnstableSpellbook extends Artifact {
 						+ Messages.get(this, "desc4");
 			else if (scrolls.size() == 1)
 				desc += Messages.get(this, "desc5", Messages.get(scrolls.get(0), "name"));
-			else desc += Messages.get(this,"desc6");
+			else desc += Messages.get(this, "desc6");
 		else
-			desc += Messages.get(this,"desc6");
+			desc += Messages.get(this, "desc6");
 
 		return desc;
 	}
@@ -185,7 +185,7 @@ public class UnstableSpellbook extends Artifact {
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		bundle.put( SCROLLS, scrolls.toArray(new Class[scrolls.size()]) );
+		bundle.put(SCROLLS, scrolls.toArray(new Class[scrolls.size()]));
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class UnstableSpellbook extends Artifact {
 		public boolean act() {
 			if (charge < chargeCap && !cursed) {
 
-				partialCharge += level<10 ? (1 / (150f - level * 15f)) : 1 / 15f;
+				partialCharge += level < 10 ? (1 / (150f - level * 15f)) : 1 / 15f;
 
 				if (partialCharge >= 1) {
 					partialCharge--;
@@ -237,14 +237,14 @@ public class UnstableSpellbook extends Artifact {
 						item.detach(hero.belongings.backpack);
 
 						upgrade();
-						GLog.i(Messages.get(UnstableSpellbook.class,"infuse_scroll"));
+						GLog.i(Messages.get(UnstableSpellbook.class, "infuse_scroll"));
 						return;
 					}
 				}
 				if (item != null)
-					GLog.w(Messages.get(UnstableSpellbook.class,"unable_scroll"));
+					GLog.w(Messages.get(UnstableSpellbook.class, "unable_scroll"));
 			} else if (item instanceof Scroll && !item.isIdentified())
-				GLog.w(Messages.get(UnstableSpellbook.class,"unknown_scroll"));
+				GLog.w(Messages.get(UnstableSpellbook.class, "unknown_scroll"));
 		}
 	};
 }

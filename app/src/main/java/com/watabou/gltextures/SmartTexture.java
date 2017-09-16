@@ -26,29 +26,29 @@ public class SmartTexture extends Texture {
 
 	public int width;
 	public int height;
-	
+
 	public int fModeMin;
 	public int fModeMax;
-	
+
 	public int wModeH;
 	public int wModeV;
-	
+
 	public Bitmap bitmap;
-	
+
 	public Atlas atlas;
 
-	protected SmartTexture( ) {
+	protected SmartTexture() {
 		//useful for subclasses which want to manage their own texture data
 		// in cases where android.graphics.bitmap isn't fast enough.
 
 		//subclasses which use this MUST also override some mix of reload/generate/bind
 	}
-	
-	public SmartTexture( Bitmap bitmap ) {
-		this( bitmap, NEAREST, CLAMP, false);
+
+	public SmartTexture(Bitmap bitmap) {
+		this(bitmap, NEAREST, CLAMP, false);
 	}
 
-	public SmartTexture( Bitmap bitmap, int filtering, int wrapping, boolean premultiplied ) {
+	public SmartTexture(Bitmap bitmap, int filtering, int wrapping, boolean premultiplied) {
 
 		this.bitmap = bitmap;
 		width = bitmap.getWidth();
@@ -84,15 +84,15 @@ public class SmartTexture extends Texture {
 	}
 
 	@Override
-	public void bitmap( Bitmap bitmap ) {
-		bitmap( bitmap, false );
+	public void bitmap(Bitmap bitmap) {
+		bitmap(bitmap, false);
 	}
 
-	public void bitmap( Bitmap bitmap, boolean premultiplied ) {
+	public void bitmap(Bitmap bitmap, boolean premultiplied) {
 		if (premultiplied) {
-			super.bitmap( bitmap );
+			super.bitmap(bitmap);
 		} else {
-			handMade( bitmap, true );
+			handMade(bitmap, true);
 		}
 
 		this.bitmap = bitmap;
@@ -115,11 +115,11 @@ public class SmartTexture extends Texture {
 		bitmap = null;
 	}
 
-	public RectF uvRect( int left, int top, int right, int bottom ) {
+	public RectF uvRect(int left, int top, int right, int bottom) {
 		return new RectF(
-				(float)left		/ width,
-				(float)top		/ height,
-				(float)right	/ width,
-				(float)bottom	/ height );
+				(float) left / width,
+				(float) top / height,
+				(float) right / width,
+				(float) bottom / height);
 	}
 }

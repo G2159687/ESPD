@@ -38,37 +38,37 @@ import com.watabou.utils.Random;
 
 import java.util.HashSet;
 
-public class ZotPhase extends Mob implements Callback{
+public class ZotPhase extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(ZotPhase.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(ZotPhase.class, "kill");
 
 	{
-		name = Messages.get(Zot.class,"name");
+		name = Messages.get(Zot.class, "name");
 		spriteClass = ZotPhaseSprite.class;
 
 		HP = HT = 1000;
-		defenseSkill = 40+adj(1);
+		defenseSkill = 40 + adj(1);
 		baseSpeed = 2f;
 
-		EXP = 36;		
+		EXP = 36;
 
 		loot = Generator.Category.SCROLL;
-		lootChance = 0.33f;		
-		
+		lootChance = 0.33f;
+
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(115, 160+adj(1));
+		return Random.NormalIntRange(115, 160 + adj(1));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 100+adj(0);
+		return 100 + adj(0);
 	}
-	
+
 	@Override
 	protected float attackDelay() {
 		return 0.5f;
@@ -82,7 +82,7 @@ public class ZotPhase extends Mob implements Callback{
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ZotPhase extends Mob implements Callback{
 			spend(TIME_TO_ZAP);
 
 			if (hit(this, enemy, true)) {
-				int dmg = Random.Int(80+adj(0), 160+adj(3));
+				int dmg = Random.Int(80 + adj(0), 160 + adj(3));
 				if (Level.water[enemy.pos] && !enemy.flying) {
 					dmg *= 1.5f;
 				}
@@ -130,15 +130,15 @@ public class ZotPhase extends Mob implements Callback{
 			return !visible;
 		}
 	}
-	
+
 	@Override
 	public void damage(int dmg, Object src) {
-		
-		if(!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)){
-			int max = Math.round(dmg*.25f);
-			dmg = Random.Int(1,max);
+
+		if (!(src instanceof RelicMeleeWeapon || src instanceof JupitersWraith)) {
+			int max = Math.round(dmg * .25f);
+			dmg = Random.Int(1, max);
 		}
-		
+
 		super.damage(dmg, src);
 	}
 
@@ -149,11 +149,12 @@ public class ZotPhase extends Mob implements Callback{
 
 	@Override
 	public String description() {
-		
-		return (Random.Int(10) > 2) ? Messages.get(Zot.class,"desc") : "???";
+
+		return (Random.Int(10) > 2) ? Messages.get(Zot.class, "desc") : "???";
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}

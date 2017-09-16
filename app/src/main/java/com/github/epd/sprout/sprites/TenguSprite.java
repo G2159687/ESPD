@@ -80,26 +80,26 @@ public class TenguSprite extends MobSprite {
 	public void attack(int cell) {
 		if (!Level.adjacent(cell, ch.pos)) {
 			Char enemy = Actor.findChar(cell);
-				  ((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
+			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new Shuriken(), new Callback() {
 						@Override
 						public void call() {
 							ch.onAttackComplete();
 						}
-				});
-		 	  
-		  		if(Random.Int(5)==0){
-		  				Buff.affect(enemy, Burning.class).reignite(enemy);
-		  				enemy.sprite.emitter().burst(FlameParticle.FACTORY, 5);
-		  			}
-		  		if(Random.Int(10)==0){
-		  			Buff.affect(enemy, Slow.class, Slow.duration(enemy) / 2);
-		  		}
-		  				  		
-		  		if(Random.Int(20)==0){
-		  		       Buff.prolong(enemy, Paralysis.class, DURATION);
-		  		}
-		  		
+					});
+
+			if (Random.Int(5) == 0) {
+				Buff.affect(enemy, Burning.class).reignite(enemy);
+				enemy.sprite.emitter().burst(FlameParticle.FACTORY, 5);
+			}
+			if (Random.Int(10) == 0) {
+				Buff.affect(enemy, Slow.class, Slow.duration(enemy) / 2);
+			}
+
+			if (Random.Int(20) == 0) {
+				Buff.prolong(enemy, Paralysis.class, DURATION);
+			}
+
 			play(cast);
 			turnTo(ch.pos, cell);
 
@@ -113,7 +113,7 @@ public class TenguSprite extends MobSprite {
 	@Override
 	public void onComplete(Animation anim) {
 		if (anim == run) {
-			synchronized (this){
+			synchronized (this) {
 				isMoving = false;
 				idle();
 				notifyAll();

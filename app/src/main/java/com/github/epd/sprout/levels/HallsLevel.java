@@ -25,7 +25,6 @@ import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.Sentinel;
 import com.github.epd.sprout.items.Bomb;
-import com.github.epd.sprout.items.DwarfHammer;
 import com.github.epd.sprout.items.Torch;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Game;
@@ -48,7 +47,7 @@ public class HallsLevel extends RegularLevel {
 		color1 = 0x801500;
 		color2 = 0xa68521;
 	}
-		
+
 	@Override
 	public void create() {
 		addItemToSpawn(new Torch());
@@ -64,10 +63,10 @@ public class HallsLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_HALLS;
 	}
-	
+
 	@Override
-	protected void setPar(){
-		Dungeon.pars[Dungeon.depth] = 300+(Dungeon.depth*50)+(secretDoors*20);
+	protected void setPar() {
+		Dungeon.pars[Dungeon.depth] = 300 + (Dungeon.depth * 50) + (secretDoors * 20);
 	}
 
 	@Override
@@ -114,61 +113,64 @@ public class HallsLevel extends RegularLevel {
 				break;
 			}
 		}
-		
-         for (int i = 0; i < getLength(); i++) {
-			
-			if (map[i]==Terrain.EXIT){
+
+		for (int i = 0; i < getLength(); i++) {
+
+			if (map[i] == Terrain.EXIT) {
 				map[i] = Terrain.PEDESTAL;
-				sealedlevel=true;
-			    if(Dungeon.depth==24){
+				sealedlevel = true;
+				if (Dungeon.depth == 24) {
 					map[i] = Terrain.EMBERS;
-			    	Sentinel sentinel = new Sentinel();
-				    sentinel.pos = i;
-				    mobs.add(sentinel);}
-			}			
-			
+					Sentinel sentinel = new Sentinel();
+					sentinel.pos = i;
+					mobs.add(sentinel);
+				}
+			}
+
 		}
-         
-         setPar();
-		
-		
+
+		setPar();
+
+
 	}
-	
+
 	@Override
 	protected void createItems() {
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(1) == 0){addItemToSpawn(new Bomb());}
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(1) == 0) {
+			addItemToSpawn(new Bomb());
+		}
 		super.createItems();
 	}
 
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(HallsLevel.class,"water_name");
-		case Terrain.GRASS:
-			return Messages.get(HallsLevel.class,"grass_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(HallsLevel.class,"high_grass_name");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(HallsLevel.class,"statue_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(HallsLevel.class, "water_name");
+			case Terrain.GRASS:
+				return Messages.get(HallsLevel.class, "grass_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(HallsLevel.class, "high_grass_name");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(HallsLevel.class, "statue_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(HallsLevel.class,"water_desc");
-		case Terrain.STATUE:
-		case Terrain.STATUE_SP:
-			return Messages.get(HallsLevel.class,"statue_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(HallsLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.WATER:
+				return Messages.get(HallsLevel.class, "water_desc");
+			case Terrain.STATUE:
+			case Terrain.STATUE_SP:
+				return Messages.get(HallsLevel.class, "statue_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(HallsLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
@@ -213,7 +215,7 @@ public class HallsLevel extends RegularLevel {
 
 					PointF p = DungeonTilemap.tileToWorld(pos);
 					((FireParticle) recycle(FireParticle.class)).reset(p.x
-							+ Random.Float(DungeonTilemap.SIZE),
+									+ Random.Float(DungeonTilemap.SIZE),
 							p.y + Random.Float(DungeonTilemap.SIZE));
 				}
 			}

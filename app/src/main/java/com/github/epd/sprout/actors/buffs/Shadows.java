@@ -92,7 +92,7 @@ public class Shadows extends Invisibility {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override

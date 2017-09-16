@@ -42,7 +42,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class KeyRing extends Bag {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.KEYRING;
 
 		size = 24;
@@ -57,22 +57,22 @@ public class KeyRing extends Bag {
 				|| item instanceof SewersKey
 				|| item instanceof HallsKey
 				|| item instanceof PrisonKey
-                || item instanceof AncientCoin
-                || item instanceof Bone
-                || item instanceof BookOfDead
-                || item instanceof BookOfLife
-                || item instanceof BookOfTranscendence
-                || item instanceof ConchShell
-                || item instanceof Palantir
-                || item instanceof SanChikarah
-                || item instanceof SanChikarahDeath
-                || item instanceof SanChikarahLife
-                || item instanceof SanChikarahTranscend;
+				|| item instanceof AncientCoin
+				|| item instanceof Bone
+				|| item instanceof BookOfDead
+				|| item instanceof BookOfLife
+				|| item instanceof BookOfTranscendence
+				|| item instanceof ConchShell
+				|| item instanceof Palantir
+				|| item instanceof SanChikarah
+				|| item instanceof SanChikarahDeath
+				|| item instanceof SanChikarahLife
+				|| item instanceof SanChikarahTranscend;
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }
 

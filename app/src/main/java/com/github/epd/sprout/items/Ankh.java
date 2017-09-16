@@ -32,16 +32,16 @@ import java.util.ArrayList;
 
 public class Ankh extends Item {
 
-	public static final String AC_BLESS = Messages.get(Ankh.class,"ac_bless");
+	public static final String AC_BLESS = Messages.get(Ankh.class, "ac_bless");
 
-	public static final String TXT_DESC_NOBLESS = Messages.get(Ankh.class,"desc");
-	public static final String TXT_DESC_BLESSED = Messages.get(Ankh.class,"desc_blessed");
+	public static final String TXT_DESC_NOBLESS = Messages.get(Ankh.class, "desc");
+	public static final String TXT_DESC_BLESSED = Messages.get(Ankh.class, "desc_blessed");
 
-	public static final String TXT_BLESS = Messages.get(Ankh.class,"bless");
-	public static final String TXT_REVIVE = Messages.get(Ankh.class,"revive");
+	public static final String TXT_BLESS = Messages.get(Ankh.class, "bless");
+	public static final String TXT_REVIVE = Messages.get(Ankh.class, "revive");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ANKH;
 
 		// You tell the ankh no, don't revive me, and then it comes back to

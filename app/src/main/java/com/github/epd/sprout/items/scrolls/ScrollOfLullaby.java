@@ -32,8 +32,8 @@ import com.watabou.noosa.audio.Sample;
 public class ScrollOfLullaby extends Scroll {
 
 	{
-		initials=1;
-		name = Messages.get(this,"name");
+		initials = 1;
+		name = Messages.get(this, "name");
 		consumedValue = 5;
 	}
 
@@ -55,7 +55,7 @@ public class ScrollOfLullaby extends Scroll {
 
 		Buff.affect(curUser, Drowsy.class);
 
-		GLog.i(Messages.get(this,"sooth"));
+		GLog.i(Messages.get(this, "sooth"));
 
 		setKnown();
 
@@ -64,7 +64,7 @@ public class ScrollOfLullaby extends Scroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

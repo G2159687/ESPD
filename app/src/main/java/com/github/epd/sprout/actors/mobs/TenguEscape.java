@@ -45,9 +45,9 @@ public class TenguEscape extends Mob {
 	private static final int JUMP_DELAY = 5;
 	private static final int JUMPS_TO_ESCAPE = 5;
 	protected static final float SPAWN_DELAY = 2f;
-	
+
 	{
-		name = Messages.get(Tengu.class,"name");
+		name = Messages.get(Tengu.class, "name");
 		spriteClass = TenguSprite.class;
 		baseSpeed = 1f;
 
@@ -58,9 +58,9 @@ public class TenguEscape extends Mob {
 
 	private int timeToJump = JUMP_DELAY;
 	private int escapeCount = JUMPS_TO_ESCAPE;
-	private int jumps=0;
-	
-	
+	private int jumps = 0;
+
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(15, 18);
@@ -76,32 +76,30 @@ public class TenguEscape extends Mob {
 		return 15;
 	}
 
-	
-	
-	
+
 	@Override
 	public void die(Object cause) {
 
 		//super.die(cause);
 
-		if (jumps>=JUMPS_TO_ESCAPE){
-	    	yell(Messages.get(TenguEscape.class,"escape"));
-	    	     } else {
-		    yell(Messages.get(this,"e2", Dungeon.hero.givenName()));
-		    if(!Dungeon.limitedDrops.tengukey.dropped()) {
-			Dungeon.limitedDrops.tengukey.drop();
-			Dungeon.level.drop(new TenguKey(), pos).sprite.drop();
+		if (jumps >= JUMPS_TO_ESCAPE) {
+			yell(Messages.get(TenguEscape.class, "escape"));
+		} else {
+			yell(Messages.get(this, "e2", Dungeon.hero.givenName()));
+			if (!Dungeon.limitedDrops.tengukey.dropped()) {
+				Dungeon.limitedDrops.tengukey.drop();
+				Dungeon.level.drop(new TenguKey(), pos).sprite.drop();
+			}
 		}
-	    	     }
 		destroy();
 		sprite.killAndErase();
-		CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);	
-					
+		CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
+
 	}
 
 	@Override
 	protected boolean getCloser(int target) {
-		if (Level.fieldOfView[target] && jumps<JUMPS_TO_ESCAPE) {
+		if (Level.fieldOfView[target] && jumps < JUMPS_TO_ESCAPE) {
 			jump();
 			return true;
 		} else {
@@ -111,13 +109,13 @@ public class TenguEscape extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
 	protected boolean doAttack(Char enemy) {
 		timeToJump--;
-		if (timeToJump <= 0 && jumps<JUMPS_TO_ESCAPE) {
+		if (timeToJump <= 0 && jumps < JUMPS_TO_ESCAPE) {
 			jump();
 			return true;
 		} else {
@@ -128,8 +126,8 @@ public class TenguEscape extends Mob {
 	private void jump() {
 		timeToJump = JUMP_DELAY;
 		escapeCount = JUMPS_TO_ESCAPE;
-		
-		
+
+
 		//GLog.i("%s! ",(JUMPS_TO_ESCAPE-jumps));
 
 		int newPos;
@@ -148,19 +146,19 @@ public class TenguEscape extends Mob {
 		}
 
 		spend(1 / speed());
-		
+
 		jumps++;
-		
-		if (jumps>=JUMPS_TO_ESCAPE){
-			HP=1;
-			Buff.affect(this,Poison.class).set(Poison.durationFactor(this) * 2);
+
+		if (jumps >= JUMPS_TO_ESCAPE) {
+			HP = 1;
+			Buff.affect(this, Poison.class).set(Poison.durationFactor(this) * 2);
 		}
-		
+
 	}
 
 	public static TenguEscape spawnAt(int pos) {
 		if (Level.passable[pos] && Actor.findChar(pos) == null) {
-          
+
 			TenguEscape w = new TenguEscape();
 			w.pos = pos;
 			w.state = w.HUNTING;
@@ -170,24 +168,25 @@ public class TenguEscape extends Mob {
 			//w.sprite.parent.add(new AlphaTweener(w.sprite, 1, 0.5f));
 
 			return w;
-  			
+
 		} else {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(TenguEscape.class,"notice"));
+		yell(Messages.get(TenguEscape.class, "notice"));
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(Tengu.class,"desc");
+		return Messages.get(Tengu.class, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

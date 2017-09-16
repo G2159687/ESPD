@@ -38,7 +38,7 @@ public class ZotBossLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		cleared=true;
+		cleared = true;
 		viewDistance = 6;
 	}
 
@@ -64,7 +64,7 @@ public class ZotBossLevel extends Level {
 	private static final String DOOR = "door";
 	private static final String ENTERED = "entered";
 	private static final String DROPPED = "droppped";
-	
+
 	protected static final float TIME_TO_RESPAWN = 20;
 
 	@Override
@@ -114,7 +114,7 @@ public class ZotBossLevel extends Level {
 			}
 		}
 
-		map[exit] = Terrain.WALL;		
+		map[exit] = Terrain.WALL;
 
 		Painter.fill(this, ROOM_LEFT - 1, ROOM_TOP - 1, ROOM_RIGHT - ROOM_LEFT
 				+ 3, ROOM_BOTTOM - ROOM_TOP + 3, Terrain.WALL);
@@ -160,11 +160,13 @@ public class ZotBossLevel extends Level {
 		}
 
 		for (int i = 0; i < getLength(); i++) {
-			
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.PEDESTAL;}
+
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.PEDESTAL;
+			}
 		}
-		
-		locked=true;
+
+		locked = true;
 
 	}
 
@@ -196,7 +198,7 @@ public class ZotBossLevel extends Level {
 			enteredArena = true;
 			//locked = true;
 
-		    Zot boss = new Zot();
+			Zot boss = new Zot();
 			boss.state = boss.WANDERING;
 			do {
 				boss.pos = Random.Int(getLength());
@@ -204,7 +206,7 @@ public class ZotBossLevel extends Level {
 					|| Dungeon.visible[boss.pos]);
 			GameScene.add(boss);
 			GLog.n("...");
-			
+
 
 			//set(arenaDoor, Terrain.WALL);
 			GameScene.updateMap(arenaDoor);
@@ -216,7 +218,7 @@ public class ZotBossLevel extends Level {
 		}
 	}
 
-	
+
 	private boolean outsideEntraceRoom(int cell) {
 		int cx = cell % getWidth();
 		int cy = cell / getWidth();
@@ -228,11 +230,11 @@ public class ZotBossLevel extends Level {
 	public String tileName(int tile) {
 		switch (tile) {
 			case Terrain.GRASS:
-				return Messages.get(CavesLevel.class,"grass_name");
+				return Messages.get(CavesLevel.class, "grass_name");
 			case Terrain.HIGH_GRASS:
-				return Messages.get(CavesLevel.class,"high_grass_name");
+				return Messages.get(CavesLevel.class, "high_grass_name");
 			case Terrain.WATER:
-				return Messages.get(CavesLevel.class,"water_name");
+				return Messages.get(CavesLevel.class, "water_name");
 			default:
 				return super.tileName(tile);
 		}
@@ -242,15 +244,15 @@ public class ZotBossLevel extends Level {
 	public String tileDesc(int tile) {
 		switch (tile) {
 			case Terrain.ENTRANCE:
-				return Messages.get(CavesLevel.class,"entrance_desc");
+				return Messages.get(CavesLevel.class, "entrance_desc");
 			case Terrain.EXIT:
-				return Messages.get(CavesLevel.class,"exit_desc");
+				return Messages.get(CavesLevel.class, "exit_desc");
 			case Terrain.HIGH_GRASS:
-				return Messages.get(CavesLevel.class,"high_grass_desc");
+				return Messages.get(CavesLevel.class, "high_grass_desc");
 			case Terrain.WALL_DECO:
-				return Messages.get(CavesLevel.class,"wall_deco_desc");
+				return Messages.get(CavesLevel.class, "wall_deco_desc");
 			case Terrain.BOOKSHELF:
-				return Messages.get(CavesLevel.class,"bookshelf_desc");
+				return Messages.get(CavesLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc(tile);
 		}
@@ -260,13 +262,15 @@ public class ZotBossLevel extends Level {
 	public void addVisuals(Scene scene) {
 		CavesLevel.addVisuals(this, scene);
 	}
+
 	@Override
 	public int nMobs() {
 		return 0;
 	}
-	
-	@Override
-	protected void createMobs() {			}
 
-	
+	@Override
+	protected void createMobs() {
+	}
+
+
 }

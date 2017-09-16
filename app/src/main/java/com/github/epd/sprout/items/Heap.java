@@ -69,13 +69,13 @@ import java.util.LinkedList;
 
 public class Heap implements Bundlable {
 
-	private static final String TXT_MIMIC = Messages.get(Heap.class,"mimic");
+	private static final String TXT_MIMIC = Messages.get(Heap.class, "mimic");
 	//private static final String TXT_MONSTERBOX = "You've opened a world of hurt!";
 
 	private static final int SEEDS_TO_POTION = 3;
 
 	public enum Type {
-		HEAP, FOR_SALE, CHEST, LOCKED_CHEST, CRYSTAL_CHEST, TOMB, SKELETON, REMAINS, MIMIC //,MONSTERBOX
+		HEAP, FOR_SALE, CHEST, LOCKED_CHEST, CRYSTAL_CHEST, TOMB, SKELETON, REMAINS, MIMIC, HARD_TOMB //,MONSTERBOX
 	}
 
 	public Type type = Type.HEAP;
@@ -89,45 +89,48 @@ public class Heap implements Bundlable {
 
 	public int image() {
 		switch (type) {
-		case HEAP:
-		case FOR_SALE:
-			return size() > 0 ? items.peek().image() : 0;
-		case CHEST:
-		case MIMIC:
-			return ItemSpriteSheet.CHEST;
-		case LOCKED_CHEST:
-			return ItemSpriteSheet.LOCKED_CHEST;
-		case CRYSTAL_CHEST:
-			return ItemSpriteSheet.CRYSTAL_CHEST;
-		case TOMB:
-			return ItemSpriteSheet.TOMB;
-		case SKELETON:
-			return ItemSpriteSheet.BONES;
-		case REMAINS:
-			return ItemSpriteSheet.REMAINS;
-		//case MONSTERBOX:
-		//	return ItemSpriteSheet.LOCKED_CHEST;
-		default:
-			return 0;
+			case HEAP:
+			case FOR_SALE:
+				return size() > 0 ? items.peek().image() : 0;
+			case CHEST:
+			case MIMIC:
+				return ItemSpriteSheet.CHEST;
+			case LOCKED_CHEST:
+				return ItemSpriteSheet.LOCKED_CHEST;
+			case CRYSTAL_CHEST:
+				return ItemSpriteSheet.CRYSTAL_CHEST;
+			case TOMB:
+				return ItemSpriteSheet.TOMB;
+			case SKELETON:
+				return ItemSpriteSheet.BONES;
+			case REMAINS:
+				return ItemSpriteSheet.REMAINS;
+			case HARD_TOMB:
+				return ItemSpriteSheet.GRAVE;
+			//case MONSTERBOX:
+			//	return ItemSpriteSheet.LOCKED_CHEST;
+			default:
+				return 0;
 		}
 	}
-	
+
 
 	public boolean chestCheck() {
 		switch (type) {
-		case HEAP:
-		case FOR_SALE:
-		case TOMB:
-		case SKELETON:
-		case REMAINS:
+			case HEAP:
+			case FOR_SALE:
+			case TOMB:
+			case SKELETON:
+			case REMAINS:
 				return false;
-		case CRYSTAL_CHEST:
-		case LOCKED_CHEST:
-		case MIMIC:
-		case CHEST:
-		       return true;		
-		default:
-			return false;
+			case CRYSTAL_CHEST:
+			case LOCKED_CHEST:
+			case MIMIC:
+			case CHEST:
+			case HARD_TOMB:
+				return true;
+			default:
+				return false;
 		}
 	}
 
@@ -139,39 +142,39 @@ public class Heap implements Bundlable {
 
 	public void open(Hero hero) {
 		switch (type) {
-		//case MONSTERBOX:
-		//	if (MonsterBox.spawnAt(pos, items) != null) {
-		//		GLog.n(TXT_MONSTERBOX);
-		//		destroy();
-		//	} else {
-		//		type = Type.CHEST;
-		//	}
-		case MIMIC:
-			if (Mimic.spawnAt(pos, items) != null) {
-				GLog.n(TXT_MIMIC);
-				destroy();
-			} else {
-				type = Type.CHEST;
-			}
-			break;
-		case TOMB:
-			  Wraith.spawnAround(hero.pos);
-			  break;
-		case SKELETON:
-		case REMAINS:
-			CellEmitter.center(pos).start(Speck.factory(Speck.RATTLE), 0.1f, 3);
-			for (Item item : items) {
-				if (item.cursed) {
-					if (RedWraith.spawnAt(pos) == null) {
-						hero.sprite.emitter().burst(ShadowParticle.CURSE, 6);
-						hero.damage(hero.HP / 2, this);
-					}
-					Sample.INSTANCE.play(Assets.SND_CURSED);
-					break;
+			//case MONSTERBOX:
+			//	if (MonsterBox.spawnAt(pos, items) != null) {
+			//		GLog.n(TXT_MONSTERBOX);
+			//		destroy();
+			//	} else {
+			//		type = Type.CHEST;
+			//	}
+			case MIMIC:
+				if (Mimic.spawnAt(pos, items) != null) {
+					GLog.n(TXT_MIMIC);
+					destroy();
+				} else {
+					type = Type.CHEST;
 				}
-			}
-			break;
-		default:
+				break;
+			case TOMB:
+				Wraith.spawnAround(hero.pos);
+				break;
+			case SKELETON:
+			case REMAINS:
+				CellEmitter.center(pos).start(Speck.factory(Speck.RATTLE), 0.1f, 3);
+				for (Item item : items) {
+					if (item.cursed) {
+						if (RedWraith.spawnAt(pos) == null) {
+							hero.sprite.emitter().burst(ShadowParticle.CURSE, 6);
+							hero.damage(hero.HP / 2, this);
+						}
+						Sample.INSTANCE.play(Assets.SND_CURSED);
+						break;
+					}
+				}
+				break;
+			default:
 		}
 
 		//if (type != Type.MIMIC && type != Type.MONSTERBOX) {
@@ -235,7 +238,7 @@ public class Heap implements Bundlable {
 			items.add(index, b);
 		}
 	}
-	
+
 	public void burn() {
 
 		if (type == Type.MIMIC) {
@@ -246,11 +249,11 @@ public class Heap implements Bundlable {
 				destroy();
 			}
 		}
-				
+
 		if (type != Type.HEAP) {
 			return;
 		}
-		
+
 		boolean burnt = false;
 		boolean evaporated = false;
 
@@ -263,6 +266,9 @@ public class Heap implements Bundlable {
 				evaporated = true;
 			} else if (item instanceof Egg) {
 				((Egg) item).burns++;
+				burnt = true;
+			} else if (item instanceof EasterEgg) {
+				((EasterEgg) item).burns++;
 				burnt = true;
 			} else if (item instanceof MysteryMeat) {
 				replace(item, ChargrilledMeat.cook((MysteryMeat) item));
@@ -301,21 +307,21 @@ public class Heap implements Bundlable {
 		}
 	}
 
-	public void removeSeekingBomb(){
+	public void removeSeekingBomb() {
 		for (Item item : items.toArray(new Item[0])) {
 			if (item instanceof SeekingBombItem) {
 				items.remove(item);
 			}
-			
+
 		}
 	}
-	
+
 	// Note: should not be called to initiate an explosion, but rather by an
 	// explosion that is happening.
 	public void explode() {
 
 		// breaks open most standard containers, mimics die.
-		if (type == Type.MIMIC ||  type == Type.CHEST || type == Type.SKELETON) {
+		if (type == Type.MIMIC || type == Type.CHEST || type == Type.SKELETON) {
 			type = Type.HEAP;
 			sprite.link();
 			sprite.drop();
@@ -330,7 +336,7 @@ public class Heap implements Bundlable {
 
 			for (Item item : items.toArray(new Item[0])) {
 
-				if (item instanceof Potion && Random.Float() < 0.10f ) {
+				if (item instanceof Potion && Random.Float() < 0.10f) {
 					items.remove(item);
 					((Potion) item).shatter(pos);
 
@@ -381,7 +387,7 @@ public class Heap implements Bundlable {
 				destroy();
 		}
 	}
-	
+
 	/*
 	public void dewcollect() {
 
@@ -397,73 +403,75 @@ public class Heap implements Bundlable {
 		}
 	}
 	*/
-	
+
 	// Note: should not be called to initiate an explosion, but rather by an
-		// explosion that is happening.
-		public void holyexplode() {
-			
-				for (Item item : items.toArray(new Item[0])) {
+	// explosion that is happening.
+	public void holyexplode() {
 
-					if (item.cursed) {
-						item.cursed = false;
-						if(item.isUpgradable() && item.level<0){item.upgrade(-item.level);} //upgrade to even
-					}
-					
-					if (item instanceof HolyHandGrenade) {
-						items.remove(item);
-						((HolyHandGrenade) item).explode(pos);
-						// stop processing current explosion, it will be replaced by
-						// the new one.
-						return;
-						// unique and upgraded items can endure the blast
-					} 
+		for (Item item : items.toArray(new Item[0])) {
 
-				}
-
-				
-				if (items.isEmpty())
-					destroy();
-					}
-	
-	// Note: should not be called to initiate an explosion, but rather by an
-		// explosion that is happening.
-		public void dumpexplode() {
-
-			
-			if (type != Type.HEAP) {
-
-				return;
-
-			} else {
-
-				for (Item item : items.toArray(new Item[0])) {
-
-					
-				   if (item instanceof DumplingBomb) {
-						items.remove(item);
-						((DumplingBomb) item).explode(pos);
-						// stop processing current explosion, it will be replaced by
-						// the new one.
-						return;
-						// unique and upgraded items can endure the blast
-					} 
-				}
-
-				if (items.isEmpty())
-					destroy();
+			if (item.cursed) {
+				item.cursed = false;
+				if (item.isUpgradable() && item.level < 0) {
+					item.upgrade(-item.level);
+				} //upgrade to even
 			}
+
+			if (item instanceof HolyHandGrenade) {
+				items.remove(item);
+				((HolyHandGrenade) item).explode(pos);
+				// stop processing current explosion, it will be replaced by
+				// the new one.
+				return;
+				// unique and upgraded items can endure the blast
+			}
+
+		}
+
+
+		if (items.isEmpty())
+			destroy();
 	}
-		
-	public void dryup(){
-					
+
+	// Note: should not be called to initiate an explosion, but rather by an
+	// explosion that is happening.
+	public void dumpexplode() {
+
+
+		if (type != Type.HEAP) {
+
+			return;
+
+		} else {
+
+			for (Item item : items.toArray(new Item[0])) {
+
+
+				if (item instanceof DumplingBomb) {
+					items.remove(item);
+					((DumplingBomb) item).explode(pos);
+					// stop processing current explosion, it will be replaced by
+					// the new one.
+					return;
+					// unique and upgraded items can endure the blast
+				}
+			}
+
+			if (items.isEmpty())
+				destroy();
+		}
+	}
+
+	public void dryup() {
+
 		if (type != Type.HEAP) {
 			return;
 		}
-		
+
 		boolean evaporated = false;
 
 		for (Item item : items.toArray(new Item[0])) {
-			 if (item instanceof Dewdrop) {
+			if (item instanceof Dewdrop) {
 				items.remove(item);
 				evaporated = true;
 			} else if (item instanceof VioletDewdrop) {
@@ -475,15 +483,15 @@ public class Heap implements Bundlable {
 			} else if (item instanceof YellowDewdrop) {
 				items.remove(item);
 				evaporated = true;
-			} 
+			}
 		}
 
 		if (evaporated) {
 
 			if (Dungeon.visible[pos]) {
-				
-					evaporateFX(pos);
-				
+
+				evaporateFX(pos);
+
 			}
 
 			if (isEmpty()) {
@@ -494,18 +502,18 @@ public class Heap implements Bundlable {
 
 		}
 	}
-	
-	
-	public int dewdrops(){
-		
+
+
+	public int dewdrops() {
+
 		if (type != Type.HEAP) {
 			return 0;
 		}
-		
-		int drops=0;
-		
+
+		int drops = 0;
+
 		for (Item item : items.toArray(new Item[0])) {
-			 if (item instanceof Dewdrop) {
+			if (item instanceof Dewdrop) {
 				drops++;
 			} else if (item instanceof VioletDewdrop) {
 				drops++;
@@ -513,53 +521,57 @@ public class Heap implements Bundlable {
 				drops++;
 			} else if (item instanceof YellowDewdrop) {
 				drops++;
-			} 
+			}
 		}
-		
-		return drops;		
+
+		return drops;
 	}
-	
-	
+
+
 	public void lit() {
 		if (type != Type.HEAP) {
 			return;
-		}		
+		}
 		for (Item item : items.toArray(new Item[0])) {
-			if (item instanceof Egg) {	
+			if (item instanceof Egg) {
 				((Egg) item).lits++;
+			} else if (item instanceof EasterEgg) {
+				((EasterEgg) item).lits++;
+			} else if (item instanceof InactiveMrDestructo) {
+				items.remove(item);
+				Dungeon.level.drop(new ActiveMrDestructo(), pos).sprite.drop();
+			} else if (item instanceof InactiveMrDestructo2) {
+				items.remove(item);
+				Dungeon.level.drop(new ActiveMrDestructo2(), pos).sprite.drop();
 			}
-			else if (item instanceof InactiveMrDestructo) {
-                items.remove(item);
-                Dungeon.level.drop(new ActiveMrDestructo(), pos).sprite.drop();
-            }
-            else if (item instanceof InactiveMrDestructo2) {
-                items.remove(item);
-                Dungeon.level.drop(new ActiveMrDestructo2(), pos).sprite.drop();
-            }
-		}		
+		}
 	}
-	
+
 
 	public void summon() {
 		if (type != Type.HEAP) {
 			return;
-		}		
+		}
 		for (Item item : items.toArray(new Item[0])) {
-			if (item instanceof Egg) {	
+			if (item instanceof Egg) {
 				((Egg) item).summons++;
-			}			
-		}		
+			} else if (item instanceof EasterEgg) {
+				((EasterEgg) item).summons++;
+			}
+		}
 	}
-	
+
 	public void poison() {
 		if (type != Type.HEAP) {
 			return;
-		}		
+		}
 		for (Item item : items.toArray(new Item[0])) {
-			if (item instanceof Egg) {	
+			if (item instanceof Egg) {
 				((Egg) item).poisons++;
-			}			
-		}		
+			} else if (item instanceof EasterEgg) {
+				((EasterEgg) item).poisons++;
+			}
+		}
 	}
 
 	public void freeze() {
@@ -587,9 +599,11 @@ public class Heap implements Bundlable {
 				items.remove(item);
 				((Potion) item).shatter(pos);
 				frozen = true;
-			}else if (item instanceof Egg) {	
+			} else if (item instanceof Egg) {
 				((Egg) item).freezes++;
 				frozen = true;
+			} else if (item instanceof EasterEgg) {
+				((EasterEgg) item).freezes++;
 			} else if (item instanceof Bomb) {
 				((Bomb) item).fuse = null;
 				frozen = true;
@@ -699,53 +713,65 @@ public class Heap implements Bundlable {
 			return null;
 		}
 	}
-	
+
 	public Weapon consecrate() {
 
 		CellEmitter.get(pos).burst(Speck.factory(Speck.FORGE), 3);
-		Splash.at(pos, 0xFFFFFF, 3);	
-		
-		int count=0;
-		int type=0;
-		
+		Splash.at(pos, 0xFFFFFF, 3);
+
+		int count = 0;
+		int type = 0;
+
 		for (Item item : items) {
 			if (item instanceof NornStone) {
 				count += item.quantity;
-				if(type==0){
-					type=((NornStone) item).type;
-				} else if (Random.Int(3)<item.quantity){
-				 	type=((NornStone) item).type;	
+				if (type == 0) {
+					type = ((NornStone) item).type;
+				} else if (Random.Int(3) < item.quantity) {
+					type = ((NornStone) item).type;
 				}
 			} else {
 				count = 0;
 				break;
 			}
 		}
-		
+
 		Weapon weapon;
-				
+
 		if (count >= SEEDS_TO_POTION) {
 
 			CellEmitter.get(pos).burst(Speck.factory(Speck.WOOL), 6);
 			Sample.INSTANCE.play(Assets.SND_PUFF);
-			
-			destroy(); 
-			
-				switch (type) {
-	            case 1:  weapon = new JupitersWraith(); weapon.enchantJupiter();
-	                     break;
-	            case 2:  weapon = new AresSword(); weapon.enchantAres();
-                         break;
-	            case 3:  weapon = new CromCruachAxe(); weapon.enchantLuck();
-                         break;
-	            case 4:  weapon = new LokisFlail(); weapon.enchantLoki();
-                         break;
-	            case 5:  weapon = new NeptunusTrident(); weapon.enchantNeptune();
-                         break;
-	            default: weapon = new AresSword(); weapon.enchantAres();
-                         break;
-                          }
-                         
+
+			destroy();
+
+			switch (type) {
+				case 1:
+					weapon = new JupitersWraith();
+					weapon.enchantJupiter();
+					break;
+				case 2:
+					weapon = new AresSword();
+					weapon.enchantAres();
+					break;
+				case 3:
+					weapon = new CromCruachAxe();
+					weapon.enchantLuck();
+					break;
+				case 4:
+					weapon = new LokisFlail();
+					weapon.enchantLoki();
+					break;
+				case 5:
+					weapon = new NeptunusTrident();
+					weapon.enchantNeptune();
+					break;
+				default:
+					weapon = new AresSword();
+					weapon.enchantAres();
+					break;
+			}
+
 			return weapon;
 
 		} else {
@@ -777,8 +803,8 @@ public class Heap implements Bundlable {
 	}
 
 	@Override
-	public String toString(){
-		switch(type){
+	public String toString() {
+		switch (type) {
 			case CHEST:
 			case MIMIC:
 				return Messages.get(this, "chest");
@@ -792,13 +818,15 @@ public class Heap implements Bundlable {
 				return Messages.get(this, "skeleton");
 			case REMAINS:
 				return Messages.get(this, "remains");
+			case HARD_TOMB:
+				return Messages.get(this, "hardtomb");
 			default:
 				return peek().toString();
 		}
 	}
 
-	public String info(){
-		switch(type){
+	public String info() {
+		switch (type) {
 			case CHEST:
 			case MIMIC:
 				return Messages.get(this, "chest_desc");
@@ -806,24 +834,26 @@ public class Heap implements Bundlable {
 				return Messages.get(this, "locked_chest_desc");
 			case CRYSTAL_CHEST:
 				if (peek() instanceof Artifact)
-					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "artifact") );
+					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "artifact"));
 				else if (peek() instanceof Wand)
-					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "wand") );
+					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "wand"));
 				else
-					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "ring") );
+					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "ring"));
 			case TOMB:
 				return Messages.get(this, "tomb_desc");
 			case SKELETON:
 				return Messages.get(this, "skeleton_desc");
 			case REMAINS:
 				return Messages.get(this, "remains_desc");
+			case HARD_TOMB:
+				return Messages.get(this,"hardtomb_desc");
 			default:
 				return peek().info();
 		}
 	}
 
 	private static final String POS = "pos";
-	private static final String SEEN	= "seen";
+	private static final String SEEN = "seen";
 	private static final String TYPE = "type";
 	private static final String ITEMS = "items";
 
@@ -831,7 +861,7 @@ public class Heap implements Bundlable {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		pos = bundle.getInt(POS);
-		seen = bundle.getBoolean( SEEN );
+		seen = bundle.getBoolean(SEEN);
 		type = Type.valueOf(bundle.getString(TYPE));
 		items = new LinkedList<Item>(
 				(Collection<Item>) ((Collection<?>) bundle.getCollection(ITEMS)));
@@ -841,7 +871,7 @@ public class Heap implements Bundlable {
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		bundle.put(POS, pos);
-		bundle.put( SEEN, seen );
+		bundle.put(SEEN, seen);
 		bundle.put(TYPE, type.toString());
 		bundle.put(ITEMS, items);
 	}

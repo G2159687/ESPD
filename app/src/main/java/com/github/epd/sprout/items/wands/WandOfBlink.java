@@ -19,9 +19,7 @@ package com.github.epd.sprout.items.wands;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
-import com.github.epd.sprout.actors.buffs.Barkskin;
 import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.effects.Speck;
@@ -37,15 +35,17 @@ import com.watabou.utils.Callback;
 public class WandOfBlink extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_BLINK;
 	}
-	private static final String TXT_PREVENTING = Messages.get(WandOfBlink.class,"prevent");
+
+	private static final String TXT_PREVENTING = Messages.get(WandOfBlink.class, "prevent");
+
 	@Override
 	protected void onZap(Ballistica bolt) {
 
-		if (Dungeon.sokobanLevel(Dungeon.depth)){
-			GLog.w(TXT_PREVENTING);	
+		if (Dungeon.sokobanLevel(Dungeon.depth)) {
+			GLog.w(TXT_PREVENTING);
 			Invisibility.dispel();
 			return;
 		}
@@ -62,8 +62,8 @@ public class WandOfBlink extends Wand {
 		MagicMissile.whiteLight(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos,
 				callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
-		if (!Dungeon.sokobanLevel(Dungeon.depth)){
-		curUser.sprite.visible = false;
+		if (!Dungeon.sokobanLevel(Dungeon.depth)) {
+			curUser.sprite.visible = false;
 		}
 	}
 
@@ -85,6 +85,6 @@ public class WandOfBlink extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

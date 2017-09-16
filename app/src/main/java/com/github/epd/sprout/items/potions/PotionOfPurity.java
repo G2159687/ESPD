@@ -39,14 +39,14 @@ import com.watabou.utils.PathFinder;
 
 public class PotionOfPurity extends Potion {
 
-	private static final String TXT_FRESHNESS = Messages.get(PotionOfPurity.class,"freshness");
-	private static final String TXT_NO_SMELL = Messages.get(PotionOfPurity.class,"no_smell");
+	private static final String TXT_FRESHNESS = Messages.get(PotionOfPurity.class, "freshness");
+	private static final String TXT_NO_SMELL = Messages.get(PotionOfPurity.class, "no_smell");
 
 	private static final int DISTANCE = 5;
 
 	{
-		initials=9;
-		name = Messages.get(this,"name");
+		initials = 9;
+		name = Messages.get(this, "name");
 	}
 
 	@Override
@@ -57,10 +57,10 @@ public class PotionOfPurity extends Potion {
 
 		boolean procd = false;
 
-		Blob[] blobs = { Dungeon.level.blobs.get(ToxicGas.class),
+		Blob[] blobs = {Dungeon.level.blobs.get(ToxicGas.class),
 				Dungeon.level.blobs.get(ParalyticGas.class),
 				Dungeon.level.blobs.get(ConfusionGas.class),
-				Dungeon.level.blobs.get(StenchGas.class) ,
+				Dungeon.level.blobs.get(StenchGas.class),
 				Dungeon.level.blobs.get(VenomGas.class)};
 
 		for (int j = 0; j < blobs.length; j++) {
@@ -126,7 +126,7 @@ public class PotionOfPurity extends Potion {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

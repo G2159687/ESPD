@@ -70,7 +70,7 @@ public class MagicMissile extends Emitter {
 	}
 
 	public static void blueLight(Group group, int from, int to,
-			Callback callback) {
+	                             Callback callback) {
 		MagicMissile missile = ((MagicMissile) group
 				.recycle(MagicMissile.class));
 		missile.reset(from, to, callback);
@@ -84,7 +84,7 @@ public class MagicMissile extends Emitter {
 		missile.size(4);
 		missile.pour(FlameParticle.FACTORY, 0.01f);
 	}
-	
+
 	public static void firesmall(Group group, int from, int to, Callback callback) {
 		MagicMissile missile = ((MagicMissile) group
 				.recycle(MagicMissile.class));
@@ -92,7 +92,7 @@ public class MagicMissile extends Emitter {
 		missile.size(2);
 		missile.pour(FlameParticle.FACTORY, 0.01f);
 	}
-	
+
 	public static void firelarge(Group group, int from, int to, Callback callback) {
 		MagicMissile missile = ((MagicMissile) group
 				.recycle(MagicMissile.class));
@@ -110,7 +110,7 @@ public class MagicMissile extends Emitter {
 	}
 
 	public static void purpleLight(Group group, int from, int to,
-			Callback callback) {
+	                               Callback callback) {
 		MagicMissile missile = ((MagicMissile) group
 				.recycle(MagicMissile.class));
 		missile.reset(from, to, callback);
@@ -119,7 +119,7 @@ public class MagicMissile extends Emitter {
 	}
 
 	public static void whiteLight(Group group, int from, int to,
-			Callback callback) {
+	                              Callback callback) {
 		MagicMissile missile = ((MagicMissile) group
 				.recycle(MagicMissile.class));
 		missile.reset(from, to, callback);
@@ -167,7 +167,7 @@ public class MagicMissile extends Emitter {
 	}
 
 	public static void coldLight(Group group, int from, int to,
-			Callback callback) {
+	                             Callback callback) {
 		MagicMissile missile = ((MagicMissile) group
 				.recycle(MagicMissile.class));
 		missile.reset(from, to, callback);

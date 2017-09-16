@@ -42,7 +42,7 @@ public class InfestBossLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		cleared=true;
+		cleared = true;
 
 		viewDistance = 6;
 	}
@@ -69,7 +69,7 @@ public class InfestBossLevel extends Level {
 	private static final String DOOR = "door";
 	private static final String ENTERED = "entered";
 	private static final String DROPPED = "droppped";
-	
+
 	protected static final float TIME_TO_RESPAWN = 20;
 
 	@Override
@@ -174,7 +174,9 @@ public class InfestBossLevel extends Level {
 			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
 				map[i] = Terrain.WALL_DECO;
 			}
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.PEDESTAL;}
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.PEDESTAL;
+			}
 		}
 
 	}
@@ -214,8 +216,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss.pos] || !outsideEntraceRoom(boss.pos)
 					|| Dungeon.visible[boss.pos]);
 			GameScene.add(boss);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss2 = new ShadowYog();
 			boss2.state = boss2.SLEEPING;
 			do {
@@ -223,8 +225,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss2.pos] || !outsideEntraceRoom(boss2.pos)
 					|| Dungeon.visible[boss2.pos]);
 			GameScene.add(boss2);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss3 = new ShadowYog();
 			boss3.state = boss3.SLEEPING;
 			do {
@@ -232,8 +234,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss3.pos] || !outsideEntraceRoom(boss3.pos)
 					|| Dungeon.visible[boss3.pos]);
 			GameScene.add(boss3);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss4 = new ShadowYog();
 			boss4.state = boss4.SLEEPING;
 			do {
@@ -241,8 +243,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss4.pos] || !outsideEntraceRoom(boss4.pos)
 					|| Dungeon.visible[boss4.pos]);
 			GameScene.add(boss4);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss5 = new ShadowYog();
 			boss5.state = boss5.SLEEPING;
 			do {
@@ -250,8 +252,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss5.pos] || !outsideEntraceRoom(boss5.pos)
 					|| Dungeon.visible[boss5.pos]);
 			GameScene.add(boss5);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss6 = new ShadowYog();
 			boss6.state = boss6.SLEEPING;
 			do {
@@ -259,8 +261,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss6.pos] || !outsideEntraceRoom(boss6.pos)
 					|| Dungeon.visible[boss6.pos]);
 			GameScene.add(boss6);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss7 = new ShadowYog();
 			boss7.state = boss7.SLEEPING;
 			do {
@@ -268,8 +270,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss7.pos] || !outsideEntraceRoom(boss7.pos)
 					|| Dungeon.visible[boss7.pos]);
 			GameScene.add(boss7);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss8 = new ShadowYog();
 			boss8.state = boss8.SLEEPING;
 			do {
@@ -277,8 +279,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss8.pos] || !outsideEntraceRoom(boss8.pos)
 					|| Dungeon.visible[boss8.pos]);
 			GameScene.add(boss8);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss9 = new ShadowYog();
 			boss9.state = boss9.SLEEPING;
 			do {
@@ -286,8 +288,8 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss9.pos] || !outsideEntraceRoom(boss9.pos)
 					|| Dungeon.visible[boss9.pos]);
 			GameScene.add(boss9);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
-			
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
+
 			ShadowYog boss10 = new ShadowYog();
 			boss10.state = boss10.SLEEPING;
 			do {
@@ -295,7 +297,7 @@ public class InfestBossLevel extends Level {
 			} while (!passable[boss10.pos] || !outsideEntraceRoom(boss10.pos)
 					|| Dungeon.visible[boss10.pos]);
 			GameScene.add(boss10);
-			GLog.n(Messages.get(InfestBossLevel.class,"yell"));
+			GLog.n(Messages.get(InfestBossLevel.class, "yell"));
 
 			//set(arenaDoor, Terrain.WALL);
 			GameScene.updateMap(arenaDoor);
@@ -307,7 +309,7 @@ public class InfestBossLevel extends Level {
 		}
 	}
 
-	
+
 	private boolean outsideEntraceRoom(int cell) {
 		int cx = cell % getWidth();
 		int cy = cell / getWidth();
@@ -318,30 +320,30 @@ public class InfestBossLevel extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.GRASS:
-			return Messages.get(CavesLevel.class,"grass_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CavesLevel.class,"high_grass_name");
-		case Terrain.WATER:
-			return Messages.get(CavesLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.GRASS:
+				return Messages.get(CavesLevel.class, "grass_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CavesLevel.class, "high_grass_name");
+			case Terrain.WATER:
+				return Messages.get(CavesLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return "";
-		case Terrain.EXIT:
-			return "";
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CavesLevel.class,"high_grass_desc");
-		case Terrain.WALL_DECO:
-			return Messages.get(CavesLevel.class,"wall_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return "";
+			case Terrain.EXIT:
+				return "";
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CavesLevel.class, "high_grass_desc");
+			case Terrain.WALL_DECO:
+				return Messages.get(CavesLevel.class, "wall_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
@@ -349,11 +351,12 @@ public class InfestBossLevel extends Level {
 	public void addVisuals(Scene scene) {
 		CavesLevel.addVisuals(this, scene);
 	}
+
 	@Override
 	public int nMobs() {
 		return 20;
 	}
-	
+
 	@Override
 	protected void createMobs() {
 		int nMobs = nMobs();

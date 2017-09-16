@@ -40,7 +40,7 @@ public class WndJournal extends Window {
 
 	private static final int ITEM_HEIGHT = 18;
 
-	private static final String TXT_TITLE = Messages.get(WndJournal.class,"journal");
+	private static final String TXT_TITLE = Messages.get(WndJournal.class, "journal");
 
 	private RenderedText txtTitle;
 	private ScrollPane list;

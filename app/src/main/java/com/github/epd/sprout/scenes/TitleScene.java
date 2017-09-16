@@ -55,8 +55,8 @@ public class TitleScene extends PixelScene {
 		super.create();
 		Badges.loadGlobal();
 
-		Music.INSTANCE.play( Assets.THEME, true );
-		Music.INSTANCE.volume( 1f );
+		Music.INSTANCE.play(Assets.THEME, true);
+		Music.INSTANCE.volume(1f);
 
 		uiCamera.visible = false;
 
@@ -64,12 +64,12 @@ public class TitleScene extends PixelScene {
 		int h = Camera.main.height;
 
 		Archs archs = new Archs();
-		archs.setSize( w, h );
-		add( archs );
+		archs.setSize(w, h);
+		add(archs);
 
-		Image title = BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON );
+		Image title = BannerSprites.get(BannerSprites.Type.PIXEL_DUNGEON);
 
-		float topRegion = Math.max(95f, h*0.45f);
+		float topRegion = Math.max(95f, h * 0.45f);
 
 		title.x = (w - title.width()) / 2f;
 		if (ShatteredPixelDungeon.landscape())
@@ -79,24 +79,26 @@ public class TitleScene extends PixelScene {
 
 		align(title);
 
-		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
+		Image signs = new Image(BannerSprites.get(BannerSprites.Type.PIXEL_DUNGEON_SIGNS)) {
 			private float time = 0;
+
 			@Override
 			public void update() {
 				super.update();
-				am = (float)Math.sin( -(time += Game.elapsed) );
+				am = (float) Math.sin(-(time += Game.elapsed));
 			}
+
 			@Override
 			public void draw() {
-				GLES20.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE );
+				GLES20.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 				super.draw();
 				GLES20.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 			}
 		};
-		signs.x = title.x + (title.width() - signs.width())/2f;
+		signs.x = title.x + (title.width() - signs.width()) / 2f;
 		signs.y = title.y;
 
-		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2)){
+		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2)) {
 			add(title);
 			add(signs);
 			placeTorch(title.x + 22, title.y + 46);
@@ -110,49 +112,49 @@ public class TitleScene extends PixelScene {
 		hint.setPos((topRegion - title.height()) / 2f, 16 + (topRegion - title.height() - 16) / 2f);
 		align(hint);
 
-		DashboardItem btnBadges = new DashboardItem( Messages.get(this, "badges"), 3 ) {
+		DashboardItem btnBadges = new DashboardItem(Messages.get(this, "badges"), 3) {
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( BadgesScene.class );
+				ShatteredPixelDungeon.switchNoFade(BadgesScene.class);
 			}
 		};
 		add(btnBadges);
 
-		DashboardItem btnAbout = new DashboardItem( Messages.get(this, "about"), 1 ) {
+		DashboardItem btnAbout = new DashboardItem(Messages.get(this, "about"), 1) {
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( AboutScene.class );
+				ShatteredPixelDungeon.switchNoFade(AboutScene.class);
 			}
 		};
-		add( btnAbout );
+		add(btnAbout);
 
-		DashboardItem btnPlay = new DashboardItem( Messages.get(this, "play"), 0 ) {
+		DashboardItem btnPlay = new DashboardItem(Messages.get(this, "play"), 0) {
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( StartScene.class );
+				ShatteredPixelDungeon.switchNoFade(StartScene.class);
 			}
 		};
 		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2))
-		add( btnPlay );
+			add(btnPlay);
 
-		DashboardItem btnRankings = new DashboardItem( Messages.get(this, "rankings"), 2 ) {
+		DashboardItem btnRankings = new DashboardItem(Messages.get(this, "rankings"), 2) {
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( RankingsScene.class );
+				ShatteredPixelDungeon.switchNoFade(RankingsScene.class);
 			}
 		};
-		add( btnRankings );
+		add(btnRankings);
 
 		if (ShatteredPixelDungeon.landscape()) {
-			btnRankings     .setPos( w / 2 - btnRankings.width(), topRegion );
-			btnBadges       .setPos( w / 2, topRegion );
-			btnPlay         .setPos( btnRankings.left() - btnPlay.width(), topRegion );
-			btnAbout        .setPos( btnBadges.right(), topRegion );
+			btnRankings.setPos(w / 2 - btnRankings.width(), topRegion);
+			btnBadges.setPos(w / 2, topRegion);
+			btnPlay.setPos(btnRankings.left() - btnPlay.width(), topRegion);
+			btnAbout.setPos(btnBadges.right(), topRegion);
 		} else {
-			btnPlay.setPos( w / 2 - btnPlay.width(), topRegion );
-			btnRankings.setPos( w / 2, btnPlay.top() );
-			btnBadges.setPos( w / 2 - btnBadges.width(), btnPlay.top() + DashboardItem.SIZE );
-			btnAbout.setPos( w / 2, btnBadges.top() );
+			btnPlay.setPos(w / 2 - btnPlay.width(), topRegion);
+			btnRankings.setPos(w / 2, btnPlay.top());
+			btnBadges.setPos(w / 2 - btnBadges.width(), btnPlay.top() + DashboardItem.SIZE);
+			btnAbout.setPos(w / 2, btnBadges.top());
 		}
 
 		BitmapText source = new BitmapText("PD v 1.7.5", font1x);
@@ -164,11 +166,11 @@ public class TitleScene extends PixelScene {
 
 		TouchArea changes = new TouchArea(source.x, source.y, source.width, source.height) {
 			@Override
-			protected void onClick (Touchscreen.Touch touch){
+			protected void onClick(Touchscreen.Touch touch) {
 				ShatteredPixelDungeon.switchNoFade(ChangesScene.class);
 			}
 		};
-		add (changes);
+		add(changes);
 
 		BitmapText version = new BitmapText("v " + Game.version + "", font1x);
 		version.measure();
@@ -179,11 +181,11 @@ public class TitleScene extends PixelScene {
 
 		TouchArea changes2 = new TouchArea(version.x, version.y, version.width, version.height) {
 			@Override
-			protected void onClick (Touchscreen.Touch touch){
+			protected void onClick(Touchscreen.Touch touch) {
 				ShatteredPixelDungeon.switchNoFade(ChangesScene.class);
 			}
 		};
-		add (changes2);
+		add(changes2);
 
 		PrefsButton btnPrefs = new PrefsButton();
 		btnPrefs.setPos(0, 0);
@@ -191,52 +193,52 @@ public class TitleScene extends PixelScene {
 
 		LanguageButton btnLang = new LanguageButton();
 		btnLang.setPos(16, 1);
-		add( btnLang );
+		add(btnLang);
 
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos(w - btnExit.width(), 0);
 		add(btnExit);
 
-        DonateButton btnDonate = new DonateButton();
-        btnDonate.setPos(w/2 - (btnDonate.width()/2), (5*h)/6);
-        add(btnDonate);
+		DonateButton btnDonate = new DonateButton();
+		btnDonate.setPos(w / 2 - (btnDonate.width() / 2), (5 * h) / 6);
+		add(btnDonate);
 
 		fadeIn();
 	}
 
-	private void placeTorch( float x, float y ) {
+	private void placeTorch(float x, float y) {
 		Fireball fb = new Fireball();
-		fb.setPos( x, y );
-		add( fb );
+		fb.setPos(x, y);
+		add(fb);
 	}
 
 	private static class DashboardItem extends Button {
 
-		public static final float SIZE	= 48;
+		public static final float SIZE = 48;
 
-		private static final int IMAGE_SIZE	= 32;
+		private static final int IMAGE_SIZE = 32;
 
 		private Image image;
 		private RenderedText label;
 
-		DashboardItem( String text, int index ) {
+		DashboardItem(String text, int index) {
 			super();
 
-			image.frame( image.texture.uvRect( index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE ) );
-			this.label.text( text );
+			image.frame(image.texture.uvRect(index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE));
+			this.label.text(text);
 
-			setSize( SIZE, SIZE );
+			setSize(SIZE, SIZE);
 		}
 
 		@Override
 		protected void createChildren() {
 			super.createChildren();
 
-			image = new Image( Assets.DASHBOARD );
-			add( image );
+			image = new Image(Assets.DASHBOARD);
+			add(image);
 
-			label = renderText( 9 );
-			add( label );
+			label = renderText(9);
+			add(label);
 		}
 
 		@Override
@@ -248,14 +250,14 @@ public class TitleScene extends PixelScene {
 			align(image);
 
 			label.x = x + (width - label.width()) / 2;
-			label.y = image.y + image.height() +2;
+			label.y = image.y + image.height() + 2;
 			align(label);
 		}
 
 		@Override
 		protected void onTouchDown() {
-			image.brightness( 1.5f );
-			Sample.INSTANCE.play( Assets.SND_CLICK, 1, 1, 0.8f );
+			image.brightness(1.5f);
+			Sample.INSTANCE.play(Assets.SND_CLICK, 1, 1, 0.8f);
 		}
 
 		@Override

@@ -29,18 +29,18 @@ import java.util.ArrayList;
 
 public class UpgradeBlobRed extends Item {
 
-	private static final String TXT_SELECT = Messages.get(UpgradeBlobRed.class,"prompt");
-	private static final String TXT_UPGRADED = Messages.get(UpgradeBlobRed.class,"upgraded");
+	private static final String TXT_SELECT = Messages.get(UpgradeBlobRed.class, "prompt");
+	private static final String TXT_UPGRADED = Messages.get(UpgradeBlobRed.class, "upgraded");
 
 	private static final float TIME_TO_INSCRIBE = 2;
-	
-	private static final int upgrades = 3;
-	
 
-	private static final String AC_INSCRIBE = Messages.get(UpgradeBlobRed.class,"ac");
+	private static final int upgrades = 3;
+
+
+	private static final String AC_INSCRIBE = Messages.get(UpgradeBlobRed.class, "ac");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.UPGRADEGOO_RED;
 
 		stackable = true;
@@ -86,18 +86,18 @@ public class UpgradeBlobRed extends Item {
 
 		GLog.p(TXT_UPGRADED, item.name());
 
-		if (item.reinforced){		
-		item.upgrade(upgrades);
+		if (item.reinforced) {
+			item.upgrade(upgrades);
 		} else {
-		item.upgrade(Math.min(upgrades, 15-item.level));
+			item.upgrade(Math.min(upgrades, 15 - item.level));
 		}
 
 		curUser.sprite.operate(curUser.pos);
 		curUser.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
-		
+
 		curUser.spend(TIME_TO_INSCRIBE);
 		curUser.busy();
-		
+
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class UpgradeBlobRed extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {

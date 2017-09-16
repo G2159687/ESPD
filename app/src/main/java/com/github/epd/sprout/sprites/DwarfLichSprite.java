@@ -63,9 +63,9 @@ public class DwarfLichSprite extends MobSprite {
 	public int blood() {
 		return 0xFF44FF22;
 	}
-	
+
 	public void boneExplode(int cell) {
-		
+
 		Camera.main.shake(3, 0.7f);
 		for (int n : PathFinder.NEIGHBOURS9) {
 			int c = cell + n;
@@ -76,27 +76,31 @@ public class DwarfLichSprite extends MobSprite {
 					CellEmitter.center(c).start(Speck.factory(Speck.ROCK), 0.07f, 10);
 				}
 
-				if(Random.Int(100)==42){RedWraith.spawnAt(c);}
-				
-				
+				if (Random.Int(100) == 42) {
+					RedWraith.spawnAt(c);
+				}
+
+
 				Char ch = Actor.findChar(c);
-				if (ch != null && ch==Dungeon.hero) {
+				if (ch != null && ch == Dungeon.hero) {
 					// those not at the center of the blast take damage less
 					// consistently.
 					int minDamage = c == cell ? Dungeon.depth + 5 : 1;
 					int maxDamage = 10 + Dungeon.depth * 3;
-					                    
-					
+
+
 					int dmg = Random.NormalIntRange(minDamage, maxDamage) - Random.Int(ch.dr());
-					
-					
+
+
 					if (dmg > 0) {
 						ch.damage(dmg, this);
-						if(Random.Int(15)==1){Buff.prolong(ch, Paralysis.class, 1);}
+						if (Random.Int(15) == 1) {
+							Buff.prolong(ch, Paralysis.class, 1);
+						}
 					}
-											
 
-					if (ch == Dungeon.hero && !ch.isAlive()){
+
+					if (ch == Dungeon.hero && !ch.isAlive()) {
 						Dungeon.fail(Utils.format(ResultDescriptions.ITEM,
 								"bone explosion"));
 					}
@@ -120,8 +124,6 @@ public class DwarfLichSprite extends MobSprite {
 
 		}
 	}
-	
-	
 
 
 }

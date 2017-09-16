@@ -45,11 +45,11 @@ import java.util.ArrayList;
 public class ClusterBomb extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.CLUSTER_BOMB;
 		defaultAction = AC_LIGHTTHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	public Fuse fuse;
@@ -57,7 +57,7 @@ public class ClusterBomb extends Item {
 
 	private static boolean lightingFuse = false;
 
-	private static final String AC_LIGHTTHROW = Messages.get(ClusterBomb.class,"ac");
+	private static final String AC_LIGHTTHROW = Messages.get(ClusterBomb.class, "ac");
 
 	@Override
 	public boolean isSimilar(Item item) {
@@ -96,7 +96,7 @@ public class ClusterBomb extends Item {
 			int newCell = candidates.isEmpty() ? cell : Random
 					.element(candidates);
 			Dungeon.level.drop(this, newCell).sprite.drop(cell);
-			
+
 		} else
 			super.onThrow(cell);
 	}
@@ -104,7 +104,7 @@ public class ClusterBomb extends Item {
 	@Override
 	public boolean doPickUp(Hero hero) {
 		if (fuse != null) {
-			GLog.w(Messages.get(this,"sniff"));
+			GLog.w(Messages.get(this, "sniff"));
 			fuse = null;
 		}
 		return super.doPickUp(hero);
@@ -163,8 +163,8 @@ public class ClusterBomb extends Item {
 
 		if (terrainAffected) {
 			Dungeon.observe();
-		}	
-		
+		}
+
 	}
 
 	@Override
@@ -180,11 +180,11 @@ public class ClusterBomb extends Item {
 	@Override
 	public Item random() {
 		switch (Random.Int(2)) {
-		case 0:
-		default:
-			return this;
-		case 1:
-			return new DoubleBomb();
+			case 0:
+			default:
+				return this;
+			case 1:
+				return new DoubleBomb();
 		}
 	}
 
@@ -200,7 +200,7 @@ public class ClusterBomb extends Item {
 
 	@Override
 	public String info() {
-		return fuse != null ? Messages.get(this,"desc1") : Messages.get(this,"desc2");
+		return fuse != null ? Messages.get(this, "desc1") : Messages.get(this, "desc2");
 	}
 
 	private static final String FUSE = "fuse";
@@ -247,12 +247,12 @@ public class ClusterBomb extends Item {
 					heap.items.remove(bomb);
 
 					bomb.explode(heap.pos);
-					
+
 					for (int n : PathFinder.NEIGHBOURS8DIST2) {
 						int c = heap.pos + n;
-						if (Random.Int(3)==0){
-						bomb.explode(c);
-						//spend(2f);
+						if (Random.Int(3) == 0) {
+							bomb.explode(c);
+							//spend(2f);
 						}
 					}
 
@@ -262,7 +262,7 @@ public class ClusterBomb extends Item {
 			}
 
 			bomb.fuse = null;
-			Actor.remove( this );
+			Actor.remove(this);
 			return true;
 		}
 	}

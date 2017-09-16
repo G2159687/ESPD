@@ -28,8 +28,8 @@ import java.util.ArrayList;
 
 abstract public class ClassArmor extends Armor {
 
-	private static final String TXT_LOW_HEALTH = Messages.get(ClassArmor.class,"low_hp");
-	private static final String TXT_NOT_EQUIPPED = Messages.get(ClassArmor.class,"not_equipped");
+	private static final String TXT_LOW_HEALTH = Messages.get(ClassArmor.class, "low_hp");
+	private static final String TXT_NOT_EQUIPPED = Messages.get(ClassArmor.class, "not_equipped");
 
 	{
 		levelKnown = true;
@@ -48,18 +48,18 @@ abstract public class ClassArmor extends Armor {
 		ClassArmor classArmor = null;
 
 		switch (owner.heroClass) {
-		case WARRIOR:
-			classArmor = new WarriorArmor();
-			break;
-		case ROGUE:
-			classArmor = new RogueArmor();
-			break;
-		case MAGE:
-			classArmor = new MageArmor();
-			break;
-		case HUNTRESS:
-			classArmor = new HuntressArmor();
-			break;
+			case WARRIOR:
+				classArmor = new WarriorArmor();
+				break;
+			case ROGUE:
+				classArmor = new RogueArmor();
+				break;
+			case MAGE:
+				classArmor = new MageArmor();
+				break;
+			case HUNTRESS:
+				classArmor = new HuntressArmor();
+				break;
 		}
 
 		classArmor.STR = armor.STR;
@@ -119,7 +119,7 @@ abstract public class ClassArmor extends Armor {
 
 	abstract public void doSpecial();
 
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return true;

@@ -36,32 +36,31 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-public class SpectralRat extends Mob  implements Callback {
-	
+public class SpectralRat extends Mob implements Callback {
+
 	private static final float TIME_TO_ZAP = 1f;
 
-	private static final String TXT_SHADOWBOLT_KILLED = Messages.get(SpectralRat.class,"kill");
+	private static final String TXT_SHADOWBOLT_KILLED = Messages.get(SpectralRat.class, "kill");
 
 	private static final float SPAWN_DELAY = 2f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SpectralRatSprite.class;
 		baseSpeed = 4f;
 
-		HP = HT = 80+(Dungeon.depth*Random.NormalIntRange(2, 5));
+		HP = HT = 80 + (Dungeon.depth * Random.NormalIntRange(2, 5));
 		defenseSkill = 2;
-		
+
 		loot = new Meat();
 		lootChance = 0.5f;
 
 	}
 
 
-	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(Dungeon.depth/2, Dungeon.depth);
+		return Random.NormalIntRange(Dungeon.depth / 2, Dungeon.depth);
 	}
 
 	@Override
@@ -73,10 +72,10 @@ public class SpectralRat extends Mob  implements Callback {
 	public int dr() {
 		return 10;
 	}
-	
+
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -134,9 +133,9 @@ public class SpectralRat extends Mob  implements Callback {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	public static void spawnAround(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
 			int cell = pos + n;
@@ -145,7 +144,7 @@ public class SpectralRat extends Mob  implements Callback {
 			}
 		}
 	}
-	
+
 	public static void spawnAroundChance(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
 			int cell = pos + n;
@@ -154,17 +153,17 @@ public class SpectralRat extends Mob  implements Callback {
 			}
 		}
 	}
-	
-	public static SpectralRat spawnAt(int pos) {
-		
-        SpectralRat b = new SpectralRat();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-	
+	public static SpectralRat spawnAt(int pos) {
+
+		SpectralRat b = new SpectralRat();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
 }

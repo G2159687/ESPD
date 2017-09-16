@@ -34,21 +34,21 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class DwarfLich extends Mob {
-	
+
 	private static final float SPAWN_DELAY = 2f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = DwarfLichSprite.class;
 
-		HP = HT = 100+(adj(0)*Random.NormalIntRange(7, 5));
-		defenseSkill = 24+adj(1);
-	
+		HP = HT = 100 + (adj(0) * Random.NormalIntRange(7, 5));
+		defenseSkill = 24 + adj(1);
+
 		EXP = 14;
-		
+
 		loot = new PotionOfHealing();
 		lootChance = 0.2f;
-		
+
 		lootOther = new Blackberry();
 		lootChanceOther = 0.333f;
 	}
@@ -60,18 +60,18 @@ public class DwarfLich extends Mob {
 
 	@Override
 	public int attackSkill(Char target) {
-		return 36+adj(1);
+		return 36 + adj(1);
 	}
 
 	@Override
 	public int dr() {
-		return 16+adj(0);
+		return 16 + adj(0);
 	}
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		Ballistica attack = new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE);
-		return !Level.adjacent( pos, enemy.pos ) && attack.collisionPos == enemy.pos;
+		Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+		return !Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -92,28 +92,27 @@ public class DwarfLich extends Mob {
 			}
 		}
 	}
-	
-	public static DwarfLich spawnAt(int pos) {
-		
-		DwarfLich d = new DwarfLich();  
-    	
-			d.pos = pos;
-			d.state = d.HUNTING;
-			GameScene.add(d, SPAWN_DELAY);
 
-			return d;
-     
-     }
-	
-	
-	
+	public static DwarfLich spawnAt(int pos) {
+
+		DwarfLich d = new DwarfLich();
+
+		d.pos = pos;
+		d.state = d.HUNTING;
+		GameScene.add(d, SPAWN_DELAY);
+
+		return d;
+
+	}
+
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Leech.class);
 		RESISTANCES.add(Poison.class);

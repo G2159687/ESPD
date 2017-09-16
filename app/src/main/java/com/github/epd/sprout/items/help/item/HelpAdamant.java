@@ -6,15 +6,15 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 //This is for help only, not a real item!!!
 
-public class HelpAdamant extends Item{
+public class HelpAdamant extends Item {
 
-    {
-        name = Messages.get(this,"name");
-        image = ItemSpriteSheet.ARMOR_ADAMANT;
-    }
+	{
+		name = Messages.get(this, "name");
+		image = ItemSpriteSheet.ARMOR_ADAMANT;
+	}
 
-    @Override
-    public String info() {
-        return Messages.get(this,"desc") + Messages.get(this,"desc2");
-    }
+	@Override
+	public String info() {
+		return Messages.get(this, "desc") + Messages.get(this, "desc2");
+	}
 }

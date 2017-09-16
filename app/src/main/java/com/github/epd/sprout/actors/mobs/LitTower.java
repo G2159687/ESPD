@@ -43,28 +43,29 @@ import com.watabou.utils.Random;
 import java.util.HashSet;
 
 public class LitTower extends Mob implements Callback {
-	
+
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(LitTower.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(LitTower.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = LitTowerSprite.class;
 
 		HP = HT = 600;
 		defenseSkill = 1000;
 
 		EXP = 25;
-		
+
 		hostile = false;
 		state = PASSIVE;
-		
+
 		loot = new RedDewdrop();
 		lootChance = 1f;
-		
+
+		properties.add(Property.IMMOVABLE);
 	}
-	
+
 	@Override
 	public void beckon(int cell) {
 		// Do nothing
@@ -75,7 +76,7 @@ public class LitTower extends Mob implements Callback {
 		return 0;
 	}
 
-		
+
 	@Override
 	public int attackSkill(Char target) {
 		return 100;
@@ -85,15 +86,15 @@ public class LitTower extends Mob implements Callback {
 	public int dr() {
 		return 1000;
 	}
-	
+
 
 	@Override
 	public void damage(int dmg, Object src) {
 	}
-	
+
 	@Override
 	protected boolean act() {
-		if(Level.distance(pos, Dungeon.hero.pos)<5 && Dungeon.hero.isAlive() && checkOtiluke()){
+		if (Level.distance(pos, Dungeon.hero.pos) < 5 && Dungeon.hero.isAlive() && checkOtiluke()) {
 			zapAll(Dungeon.hero.pos);
 		}
 		throwItem();
@@ -110,41 +111,41 @@ public class LitTower extends Mob implements Callback {
 			Dungeon.level.drop(heap.pickUp(), n).sprite.drop(pos);
 		}
 	}
-	
+
 	@Override
 	public void call() {
 		next();
 	}
-	
-	protected boolean checkOtiluke(){
-      boolean check = false;
-		
+
+	protected boolean checkOtiluke() {
+		boolean check = false;
+
 		for (Mob mob : Dungeon.level.mobs) {
 			if (mob instanceof Otiluke) {
-			check=true;	
+				check = true;
 			}
 		}
 		return check;
 	}
-	
 
-	protected boolean heroNear (){
-		boolean check=false;
-		for (int i : PathFinder.NEIGHBOURS9DIST2){
-			int cell=pos+i;
-			if (Actor.findChar(cell) != null	
-				&& (Actor.findChar(cell) instanceof Hero)
-				){
-				check=true;
-			}			
-		}		
+
+	protected boolean heroNear() {
+		boolean check = false;
+		for (int i : PathFinder.NEIGHBOURS9DIST2) {
+			int cell = pos + i;
+			if (Actor.findChar(cell) != null
+					&& (Actor.findChar(cell) instanceof Hero)
+					) {
+				check = true;
+			}
+		}
 		return check;
 	}
-	
-	
+
+
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -153,42 +154,43 @@ public class LitTower extends Mob implements Callback {
 	}
 
 
-	public void zapAll(int loc){
-		
-		yell(Messages.get(this,"zap"));
-		
-		Char hero=Dungeon.hero;
-				
-	    int mobDmg=Random.Int(300, 600);
-		
-		
-		 boolean visible = Level.fieldOfView[pos] || Level.fieldOfView[loc];
-			
-			
-			  if (visible) {
-				sprite.zap(loc);
-			  }
-			
-			  
-			  hero.damage(mobDmg, LightningTrap.LIGHTNING);
+	public void zapAll(int loc) {
 
-			  hero.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
-			  hero.sprite.flash();
-			
-			  Camera.main.shake(2, 0.3f);			
+		yell(Messages.get(this, "zap"));
+
+		Char hero = Dungeon.hero;
+
+		int mobDmg = Random.Int(300, 600);
+
+
+		boolean visible = Level.fieldOfView[pos] || Level.fieldOfView[loc];
+
+
+		if (visible) {
+			sprite.zap(loc);
+		}
+
+
+		hero.damage(mobDmg, LightningTrap.LIGHTNING);
+
+		hero.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
+		hero.sprite.flash();
+
+		Camera.main.shake(2, 0.3f);
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	@Override
 	public void add(Buff buff) {
 	}
-	
+
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 		RESISTANCES.add(ScrollOfPsionicBlast.class);
@@ -201,6 +203,7 @@ public class LitTower extends Mob implements Callback {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(ToxicGas.class);
 		IMMUNITIES.add(Terror.class);
@@ -212,5 +215,5 @@ public class LitTower extends Mob implements Callback {
 		return IMMUNITIES;
 	}
 
-	
+
 }

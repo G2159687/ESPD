@@ -32,11 +32,11 @@ import com.watabou.utils.Random;
 
 public class Blindweed extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Blindweed.class,"desc");
+	private static final String TXT_DESC = Messages.get(Blindweed.class, "desc");
 
 	{
 		image = 3;
-		plantName = Messages.get(Messages.get(this,"name"));
+		plantName = Messages.get(Messages.get(this, "name"));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Blindweed extends Plant {
 			Buff.prolong(ch, Blindness.class, len);
 			Buff.prolong(ch, Cripple.class, len);
 			if (ch instanceof Mob) {
-				if (((Mob)ch).state == ((Mob)ch).HUNTING) ((Mob)ch).state = ((Mob)ch).WANDERING;
+				if (((Mob) ch).state == ((Mob) ch).HUNTING) ((Mob) ch).state = ((Mob) ch).WANDERING;
 				((Mob) ch).beckon(Dungeon.level.randomDestination());
 			}
 		}
@@ -65,9 +65,9 @@ public class Blindweed extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Blindweed.class,"name");
+			plantName = Messages.get(Blindweed.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_BLINDWEED;
 
 			plantClass = Blindweed.class;
@@ -76,6 +76,7 @@ public class Blindweed extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 }

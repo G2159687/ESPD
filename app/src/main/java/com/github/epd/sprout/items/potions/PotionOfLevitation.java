@@ -33,11 +33,11 @@ public class PotionOfLevitation extends Potion {
 
 	{
 		initials = 4;
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
-	private static final String TXT_PREVENTING = Messages.get(PotionOfLevitation.class,"prevent");
-	
+	private static final String TXT_PREVENTING = Messages.get(PotionOfLevitation.class, "prevent");
+
 	@Override
 	public void shatter(int cell) {
 
@@ -55,26 +55,26 @@ public class PotionOfLevitation extends Potion {
 	public void apply(Hero hero) {
 		setKnown();
 		Buff.affect(hero, Levitation.class, Levitation.DURATION);
-		GLog.i(Messages.get(this,"float"));
+		GLog.i(Messages.get(this, "float"));
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 	@Override
 	public void execute(final Hero hero, String action) {
 		if (action.equals(AC_DRINK)) {
-			
-		  if (Dungeon.depth>50) {
+
+			if (Dungeon.depth > 50) {
 				GLog.w(TXT_PREVENTING);
-				return;		
-		   } 
+				return;
+			}
 		}
-		
-	   super.execute(hero, action);
-		 	
+
+		super.execute(hero, action);
+
 	}
 
 	@Override

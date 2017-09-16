@@ -18,8 +18,6 @@
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Badges;
-import com.github.epd.sprout.Badges.Badge;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Blob;
@@ -31,8 +29,8 @@ import com.github.epd.sprout.actors.buffs.Roots;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
-import com.github.epd.sprout.items.ActiveMrDestructo;
 import com.github.epd.sprout.items.Egg;
+import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban1;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
@@ -56,20 +54,17 @@ import java.util.HashSet;
 
 public class Goo extends Mob {
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		HP = HT = 200; //200
 		EXP = 10;
 		defenseSkill = 12;
 		spriteClass = GooSprite.class;
 
-		loot = new ActiveMrDestructo();
+		loot = new LloydsBeacon().identify();
 		lootChance = 0.5f;
-		
-		lootOther = Dungeon.getMonth() == 9 ? new Egg() : new Chainsaw().enchantBuzz();
-		lootChanceOther = 0.05f;
-		
-		lootThird = Dungeon.getMonth() != 9 ? new Chainsaw().enchantBuzz() : new Egg();
-		lootChanceThird = 1f;
+
+		lootOther = new Chainsaw().enchantBuzz().identify();
+		lootChanceOther = 1f;
 	}
 
 	private int pumpedUp = 0;
@@ -105,14 +100,14 @@ public class Goo extends Mob {
 	public boolean act() {
 
 		if (Level.water[pos] && HP < HT) {
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			HP++;
 		}
 
 		return super.act();
 	}
 
-	
+
 	@Override
 	protected boolean canAttack(Char enemy) {
 		return (pumpedUp > 0) ? distance(enemy) <= 2 : super.canAttack(enemy);
@@ -128,7 +123,7 @@ public class Goo extends Mob {
 		if (pumpedUp > 0) {
 			Camera.main.shake(3, 0.2f);
 		}
-				
+
 		return damage;
 	}
 
@@ -177,7 +172,7 @@ public class Goo extends Mob {
 
 			if (Dungeon.visible[pos]) {
 				sprite.showStatus(CharSprite.NEGATIVE, "!!!");
-				GLog.n(Messages.get(this,"atk"));
+				GLog.n(Messages.get(this, "atk"));
 			}
 
 			spend(attackDelay());
@@ -205,61 +200,44 @@ public class Goo extends Mob {
 		super.die(cause);
 
 		for (Mob mob : Dungeon.level.mobs) {
-			
-			if (mob instanceof Goo || mob instanceof PoisonGoo){
-				   goosAlive++;
-				 }
-			
+
+			if (mob instanceof Goo || mob instanceof PoisonGoo) {
+				goosAlive++;
 			}
-			
-			 if(goosAlive==0){
-			
+
+		}
+
+		if (goosAlive == 0) {
+
 			((SewerBossLevel) Dungeon.level).unseal();
 
 			GameScene.bossSlain();
-			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();	
-			Badges.validateBossSlain();
-		}
-			 
-		 Badges.Badge badgeToCheck = null;
-				switch (Dungeon.hero.heroClass) {
-				case WARRIOR:
-					badgeToCheck = Badge.MASTERY_WARRIOR;
-					break;
-				case MAGE:
-					badgeToCheck = Badge.MASTERY_MAGE;
-					break;
-				case ROGUE:
-					badgeToCheck = Badge.MASTERY_ROGUE;
-					break;
-				case HUNTRESS:
-					badgeToCheck = Badge.MASTERY_HUNTRESS;
-					break;
-		}
-				
-	
-		Dungeon.level.drop(new Sokoban1(), pos).sprite.drop();
-		
+			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
 
-		yell(Messages.get(this,"die"));
+		}
+
+		Dungeon.level.drop(new Sokoban1(), pos).sprite.drop();
+
+
+		yell(Messages.get(this, "die"));
 	}
-  
+
 	protected boolean spawnedMini = false;
-	
+
 	@Override
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice"));
-		if (!spawnedMini){
-	    PoisonGoo.spawnAround(pos);
-	    spawnedMini = true;
+		yell(Messages.get(this, "notice"));
+		if (!spawnedMini) {
+			PoisonGoo.spawnAround(pos);
+			spawnedMini = true;
 		}
-	  }
+	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final String PUMPEDUP = "pumpedup";
@@ -281,6 +259,7 @@ public class Goo extends Mob {
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Death.class);
@@ -291,6 +270,7 @@ public class Goo extends Mob {
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;
 	}
+
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 
 	static {
@@ -301,5 +281,5 @@ public class Goo extends Mob {
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
 	}
-	
-	}
+
+}

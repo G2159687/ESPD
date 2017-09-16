@@ -41,12 +41,12 @@ public class HermitCrab extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(HermitCrab.class,"kill");
-	private static final String TXT_SHELL_ABSORB = Messages.get(HermitCrab.class,"absorb");
-	private static final String TXT_SHELL_CHARGE = Messages.get(HermitCrab.class,"charge");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(HermitCrab.class, "kill");
+	private static final String TXT_SHELL_ABSORB = Messages.get(HermitCrab.class, "absorb");
+	private static final String TXT_SHELL_CHARGE = Messages.get(HermitCrab.class, "charge");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = HermitCrabSprite.class;
 
 		HP = HT = 20;
@@ -56,8 +56,8 @@ public class HermitCrab extends Mob implements Callback {
 
 		loot = Generator.Category.BERRY;
 		lootChance = 0.33f;
-		
-	
+
+
 	}
 
 	@Override
@@ -77,25 +77,25 @@ public class HermitCrab extends Mob implements Callback {
 
 	@Override
 	public void damage(int dmg, Object src) {
-		
-		if (dmg>HT/4 && src != LightningTrap.LIGHTNING){
-            for (Mob mob : Dungeon.level.mobs) {
-			if (mob instanceof Shell && mob.isAlive()){
-				Dungeon.shellCharge+=dmg;
-				GLog.n(TXT_SHELL_ABSORB);
-				GLog.n(TXT_SHELL_CHARGE, dmg);
-				dmg=1;
-				
-			    }			
+
+		if (dmg > HT / 4 && src != LightningTrap.LIGHTNING) {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob instanceof Shell && mob.isAlive()) {
+					Dungeon.shellCharge += dmg;
+					GLog.n(TXT_SHELL_ABSORB);
+					GLog.n(TXT_SHELL_CHARGE, dmg);
+					dmg = 1;
+
+				}
 			}
-		}			
+		}
 		super.damage(dmg, src);
 	}
 
-	
+
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -148,22 +148,23 @@ public class HermitCrab extends Mob implements Callback {
 	public void call() {
 		next();
 	}
-	
+
 	@Override
 	public void die(Object cause) {
-		super.die(cause);  
-		if(Random.Int(1)==0){
-		Dungeon.level.drop(new GoldenSkeletonKey(0), pos).sprite.drop();	
+		super.die(cause);
+		if (Random.Int(1) == 0) {
+			Dungeon.level.drop(new GoldenSkeletonKey(0), pos).sprite.drop();
 		}
 	}
-	
+
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}

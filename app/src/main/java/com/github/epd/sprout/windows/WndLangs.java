@@ -46,7 +46,7 @@ public class WndLangs extends Window {
 	private int BTN_WIDTH = 50;
 	private int BTN_HEIGHT = 14;
 
-	public WndLangs(){
+	public WndLangs() {
 		super();
 
 		final ArrayList<Languages> langs = new ArrayList<>(Arrays.asList(Languages.values()));
@@ -60,9 +60,9 @@ public class WndLangs extends Window {
 
 		//language buttons layout
 		int y = 0;
-		for (int i = 0; i < langs.size(); i++){
+		for (int i = 0; i < langs.size(); i++) {
 			final int langIndex = i;
-			NewRedButton btn = new NewRedButton(Messages.titleCase(langs.get(i).nativeName())){
+			NewRedButton btn = new NewRedButton(Messages.titleCase(langs.get(i).nativeName())) {
 				@Override
 				protected void onClick() {
 					super.onClick();
@@ -73,6 +73,7 @@ public class WndLangs extends Window {
 							ShatteredPixelDungeon.language(langs.get(langIndex));
 							RenderedText.clearCache();
 						}
+
 						@Override
 						public void afterCreate() {
 							Game.scene().add(new WndLangs());
@@ -80,7 +81,7 @@ public class WndLangs extends Window {
 					});
 				}
 			};
-			if (currLang == langs.get(i)){
+			if (currLang == langs.get(i)) {
 				btn.textColor(TITLE_COLOR);
 			} else {
 				switch (langs.get(i).status()) {
@@ -93,8 +94,8 @@ public class WndLangs extends Window {
 				}
 			}
 			btn.setSize(BTN_WIDTH, BTN_HEIGHT);
-			if (ShatteredPixelDungeon.landscape() && i % 2 == 1){
-				btn.setPos(BTN_WIDTH+1, y-15);
+			if (ShatteredPixelDungeon.landscape() && i % 2 == 1) {
+				btn.setPos(BTN_WIDTH + 1, y - 15);
 			} else {
 				btn.setPos(0, y);
 				y += 15;
@@ -102,7 +103,7 @@ public class WndLangs extends Window {
 
 			add(btn);
 		}
-		y = Math.max(MIN_HEIGHT, y+1);
+		y = Math.max(MIN_HEIGHT, y + 1);
 		resize(ShatteredPixelDungeon.landscape() ? WIDTH_L : WIDTH_P, y);
 
 		int textLeft = width - 65;
@@ -113,14 +114,14 @@ public class WndLangs extends Window {
 		add(separator);
 
 		//language info layout.
-		RenderedText title = PixelScene.renderText( Messages.titleCase(currLang.nativeName()) , 9 );
-		title.x = textLeft + (textWidth - title.width())/2f;
+		RenderedText title = PixelScene.renderText(Messages.titleCase(currLang.nativeName()), 9);
+		title.x = textLeft + (textWidth - title.width()) / 2f;
 		title.y = 0;
 		title.hardlight(TITLE_COLOR);
 		PixelScene.align(title);
 		add(title);
 
-		if (currLang == Languages.ENGLISH){
+		if (currLang == Languages.ENGLISH) {
 
 			RenderedTextMultiline info = PixelScene.renderMultiline(6);
 			info.text("This is the source language, written by the developer.", width - textLeft);
@@ -144,28 +145,30 @@ public class WndLangs extends Window {
 			info.setPos(textLeft, title.height() + 2);
 			add(info);
 
-			NewRedButton creditsBtn = new NewRedButton(Messages.titleCase(Messages.get(this, "credits"))){
+			NewRedButton creditsBtn = new NewRedButton(Messages.titleCase(Messages.get(this, "credits"))) {
 				@Override
 				protected void onClick() {
 					super.onClick();
 					String creds = "";
 					String[] reviewers = currLang.reviewers();
 					String[] translators = currLang.translators();
-					if (reviewers.length > 0){
+					if (reviewers.length > 0) {
 						creds += "_" + Messages.titleCase(Messages.get(WndLangs.class, "reviewers")) + "_\n";
-						for (String reviewer : reviewers){
+						for (String reviewer : reviewers) {
 							creds += "-" + reviewer + "\n";
 						}
 						creds += "\n";
 					}
 
-					if (reviewers.length > 0 || translators.length > 0){
+					if (reviewers.length > 0 || translators.length > 0) {
 						creds += "_" + Messages.titleCase(Messages.get(WndLangs.class, "translators")) + "_";
 						//reviewers are also translators
-						for (String reviewer : reviewers){
-							if (ShatteredPixelDungeon.language()!=Languages.CHINESE) {creds += "\n-" + reviewer;}
+						for (String reviewer : reviewers) {
+							if (ShatteredPixelDungeon.language() != Languages.CHINESE) {
+								creds += "\n-" + reviewer;
+							}
 						}
-						for (String translator : translators){
+						for (String translator : translators) {
 							creds += "\n-" + translator;
 						}
 					}
@@ -173,9 +176,9 @@ public class WndLangs extends Window {
 					Window credits = new Window();
 
 					RenderedTextMultiline title = PixelScene.renderMultiline(9);
-					title.text(Messages.titleCase(Messages.get(WndLangs.class, "credits")) , 65);
+					title.text(Messages.titleCase(Messages.get(WndLangs.class, "credits")), 65);
 					title.hardlight(SHPX_COLOR);
-					title.setPos((65 - title.width())/2, 0);
+					title.setPos((65 - title.width()) / 2, 0);
 					credits.add(title);
 
 					RenderedTextMultiline text = PixelScene.renderMultiline(6);
@@ -183,7 +186,7 @@ public class WndLangs extends Window {
 					text.setPos(0, title.bottom() + 2);
 					credits.add(text);
 
-					credits.resize(80, (int)text.bottom());
+					credits.resize(80, (int) text.bottom());
 					parent.add(credits);
 				}
 			};

@@ -30,10 +30,10 @@ import com.watabou.utils.Callback;
 
 public class ShadowDragonSprite extends MobSprite {
 
-	private HealthBar hpBar;
-	
+	public HealthBar hpBar;
+
 	//Frames 1-4 are idle, 5-8 are moving, 9-12 are attack and the last are for death RBVG
-	
+
 	private int[] points = new int[2];
 
 	public ShadowDragonSprite() {
@@ -53,7 +53,7 @@ public class ShadowDragonSprite extends MobSprite {
 		attack.frames(frames, 72, 73, 74, 75);
 
 		zap = attack.clone();
-		
+
 		die = new Animation(8, false);
 		die.frames(frames, 76, 77, 78, 79);
 
@@ -78,23 +78,32 @@ public class ShadowDragonSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof ShadowDragon){
+		if (ch instanceof ShadowDragon) {
 			final Char finalCH = ch;
-			hpBar = new HealthBar(){
+			hpBar = new HealthBar() {
 				@Override
 				public synchronized void update() {
 					super.update();
-					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y-3, finalCH.sprite.width, hpBar.height());
-					hpBar.level( finalCH );
+					hpBar.setRect(finalCH.sprite.x, finalCH.sprite.y - 3, finalCH.sprite.width, hpBar.height());
+					hpBar.level(finalCH);
 					visible = finalCH.sprite.visible;
 				}
 			};
 			((GameScene) ShatteredPixelDungeon.scene()).ghostHP.add(hpBar);
 		}
 	}
-	
+
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;
+	}
+
+	@Override
+	public void die() {
+		super.die();
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
 	}
 }

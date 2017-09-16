@@ -23,20 +23,20 @@ import com.github.epd.sprout.sprites.ShieldedSprite;
 public class Shielded extends Brute {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ShieldedSprite.class;
 
-		defenseSkill = 20+adj(0);
+		defenseSkill = 20 + adj(0);
 	}
 
 	@Override
 	public int dr() {
-		return 20+adj(0);
+		return 20 + adj(0);
 	}
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override

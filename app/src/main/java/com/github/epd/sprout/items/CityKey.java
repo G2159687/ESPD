@@ -27,7 +27,6 @@ import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.food.GoldenNut;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSprite;
@@ -41,26 +40,26 @@ import com.watabou.utils.PathFinder;
 import java.util.ArrayList;
 
 public class CityKey extends Item {
-	
-	private static final String TXT_PREVENTING = Messages.get(CavesKey.class,"prevent");
-		
-	
+
+	private static final String TXT_PREVENTING = Messages.get(CavesKey.class, "prevent");
+
+
 	public static final float TIME_TO_USE = 1;
 
-	public static final String AC_PORT = Messages.get(CavesKey.class,"ac");
+	public static final String AC_PORT = Messages.get(CavesKey.class, "ac");
 
 	private int specialLevel = 30;
 	private int returnDepth = -1;
 	private int returnPos;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ANCIENTKEY;
 
 		stackable = false;
 		unique = true;
 	}
-	
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 
@@ -84,7 +83,7 @@ public class CityKey extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		actions.add(AC_PORT);
-		
+
 		return actions;
 	}
 
@@ -98,13 +97,13 @@ public class CityKey extends Item {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			
-			if (Dungeon.depth>25 && Dungeon.depth!=specialLevel) {
+
+			if (Dungeon.depth > 25 && Dungeon.depth != specialLevel) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-			if (Dungeon.depth==1) {
+			if (Dungeon.depth == 1) {
 				hero.spend(TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
 				return;
@@ -114,95 +113,96 @@ public class CityKey extends Item {
 		}
 
 		if (action == AC_PORT) {
-			
-			 hero.spend(TIME_TO_USE);
 
-				Buff buff = Dungeon.hero
-						.buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null)
-					buff.detach();
+			hero.spend(TIME_TO_USE);
 
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
-					if (mob instanceof DriedRose.GhostHero)
-						mob.destroy();
-              if (Dungeon.depth<25 && !Dungeon.bossLevel()){
-            	
-            	returnDepth = Dungeon.depth;
-       			returnPos = hero.pos;
+			Buff buff = Dungeon.hero
+					.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null)
+				buff.detach();
+
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
+				if (mob instanceof DriedRose.GhostHero)
+					mob.destroy();
+			if (Dungeon.depth < 25 && !Dungeon.bossLevel()) {
+
+				returnDepth = Dungeon.depth;
+				returnPos = hero.pos;
 				InterlevelScene.mode = InterlevelScene.Mode.PORTCITY;
 			} else {
 				checkPetPort();
-				 removePet();
+				removePet();
 				this.doDrop(hero);
-				hero.invisible=0;
-				
-				if (Statistics.goldThievesKilled>99 && Statistics.skeletonsKilled>99 
-						&& Statistics.albinoPiranhasKilled>99 && Statistics.archersKilled>99){
+				hero.invisible = 0;
+
+				if (Statistics.goldThievesKilled > 99 && Statistics.skeletonsKilled > 99
+						&& Statistics.albinoPiranhasKilled > 99 && Statistics.archersKilled > 99) {
 					GoldenNut nut = new GoldenNut();
-					nut.doPickUp(Dungeon.hero);					
+					nut.doPickUp(Dungeon.hero);
 				}
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
+				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 			}
-               
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-					
+
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+
 		} else {
 
 			super.execute(hero, action);
 
 		}
 	}
-	
 
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		  //GLog.i("I see pet");
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			//GLog.i("I see pet");
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
-	private void removePet(){
-		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow){
-		 for (Mob mob : Dungeon.level.mobs) {
-				if(mob instanceof PET) {				 
-					Dungeon.hero.haspet=false;
+
+	private void removePet() {
+		if (Dungeon.hero.haspet && !Dungeon.hero.petfollow) {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob instanceof PET) {
+					Dungeon.hero.haspet = false;
 					Dungeon.hero.petCount++;
-					mob.destroy();				
+					mob.destroy();
 				}
-			  }
+			}
 		}
 	}
-	
-	
+
+
 	public void reset() {
 		returnDepth = -1;
 	}
@@ -219,7 +219,7 @@ public class CityKey extends Item {
 
 
 	private static ItemSprite.Glowing YELLOW = new ItemSprite.Glowing(0xCCAA44);
-	
+
 	@Override
 	public Glowing glowing() {
 		return YELLOW;
@@ -227,6 +227,6 @@ public class CityKey extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

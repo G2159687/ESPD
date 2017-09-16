@@ -54,6 +54,6 @@ public class ParalyticGas extends Blob {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

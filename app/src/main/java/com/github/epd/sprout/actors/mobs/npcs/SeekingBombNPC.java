@@ -31,95 +31,95 @@ import java.util.HashSet;
 
 public class SeekingBombNPC extends NPC {
 
-    {
-        name = Messages.get(SeekingBombNPC.class, "name");
-        spriteClass = SeekingBombSprite.class;
+	{
+		name = Messages.get(SeekingBombNPC.class, "name");
+		spriteClass = SeekingBombSprite.class;
 
-        state = HUNTING;
+		state = HUNTING;
 
-    }
+	}
 
-    private static final float SPAWN_DELAY = 0.1f;
+	private static final float SPAWN_DELAY = 0.1f;
 
-    @Override
-    public int attackSkill(Char target) {
-        return 99;
-    }
-
-
-    @Override
-    public int attackProc(Char enemy, int damage) {
-        int dmg = super.attackProc(enemy, damage);
-
-        Bomb bomb = new Bomb();
-        bomb.explode(pos);
-        yell(Messages.get(SeekingBombNPC.class, "yell"));
+	@Override
+	public int attackSkill(Char target) {
+		return 99;
+	}
 
 
-        destroy();
-        sprite.die();
+	@Override
+	public int attackProc(Char enemy, int damage) {
+		int dmg = super.attackProc(enemy, damage);
 
-        return dmg;
-    }
-
-    @Override
-    protected Char chooseEnemy() {
-
-        if (enemy == null || !enemy.isAlive()) {
-            HashSet<Mob> enemies = new HashSet<Mob>();
-            for (Mob mob : Dungeon.level.mobs) {
-                if (mob.hostile && Level.fieldOfView[mob.pos]) {
-                    enemies.add(mob);
-                }
-            }
-
-            enemy = enemies.size() > 0 ? Random.element(enemies) : null;
-        }
-
-        return enemy;
-    }
-
-    @Override
-    public String description() {
-        return Messages.get(SeekingBombNPC.class, "desc");
-    }
+		Bomb bomb = new Bomb();
+		bomb.explode(pos);
+		yell(Messages.get(SeekingBombNPC.class, "yell"));
 
 
-    @Override
-    public boolean interact() {
+		destroy();
+		sprite.die();
 
-        int curPos = pos;
+		return dmg;
+	}
 
-        moveSprite(pos, Dungeon.hero.pos);
-        move(Dungeon.hero.pos);
+	@Override
+	protected Char chooseEnemy() {
 
-        Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-        Dungeon.hero.move(curPos);
+		if (enemy == null || !enemy.isAlive()) {
+			HashSet<Mob> enemies = new HashSet<Mob>();
+			for (Mob mob : Dungeon.level.mobs) {
+				if (mob.hostile && Level.fieldOfView[mob.pos]) {
+					enemies.add(mob);
+				}
+			}
 
-        Dungeon.hero.spend(1 / Dungeon.hero.speed());
-        Dungeon.hero.busy();
+			enemy = enemies.size() > 0 ? Random.element(enemies) : null;
+		}
 
-        return true;
-    }
+		return enemy;
+	}
 
-    public static SeekingBombNPC spawnAt(int pos) {
+	@Override
+	public String description() {
+		return Messages.get(SeekingBombNPC.class, "desc");
+	}
 
-        SeekingBombNPC b = new SeekingBombNPC();
 
-        b.pos = pos;
-        b.state = b.HUNTING;
-        GameScene.add(b, SPAWN_DELAY);
+	@Override
+	public boolean interact() {
 
-        return b;
+		int curPos = pos;
 
-    }
+		moveSprite(pos, Dungeon.hero.pos);
+		move(Dungeon.hero.pos);
 
-    @Override
-    public void die(Object cause) {
-        Bomb bomb = new Bomb();
-        bomb.explode(pos);
+		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+		Dungeon.hero.move(curPos);
 
-        super.die(cause);
-    }
+		Dungeon.hero.spend(1 / Dungeon.hero.speed());
+		Dungeon.hero.busy();
+
+		return true;
+	}
+
+	public static SeekingBombNPC spawnAt(int pos) {
+
+		SeekingBombNPC b = new SeekingBombNPC();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
+	@Override
+	public void die(Object cause) {
+		Bomb bomb = new Bomb();
+		bomb.explode(pos);
+
+		super.die(cause);
+	}
 
 }

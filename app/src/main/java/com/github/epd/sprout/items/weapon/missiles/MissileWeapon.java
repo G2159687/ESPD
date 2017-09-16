@@ -36,16 +36,16 @@ import java.util.ArrayList;
 
 public class MissileWeapon extends Weapon {
 
-	private static final String TXT_MISSILES = Messages.get(MissileWeapon.class,"missiles");
-	private static final String TXT_YES = Messages.get(MissileWeapon.class,"yes");
-	private static final String TXT_NO = Messages.get(MissileWeapon.class,"no");
-	private static final String TXT_R_U_SURE = Messages.get(MissileWeapon.class,"sure");
+	private static final String TXT_MISSILES = Messages.get(MissileWeapon.class, "missiles");
+	private static final String TXT_YES = Messages.get(MissileWeapon.class, "yes");
+	private static final String TXT_NO = Messages.get(MissileWeapon.class, "no");
+	private static final String TXT_R_U_SURE = Messages.get(MissileWeapon.class, "sure");
 
 	{
 		stackable = true;
 		levelKnown = true;
 		defaultAction = AC_THROW;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
 	@Override
@@ -80,11 +80,11 @@ public class MissileWeapon extends Weapon {
 						&& enemy.buff(PinCushion.class) == null)
 					bonus += 3;
 
-				if (Random.Float() > Math.pow(0.7, bonus)){
+				if (Random.Float() > Math.pow(0.7, bonus)) {
 					if (enemy.isAlive())
 						Buff.affect(enemy, PinCushion.class).stick(this);
 					else
-						Dungeon.level.drop( this, enemy.pos).sprite.drop();
+						Dungeon.level.drop(this, enemy.pos).sprite.drop();
 				}
 			}
 		}
@@ -152,25 +152,25 @@ public class MissileWeapon extends Weapon {
 		String name = name();
 		StringBuilder info = new StringBuilder(desc());
 
-		info.append(Messages.get(this,"avgdmg", MIN, MAX));
+		info.append(Messages.get(this, "avgdmg", MIN, MAX));
 
 		if (Dungeon.hero.belongings.backpack.items.contains(this)) {
 			if (STR > Dungeon.hero.STR()) {
-				info.append(Messages.get(this,"decreased", name));
+				info.append(Messages.get(this, "decreased", name));
 			}
 			if (STR < Dungeon.hero.STR()
 					&& Dungeon.hero.heroClass == HeroClass.HUNTRESS) {
-				info.append(Messages.get(this,"increased", name));
+				info.append(Messages.get(this, "increased", name));
 			}
 		}
 
-		info.append(Messages.get(this,"distance"));
+		info.append(Messages.get(this, "distance"));
 
 		if (isEquipped(Dungeon.hero)) {
-			info.append(Messages.get(this,"ready", name));
+			info.append(Messages.get(this, "ready", name));
 		}
 
-		if (enchantment != null){
+		if (enchantment != null) {
 			info.append("\n\n" + Messages.get(Weapon.class, "enchanted", enchantment.name()));
 			info.append(" " + Messages.get(enchantment, "desc"));
 		}

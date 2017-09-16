@@ -31,7 +31,7 @@ import com.watabou.utils.Random;
 
 public class Bounce extends Glyph {
 
-	private static final String TXT_BOUNCE = Messages.get(Bounce.class,"name");
+	private static final String TXT_BOUNCE = Messages.get(Bounce.class, "name");
 
 	@Override
 	public int proc(Armor armor, Char attacker, Char defender, int damage) {
@@ -39,6 +39,7 @@ public class Bounce extends Glyph {
 		int level = Math.max(0, armor.level);
 
 		if (Level.adjacent(attacker.pos, defender.pos)
+				&& !defender.properties().contains(Char.Property.IMMOVABLE)
 				&& Random.Int(level + 5) >= 4) {
 
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {

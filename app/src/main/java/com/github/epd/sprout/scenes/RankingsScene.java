@@ -41,11 +41,11 @@ import com.watabou.utils.GameMath;
 
 public class RankingsScene extends PixelScene {
 
-	private static final String TXT_TITLE = Messages.get(RankingsScene.class,"title");
-	private static final String TXT_TOTAL = Messages.get(RankingsScene.class,"total");
-	private static final String TXT_NO_GAMES = Messages.get(RankingsScene.class,"no_games");
+	private static final String TXT_TITLE = Messages.get(RankingsScene.class, "title");
+	private static final String TXT_TOTAL = Messages.get(RankingsScene.class, "total");
+	private static final String TXT_NO_GAMES = Messages.get(RankingsScene.class, "no_games");
 
-	private static final String TXT_NO_INFO = Messages.get(RankingsScene.class,"no_info");
+	private static final String TXT_NO_INFO = Messages.get(RankingsScene.class, "no_info");
 
 	private static final float ROW_HEIGHT_MAX = 20;
 	private static final float ROW_HEIGHT_MIN = 12;
@@ -156,8 +156,8 @@ public class RankingsScene extends PixelScene {
 
 		private static final float GAP = 4;
 
-		private static final int[] TEXT_WIN = { 0xFFFF88, 0xB2B25F };
-		private static final int[] TEXT_LOSE = { 0xDDDDDD, 0x888888 };
+		private static final int[] TEXT_WIN = {0xFFFF88, 0xB2B25F};
+		private static final int[] TEXT_LOSE = {0xDDDDDD, 0x888888};
 		private static final int FLARE_WIN = 0x888866;
 		private static final int FLARE_LOSE = 0x666666;
 
@@ -267,7 +267,7 @@ public class RankingsScene extends PixelScene {
 					/ 2 + 1);
 
 			if (flare != null) {
-				flare.point( shield.center() );
+				flare.point(shield.center());
 			}
 
 			classIcon.x = x + width - classIcon.width;
@@ -284,7 +284,7 @@ public class RankingsScene extends PixelScene {
 			depth.y = steps.y + (steps.height - depth.height()) / 2f + 1;
 			align(depth);
 
-			desc.maxWidth((int)(steps.x - (shield.x + shield.width + GAP)));
+			desc.maxWidth((int) (steps.x - (shield.x + shield.width + GAP)));
 			desc.setPos(shield.x + shield.width + GAP, shield.y + (shield.height - desc.height()) / 2f + 1);
 			align(desc);
 		}

@@ -22,15 +22,15 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class StoneOre extends Item {
 
-	
+
 	{
-		name = Messages.get(this,"name");
-		image = ItemSpriteSheet.STONE;	
+		name = Messages.get(this, "name");
+		image = ItemSpriteSheet.STONE;
 		bones = false;
-		stackable=true;
+		stackable = true;
 	}
 
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;

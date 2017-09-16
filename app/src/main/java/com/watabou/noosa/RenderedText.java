@@ -43,7 +43,7 @@ public class RenderedText extends Image {
 	private static Typeface font;
 
 	private static LinkedHashMap<String, CachedText> textCache =
-			new LinkedHashMap<String, CachedText>(700, 0.75f, true){
+			new LinkedHashMap<String, CachedText>(700, 0.75f, true) {
 				private int cachedChars = 0;
 				private final int MAX_CACHED = 1000;
 
@@ -59,7 +59,7 @@ public class RenderedText extends Image {
 				public CachedText remove(Object key) {
 					CachedText removed = super.remove(key);
 					if (removed != null) {
-						cachedChars-= removed.length;
+						cachedChars -= removed.length;
 						removed.texture.delete();
 					}
 					return removed;
@@ -71,14 +71,14 @@ public class RenderedText extends Image {
 					cachedChars = 0;
 				}
 
-				private void runGC(){
+				private void runGC() {
 					Iterator<Entry<String, CachedText>> it = this.entrySet().iterator();
-					while (cachedChars > MAX_CACHED && it.hasNext()){
+					while (cachedChars > MAX_CACHED && it.hasNext()) {
 						CachedText cached = it.next().getValue();
 						if (cached.activeTexts.isEmpty()) it.remove();
 					}
 				}
-	};
+			};
 
 	private int size;
 	private String text;
@@ -86,16 +86,16 @@ public class RenderedText extends Image {
 
 	private boolean needsRender = false;
 
-	public RenderedText( ){
+	public RenderedText() {
 		text = null;
 	}
 
-	public RenderedText(int size ){
+	public RenderedText(int size) {
 		text = null;
 		this.size = size;
 	}
 
-	public RenderedText(String text, int size){
+	public RenderedText(String text, int size) {
 		this.text = text;
 		this.size = size;
 
@@ -103,32 +103,32 @@ public class RenderedText extends Image {
 		measure(this);
 	}
 
-	public void text( String text ){
+	public void text(String text) {
 		this.text = text;
 
 		needsRender = true;
 		measure(this);
 	}
 
-	public String text(){
+	public String text() {
 		return text;
 	}
 
-	public void size( int size ){
+	public void size(int size) {
 		this.size = size;
 		needsRender = true;
 		measure(this);
 	}
 
-	public float baseLine(){
+	public float baseLine() {
 		return size * scale.y;
 	}
 
-	private static synchronized void measure(RenderedText r){
+	private static synchronized void measure(RenderedText r) {
 
-		if ( r.text == null || r.text.equals("") ) {
+		if (r.text == null || r.text.equals("")) {
 			r.text = "";
-			r.width=r.height=0;
+			r.width = r.height = 0;
 			r.visible = false;
 			return;
 		} else {
@@ -149,18 +149,18 @@ public class RenderedText extends Image {
 		painter.setStyle(Paint.Style.STROKE);
 		painter.setStrokeWidth(r.size / 5f);
 
-		r.width = (painter.measureText(r.text)+ (r.size/5f));
-		r.height = (-painter.ascent() + painter.descent()+ (r.size/5f));
+		r.width = (painter.measureText(r.text) + (r.size / 5f));
+		r.height = (-painter.ascent() + painter.descent() + (r.size / 5f));
 	}
 
-	private static synchronized void render(RenderedText r){
+	private static synchronized void render(RenderedText r) {
 		r.needsRender = false;
 
 		if (r.cache != null)
 			r.cache.activeTexts.remove(r);
 
 		String key = "text:" + r.size + " " + r.text;
-		if (textCache.containsKey(key)){
+		if (textCache.containsKey(key)) {
 			r.cache = textCache.get(key);
 			r.texture = r.cache.texture;
 			r.frame(r.cache.rect);
@@ -173,21 +173,21 @@ public class RenderedText extends Image {
 				return;
 
 			//bitmap has to be in a power of 2 for some devices (as we're using openGL methods to render to texture)
-			Bitmap bitmap = Bitmap.createBitmap(Integer.highestOneBit((int)r.width)*2, Integer.highestOneBit((int)r.height)*2, Bitmap.Config.ARGB_4444);
+			Bitmap bitmap = Bitmap.createBitmap(Integer.highestOneBit((int) r.width) * 2, Integer.highestOneBit((int) r.height) * 2, Bitmap.Config.ARGB_4444);
 			bitmap.eraseColor(0x00000000);
 
 			canvas.setBitmap(bitmap);
-			canvas.drawText(r.text, (r.size/10f), r.size, painter);
+			canvas.drawText(r.text, (r.size / 10f), r.size, painter);
 
 			//paint inner text
 			painter.setARGB(0xff, 0xff, 0xff, 0xff);
 			painter.setStyle(Paint.Style.FILL);
 
-			canvas.drawText(r.text, (r.size/10f), r.size, painter);
+			canvas.drawText(r.text, (r.size / 10f), r.size, painter);
 
 			r.texture = new SmartTexture(bitmap, Texture.NEAREST, Texture.CLAMP, true);
 
-			RectF rect = r.texture.uvRect(0, 0, (int)r.width, (int)r.height);
+			RectF rect = r.texture.uvRect(0, 0, (int) r.width, (int) r.height);
 			r.frame(rect);
 
 			r.cache = new CachedText();
@@ -204,7 +204,7 @@ public class RenderedText extends Image {
 	protected void updateMatrix() {
 		super.updateMatrix();
 		//the y value is set at the top of the character, not at the top of accents.
-		Matrix.translate( matrix, 0, -Math.round((baseLine()*0.15f)/scale.y) );
+		Matrix.translate(matrix, 0, -Math.round((baseLine() * 0.15f) / scale.y));
 	}
 
 	@Override
@@ -222,30 +222,30 @@ public class RenderedText extends Image {
 		super.destroy();
 	}
 
-	public static void clearCache(){
-		for (CachedText cached : textCache.values()){
+	public static void clearCache() {
+		for (CachedText cached : textCache.values()) {
 			cached.texture.delete();
 		}
 		textCache.clear();
 	}
 
-	public static void reloadCache(){
-		for (CachedText txt : textCache.values()){
+	public static void reloadCache() {
+		for (CachedText txt : textCache.values()) {
 			txt.texture.reload();
 		}
 	}
 
-	public static void setFont(String asset){
+	public static void setFont(String asset) {
 		if (asset == null) font = null;
 		else font = Typeface.createFromAsset(Game.instance.getAssets(), asset);
 		clearCache();
 	}
 
-	public static Typeface getFont(){
+	public static Typeface getFont() {
 		return font;
 	}
 
-	private static class CachedText{
+	private static class CachedText {
 		public SmartTexture texture;
 		public RectF rect;
 		public int length;

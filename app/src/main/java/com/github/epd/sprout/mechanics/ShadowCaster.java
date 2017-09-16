@@ -17,11 +17,8 @@
  */
 package com.github.epd.sprout.mechanics;
 
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.utils.BArray;
-
-import java.util.Arrays;
 
 public final class ShadowCaster {
 
@@ -33,6 +30,7 @@ public final class ShadowCaster {
 	private static boolean[] falseArray;
 
 	private static int[][] rounding;
+
 	static {
 		rounding = new int[MAX_DISTANCE + 1][];
 		for (int i = 1; i <= MAX_DISTANCE; i++) {
@@ -46,7 +44,7 @@ public final class ShadowCaster {
 
 	private static Obstacles obs = new Obstacles();
 
-	public static void castShadow( int x, int y, boolean[] fieldOfView, int distance ) {
+	public static void castShadow(int x, int y, boolean[] fieldOfView, int distance) {
 
 		BArray.setFalse(fieldOfView);
 
@@ -55,18 +53,18 @@ public final class ShadowCaster {
 		boolean[] losBlocking = Level.losBlocking;
 		Obstacles obs = new Obstacles();
 
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, +1, +1, 0, 0 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, -1, +1, 0, 0 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, +1, -1, 0, 0 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, -1, -1, 0, 0 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, 0, 0, +1, +1 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, 0, 0, -1, +1 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, 0, 0, +1, -1 );
-		scanSector( distance, fieldOfView, losBlocking, obs, x, y, 0, 0, -1, -1 );
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, +1, +1, 0, 0);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, -1, +1, 0, 0);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, +1, -1, 0, 0);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, -1, -1, 0, 0);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, 0, 0, +1, +1);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, 0, 0, -1, +1);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, 0, 0, +1, -1);
+		scanSector(distance, fieldOfView, losBlocking, obs, x, y, 0, 0, -1, -1);
 
 	}
 
-	private static void scanSector( int distance, boolean[] fieldOfView, boolean[] losBlocking, Obstacles obs, int cx, int cy, int m1, int m2, int m3, int m4 ) {
+	private static void scanSector(int distance, boolean[] fieldOfView, boolean[] losBlocking, Obstacles obs, int cx, int cy, int m1, int m2, int m3, int m4) {
 
 
 		obs.reset();

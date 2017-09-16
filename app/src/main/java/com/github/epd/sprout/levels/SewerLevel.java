@@ -24,9 +24,7 @@ import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.npcs.Ghost;
 import com.github.epd.sprout.actors.mobs.npcs.Ghost.GnollArcher;
-import com.github.epd.sprout.actors.mobs.npcs.Tinkerer1;
 import com.github.epd.sprout.items.Bomb;
-import com.github.epd.sprout.items.Mushroom;
 import com.github.epd.sprout.items.food.Blackberry;
 import com.github.epd.sprout.items.food.Blueberry;
 import com.github.epd.sprout.items.food.Cloudberry;
@@ -52,8 +50,8 @@ public class SewerLevel extends RegularLevel {
 	public String tilesTex() {
 		return Assets.TILES_SEWERS;
 	}
-	
-	
+
+
 	@Override
 	public String waterTex() {
 		return Assets.WATER_SEWERS;
@@ -68,10 +66,10 @@ public class SewerLevel extends RegularLevel {
 	protected boolean[] grass() {
 		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 4);
 	}
-	
+
 	@Override
-	protected void setPar(){
-		Dungeon.pars[Dungeon.depth] = 500+(Dungeon.depth*50)+(secretDoors*50);
+	protected void setPar() {
+		Dungeon.pars[Dungeon.depth] = 500 + (Dungeon.depth * 50) + (secretDoors * 50);
 	}
 
 	@Override
@@ -113,16 +111,16 @@ public class SewerLevel extends RegularLevel {
 				map[pos] = Terrain.SIGN;
 				break;
 			}
-		}	
-		
+		}
+
 		setPar();
-		
-		
+
+
 	}
 
 	@Override
 	protected void createItems() {
-		if (!Dungeon.limitedDrops.dewVial.dropped()	&& Dungeon.depth == 1) {
+		if (Dungeon.depth == 1) {
 	/*		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
 				addItemToSpawn(new DewVial());
 				Dungeon.limitedDrops.dewVial.drop();
@@ -134,35 +132,24 @@ public class SewerLevel extends RegularLevel {
 			addItemToSpawn(new Blueberry());
 			addItemToSpawn(new Cloudberry());
 			addItemToSpawn(new Blackberry());
-			
+
 			//addItemToSpawn(new Spectacles());
 			//addItemToSpawn(new Towel());
-			
+
 			//addItemToSpawn(new Egg());
 		}
-		
-		if (Dungeon.depth == 2){
-			Tinkerer1 npc = new Tinkerer1();
-			do {
-				npc.pos = randomRespawnCell();
-			} while (npc.pos == -1 || heaps.get(npc.pos) != null);
-			mobs.add(npc);
-			Actor.occupyCell(npc);
-		}
-		
-		if (Dungeon.depth == 1){
-			addItemToSpawn(new Mushroom());
-		}
-				
+
 		Ghost.Quest.spawn(this);
 		spawnGnoll(this);
 
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(3) == 0){addItemToSpawn(new Bomb());}
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(3) == 0) {
+			addItemToSpawn(new Bomb());
+		}
 		super.createItems();
 	}
-	
+
 	public static void spawnGnoll(SewerLevel level) {
-		if (Dungeon.depth == 4 && !Dungeon.gnollspawned){
+		if (Dungeon.depth == 4 && !Dungeon.gnollspawned) {
 
 			GnollArcher gnoll = new Ghost.GnollArcher();
 			do {
@@ -170,12 +157,12 @@ public class SewerLevel extends RegularLevel {
 			} while (gnoll.pos == -1);
 			level.mobs.add(gnoll);
 			Actor.occupyCell(gnoll);
-           
+
 			Dungeon.gnollspawned = true;
 		}
 	}
 
-	
+
 	@Override
 	public void addVisuals(Scene scene) {
 		super.addVisuals(scene);
@@ -193,22 +180,22 @@ public class SewerLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(SewerLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(SewerLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
@@ -235,7 +222,7 @@ public class SewerLevel extends RegularLevel {
 			PointF p = DungeonTilemap.tileCenterToWorld(pos);
 			pos(p.x - 2, p.y + 1, 4, 0);
 
-			pour( factory, 0.1f );
+			pour(factory, 0.1f);
 		}
 
 		@Override

@@ -29,10 +29,10 @@ import com.watabou.utils.Random;
 public class Nut extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SEED_DUNGEONNUT;
-		energy = (Hunger.STARVING - Hunger.HUNGRY)/2;
-		message = Messages.get(this,"eat");
+		energy = (Hunger.STARVING - Hunger.HUNGRY) / 2;
+		message = Messages.get(this, "eat");
 		hornValue = 2;
 		bones = false;
 	}
@@ -45,17 +45,17 @@ public class Nut extends Food {
 		if (action.equals(AC_EAT)) {
 
 			switch (Random.Int(10)) {
-			case 0:
-				GLog.w(Messages.get(this,"effect"));
-				Buff.affect(hero, Barkskin.class).level(hero.HT / 4);
-				break;
+				case 0:
+					GLog.w(Messages.get(this, "effect"));
+					Buff.affect(hero, Barkskin.class).level(hero.HT / 4);
+					break;
 			}
 		}
-	}	
-	
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

@@ -29,11 +29,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class Sorrowmoss extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Sorrowmoss.class,"desc");
+	private static final String TXT_DESC = Messages.get(Sorrowmoss.class, "desc");
 
 	{
 		image = 2;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
@@ -57,9 +57,9 @@ public class Sorrowmoss extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Sorrowmoss.class,"name");
+			plantName = Messages.get(Sorrowmoss.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_SORROWMOSS;
 
 			plantClass = Sorrowmoss.class;
@@ -68,6 +68,7 @@ public class Sorrowmoss extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 }

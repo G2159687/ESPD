@@ -23,8 +23,8 @@ import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Strength;
-import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Beam;
+import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.particles.PurpleParticle;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class WandOfDisintegration extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		collisionProperties = Ballistica.WONT_STOP;
 		image = ItemSpriteSheet.WAND_DISINTEGRATION;
 	}
@@ -62,7 +62,7 @@ public class WandOfDisintegration extends Wand {
 
 			//we don't want to count passed terrain after the last enemy hit. That would be a lot of bonus levels.
 			//terrainPassed starts at 2, equivalent of rounding up when /3 for integer arithmetic.
-			terrainBonus += terrainPassed/3;
+			terrainBonus += terrainPassed / 3;
 			terrainPassed = 1;
 
 			Char ch;
@@ -92,7 +92,11 @@ public class WandOfDisintegration extends Wand {
 		int lvl = level + chars.size() + terrainBonus;
 		int dmgMin = lvl;
 		int dmgMax = 8 + lvl * lvl / 3;
-		if (Dungeon.hero.buff(Strength.class) != null){ dmgMin *= (int) 4f; dmgMax *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
+		if (Dungeon.hero.buff(Strength.class) != null) {
+			dmgMin *= (int) 4f;
+			dmgMax *= (int) 4f;
+			Buff.detach(Dungeon.hero, Strength.class);
+		}
 		for (Char ch : chars) {
 			ch.damage(Random.NormalIntRange(dmgMin, dmgMax), this);
 			ch.sprite.centerEmitter().burst(PurpleParticle.BURST,
@@ -116,6 +120,6 @@ public class WandOfDisintegration extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc", level, 8 + level * level / 3);
 	}
 }

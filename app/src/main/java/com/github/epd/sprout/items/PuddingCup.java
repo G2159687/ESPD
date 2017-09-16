@@ -17,7 +17,6 @@
  */
 package com.github.epd.sprout.items;
 
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.messages.Messages;
@@ -28,10 +27,10 @@ import java.util.ArrayList;
 
 public class PuddingCup extends Item {
 
-	private static final String AC_END = Messages.get(PuddingCup.class,"ac_end");
+	private static final String AC_END = Messages.get(PuddingCup.class, "ac_end");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.AMULET;
 
 		unique = true;
@@ -43,7 +42,7 @@ public class PuddingCup extends Item {
 		if (!Statistics.amuletObtained) {
 			Statistics.amuletObtained = true;
 		}
-		
+
 		return super.doPickUp(hero);
 	}
 
@@ -59,7 +58,7 @@ public class PuddingCup extends Item {
 		if (action == AC_END) {
 
 			detach(hero.belongings.backpack);
-			GLog.n(Messages.get(this,"broken"));
+			GLog.n(Messages.get(this, "broken"));
 
 			hero.sprite.operate(hero.pos);
 			hero.busy();
@@ -81,8 +80,9 @@ public class PuddingCup extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

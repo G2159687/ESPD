@@ -63,21 +63,21 @@ public class MineLevel extends RegularLevel {
 	}
 
 	@Override
-	protected void setPar(){
-		Dungeon.pars[Dungeon.depth] = 400+(Dungeon.depth*50)+(secretDoors*20);
+	protected void setPar() {
+		Dungeon.pars[Dungeon.depth] = 400 + (Dungeon.depth * 50) + (secretDoors * 20);
 	}
 
 	@Override
 	protected void createItems() {
-		
-		
-		if (Dungeon.hero.heroClass==HeroClass.ROGUE && Random.Int(3) == 0){addItemToSpawn(new Bomb());}
+
+
+		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(3) == 0) {
+			addItemToSpawn(new Bomb());
+		}
 		super.createItems();
 	}
-	
-	
-	
-	
+
+
 	@Override
 	protected void decorate() {
 
@@ -159,8 +159,8 @@ public class MineLevel extends RegularLevel {
 			}
 		}
 
-				
-		setPar();		
+
+		setPar();
 
 		if (Dungeon.bossLevel(Dungeon.depth + 1)) {
 			return;
@@ -195,39 +195,39 @@ public class MineLevel extends RegularLevel {
 				}
 			}
 		}
-		
-		
+
+
 	}
 
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.GRASS:
-			return Messages.get(CavesLevel.class,"grass_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CavesLevel.class,"high_grass_name");
-		case Terrain.WATER:
-			return Messages.get(CavesLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.GRASS:
+				return Messages.get(CavesLevel.class, "grass_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CavesLevel.class, "high_grass_name");
+			case Terrain.WATER:
+				return Messages.get(CavesLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.ENTRANCE:
-			return Messages.get(CavesLevel.class,"entrance_desc");
-		case Terrain.EXIT:
-			return Messages.get(CavesLevel.class,"exit_desc");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CavesLevel.class,"high_grass_desc");
-		case Terrain.WALL_DECO:
-			return Messages.get(CavesLevel.class,"wall_deco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(CavesLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.ENTRANCE:
+				return Messages.get(CavesLevel.class, "entrance_desc");
+			case Terrain.EXIT:
+				return Messages.get(CavesLevel.class, "exit_desc");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CavesLevel.class, "high_grass_desc");
+			case Terrain.WALL_DECO:
+				return Messages.get(CavesLevel.class, "wall_deco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(CavesLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

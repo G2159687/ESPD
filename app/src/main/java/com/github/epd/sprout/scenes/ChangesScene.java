@@ -35,7 +35,7 @@ import com.watabou.noosa.ui.Component;
 
 public class ChangesScene extends PixelScene {
 
-	private static final String TXT_Update =Messages.get(ChangesScene.class,"update1");
+	private static final String TXT_Update = Messages.get(ChangesScene.class, "update1");
 
 	@Override
 	public void create() {
@@ -44,32 +44,32 @@ public class ChangesScene extends PixelScene {
 		int w = Camera.main.width;
 		int h = Camera.main.height;
 
-		RenderedText title = PixelScene.renderText( Messages.get(this, "title"), 9 );
+		RenderedText title = PixelScene.renderText(Messages.get(this, "title"), 9);
 		title.hardlight(Window.TITLE_COLOR);
-		title.x = (w - title.width()) / 2 ;
+		title.x = (w - title.width()) / 2;
 		title.y = 4;
 		align(title);
 		add(title);
 
 		ExitButton btnExit = new ExitButton();
-		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
-		add( btnExit );
+		btnExit.setPos(Camera.main.width - btnExit.width(), 0);
+		add(btnExit);
 
-		RenderedTextMultiline text = renderMultiline(TXT_Update, 6 );
+		RenderedTextMultiline text = renderMultiline(TXT_Update, 6);
 
 		NinePatch panel = Chrome.get(Chrome.Type.TOAST);
 
 		int pw = 135 + panel.marginLeft() + panel.marginRight() - 2;
 		int ph = h - 16;
 
-		panel.size( pw, ph );
+		panel.size(pw, ph);
 		panel.x = (w - pw) / 2f;
 		panel.y = title.y + title.height();
-		align( panel );
-		add( panel );
+		align(panel);
+		add(panel);
 
-		ScrollPane list = new ScrollPane( new Component() );
-		add( list );
+		ScrollPane list = new ScrollPane(new Component());
+		add(list);
 
 		Component content = list.content();
 		content.clear();
@@ -78,7 +78,7 @@ public class ChangesScene extends PixelScene {
 
 		content.add(text);
 
-		content.setSize( panel.innerWidth(), (int) Math.ceil(text.height()) );
+		content.setSize(panel.innerWidth(), (int) Math.ceil(text.height()));
 
 		list.setRect(
 				panel.x + panel.marginLeft(),
@@ -88,8 +88,8 @@ public class ChangesScene extends PixelScene {
 		list.scrollTo(0, 0);
 
 		Archs archs = new Archs();
-		archs.setSize( Camera.main.width, Camera.main.height );
-		addToBack( archs );
+		archs.setSize(Camera.main.width, Camera.main.height);
+		addToBack(archs);
 
 		fadeIn();
 	}

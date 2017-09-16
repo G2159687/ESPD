@@ -47,16 +47,16 @@ import java.util.ArrayList;
 public class Armor extends EquipableItem {
 
 	private static final int HITS_TO_KNOW = 10;
-	
+
 	private static final float TIME_TO_EQUIP = 1f;
 
-	private static final String TXT_EQUIP_CURSED = Messages.get(Armor.class,"equip_cursed");
+	private static final String TXT_EQUIP_CURSED = Messages.get(Armor.class, "equip_cursed");
 
-	private static final String TXT_IDENTIFY = Messages.get(Armor.class,"identify");
+	private static final String TXT_IDENTIFY = Messages.get(Armor.class, "identify");
 
 	private static final String TXT_TO_STRING = "%s :%d";
 
-	private static final String TXT_INCOMPATIBLE = Messages.get(Armor.class,"incompatible");
+	private static final String TXT_INCOMPATIBLE = Messages.get(Armor.class, "incompatible");
 
 	public int tier;
 
@@ -163,10 +163,10 @@ public class Armor extends EquipableItem {
 
 	public Item upgrade(boolean inscribe) {
 
-			if (inscribe) {
-				inscribe(Glyph.random());
-			}
-				
+		if (inscribe) {
+			inscribe(Glyph.random());
+		}
+
 		DR += tier;
 		STR--;
 
@@ -214,35 +214,38 @@ public class Armor extends EquipableItem {
 		StringBuilder info = new StringBuilder(desc());
 
 		if (levelKnown) {
-			info.append(Messages.get(this,"curr_absorb", Math.max(DR, 0)));
+			info.append(Messages.get(this, "curr_absorb", Math.max(DR, 0)));
 
 			if (STR > Dungeon.hero.STR()) {
 
-				info.append(Messages.get(this,"too_heavy"));
+				info.append(Messages.get(this, "too_heavy"));
 
 			}
 		} else {
-			info.append(Messages.get(this,"avg_absorb", typicalDR()));
+			info.append(Messages.get(this, "avg_absorb", typicalDR()));
 			if (typicalSTR() > Dungeon.hero.STR()) {
-				info.append(Messages.get(this,"probably_too_heavy"));
+				info.append(Messages.get(this, "probably_too_heavy"));
 			}
 		}
 
 		if (glyph != null) {
-			info.append(Messages.get(this,"inscribed", glyph.name()));
+			info.append(Messages.get(this, "inscribed", glyph.name()));
 			info.append(glyph.desc());
 		}
 
 		if (reinforced) {
-			info.append(Messages.get(this,"reinforced"));
+			info.append(Messages.get(this, "reinforced"));
 		}
 
 		if (isEquipped(Dungeon.hero)) {
-			if (cursed ) {info.append(Messages.get(this,"wearing", name) + Messages.get(this,"cursed_worn"));}
-			else {info.append(Messages.get(this,"wearing", name));}
+			if (cursed) {
+				info.append(Messages.get(this, "wearing", name) + Messages.get(this, "cursed_worn"));
+			} else {
+				info.append(Messages.get(this, "wearing", name));
+			}
 		} else {
 			if (cursedKnown && cursed) {
-				info.append(Messages.get(this,"cursed"));
+				info.append(Messages.get(this, "cursed"));
 			}
 		}
 
@@ -340,22 +343,22 @@ public class Armor extends EquipableItem {
 
 	public static abstract class Glyph implements Bundlable {
 
-		private static final Class<?>[] glyphs = new Class<?>[] { Bounce.class,
+		private static final Class<?>[] glyphs = new Class<?>[]{Bounce.class,
 				Affection.class, AntiEntropy.class, Multiplicity.class,
 				Potential.class, Metabolism.class, Stench.class,
-				Viscosity.class, Displacement.class, Entanglement.class };
+				Viscosity.class, Displacement.class, Entanglement.class};
 
-		private static final float[] chances = new float[] { 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1 };
+		private static final float[] chances = new float[]{1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1};
 
-		private static final float[] chancesAdv = new float[] { 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1 };
-		
+		private static final float[] chancesAdv = new float[]{1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1};
+
 		public abstract int proc(Armor armor, Char attacker, Char defender,
-				int damage);
+		                         int damage);
 
 		public String name() {
-			return name(Messages.get(Armor.class,"gname"));
+			return name(Messages.get(Armor.class, "gname"));
 		}
 
 		public String name(String armorName) {
@@ -363,7 +366,7 @@ public class Armor extends EquipableItem {
 		}
 
 		public String desc() {
-			return Messages.get(this,"desc");
+			return Messages.get(this, "desc");
 		}
 
 		@Override
@@ -382,7 +385,7 @@ public class Armor extends EquipableItem {
 			if (!owner.isAlive() && owner instanceof Hero) {
 
 				Dungeon.fail(Utils.format(ResultDescriptions.GLYPH, name()));
-				GLog.n(Messages.get(Armor.class,"gkilled"), name());
+				GLog.n(Messages.get(Armor.class, "gkilled"), name());
 
 				return true;
 
@@ -400,7 +403,7 @@ public class Armor extends EquipableItem {
 				return null;
 			}
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public static Glyph randomAdv() {
 			try {

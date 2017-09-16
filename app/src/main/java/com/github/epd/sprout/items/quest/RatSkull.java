@@ -25,7 +25,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class RatSkull extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.SKULL;
 
 		unique = true;
@@ -43,7 +43,7 @@ public class RatSkull extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

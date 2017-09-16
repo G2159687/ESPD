@@ -72,10 +72,10 @@ public class SafeLevel extends Level {
 		color2 = 0xb9d661;
 		WIDTH = 48;
 		HEIGHT = 48;
-		LENGTH = HEIGHT*WIDTH;
+		LENGTH = HEIGHT * WIDTH;
 	}
-	
-	
+
+
 	public HashSet<Item> heapstogen;
 	public int[] heapgenspots;
 	public int[] teleportspots;
@@ -84,17 +84,17 @@ public class SafeLevel extends Level {
 	public int[] destinationspots;
 	public int[] destinationassign;
 	public int prizeNo;
-	
+
 	private static final String HEAPSTOGEN = "heapstogen";
 	private static final String HEAPGENSPOTS = "heapgenspots";
 	private static final String TELEPORTSPOTS = "teleportspots";
 	private static final String PORTSWITCHSPOTS = "portswitchspots";
 	private static final String DESTINATIONSPOTS = "destinationspots";
 	private static final String TELEPORTASSIGN = "teleportassign";
-	private static final String DESTINATIONASSIGN= "destinationassign";
+	private static final String DESTINATIONASSIGN = "destinationassign";
 	private static final String PRIZENO = "prizeNo";
-	
-	
+
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
@@ -107,73 +107,72 @@ public class SafeLevel extends Level {
 		bundle.put(TELEPORTASSIGN, teleportassign);
 		bundle.put(PRIZENO, prizeNo);
 	}
-	
-	
-	
+
+
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
-		
-		      super.restoreFromBundle(bundle);
-		      
-		      heapgenspots = bundle.getIntArray(HEAPGENSPOTS);
-		      teleportspots = bundle.getIntArray(TELEPORTSPOTS);
-		      portswitchspots = bundle.getIntArray(PORTSWITCHSPOTS);
-		      destinationspots = bundle.getIntArray(DESTINATIONSPOTS);
-		      destinationassign = bundle.getIntArray(DESTINATIONASSIGN);
-		      teleportassign = bundle.getIntArray(TELEPORTASSIGN);
-		      prizeNo = bundle.getInt(PRIZENO);
-		      
-		      heapstogen = new HashSet<Item>();
-		      
-		      Collection <Bundlable> collectionheap = bundle.getCollection(HEAPSTOGEN);
-				for (Bundlable i : collectionheap) {
-					Item item = (Item) i;
-					if (item != null) {
-						heapstogen.add(item);
-					}
-				}
-	}
 
-  @Override
-  public void create() {
-	   heapstogen = new HashSet<Item>();
-	   heapgenspots = new int[10];
-	   teleportspots = new int[10];
-	   portswitchspots = new int[10];
-	   destinationspots = new int[10];
-	   destinationassign = new int[10];
-	   teleportassign = new int[10];
-	   super.create();	
-   }	
-  
-  public void addItemToGen(Item item, int arraypos, int pos) {
-		if (item != null) {
-			heapstogen.add(item);
-			heapgenspots[arraypos]=pos;
+		super.restoreFromBundle(bundle);
+
+		heapgenspots = bundle.getIntArray(HEAPGENSPOTS);
+		teleportspots = bundle.getIntArray(TELEPORTSPOTS);
+		portswitchspots = bundle.getIntArray(PORTSWITCHSPOTS);
+		destinationspots = bundle.getIntArray(DESTINATIONSPOTS);
+		destinationassign = bundle.getIntArray(DESTINATIONASSIGN);
+		teleportassign = bundle.getIntArray(TELEPORTASSIGN);
+		prizeNo = bundle.getInt(PRIZENO);
+
+		heapstogen = new HashSet<Item>();
+
+		Collection<Bundlable> collectionheap = bundle.getCollection(HEAPSTOGEN);
+		for (Bundlable i : collectionheap) {
+			Item item = (Item) i;
+			if (item != null) {
+				heapstogen.add(item);
+			}
 		}
 	}
-  
-  
+
+	@Override
+	public void create() {
+		heapstogen = new HashSet<Item>();
+		heapgenspots = new int[10];
+		teleportspots = new int[10];
+		portswitchspots = new int[10];
+		destinationspots = new int[10];
+		destinationassign = new int[10];
+		teleportassign = new int[10];
+		super.create();
+	}
+
+	public void addItemToGen(Item item, int arraypos, int pos) {
+		if (item != null) {
+			heapstogen.add(item);
+			heapgenspots[arraypos] = pos;
+		}
+	}
+
+
 	public Item genPrizeItem() {
 		return genPrizeItem(null);
 	}
-	
-	
+
+
 	public Item genPrizeItem(Class<? extends Item> match) {
-		
+
 		boolean keysLeft = false;
-		
+
 		if (heapstogen.size() == 0)
 			return null;
 
 		for (Item item : heapstogen) {
 			if (match.isInstance(item)) {
 				heapstogen.remove(item);
-				keysLeft=true;
+				keysLeft = true;
 				return item;
 			}
 		}
-		
+
 		if (match == null || !keysLeft) {
 			Item item = Random.element(heapstogen);
 			heapstogen.remove(item);
@@ -182,7 +181,7 @@ public class SafeLevel extends Level {
 
 		return null;
 	}
-	
+
 	@Override
 	public void press(int cell, Char ch) {
 
@@ -197,68 +196,68 @@ public class SafeLevel extends Level {
 			timeFreeze = ch.buff(TimekeepersHourglass.timeFreeze.class);
 
 		boolean trap = false;
-		
+
 		switch (map[cell]) {
 
-			case Terrain.FLEECING_TRAP:			
-					
-			if (ch != null && ch==Dungeon.hero){
-				trap = true;
-				FleecingTrap.trigger(cell, ch);
-			}
-			break;
-			
-		case Terrain.CHANGE_SHEEP_TRAP:
-			
-			if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep){
-				trap = true;
-				ChangeSheepTrap.trigger(cell, ch);
-			}						
-			break;
-			
-        case Terrain.PORT_WELL:
-			
-			if (ch != null && ch==Dungeon.hero){
+			case Terrain.FLEECING_TRAP:
 
-				int portarray=-1;
-				int destinationspot=cell;
-				
-				for(int i = 0; i < teleportspots.length; i++) {
-					  if(teleportspots[i] == cell) {
-						     portarray = i;
-						     break;
-						  }
+				if (ch != null && ch == Dungeon.hero) {
+					trap = true;
+					FleecingTrap.trigger(cell, ch);
 				}
-				
-				if(portarray != -1) {
-					destinationspot=destinationspots[portarray];
-					if (destinationspot>0){
-					SokobanPortalTrap.trigger(cell, ch, destinationspot);
+				break;
+
+			case Terrain.CHANGE_SHEEP_TRAP:
+
+				if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep) {
+					trap = true;
+					ChangeSheepTrap.trigger(cell, ch);
+				}
+				break;
+
+			case Terrain.PORT_WELL:
+
+				if (ch != null && ch == Dungeon.hero) {
+
+					int portarray = -1;
+					int destinationspot = cell;
+
+					for (int i = 0; i < teleportspots.length; i++) {
+						if (teleportspots[i] == cell) {
+							portarray = i;
+							break;
+						}
 					}
-				}				
-			}						
-			break;
 
-		case Terrain.HIGH_GRASS:
-			HighGrass.trample(this, cell, ch);
-			break;
+					if (portarray != -1) {
+						destinationspot = destinationspots[portarray];
+						if (destinationspot > 0) {
+							SokobanPortalTrap.trigger(cell, ch, destinationspot);
+						}
+					}
+				}
+				break;
 
-		case Terrain.WELL:
-			WellWater.affectCell(cell);
-			break;
+			case Terrain.HIGH_GRASS:
+				HighGrass.trample(this, cell, ch);
+				break;
 
-		case Terrain.ALCHEMY:
-			if (ch == null) {
-				Alchemy.transmute(cell);
-			}
-			break;
+			case Terrain.WELL:
+				WellWater.affectCell(cell);
+				break;
 
-		case Terrain.DOOR:
-			Door.enter(cell, ch);
-			break;
+			case Terrain.ALCHEMY:
+				if (ch == null) {
+					Alchemy.transmute(cell);
+				}
+				break;
+
+			case Terrain.DOOR:
+				Door.enter(cell);
+				break;
 		}
 
-		if (trap){
+		if (trap) {
 
 			if (Dungeon.visible[cell])
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -267,8 +266,8 @@ public class SafeLevel extends Level {
 				Dungeon.hero.interrupt();
 
 			set(cell, Terrain.INACTIVE_TRAP);
-			GameScene.updateMap(cell);					
-		} 
+			GameScene.updateMap(cell);
+		}
 
 		Plant plant = plants.get(cell);
 		if (plant != null) {
@@ -276,8 +275,7 @@ public class SafeLevel extends Level {
 		}
 	}
 
-	
-	
+
 	@Override
 	public void mobPress(Mob mob) {
 
@@ -293,48 +291,48 @@ public class SafeLevel extends Level {
 		boolean sheep = false;
 		switch (map[cell]) {
 
-		case Terrain.TOXIC_TRAP:
-			ToxicTrap.trigger(cell, mob);
-			break;
+			case Terrain.TOXIC_TRAP:
+				ToxicTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.FIRE_TRAP:
-			FireTrap.trigger(cell, mob);
-			break;
+			case Terrain.FIRE_TRAP:
+				FireTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.PARALYTIC_TRAP:
-			ParalyticTrap.trigger(cell, mob);
-			break;
-			
-		case Terrain.FLEECING_TRAP:
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
-				fleece=true;
-			}
-			FleecingTrap.trigger(cell, mob);
-			break;
-			
-		case Terrain.CHANGE_SHEEP_TRAP:
-			trap=false;
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof Sheep){
-				trap=true;
-				ChangeSheepTrap.trigger(cell, mob);
-			}						
-			break;
-			
-		case Terrain.SOKOBAN_ITEM_REVEAL:
-			trap=false;
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
-				HeapGenTrap.trigger(cell, mob);
-				drop(genPrizeItem(IronKey.class),heapgenspots[prizeNo]);
-				prizeNo++;
-				sheep=true;
-			}						
-			break;
-			
-		case Terrain.SOKOBAN_PORT_SWITCH:
-			trap=false;
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
-				ActivatePortalTrap.trigger(cell, mob);
-				
+			case Terrain.PARALYTIC_TRAP:
+				ParalyticTrap.trigger(cell, mob);
+				break;
+
+			case Terrain.FLEECING_TRAP:
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
+					fleece = true;
+				}
+				FleecingTrap.trigger(cell, mob);
+				break;
+
+			case Terrain.CHANGE_SHEEP_TRAP:
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof Sheep) {
+					trap = true;
+					ChangeSheepTrap.trigger(cell, mob);
+				}
+				break;
+
+			case Terrain.SOKOBAN_ITEM_REVEAL:
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
+					HeapGenTrap.trigger(cell, mob);
+					drop(genPrizeItem(IronKey.class), heapgenspots[prizeNo]);
+					prizeNo++;
+					sheep = true;
+				}
+				break;
+
+			case Terrain.SOKOBAN_PORT_SWITCH:
+				trap = false;
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
+					ActivatePortalTrap.trigger(cell, mob);
+
 				/*
 				public int[] teleportspots; location of teleports
 				public int[] portswitchspots; location of switches
@@ -342,68 +340,68 @@ public class SafeLevel extends Level {
 				public int[] destinationspots; current assignment of destination spots to teleports
 				public int[] destinationassign; assignemnt of destination spots to switches
 				*/
-				
-				int arraypos = -1; //position in array of teleport switch
-				int portpos = -1; //position on map of teleporter
-				int portarray = -1; //position in array of teleporter
-				int destpos = -1; //destination position assigned to switch
-				
-				for(int i = 0; i < portswitchspots.length; i++) {
-				  if(portswitchspots[i] == cell) {
-				     arraypos = i;
-				     GLog.i("Pos1 %s", arraypos);
-				     break;
-				  }
+
+					int arraypos = -1; //position in array of teleport switch
+					int portpos = -1; //position on map of teleporter
+					int portarray = -1; //position in array of teleporter
+					int destpos = -1; //destination position assigned to switch
+
+					for (int i = 0; i < portswitchspots.length; i++) {
+						if (portswitchspots[i] == cell) {
+							arraypos = i;
+							GLog.i("Pos1 %s", arraypos);
+							break;
+						}
+					}
+
+					portpos = teleportassign[arraypos];
+					destpos = destinationassign[arraypos];
+
+					GLog.i("ass2 %s", portpos);
+					GLog.i("dest3 %s", destpos);
+
+					for (int i = 0; i < teleportspots.length; i++) {
+						if (teleportspots[i] == portpos) {
+							portarray = i;
+							GLog.i("Pos4 %s", portarray);
+							break;
+						}
+					}
+
+					if (map[portpos] == Terrain.PORT_WELL) {
+						destinationspots[portarray] = destpos;
+						GLog.i("Pos5 %s", destpos);
+					}
+
+					sheep = true;
 				}
-				
-				portpos = teleportassign[arraypos];
-				destpos = destinationassign[arraypos];
-				
-				GLog.i("ass2 %s", portpos);
-				GLog.i("dest3 %s", destpos);
-				
-				for(int i = 0; i < teleportspots.length; i++) {
-					  if(teleportspots[i] == portpos) {
-						     portarray = i;
-						     GLog.i("Pos4 %s", portarray);
-						     break;
-						  }
-				}
-				
-				if (map[portpos] == Terrain.PORT_WELL){
-					destinationspots[portarray]=destpos;	
-					GLog.i("Pos5 %s", destpos);
-				}
-				
-				sheep=true;
-			}						
-			break;
+				break;
 
-		case Terrain.POISON_TRAP:
-			PoisonTrap.trigger(cell, mob);
-			break;
+			case Terrain.POISON_TRAP:
+				PoisonTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.ALARM_TRAP:
-			AlarmTrap.trigger(cell, mob);
-			break;
+			case Terrain.ALARM_TRAP:
+				AlarmTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.LIGHTNING_TRAP:
-			LightningTrap.trigger(cell, mob);
-			break;
+			case Terrain.LIGHTNING_TRAP:
+				LightningTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.GRIPPING_TRAP:
-			GrippingTrap.trigger(cell, mob);
-			break;
+			case Terrain.GRIPPING_TRAP:
+				GrippingTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.SUMMONING_TRAP:
-			SummoningTrap.trigger(cell, mob);
-			break;
+			case Terrain.SUMMONING_TRAP:
+				SummoningTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.DOOR:
-			Door.enter(cell, mob);
+			case Terrain.DOOR:
+				Door.enter(cell);
 
-		default:
-			trap = false;
+			default:
+				trap = false;
 		}
 
 		if (trap && !fleece && !sheep) {
@@ -413,15 +411,15 @@ public class SafeLevel extends Level {
 			set(cell, Terrain.INACTIVE_TRAP);
 			GameScene.updateMap(cell);
 		}
-		
+
 		if (trap && fleece) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
 			}
 			set(cell, Terrain.WOOL_RUG);
 			GameScene.updateMap(cell);
-		} 	
-		
+		}
+
 		if (trap && sheep) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -429,13 +427,13 @@ public class SafeLevel extends Level {
 			set(cell, Terrain.EMPTY);
 			GameScene.updateMap(cell);
 		}
-	
-		
+
+
 		Plant plant = plants.get(cell);
 		if (plant != null) {
 			plant.activate(mob);
 		}
-		
+
 		Dungeon.observe();
 	}
 
@@ -451,22 +449,23 @@ public class SafeLevel extends Level {
 
 	@Override
 	protected boolean build() {
-		
-		map = Layouts.SAFE_ROOM_DEFAULT.clone();	
-	
+
+		map = Layouts.SAFE_ROOM_DEFAULT.clone();
+
 		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
-	
+
 		entrance = 23 + WIDTH * 15;
 		exit = 0;
 
 
 		return true;
 	}
+
 	@Override
 	protected void decorate() {
 		//do nothing, all decorations are hard-coded.
@@ -484,102 +483,116 @@ public class SafeLevel extends Level {
 			mob2.pos = 25 + WIDTH * 36;
 			mobs.add(mob2);
 			Actor.occupyCell(mob2);		
-			*/	
+			*/
 	}
-	
-	
 
-	
+
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(PrisonLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(PrisonLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_desc");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_desc");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_desc");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_desc");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 
 	protected void createSheep() {
-		 for (int i = 0; i < LENGTH; i++) {				
-				if (map[i]==Terrain.SOKOBAN_SHEEP){SheepSokoban npc = new SheepSokoban(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-				else if (map[i]==Terrain.CORNER_SOKOBAN_SHEEP){SheepSokobanCorner npc = new SheepSokobanCorner(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-				else if (map[i]==Terrain.SWITCH_SOKOBAN_SHEEP){SheepSokobanSwitch npc = new SheepSokobanSwitch(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-				else if (map[i]==Terrain.BLACK_SOKOBAN_SHEEP){SheepSokobanBlack npc = new SheepSokobanBlack(); mobs.add(npc); npc.pos = i; Actor.occupyCell(npc);}
-				else if (map[i]==Terrain.PORT_WELL){
+		for (int i = 0; i < LENGTH; i++) {
+			if (map[i] == Terrain.SOKOBAN_SHEEP) {
+				SheepSokoban npc = new SheepSokoban();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
+				SheepSokobanCorner npc = new SheepSokobanCorner();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
+				SheepSokobanSwitch npc = new SheepSokobanSwitch();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
+				SheepSokobanBlack npc = new SheepSokobanBlack();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.PORT_WELL) {
 				
 					/*
 					Portal portal = new Portal();
 				portal.seed(i, 1);
 				blobs.put(Portal.class, portal);
 				*/
-				}
-				
 			}
+
+		}
 	}
-	
-	
-	protected void createSwitches(){
-		
+
+
+	protected void createSwitches() {
+
 		//spots where your portal switches are
-		
-		
+
+
 		//spots where your portals are
-		
-		
-		
+
+
 		//assign each switch to a portal
-		
-						
+
+
 		//assign each switch to a destination spot
-		
-		
-		
+
+
 		//set the original destination of portals
-		
-				
+
+
 	}
-	
+
 
 	@Override
 	protected void createItems() {
-		 for (int i = 0; i < LENGTH; i++) {				
-				if (first && map[i]==Terrain.SOKOBAN_HEAP){
-					if (Random.Int(5)==0){drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;}
-					else {drop(new Gold(Random.Int(500, 1500)), i).type = Heap.Type.CHEST;}
+		for (int i = 0; i < LENGTH; i++) {
+			if (first && map[i] == Terrain.SOKOBAN_HEAP) {
+				if (Random.Int(5) == 0) {
+					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
+				} else {
+					drop(new Gold(Random.Int(500, 1500)), i).type = Heap.Type.CHEST;
 				}
-			}	
-		 if(first){
-		   addItemToGen(new IronKey(Dungeon.depth) , 0, 23 + WIDTH * 17);
-		 } else {
-			 addItemToGen(new Food(), 0, 23 + WIDTH * 17); 
-		 }
+			}
+		}
+		if (first) {
+			addItemToGen(new IronKey(Dungeon.depth), 0, 23 + WIDTH * 17);
+		} else {
+			addItemToGen(new Food(), 0, 23 + WIDTH * 17);
+		}
 		 /*
 		 if (first){
 		 addItemToGen(new ScrollOfMagicalInfusion(), 4, 11+10*WIDTH);
 		 }
 		 */
-		 
+
 	}
 
 	@Override
 	public int randomRespawnCell() {
 		return -1;
 	}
-		
-	
+
 
 }

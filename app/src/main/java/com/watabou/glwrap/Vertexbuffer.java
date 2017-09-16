@@ -34,7 +34,7 @@ public class Vertexbuffer {
 
 	private static final ArrayList<Vertexbuffer> buffers = new ArrayList<>();
 
-	public Vertexbuffer( FloatBuffer vertices ) {
+	public Vertexbuffer(FloatBuffer vertices) {
 		synchronized (buffers) {
 			int[] ptr = new int[1];
 			GLES20.glGenBuffers(1, ptr, 0);
@@ -49,17 +49,17 @@ public class Vertexbuffer {
 	}
 
 	//For flagging the buffer for a full update without changing anything
-	public void updateVertices(){
+	public void updateVertices() {
 		updateVertices(vertices);
 	}
 
 	//For flagging an update with a full set of new data
-	public void updateVertices( FloatBuffer vertices ){
+	public void updateVertices(FloatBuffer vertices) {
 		updateVertices(vertices, 0, vertices.limit());
 	}
 
 	//For flagging an update with a subset of data changed
-	public void updateVertices( FloatBuffer vertices, int start, int end){
+	public void updateVertices(FloatBuffer vertices, int start, int end) {
 		this.vertices = vertices;
 
 		if (updateStart == -1)
@@ -73,50 +73,50 @@ public class Vertexbuffer {
 			updateEnd = Math.max(end, updateEnd);
 	}
 
-	public void updateGLData(){
+	public void updateGLData() {
 		if (updateStart == -1) return;
 
 		vertices.position(updateStart);
 		bind();
 
-		if (updateStart == 0 && updateEnd == vertices.limit()){
-			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertices.limit()*4, vertices, GLES20.GL_DYNAMIC_DRAW);
+		if (updateStart == 0 && updateEnd == vertices.limit()) {
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertices.limit() * 4, vertices, GLES20.GL_DYNAMIC_DRAW);
 		} else {
-			GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER, updateStart*4, (updateEnd - updateStart)*4, vertices);
+			GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER, updateStart * 4, (updateEnd - updateStart) * 4, vertices);
 		}
 
 		release();
 		updateStart = updateEnd = -1;
 	}
 
-	public void updateGLData2(){
+	public void updateGLData2() {
 		if (updateStart == -1) return;
 
 		vertices.position(updateStart);
 		bind();
 
-		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertices.limit()*4, vertices, GLES20.GL_DYNAMIC_DRAW);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertices.limit() * 4, vertices, GLES20.GL_DYNAMIC_DRAW);
 
 		release();
 		updateStart = updateEnd = -1;
 	}
 
-	public void bind(){
+	public void bind() {
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, id);
 	}
 
-	public void release(){
+	public void release() {
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 	}
 
-	public void delete(){
+	public void delete() {
 		synchronized (buffers) {
 			GLES20.glDeleteBuffers(1, new int[]{id}, 0);
 			buffers.remove(this);
 		}
 	}
 
-	public static void refreshAllBuffers(){
+	public static void refreshAllBuffers() {
 		synchronized (buffers) {
 			for (Vertexbuffer buf : buffers) {
 				buf.updateVertices();

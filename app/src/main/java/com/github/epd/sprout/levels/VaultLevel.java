@@ -35,9 +35,9 @@ public class VaultLevel extends Level {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
-		cleared=true;
+		cleared = true;
 
-  }
+	}
 
 	private static final int ROOM_LEFT = getWidth() / 2 - 2;
 	private static final int ROOM_RIGHT = getWidth() / 2 + 2;
@@ -46,7 +46,8 @@ public class VaultLevel extends Level {
 
 	protected static final float TIME_TO_RESPAWN = 20;
 	protected static final int REGROW_TIMER = 4;
-		@Override
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_VAULT;
 	}
@@ -56,7 +57,6 @@ public class VaultLevel extends Level {
 		return Assets.WATER_CITY;
 	}
 
-	
 
 	@Override
 	protected boolean build() {
@@ -91,13 +91,12 @@ public class VaultLevel extends Level {
 
 		map[exit] = Terrain.WALL;
 
-		
-		
+
 		Painter.fill(this, ROOM_LEFT, ROOM_TOP + 1, ROOM_RIGHT - ROOM_LEFT + 1,
 				ROOM_BOTTOM - ROOM_TOP, Terrain.EMPTY);
 
-		
-				entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
+
+		entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
 				+ Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * getWidth();
 		map[entrance] = Terrain.EMPTY;
 
@@ -132,10 +131,18 @@ public class VaultLevel extends Level {
 			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
 				map[i] = Terrain.WALL_DECO;
 			}
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.EMPTY;}			
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.15){map[i] = Terrain.STATUE;}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.10){map[i] = Terrain.HIGH_GRASS;}
-			if (map[i]==Terrain.EMPTY && heaps.get(i) == null && Random.Float()<.10){map[i] = Terrain.GRASS;}
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.EMPTY;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .15) {
+				map[i] = Terrain.STATUE;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .10) {
+				map[i] = Terrain.HIGH_GRASS;
+			}
+			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Float() < .10) {
+				map[i] = Terrain.GRASS;
+			}
 		}
 
 	}
@@ -153,12 +160,11 @@ public class VaultLevel extends Level {
 	protected void createItems() {
 
 		for (int i = 0; i < 50; i++) {
-		int pos = randomDestination();
-	    drop(new Gold(Random.Int(100,300)), pos);
+			int pos = randomDestination();
+			drop(new Gold(Random.Int(100, 300)), pos);
 		}
-	
+
 	}
-	
 
 
 	//@Override
@@ -167,15 +173,13 @@ public class VaultLevel extends Level {
 	//}
 
 
-
-
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
 			case Terrain.WATER:
-				return Messages.get(CityLevel.class,"water_name");
+				return Messages.get(CityLevel.class, "water_name");
 			case Terrain.HIGH_GRASS:
-				return Messages.get(CityLevel.class,"high_grass_name");
+				return Messages.get(CityLevel.class, "high_grass_name");
 			default:
 				return super.tileName(tile);
 		}
@@ -185,17 +189,17 @@ public class VaultLevel extends Level {
 	public String tileDesc(int tile) {
 		switch (tile) {
 			case Terrain.ENTRANCE:
-				return Messages.get(CityLevel.class,"entrance_desc");
+				return Messages.get(CityLevel.class, "entrance_desc");
 			case Terrain.EXIT:
-				return Messages.get(CityLevel.class,"exit_desc");
+				return Messages.get(CityLevel.class, "exit_desc");
 			case Terrain.WALL_DECO:
 			case Terrain.EMPTY_DECO:
-				return Messages.get(ThiefBossLevel.class,"deco_desc");
+				return Messages.get(ThiefBossLevel.class, "deco_desc");
 			case Terrain.EMPTY_SP:
-				return Messages.get(CityLevel.class,"sp_desc");
+				return Messages.get(CityLevel.class, "sp_desc");
 			case Terrain.STATUE:
 			case Terrain.STATUE_SP:
-				return Messages.get(CityLevel.class,"statue_desc");
+				return Messages.get(CityLevel.class, "statue_desc");
 			case Terrain.BOOKSHELF:
 				return "";
 			default:
@@ -208,11 +212,12 @@ public class VaultLevel extends Level {
 	public void addVisuals(Scene scene) {
 		CavesLevel.addVisuals(this, scene);
 	}
+
 	@Override
 	public int nMobs() {
 		return 16;
 	}
-	
+
 	@Override
 	protected void createMobs() {
 		int nMobs = nMobs();

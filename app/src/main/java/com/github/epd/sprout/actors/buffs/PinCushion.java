@@ -12,9 +12,9 @@ public class PinCushion extends Buff {
 
 	private ArrayList<MissileWeapon> items = new ArrayList<>();
 
-	public void stick(MissileWeapon projectile){
-		for (Item item : items){
-			if (item.isSimilar(projectile)){
+	public void stick(MissileWeapon projectile) {
+		for (Item item : items) {
+			if (item.isSimilar(projectile)) {
 				item.quantity(item.quantity() + projectile.quantity());
 				return;
 			}

@@ -41,9 +41,9 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 
 	}
 
-	
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.TRIDENT;
 
 		level = 0;
@@ -58,86 +58,86 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 
 		defaultAction = AC_FLOOD;
 	}
-	
-	
-	private int distance(){
-		return Math.round(level/5);
+
+
+	private int distance() {
+		return Math.round(level / 5);
 	}
-	
+
 	private void flood(int distance, Hero hero) {
-        charge = 0;
+		charge = 0;
 		ArrayList<Integer> affected = new ArrayList<Integer>();
-		
+
 		int length = Level.getLength();
 		int width = Level.getWidth();
-		for (int i = width; i < length - width; i++){
-			int	 dist = Level.distance(hero.pos, i);
-			  if (dist<distance){
-			    //GLog.i("TRI2 %s", dist);	
-			    if (checkFloodable(i)) {
-			    	affected.add(i);
-			    	Dungeon.level.map[i]=Terrain.WATER;
+		for (int i = width; i < length - width; i++) {
+			int dist = Level.distance(hero.pos, i);
+			if (dist < distance) {
+				//GLog.i("TRI2 %s", dist);
+				if (checkFloodable(i)) {
+					affected.add(i);
+					Dungeon.level.map[i] = Terrain.WATER;
 					Level.water[i] = true;
-			     }
-			   }
-			  
+				}
 			}
+
+		}
 		//GLog.i("TRI1 %s", length);
-		for (int n : affected){
-				int t = Terrain.WATER_TILES;
-				for (int j = 0; j < PathFinder.NEIGHBOURS4.length; j++) {
-					if ((Terrain.flags[Dungeon.level.map[n + PathFinder.NEIGHBOURS4[j]]] & Terrain.UNSTITCHABLE) != 0) {
-						t += 1 << j;	
-						
-					}
+		for (int n : affected) {
+			int t = Terrain.WATER_TILES;
+			for (int j = 0; j < PathFinder.NEIGHBOURS4.length; j++) {
+				if ((Terrain.flags[Dungeon.level.map[n + PathFinder.NEIGHBOURS4[j]]] & Terrain.UNSTITCHABLE) != 0) {
+					t += 1 << j;
+
 				}
-				
-				Char ch = Actor.findChar(n);
-				if (ch != null && ch != hero) {
-					Buff.affect(ch, Slow.class, Slow.duration(ch) / 3 + level);
-				}
-				
-				Dungeon.level.map[n] = t;
-				//Level.water[i] = true;
-				GameScene.updateMap(n);		  
+			}
+
+			Char ch = Actor.findChar(n);
+			if (ch != null && ch != hero) {
+				Buff.affect(ch, Slow.class, Slow.duration(ch) / 3 + level);
+			}
+
+			Dungeon.level.map[n] = t;
+			//Level.water[i] = true;
+			GameScene.updateMap(n);
 		}
 		Dungeon.observe();
-		
+
 	}
-	
-	private boolean checkFloodable (int cell){
-		
-		boolean check=false;
-		
-		if ((Dungeon.level.map[cell]==Terrain.EMPTY ||
-			Dungeon.level.map[cell]==Terrain.GRASS ||	
-			Dungeon.level.map[cell]==Terrain.HIGH_GRASS ||	
-			Dungeon.level.map[cell]==Terrain.EMBERS ||
-			Dungeon.level.map[cell]==Terrain.EMPTY_DECO ||
-			Dungeon.level.map[cell]==Terrain.SIGN ||
-			Dungeon.level.map[cell]==Terrain.SHRUB ||
-			Dungeon.level.map[cell]==Terrain.STATUE ||
-			Dungeon.level.map[cell]==Terrain.SECRET ||
-			Dungeon.level.map[cell]==Terrain.AVOID)
-			&& 
-			!(Dungeon.level.map[cell]==Terrain.UNSTITCHABLE||Dungeon.level.map[cell]==Terrain.WELL)
-				){
-			check=true;
-		} 
-		
-		if (Level.water[cell]){
-			check=true;			
+
+	private boolean checkFloodable(int cell) {
+
+		boolean check = false;
+
+		if ((Dungeon.level.map[cell] == Terrain.EMPTY ||
+				Dungeon.level.map[cell] == Terrain.GRASS ||
+				Dungeon.level.map[cell] == Terrain.HIGH_GRASS ||
+				Dungeon.level.map[cell] == Terrain.EMBERS ||
+				Dungeon.level.map[cell] == Terrain.EMPTY_DECO ||
+				Dungeon.level.map[cell] == Terrain.SIGN ||
+				Dungeon.level.map[cell] == Terrain.SHRUB ||
+				Dungeon.level.map[cell] == Terrain.STATUE ||
+				Dungeon.level.map[cell] == Terrain.SECRET ||
+				Dungeon.level.map[cell] == Terrain.AVOID)
+				&&
+				!(Dungeon.level.map[cell] == Terrain.UNSTITCHABLE || Dungeon.level.map[cell] == Terrain.WELL)
+				) {
+			check = true;
 		}
-		
-		if(Dungeon.level.map[cell]==Terrain.ENTRANCE || Dungeon.level.map[cell]==Terrain.EXIT){
-			check=false;
+
+		if (Level.water[cell]) {
+			check = true;
 		}
-		
+
+		if (Dungeon.level.map[cell] == Terrain.ENTRANCE || Dungeon.level.map[cell] == Terrain.EXIT) {
+			check = false;
+		}
+
 		return check;
 	}
-	
-	
-	public static final String AC_FLOOD = Messages.get(NeptunusTrident.class,"ac_flood");
+
+
+	public static final String AC_FLOOD = Messages.get(NeptunusTrident.class, "ac_flood");
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -150,23 +150,23 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_FLOOD)) {
-			int distance=distance();
-			GLog.p(Messages.get(this,"ready"));
-			flood(distance, hero);		
+			int distance = distance();
+			GLog.p(Messages.get(this, "ready"));
+			flood(distance, hero);
 		} else
 			super.execute(hero, action);
 	}
 
-	
+
 	public class Flooding extends WeaponBuff {
 
 		@Override
 		public boolean act() {
 			if (charge < chargeCap) {
-				charge+=level;
+				charge += level;
 				if (charge >= chargeCap) {
 					charge = chargeCap;
-					GLog.p(Messages.get(NeptunusTrident.class,"buffdesc"));
+					GLog.p(Messages.get(NeptunusTrident.class, "buffdesc"));
 				}
 				updateQuickslot();
 			}
@@ -177,7 +177,7 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 
 		@Override
 		public String toString() {
-			return Messages.get(NeptunusTrident.class,"buffname");
+			return Messages.get(NeptunusTrident.class, "buffname");
 		}
 
 		@Override
@@ -196,12 +196,12 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 		}
 
 	}
-	
+
 	@Override
 	protected WeaponBuff passiveBuff() {
 		return new Flooding();
 	}
-	
+
 }
 
 

@@ -27,10 +27,10 @@ import com.github.epd.sprout.sprites.ItemSprite.Glowing;
 
 public class Slashing extends Weapon.Enchantment {
 
-	private static final String TXT_SLASHING = Messages.get(Slashing.class,"name");
+	private static final String TXT_SLASHING = Messages.get(Slashing.class, "name");
 
 	private static ItemSprite.Glowing GREEN = new ItemSprite.Glowing(0x00FF00);
-	
+
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
@@ -39,17 +39,17 @@ public class Slashing extends Weapon.Enchantment {
 	private int[] points = new int[2];
 	private int nPoints;
 
-	
-	public static final int[] NEIGHBOURS8 = { +1, 
-		                                      -1, 
-		                                       +Level.getWidth(),
-		                                       -Level.getWidth(),
-		                                       
-		                                       +1 + Level.getWidth(), 
-		                                       +1 - Level.getWidth(), 
-		                                       -1 + Level.getWidth(), 
-		                                       -1 - Level.getWidth() };
-	
+
+	public static final int[] NEIGHBOURS8 = {+1,
+			-1,
+			+Level.getWidth(),
+			-Level.getWidth(),
+
+			+1 + Level.getWidth(),
+			+1 - Level.getWidth(),
+			-1 + Level.getWidth(),
+			-1 - Level.getWidth()};
+
 	/*  -W-1 -W  -W+1
 	 *  -1    P  +1
 	 *  W-1   W  W+1
@@ -60,37 +60,37 @@ public class Slashing extends Weapon.Enchantment {
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		int level = Math.max(0, weapon.level);
 
-		if (defender.pos-attacker.pos == 1){
-			
-	//		points[0] = [attacker.pos-Level.W]
-			
-		} else if (defender.pos-attacker.pos == -1) {
-			
-			
-		} else if (defender.pos-attacker.pos == Level.getWidth()) {
-			
-			
-		} else if (defender.pos-attacker.pos == -Level.getWidth()) {
-			
-			
-		} else if (defender.pos-attacker.pos == Level.getWidth()+1) {
-			
-			
-		} else if (defender.pos-attacker.pos == Level.getWidth()-1) {
-			
-			
-		}else if (defender.pos-attacker.pos == -Level.getWidth()-1) {
-			
-			
-		}else if (defender.pos-attacker.pos == -Level.getWidth()+1) {
-			
-			
-		}else  {
-			
-			
+		if (defender.pos - attacker.pos == 1) {
+
+			//		points[0] = [attacker.pos-Level.W]
+
+		} else if (defender.pos - attacker.pos == -1) {
+
+
+		} else if (defender.pos - attacker.pos == Level.getWidth()) {
+
+
+		} else if (defender.pos - attacker.pos == -Level.getWidth()) {
+
+
+		} else if (defender.pos - attacker.pos == Level.getWidth() + 1) {
+
+
+		} else if (defender.pos - attacker.pos == Level.getWidth() - 1) {
+
+
+		} else if (defender.pos - attacker.pos == -Level.getWidth() - 1) {
+
+
+		} else if (defender.pos - attacker.pos == -Level.getWidth() + 1) {
+
+
+		} else {
+
+
 		}
-			
-		
+
+
 		int dmg = damage;
 		for (int i = 1; i <= level + 1; i++) {
 			dmg = Math.max(dmg, attacker.damageRoll() - i);

@@ -34,13 +34,13 @@ import java.io.IOException;
 
 public class WndGame extends Window {
 
-	private static final String TXT_SETTINGS = Messages.get(WndGame.class,"settings");
-	private static final String TXT_CHALLEGES = Messages.get(WndGame.class,"challenges");
-	private static final String TXT_RANKINGS = Messages.get(WndGame.class,"rankings");
-	private static final String TXT_START = Messages.get(WndGame.class,"start");
-	private static final String TXT_MENU = Messages.get(WndGame.class,"menu");
-	private static final String TXT_EXIT = Messages.get(WndGame.class,"exit");
-	private static final String TXT_RETURN = Messages.get(WndGame.class,"return");
+	private static final String TXT_SETTINGS = Messages.get(WndGame.class, "settings");
+	private static final String TXT_CHALLEGES = Messages.get(WndGame.class, "challenges");
+	private static final String TXT_RANKINGS = Messages.get(WndGame.class, "rankings");
+	private static final String TXT_START = Messages.get(WndGame.class, "start");
+	private static final String TXT_MENU = Messages.get(WndGame.class, "menu");
+	private static final String TXT_EXIT = Messages.get(WndGame.class, "exit");
+	private static final String TXT_RETURN = Messages.get(WndGame.class, "return");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -98,7 +98,7 @@ public class WndGame extends Window {
 		}
 
 		addButtons(
-		// Main menu
+				// Main menu
 				new NewRedButton(TXT_MENU) {
 					@Override
 					protected void onClick() {

@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class Swarm extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SwarmSprite.class;
 
 		HP = HT = 100;
@@ -52,8 +52,11 @@ public class Swarm extends Mob {
 
 		flying = true;
 
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)){loot = new PotionOfMending();}
-		else {loot = new PotionOfHealing();}
+		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			loot = new PotionOfMending();
+		} else {
+			loot = new PotionOfHealing();
+		}
 		//loot = new PotionOfMending(); potential nerf
 		lootChance = 0.2f; // by default, see die()
 	}
@@ -88,8 +91,8 @@ public class Swarm extends Mob {
 			ArrayList<Integer> candidates = new ArrayList<Integer>();
 			boolean[] passable = Level.passable;
 
-			int[] neighbours = { pos + 1, pos - 1, pos + Level.getWidth(),
-					pos - Level.getWidth() };
+			int[] neighbours = {pos + 1, pos - 1, pos + Level.getWidth(),
+					pos - Level.getWidth()};
 			for (int n : neighbours) {
 				if (passable[n] && Actor.findChar(n) == null) {
 					candidates.add(n);
@@ -104,7 +107,7 @@ public class Swarm extends Mob {
 				clone.state = clone.HUNTING;
 
 				if (Dungeon.level.map[clone.pos] == Terrain.DOOR) {
-					Door.enter(clone.pos, clone);
+					Door.enter(clone.pos);
 				}
 
 				GameScene.add(clone, SPLIT_DELAY);
@@ -124,7 +127,7 @@ public class Swarm extends Mob {
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	private Swarm split() {
@@ -142,20 +145,25 @@ public class Swarm extends Mob {
 	@Override
 	public void die(Object cause) {
 		// sets drop chance
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {lootChance = 1f;}
-		else {lootChance = 0.5f / ((5 + Dungeon.limitedDrops.swarmHP.count) / (generation + 1));}
+		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			lootChance = 1f;
+		} else {
+			lootChance = 0.5f / ((5 + Dungeon.limitedDrops.swarmHP.count) / (generation + 1));
+		}
 		super.die(cause);
 	}
 
 	@Override
 	protected Item createLoot() {
 		Dungeon.limitedDrops.swarmHP.count++;
-		if (Dungeon.limitedDrops.swarmHP.count>5){ Dungeon.limitedDrops.swarmHP.count=5; }
+		if (Dungeon.limitedDrops.swarmHP.count > 5) {
+			Dungeon.limitedDrops.swarmHP.count = 5;
+		}
 		return super.createLoot();
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

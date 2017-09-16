@@ -36,16 +36,16 @@ import java.util.ArrayList;
 
 public class Weightstone extends Item {
 
-	private static final String TXT_SELECT_WEAPON = Messages.get(Weightstone.class,"select");
-	private static final String TXT_LIGHT = Messages.get(Weightstone.class,"light");
-	private static final String TXT_HEAVY = Messages.get(Weightstone.class,"heavy");
+	private static final String TXT_SELECT_WEAPON = Messages.get(Weightstone.class, "select");
+	private static final String TXT_LIGHT = Messages.get(Weightstone.class, "light");
+	private static final String TXT_HEAVY = Messages.get(Weightstone.class, "heavy");
 
 	private static final float TIME_TO_APPLY = 2;
 
-	private static final String AC_APPLY = Messages.get(Weightstone.class,"ac_apply");
+	private static final String AC_APPLY = Messages.get(Weightstone.class, "ac_apply");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WEIGHT;
 
 		stackable = true;
@@ -111,7 +111,7 @@ public class Weightstone extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {
@@ -125,11 +125,11 @@ public class Weightstone extends Item {
 
 	public class WndBalance extends Window {
 
-		private final String TXT_CHOICE = Messages.get(Weightstone.class,"choice");
+		private final String TXT_CHOICE = Messages.get(Weightstone.class, "choice");
 
-		private final String TXT_LIGHT = Messages.get(Weightstone.class,"lighter");
-		private final String TXT_HEAVY = Messages.get(Weightstone.class,"heavier");
-		private final String TXT_CANCEL = Messages.get(Weightstone.class,"cancel");
+		private final String TXT_LIGHT = Messages.get(Weightstone.class, "lighter");
+		private final String TXT_HEAVY = Messages.get(Weightstone.class, "heavier");
+		private final String TXT_CANCEL = Messages.get(Weightstone.class, "cancel");
 
 		private static final int WIDTH = 120;
 		private static final int MARGIN = 2;
@@ -143,10 +143,10 @@ public class Weightstone extends Item {
 			titlebar.setRect(0, 0, WIDTH, 0);
 			add(titlebar);
 
-			RenderedTextMultiline tfMesage = PixelScene.renderMultiline( Messages.get(Weightstone.class, "choice"), 8 );
+			RenderedTextMultiline tfMesage = PixelScene.renderMultiline(Messages.get(Weightstone.class, "choice"), 8);
 			tfMesage.maxWidth(WIDTH - MARGIN * 2);
 			tfMesage.setPos(MARGIN, titlebar.bottom() + MARGIN);
-			add( tfMesage );
+			add(tfMesage);
 
 			float pos = tfMesage.top() + tfMesage.height();
 

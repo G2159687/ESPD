@@ -32,22 +32,24 @@ public class Strength extends Buff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
-	public String desc() { return Messages.get(this,"desc", LEVEL); }
-	
+	public String desc() {
+		return Messages.get(this, "desc", LEVEL);
+	}
+
 	@Override
 	public void detach() {
-		
+
 		Buff buff = Dungeon.hero.buff(FullMoonStrength.class);
-		if (buff != null){
-		
+		if (buff != null) {
+
 			buff.detach();
-		} else {		
-		super.detach();
+		} else {
+			super.detach();
 		}
-		
+
 	}
 }

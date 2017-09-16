@@ -30,10 +30,10 @@ import com.github.epd.sprout.sprites.BlueWraithSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Random;
 
-public class BlueWraith extends Wraith  {
-	
+public class BlueWraith extends Wraith {
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BlueWraithSprite.class;
 
 		HP = HT = 195;
@@ -41,15 +41,15 @@ public class BlueWraith extends Wraith  {
 		baseSpeed = 2f;
 
 		EXP = 11;
-		
+
 		loot = new RedDewdrop();
 		lootChance = 1.0f; // by default, see die()
-		
+
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class BlueWraith extends Wraith  {
 		defenseSkill = 24;
 		enemySeen = true;
 	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(20, 90);
@@ -78,30 +78,30 @@ public class BlueWraith extends Wraith  {
 	public int attackSkill(Char target) {
 		return 46;
 	}
-	
+
 	@Override
 	public int dr() {
 		return 25;
 	}
 
 	public static BlueWraith spawnAt(int pos) {
-		
-            BlueWraith b = new BlueWraith();  
-        	b.adjustStats(Dungeon.depth);
- 			b.pos = pos;
- 			b.state = b.HUNTING;
- 			GameScene.add(b, SPAWN_DELAY);
 
- 			b.sprite.alpha(0);
- 			b.sprite.parent.add(new AlphaTweener(b.sprite, 1, 0.5f));
+		BlueWraith b = new BlueWraith();
+		b.adjustStats(Dungeon.depth);
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
 
- 			b.sprite.emitter().burst(ShadowParticle.CURSE, 5);
+		b.sprite.alpha(0);
+		b.sprite.parent.add(new AlphaTweener(b.sprite, 1, 0.5f));
 
- 			return b;
-         		
-		
+		b.sprite.emitter().burst(ShadowParticle.CURSE, 5);
+
+		return b;
+
+
 	}
-	
+
 
 	/*private int level;
 				
@@ -191,9 +191,6 @@ public class BlueWraith extends Wraith  {
 		next();
 	}
 		*/
-	
 
 
-
-		
 }

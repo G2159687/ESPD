@@ -52,7 +52,7 @@ public class GamesInProgress {
 	}
 
 	public static void set(HeroClass cl, int depth, int level,
-			boolean challenges) {
+	                       boolean challenges) {
 		Info info = new Info();
 		info.depth = depth;
 		info.level = level;

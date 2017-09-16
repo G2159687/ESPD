@@ -31,10 +31,10 @@ import com.watabou.utils.Random;
 public class PotionOfConstitution extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.POTION_HONEY;
 		bones = true;
-		message = Messages.get(this,"eat");
+		message = Messages.get(this, "eat");
 		hornValue = 6;
 	}
 
@@ -44,21 +44,21 @@ public class PotionOfConstitution extends Food {
 		super.execute(hero, action);
 
 		if (action.equals(AC_EAT)) {
-			 hero.HT = hero.HT + (Random.Int(5, 20));
-				hero.HP = hero.HP+Math.min(((hero.HT-hero.HP)/2), hero.HT-hero.HP);
-				Buff.detach(hero, Poison.class);
-				Buff.detach(hero, Cripple.class);
-				Buff.detach(hero, Weakness.class);
-				Buff.detach(hero, Bleeding.class);
+			hero.HT = hero.HT + (Random.Int(5, 20));
+			hero.HP = hero.HP + Math.min(((hero.HT - hero.HP) / 2), hero.HT - hero.HP);
+			Buff.detach(hero, Poison.class);
+			Buff.detach(hero, Cripple.class);
+			Buff.detach(hero, Weakness.class);
+			Buff.detach(hero, Bleeding.class);
 
-				hero.sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 4);
-			
+			hero.sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 4);
+
 		}
-	}	
-	
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 

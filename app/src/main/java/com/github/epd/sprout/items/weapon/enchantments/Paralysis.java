@@ -28,7 +28,7 @@ import com.watabou.utils.Random;
 
 public class Paralysis extends Weapon.Enchantment {
 
-	private static final String TXT_STUNNING = Messages.get(Paralysis.class,"name");
+	private static final String TXT_STUNNING = Messages.get(Paralysis.class, "name");
 
 	private static ItemSprite.Glowing YELLOW = new ItemSprite.Glowing(0xCCAA44);
 
@@ -36,7 +36,7 @@ public class Paralysis extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		// lvl 0 - 13%

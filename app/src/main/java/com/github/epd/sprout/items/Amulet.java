@@ -29,10 +29,10 @@ import java.util.ArrayList;
 
 public class Amulet extends Item {
 
-	private static final String AC_END = Messages.get(Amulet.class,"ac_end");
+	private static final String AC_END = Messages.get(Amulet.class, "ac_end");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.AMULET;
 
 		unique = true;
@@ -89,6 +89,6 @@ public class Amulet extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

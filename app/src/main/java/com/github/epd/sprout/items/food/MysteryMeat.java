@@ -33,10 +33,10 @@ import com.watabou.utils.Random;
 public class MysteryMeat extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MYSTERYMEAT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
-		message = Messages.get(this,"eat_msg");
+		message = Messages.get(this, "eat_msg");
 		hornValue = 1;
 	}
 
@@ -48,30 +48,30 @@ public class MysteryMeat extends Food {
 		if (action.equals(AC_EAT)) {
 
 			switch (Random.Int(5)) {
-			case 0:
-				GLog.w(Messages.get(this,"hot"));
-				Buff.affect(hero, Burning.class).reignite(hero);
-				break;
-			case 1:
-				GLog.w(Messages.get(this,"legs"));
-				Buff.prolong(hero, Roots.class, Paralysis.duration(hero));
-				break;
-			case 2:
-				GLog.w(Messages.get(this,"not_well"));
-				Buff.affect(hero, Poison.class).set(
-						Poison.durationFactor(hero) * hero.HT / 5);
-				break;
-			case 3:
-				GLog.w(Messages.get(this,"stuffed"));
-				Buff.prolong(hero, Slow.class, Slow.duration(hero));
-				break;
+				case 0:
+					GLog.w(Messages.get(this, "hot"));
+					Buff.affect(hero, Burning.class).reignite(hero);
+					break;
+				case 1:
+					GLog.w(Messages.get(this, "legs"));
+					Buff.prolong(hero, Roots.class, Paralysis.duration(hero));
+					break;
+				case 2:
+					GLog.w(Messages.get(this, "not_well"));
+					Buff.affect(hero, Poison.class).set(
+							Poison.durationFactor(hero) * hero.HT / 5);
+					break;
+				case 3:
+					GLog.w(Messages.get(this, "stuffed"));
+					Buff.prolong(hero, Slow.class, Slow.duration(hero));
+					break;
 			}
 		}
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

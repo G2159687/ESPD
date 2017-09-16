@@ -38,11 +38,11 @@ import java.util.HashSet;
 public class Scorpio extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = ScorpioSprite.class;
 
-		HP = HT = 100+(adj(0)*Random.NormalIntRange(1, 3));
-		defenseSkill = 24+adj(1);
+		HP = HT = 100 + (adj(0) * Random.NormalIntRange(1, 3));
+		defenseSkill = 24 + adj(1);
 		viewDistance = Light.DISTANCE;
 
 		EXP = 14;
@@ -50,30 +50,30 @@ public class Scorpio extends Mob {
 
 		loot = new PotionOfHealing();
 		lootChance = 0.2f;
-		
+
 		lootOther = new MysteryMeat();
 		lootChanceOther = 0.333f; // by default, see die()
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(20, 52+adj(0));
+		return Random.NormalIntRange(20, 52 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 36+adj(1);
+		return 36 + adj(1);
 	}
 
 	@Override
 	public int dr() {
-		return 16+adj(1);
+		return 16 + adj(1);
 	}
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		Ballistica attack = new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE);
-		return !Level.adjacent( pos, enemy.pos ) && attack.collisionPos == enemy.pos;
+		Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+		return !Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -108,10 +108,11 @@ public class Scorpio extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Leech.class);
 		RESISTANCES.add(Poison.class);

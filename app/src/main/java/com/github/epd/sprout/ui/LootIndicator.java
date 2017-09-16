@@ -43,7 +43,7 @@ public class LootIndicator extends Tag {
 		slot = new ItemSlot() {
 			@Override
 			protected void onClick() {
-				if (Dungeon.hero.handle(Dungeon.hero.pos)){
+				if (Dungeon.hero.handle(Dungeon.hero.pos)) {
 					Dungeon.hero.next();
 				}
 
@@ -70,11 +70,12 @@ public class LootIndicator extends Tag {
 				Item item = heap.type == Heap.Type.CHEST
 						|| heap.type == Heap.Type.MIMIC ? ItemSlot.CHEST
 						: heap.type == Heap.Type.LOCKED_CHEST ? ItemSlot.LOCKED_CHEST
-								: heap.type == Heap.Type.CRYSTAL_CHEST ? ItemSlot.CRYSTAL_CHEST
-										: heap.type == Heap.Type.TOMB ? ItemSlot.TOMB
-												: heap.type == Heap.Type.SKELETON ? ItemSlot.SKELETON
-														: heap.type == Heap.Type.REMAINS ? ItemSlot.REMAINS
-																: heap.peek();
+						: heap.type == Heap.Type.HARD_TOMB ? ItemSlot.GRAVE
+						: heap.type == Heap.Type.CRYSTAL_CHEST ? ItemSlot.CRYSTAL_CHEST
+						: heap.type == Heap.Type.TOMB ? ItemSlot.TOMB
+						: heap.type == Heap.Type.SKELETON ? ItemSlot.SKELETON
+						: heap.type == Heap.Type.REMAINS ? ItemSlot.REMAINS
+						: heap.peek();
 				if (item != lastItem || item.quantity() != lastQuantity) {
 					lastItem = item;
 					lastQuantity = item.quantity();

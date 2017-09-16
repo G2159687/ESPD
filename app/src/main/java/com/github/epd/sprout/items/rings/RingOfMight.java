@@ -5,7 +5,7 @@ import com.github.epd.sprout.messages.Messages;
 public class RingOfMight extends Ring {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class RingOfMight extends Ring {
 
 	@Override
 	public String desc() {
-		return isKnown() ? Messages.get(this,"desc")
+		return isKnown() ? Messages.get(this, "desc")
 				: super.desc();
 	}
 

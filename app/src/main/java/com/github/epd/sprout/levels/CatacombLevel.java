@@ -37,10 +37,10 @@ public class CatacombLevel extends RegularLevel {
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
-		cleared=true;
+		cleared = true;
 	}
 
-	
+
 	@Override
 	public String tilesTex() {
 		return Assets.TILES_SEWERS;
@@ -60,7 +60,7 @@ public class CatacombLevel extends RegularLevel {
 	protected boolean[] grass() {
 		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 4);
 	}
-	
+
 	@Override
 	protected boolean assignRoomType() {
 
@@ -90,7 +90,7 @@ public class CatacombLevel extends RegularLevel {
 		return true;
 	}
 
-	
+
 	@Override
 	protected void decorate() {
 
@@ -123,21 +123,30 @@ public class CatacombLevel extends RegularLevel {
 				}
 			}
 		}
-		
-				
+
+
 		int length = Level.getLength();
-		
+
 		for (int i = 0; i < length; i++) {
-			
-					
-			if (map[i]==Terrain.ENTRANCE){map[i] = Terrain.PEDESTAL;}
-			if (map[i]==Terrain.EXIT){map[i] = Terrain.PEDESTAL; if (!Dungeon.sanchikarahdeath){drop(new SanChikarahDeath(), i);}}
-			if (map[i]==Terrain.CHASM){map[i] = Terrain.EMPTY;}
-											
+
+
+			if (map[i] == Terrain.ENTRANCE) {
+				map[i] = Terrain.PEDESTAL;
+			}
+			if (map[i] == Terrain.EXIT) {
+				map[i] = Terrain.PEDESTAL;
+				if (!Dungeon.sanchikarahdeath) {
+					drop(new SanChikarahDeath(), i);
+				}
+			}
+			if (map[i] == Terrain.CHASM) {
+				map[i] = Terrain.EMPTY;
+			}
+
 		}
 	}
 
-	
+
 	@Override
 	public void addVisuals(Scene scene) {
 		super.addVisuals(scene);
@@ -151,7 +160,7 @@ public class CatacombLevel extends RegularLevel {
 			}
 		}
 	}
-	
+
 	//@Override
 	//public int randomRespawnCell() {
 	//	return -1;
@@ -160,22 +169,22 @@ public class CatacombLevel extends RegularLevel {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(SewerLevel.class,"water_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(SewerLevel.class, "water_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
 
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(SewerLevel.class,"empty_deco_desc");
-		case Terrain.BOOKSHELF:
-			return Messages.get(SewerLevel.class,"bookshelf_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(SewerLevel.class, "empty_deco_desc");
+			case Terrain.BOOKSHELF:
+				return Messages.get(SewerLevel.class, "bookshelf_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 

@@ -28,7 +28,7 @@ import com.watabou.utils.Random;
 
 public class Poison extends Weapon.Enchantment {
 
-	private static final String TXT_VENOMOUS = Messages.get(Poison.class,"name");
+	private static final String TXT_VENOMOUS = Messages.get(Poison.class, "name");
 
 	private static ItemSprite.Glowing PURPLE = new ItemSprite.Glowing(0x4400AA);
 
@@ -36,7 +36,7 @@ public class Poison extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		// lvl 0 - 33%

@@ -103,7 +103,7 @@ public class WindParticle extends PixelParticle {
 					delay = Random.Float(5);
 
 					((WindParticle) recycle(WindParticle.class)).reset(x
-							+ Random.Float(DungeonTilemap.SIZE),
+									+ Random.Float(DungeonTilemap.SIZE),
 							y + Random.Float(DungeonTilemap.SIZE));
 				}
 			}

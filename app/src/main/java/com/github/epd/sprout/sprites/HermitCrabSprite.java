@@ -43,7 +43,7 @@ public class HermitCrabSprite extends MobSprite {
 		zap = attack.clone();
 
 		die = new Animation(12, false);
-		die.frames(frames, 10, 11 ,12 ,13);
+		die.frames(frames, 10, 11, 12, 13);
 
 		play(idle);
 	}
@@ -51,7 +51,7 @@ public class HermitCrabSprite extends MobSprite {
 	@Override
 	public void zap(int pos) {
 
-		parent.add( new Lightning( ch.pos, pos, (HermitCrab)ch ) );
+		parent.add(new Lightning(ch.pos, pos, (HermitCrab) ch));
 
 		turnTo(ch.pos, pos);
 		play(zap);

@@ -28,17 +28,17 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Degradation extends Group {
 
-	private static int[] WEAPON = { +2, -2, +1, -1, 0, 0, -1, +1, -2, +2, -2,
-			0, 0, +2 };
+	private static int[] WEAPON = {+2, -2, +1, -1, 0, 0, -1, +1, -2, +2, -2,
+			0, 0, +2};
 
-	private static int[] ARMOR = { -2, -1, -1, -1, +1, -1, +2, -1, -2, 0, -1,
-			0, 0, 0, +1, 0, +2, 0, -1, +1, +1, +1, -1, +2, 0, +2, +1, +2 };
+	private static int[] ARMOR = {-2, -1, -1, -1, +1, -1, +2, -1, -2, 0, -1,
+			0, 0, 0, +1, 0, +2, 0, -1, +1, +1, +1, -1, +2, 0, +2, +1, +2};
 
-	private static int[] RING = { 0, -1, -1, 0, 0, 0, +1, 0, -1, +1, +1, +1,
-			-1, +2, 0, +2, +1, +2 };
+	private static int[] RING = {0, -1, -1, 0, 0, 0, +1, 0, -1, +1, +1, +1,
+			-1, +2, 0, +2, +1, +2};
 
-	private static int[] WAND = { +2, -2, +1, -1, 0, 0, -1, +1, -2, +2, +1, -2,
-			+2, -1 };
+	private static int[] WAND = {+2, -2, +1, -1, 0, 0, -1, +1, -2, +2, +1, -2,
+			+2, -1};
 
 	public static Degradation weapon(PointF p) {
 		return new Degradation(p, WEAPON);

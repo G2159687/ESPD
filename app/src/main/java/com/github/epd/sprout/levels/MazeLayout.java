@@ -18,7 +18,7 @@
 package com.github.epd.sprout.levels;
 
 public class MazeLayout {
-	
+
 	//32X32
 	private static final int W = Terrain.WALL;
 	private static final int T = Terrain.SHRUB;
@@ -34,20 +34,20 @@ public class MazeLayout {
 
 	private static final int M = Terrain.WALL_DECO;
 	//private static final int P = Terrain.PEDESTAL;
-	
+
 	private static final int A = Terrain.SOKOBAN_SHEEP;
 	private static final int X = Terrain.CORNER_SOKOBAN_SHEEP;
 	private static final int C = Terrain.SWITCH_SOKOBAN_SHEEP;
 	private static final int B = Terrain.BLACK_SOKOBAN_SHEEP;
 	private static final int H = Terrain.SOKOBAN_HEAP;
-    private static final int I = Terrain.SOKOBAN_ITEM_REVEAL;
-    private static final int F = Terrain.FLEECING_TRAP;
-    private static final int U = Terrain.STATUE;
-    private static final int G = Terrain.CHANGE_SHEEP_TRAP;
-    private static final int S = Terrain.SECRET_DOOR;
-    private static final int R = Terrain.PORT_WELL;
-    private static final int V = Terrain.SOKOBAN_PORT_SWITCH;
-    /*
+	private static final int I = Terrain.SOKOBAN_ITEM_REVEAL;
+	private static final int F = Terrain.FLEECING_TRAP;
+	private static final int U = Terrain.STATUE;
+	private static final int G = Terrain.CHANGE_SHEEP_TRAP;
+	private static final int S = Terrain.SECRET_DOOR;
+	private static final int R = Terrain.PORT_WELL;
+	private static final int V = Terrain.SOKOBAN_PORT_SWITCH;
+	/*
     public boolean[][] maze;
 	*/
     /*
@@ -106,7 +106,7 @@ public class MazeLayout {
     */
     
     /*
-	protected void buildMazeMask() {
+    protected void buildMazeMask() {
 		
 	maze = new boolean[Level.WIDTH][Level.HEIGHT];
 		

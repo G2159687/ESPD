@@ -10,28 +10,28 @@ import com.github.epd.sprout.messages.Messages;
 
 public class VenomGas extends Blob {
 
-    @Override
-    protected void evolve() {
-        super.evolve();
+	@Override
+	protected void evolve() {
+		super.evolve();
 
-        Char ch;
-        for (int i=0; i < LENGTH; i++) {
-            if (cur[i] > 0 && (ch = Actor.findChar(i)) != null) {
-                if (!ch.immunities().contains(this.getClass()))
-                    Buff.affect(ch, Venom.class).set(2f);
-            }
-        }
-    }
+		Char ch;
+		for (int i = 0; i < LENGTH; i++) {
+			if (cur[i] > 0 && (ch = Actor.findChar(i)) != null) {
+				if (!ch.immunities().contains(this.getClass()))
+					Buff.affect(ch, Venom.class).set(2f);
+			}
+		}
+	}
 
-    @Override
-    public void use( BlobEmitter emitter ) {
-        super.use( emitter );
+	@Override
+	public void use(BlobEmitter emitter) {
+		super.use(emitter);
 
-        emitter.pour( Speck.factory(Speck.VENOM), 0.6f );
-    }
+		emitter.pour(Speck.factory(Speck.VENOM), 0.6f);
+	}
 
-    @Override
-    public String tileDesc() {
-        return Messages.get(this,"desc");
-    }
+	@Override
+	public String tileDesc() {
+		return Messages.get(this, "desc");
+	}
 }

@@ -64,41 +64,40 @@ public class MinesBossLevel extends Level {
 		color2 = 0xb9d661;
 		WIDTH = 48;
 		HEIGHT = 48;
-		LENGTH = HEIGHT*WIDTH;
+		LENGTH = HEIGHT * WIDTH;
 	}
-		
-	
+
+
 	private boolean entered = false;
 	private static final String ENTERED = "entered";
-	
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(ENTERED, entered);
-		
+
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);		
+		super.restoreFromBundle(bundle);
 		entered = bundle.getBoolean(ENTERED);
-		
+
 	}
 
-  
-	
+
 	@Override
 	public void press(int cell, Char ch) {
-		
+
 
 		if (ch == Dungeon.hero && !entered) {
 
 			entered = true;
 			locked = true;
 			GameScene.show(new WndOtilukeMessage());
-			
+
 		}
-		
+
 		if (pit[cell] && ch == Dungeon.hero) {
 			Chasm.heroFall(cell);
 			return;
@@ -110,46 +109,46 @@ public class MinesBossLevel extends Level {
 			timeFreeze = ch.buff(TimekeepersHourglass.timeFreeze.class);
 
 		boolean trap = false;
-		
+
 		switch (map[cell]) {
 
-			case Terrain.FLEECING_TRAP:			
-					
-			if (ch != null && ch==Dungeon.hero){
-				trap = true;
-				FleecingTrap.trigger(cell, ch);
-			}
-			break;
-			
-		case Terrain.CHANGE_SHEEP_TRAP:
-			
-			if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep){
-				trap = true;
-				ChangeSheepTrap.trigger(cell, ch);
-			}						
-			break;
-			
-				
-		case Terrain.HIGH_GRASS:
-			HighGrass.trample(this, cell, ch);
-			break;
+			case Terrain.FLEECING_TRAP:
 
-		case Terrain.WELL:
-			WellWater.affectCell(cell);
-			break;
+				if (ch != null && ch == Dungeon.hero) {
+					trap = true;
+					FleecingTrap.trigger(cell, ch);
+				}
+				break;
 
-		case Terrain.ALCHEMY:
-			if (ch == null) {
-				Alchemy.transmute(cell);
-			}
-			break;
+			case Terrain.CHANGE_SHEEP_TRAP:
 
-		case Terrain.DOOR:
-			Door.enter(cell, ch);
-			break;
+				if (ch instanceof SheepSokoban || ch instanceof SheepSokobanSwitch || ch instanceof SheepSokobanCorner || ch instanceof Sheep) {
+					trap = true;
+					ChangeSheepTrap.trigger(cell, ch);
+				}
+				break;
+
+
+			case Terrain.HIGH_GRASS:
+				HighGrass.trample(this, cell, ch);
+				break;
+
+			case Terrain.WELL:
+				WellWater.affectCell(cell);
+				break;
+
+			case Terrain.ALCHEMY:
+				if (ch == null) {
+					Alchemy.transmute(cell);
+				}
+				break;
+
+			case Terrain.DOOR:
+				Door.enter(cell);
+				break;
 		}
 
-		if (trap){
+		if (trap) {
 
 			if (Dungeon.visible[cell])
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -158,8 +157,8 @@ public class MinesBossLevel extends Level {
 				Dungeon.hero.interrupt();
 
 			set(cell, Terrain.INACTIVE_TRAP);
-			GameScene.updateMap(cell);					
-		} 
+			GameScene.updateMap(cell);
+		}
 
 		Plant plant = plants.get(cell);
 		if (plant != null) {
@@ -167,8 +166,7 @@ public class MinesBossLevel extends Level {
 		}
 	}
 
-	
-	
+
 	@Override
 	public void mobPress(Mob mob) {
 
@@ -184,51 +182,51 @@ public class MinesBossLevel extends Level {
 		boolean sheep = false;
 		switch (map[cell]) {
 
-		case Terrain.TOXIC_TRAP:
-			ToxicTrap.trigger(cell, mob);
-			break;
+			case Terrain.TOXIC_TRAP:
+				ToxicTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.FIRE_TRAP:
-			FireTrap.trigger(cell, mob);
-			break;
+			case Terrain.FIRE_TRAP:
+				FireTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.PARALYTIC_TRAP:
-			ParalyticTrap.trigger(cell, mob);
-			break;
-			
-		case Terrain.FLEECING_TRAP:
-			if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep){
-				fleece=true;
-			}
-			FleecingTrap.trigger(cell, mob);
-			break;
-			
-	
-		case Terrain.POISON_TRAP:
-			PoisonTrap.trigger(cell, mob);
-			break;
+			case Terrain.PARALYTIC_TRAP:
+				ParalyticTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.ALARM_TRAP:
-			AlarmTrap.trigger(cell, mob);
-			break;
+			case Terrain.FLEECING_TRAP:
+				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
+					fleece = true;
+				}
+				FleecingTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.LIGHTNING_TRAP:
-			LightningTrap.trigger(cell, mob);
-			break;
 
-		case Terrain.GRIPPING_TRAP:
-			GrippingTrap.trigger(cell, mob);
-			break;
+			case Terrain.POISON_TRAP:
+				PoisonTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.SUMMONING_TRAP:
-			SummoningTrap.trigger(cell, mob);
-			break;
+			case Terrain.ALARM_TRAP:
+				AlarmTrap.trigger(cell, mob);
+				break;
 
-		case Terrain.DOOR:
-			Door.enter(cell, mob);
+			case Terrain.LIGHTNING_TRAP:
+				LightningTrap.trigger(cell, mob);
+				break;
 
-		default:
-			trap = false;
+			case Terrain.GRIPPING_TRAP:
+				GrippingTrap.trigger(cell, mob);
+				break;
+
+			case Terrain.SUMMONING_TRAP:
+				SummoningTrap.trigger(cell, mob);
+				break;
+
+			case Terrain.DOOR:
+				Door.enter(cell);
+
+			default:
+				trap = false;
 		}
 
 		if (trap && !fleece && !sheep) {
@@ -238,15 +236,15 @@ public class MinesBossLevel extends Level {
 			set(cell, Terrain.INACTIVE_TRAP);
 			GameScene.updateMap(cell);
 		}
-		
+
 		if (trap && fleece) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
 			}
 			set(cell, Terrain.WOOL_RUG);
 			GameScene.updateMap(cell);
-		} 	
-		
+		}
+
 		if (trap && sheep) {
 			if (Dungeon.visible[cell]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
@@ -254,13 +252,13 @@ public class MinesBossLevel extends Level {
 			set(cell, Terrain.EMPTY);
 			GameScene.updateMap(cell);
 		}
-	
-		
+
+
 		Plant plant = plants.get(cell);
 		if (plant != null) {
 			plant.activate(mob);
 		}
-		
+
 		Dungeon.observe();
 	}
 
@@ -276,21 +274,22 @@ public class MinesBossLevel extends Level {
 
 	@Override
 	protected boolean build() {
-		
-		
-		map = Layouts.MINE_BOSS.clone();	
-		
+
+
+		map = Layouts.MINE_BOSS.clone();
+
 		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
-			
+
 		entrance = 17 + WIDTH * 44;
 		exit = 0;
 
 
 		return true;
 	}
+
 	@Override
 	protected void decorate() {
 		//do nothing, all decorations are hard-coded.
@@ -298,63 +297,62 @@ public class MinesBossLevel extends Level {
 
 	@Override
 	protected void createMobs() {
-		 for (int i = 0; i < LENGTH; i++) {				
-				if (map[i]==Terrain.SOKOBAN_SHEEP){
-					MineSentinel npc = new MineSentinel(); 
-					mobs.add(npc); npc.pos = i; 
-					Actor.occupyCell(npc);
-				} else if (map[i]==Terrain.CORNER_SOKOBAN_SHEEP){
-					LitTower npc = new LitTower(); 
-					mobs.add(npc); npc.pos = i; 
-					Actor.occupyCell(npc);
-				}
+		for (int i = 0; i < LENGTH; i++) {
+			if (map[i] == Terrain.SOKOBAN_SHEEP) {
+				MineSentinel npc = new MineSentinel();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
+			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
+				LitTower npc = new LitTower();
+				mobs.add(npc);
+				npc.pos = i;
+				Actor.occupyCell(npc);
 			}
-		 
-		    Otiluke mob = new Otiluke(); 
-			mobs.add(mob); mob.pos = 33 + WIDTH * 10; 
-			Actor.occupyCell(mob);
-	}
-	
-	
+		}
 
-	
+		Otiluke mob = new Otiluke();
+		mobs.add(mob);
+		mob.pos = 33 + WIDTH * 10;
+		Actor.occupyCell(mob);
+	}
+
+
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-		case Terrain.EMPTY_DECO:
-			return Messages.get(PrisonLevel.class,"empty_deco_desc");
-		default:
-			return super.tileDesc(tile);
+			case Terrain.EMPTY_DECO:
+				return Messages.get(PrisonLevel.class, "empty_deco_desc");
+			default:
+				return super.tileDesc(tile);
 		}
 	}
 
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-		case Terrain.WATER:
-			return Messages.get(CityLevel.class,"water_name");
-		case Terrain.HIGH_GRASS:
-			return Messages.get(CityLevel.class,"high_grass_name");
-		default:
-			return super.tileName(tile);
+			case Terrain.WATER:
+				return Messages.get(CityLevel.class, "water_name");
+			case Terrain.HIGH_GRASS:
+				return Messages.get(CityLevel.class, "high_grass_name");
+			default:
+				return super.tileName(tile);
 		}
 	}
-	
-	
+
 
 	@Override
 	protected void createItems() {
-		 			
-				drop(new IronKey(Dungeon.depth), 30 + WIDTH * 44).type = Heap.Type.CHEST;	
-				drop(new Palantir(), 14 + WIDTH * 10);
-		 
+
+		drop(new IronKey(Dungeon.depth), 30 + WIDTH * 44).type = Heap.Type.CHEST;
+		drop(new Palantir(), 14 + WIDTH * 10);
+
 	}
 
 	@Override
 	public int randomRespawnCell() {
 		return -1;
 	}
-		
-	
+
 
 }

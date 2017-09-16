@@ -38,7 +38,7 @@ import java.util.HashSet;
 public class Statue extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = StatueSprite.class;
 
 		EXP = 5 + Dungeon.depth * 2;
@@ -144,11 +144,12 @@ public class Statue extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc", weapon.name());
+		return Messages.get(this, "desc", weapon.name());
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Poison.class);

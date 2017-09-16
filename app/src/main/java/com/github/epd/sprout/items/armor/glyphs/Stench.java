@@ -33,7 +33,7 @@ import com.watabou.utils.Random;
 
 public class Stench extends Glyph {
 
-	private static final String TXT_STENCH = Messages.get(Stench.class,"name");
+	private static final String TXT_STENCH = Messages.get(Stench.class, "name");
 
 	private static ItemSprite.Glowing GREEN = new ItemSprite.Glowing(0x22CC44);
 

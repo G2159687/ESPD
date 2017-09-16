@@ -51,24 +51,24 @@ import java.util.HashSet;
 
 public class BrokenRobot extends Mob {
 
-	private static final String TXT_DEATHGAZE_KILLED = Messages.get(BrokenRobot.class,"kill");
+	private static final String TXT_DEATHGAZE_KILLED = Messages.get(BrokenRobot.class, "kill");
 	private static final float SPAWN_DELAY = 2f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BrokenRobotSprite.class;
 
-		HP = HT = 75+(adj(0)*Random.NormalIntRange(4, 7));
-		defenseSkill = 20+adj(1);
+		HP = HT = 75 + (adj(0) * Random.NormalIntRange(4, 7));
+		defenseSkill = 20 + adj(1);
 		viewDistance = Light.DISTANCE;
 
 		EXP = 13;
 		maxLvl = 25;
 
-		
+
 		lootOther = new RedDewdrop();
 		lootChanceOther = 0.5f;
-		
+
 		loot = new ScrollOfRecharging();
 		lootChance = 0.5f; // by default, see die()
 	}
@@ -81,14 +81,16 @@ public class BrokenRobot extends Mob {
 	@Override
 	public boolean act() {
 
-		if(enemySeen){
-		  switch (Random.Int(50)) {
-		  case 1:
-			GLog.n(Messages.get(BrokenRobot.class,"broken"));
-			explode(pos);
-			if (HP<1){die(null);}
-		  break;
-		 }
+		if (enemySeen) {
+			switch (Random.Int(50)) {
+				case 1:
+					GLog.n(Messages.get(BrokenRobot.class, "broken"));
+					explode(pos);
+					if (HP < 1) {
+						die(null);
+					}
+					break;
+			}
 		}
 
 		return super.act();
@@ -99,20 +101,20 @@ public class BrokenRobot extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		beam = new Ballistica( pos, enemy.pos, Ballistica.STOP_TERRAIN);
+		beam = new Ballistica(pos, enemy.pos, Ballistica.STOP_TERRAIN);
 		return beam.subPath(1, beam.dist).contains(enemy.pos);
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 20+adj(0);
+		return 20 + adj(0);
 	}
 
 	@Override
 	protected float attackDelay() {
 		return 3f;
 	}
-	
+
 	@Override
 	protected boolean doAttack(Char enemy) {
 
@@ -146,7 +148,7 @@ public class BrokenRobot extends Mob {
 			}
 
 			if (hit(this, ch, true)) {
-				ch.damage(Random.NormalIntRange(10, 12+adj(0)), this);
+				ch.damage(Random.NormalIntRange(10, 12 + adj(0)), this);
 
 				if (Dungeon.visible[pos]) {
 					ch.sprite.flash();
@@ -169,7 +171,7 @@ public class BrokenRobot extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	public static void spawnAround(int pos) {
@@ -180,23 +182,23 @@ public class BrokenRobot extends Mob {
 			}
 		}
 	}
-	
-	public static BrokenRobot spawnAt(int pos) {
-		
-		BrokenRobot b = new BrokenRobot();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-	
-	
+	public static BrokenRobot spawnAt(int pos) {
+
+		BrokenRobot b = new BrokenRobot();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
+
 	public void explode(int cell) {
 		// We're blowing up, so no need for a fuse anymore.
-	
+
 		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
 		if (Dungeon.visible[cell]) {
@@ -234,12 +236,12 @@ public class BrokenRobot extends Mob {
 					if (dmg > 0) {
 						ch.damage(dmg, this);
 					}
- 
-					if (ch == this && HP<1){	
+
+					if (ch == this && HP < 1) {
 						die(this);
 						if (sprite != null)
 							sprite.killAndErase();
-				     }
+					}
 					if (ch == Dungeon.hero && !ch.isAlive())
 						// constant is used here in the rare instance a player
 						// is killed by a double bomb.
@@ -253,8 +255,9 @@ public class BrokenRobot extends Mob {
 			Dungeon.observe();
 		}
 	}
-	
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 		RESISTANCES.add(Leech.class);
@@ -266,6 +269,7 @@ public class BrokenRobot extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Terror.class);
 		IMMUNITIES.add(ToxicGas.class);

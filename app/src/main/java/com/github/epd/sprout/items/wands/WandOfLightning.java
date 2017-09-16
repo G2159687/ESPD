@@ -41,7 +41,7 @@ import java.util.ArrayList;
 public class WandOfLightning extends Wand {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_LIGHTNING;
 	}
 
@@ -50,51 +50,52 @@ public class WandOfLightning extends Wand {
 	ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 
 	@Override
-	protected void onZap( Ballistica bolt ) {
+	protected void onZap(Ballistica bolt) {
 
 		//lightning deals less damage per-target, the more targets that are hit.
-		float multipler = (0.6f + 0.4f*affected.size())/affected.size();
-		if (Level.water[bolt.collisionPos]) multipler *= 1.5f;
+		float multiplier = (0.6f + 0.4f * affected.size()) / affected.size();
+		if (Level.water[bolt.collisionPos]) multiplier *= 1.5f;
 
-		int min = 5+level;
+		int min = 5 + level;
 		int max = Math.round(10 + (level * level / 4f));
 
-		for (Char ch : affected){
-			ch.damage(Math.round(Random.NormalIntRange(min, max) * multipler), LightningTrap.LIGHTNING);
+		for (Char ch : affected) {
+			ch.damage(Math.round(Random.NormalIntRange(min, max) * multiplier), LightningTrap.LIGHTNING);
 
-			if (ch == Dungeon.hero) Camera.main.shake( 2, 0.3f );
-			ch.sprite.centerEmitter().burst( SparkParticle.FACTORY, 3 );
+			if (ch == Dungeon.hero) Camera.main.shake(2, 0.3f);
+			ch.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 			ch.sprite.flash();
 		}
 
 		if (!curUser.isAlive()) {
-			Dungeon.fail( Utils.format( ResultDescriptions.ITEM, name ) );
-			GLog.n(Messages.get(this,"kill"));
+			Dungeon.fail(Utils.format(ResultDescriptions.ITEM, name));
+			GLog.n(Messages.get(this, "kill"));
 		}
 	}
 
-	private void arc( Char ch ) {
+	private void arc(Char ch) {
 
-		affected.add( ch );
+		affected.add(ch);
 
 		for (int i : PathFinder.NEIGHBOURS8) {
 			int cell = ch.pos + i;
 
-			Char n = Actor.findChar( cell );
-			if (n != null && !affected.contains( n )) {
+			Char n = Actor.findChar(cell);
+			if (n != null && !affected.contains(n)) {
 				arcs.add(new Lightning.Arc(ch.pos, n.pos));
 				arc(n);
 			}
 		}
 
-		if (Level.water[ch.pos] && !ch.flying){
+		if (Level.water[ch.pos] && !ch.flying) {
 			for (int i : PathFinder.NEIGHBOURS8DIST2) {
 				int cell = ch.pos + i;
 				//player can only be hit by lightning from an adjacent enemy.
-				if (!Dungeon.level.insideMap(cell) || Actor.findChar(cell) == Dungeon.hero) continue;
+				if (!Dungeon.level.insideMap(cell) || Actor.findChar(cell) == Dungeon.hero)
+					continue;
 
-				Char n = Actor.findChar( ch.pos + i );
-				if (n != null && !affected.contains( n )) {
+				Char n = Actor.findChar(ch.pos + i);
+				if (n != null && !affected.contains(n)) {
 					arcs.add(new Lightning.Arc(ch.pos, n.pos));
 					arc(n);
 				}
@@ -103,28 +104,28 @@ public class WandOfLightning extends Wand {
 	}
 
 	@Override
-	protected void fx( Ballistica bolt, Callback callback ) {
+	protected void fx(Ballistica bolt, Callback callback) {
 
 		affected.clear();
 		arcs.clear();
-		arcs.add( new Lightning.Arc(bolt.sourcePos, bolt.collisionPos));
+		arcs.add(new Lightning.Arc(bolt.sourcePos, bolt.collisionPos));
 
 		int cell = bolt.collisionPos;
 
-		Char ch = Actor.findChar( cell );
+		Char ch = Actor.findChar(cell);
 		if (ch != null) {
 			arc(ch);
 		} else {
-			CellEmitter.center( cell ).burst( SparkParticle.FACTORY, 3 );
+			CellEmitter.center(cell).burst(SparkParticle.FACTORY, 3);
 		}
 
 		//don't want to wait for the effect before processing damage.
-		curUser.sprite.parent.add( new Lightning( arcs, null ) );
+		curUser.sprite.parent.add(new Lightning(arcs, null));
 		callback.call();
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc", 5 + level, Math.round(10 + (level * level / 4f)));
 	}
 }

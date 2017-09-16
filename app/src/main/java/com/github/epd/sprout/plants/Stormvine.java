@@ -9,11 +9,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class Stormvine extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Stormvine.class,"desc");
+	private static final String TXT_DESC = Messages.get(Stormvine.class, "desc");
 
 	{
 		image = 9;
-		plantName = Messages.get(Stormvine.class,"name");
+		plantName = Messages.get(Stormvine.class, "name");
 	}
 
 	@Override
@@ -32,9 +32,9 @@ public class Stormvine extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Stormvine.class,"name");
+			plantName = Messages.get(Stormvine.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_STORMVINE;
 
 			plantClass = Stormvine.class;
@@ -43,7 +43,7 @@ public class Stormvine extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
+			return Messages.get(Plant.class, "seeddesc", plantName);
 		}
 	}
 }

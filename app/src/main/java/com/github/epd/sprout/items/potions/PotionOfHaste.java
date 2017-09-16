@@ -32,20 +32,20 @@ public class PotionOfHaste extends Potion {
 	private static final float ALPHA = 0.4f;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 	}
 
 	@Override
 	public void apply(Hero hero) {
 		setKnown();
 		Buff.affect(hero, Haste.class, Haste.DURATION);
-		GLog.i(Messages.get(this,"effect"));
+		GLog.i(Messages.get(this, "effect"));
 		Sample.INSTANCE.play(Assets.SND_MELD);
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

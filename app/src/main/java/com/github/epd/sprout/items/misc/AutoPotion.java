@@ -23,12 +23,10 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class AutoPotion extends MiscEquippable {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT;
-
-		unique = true;
 	}
-	
+
 	@Override
 	protected MiscBuff buff() {
 		return new AutoHealPotion();
@@ -36,12 +34,12 @@ public class AutoPotion extends MiscEquippable {
 
 	public class AutoHealPotion extends MiscBuff {
 	}
-	
-    @Override
-	public String cursedDesc(){
-		return Messages.get(this,"cursed", this);
+
+	@Override
+	public String cursedDesc() {
+		return Messages.get(this, "cursed", this);
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
@@ -51,10 +49,10 @@ public class AutoPotion extends MiscEquippable {
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 

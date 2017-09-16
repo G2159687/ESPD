@@ -17,24 +17,22 @@
  */
 package com.github.epd.sprout.items.journalpages;
 
-import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
-import com.github.epd.sprout.utils.GLog;
 
 public class DragonCave extends JournalPage {
 
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.JOURNAL_PAGE;
-		room=7;
+		room = 7;
 
 		stackable = false;
 	}
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

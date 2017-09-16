@@ -33,14 +33,14 @@ import java.util.HashSet;
 
 public class Brute extends Mob {
 
-	private static final String TXT_ENRAGED = Messages.get(Brute.class,"enrage");
+	private static final String TXT_ENRAGED = Messages.get(Brute.class, "enrage");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = BruteSprite.class;
 
-		HP = HT = 60+(adj(0)*Random.NormalIntRange(4, 8));
-		defenseSkill = 15+adj(0);
+		HP = HT = 60 + (adj(0) * Random.NormalIntRange(4, 8));
+		defenseSkill = 15 + adj(0);
 
 		EXP = 8;
 		maxLvl = 15;
@@ -62,21 +62,22 @@ public class Brute extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return enraged ? Random.NormalIntRange(30+adj(0), 70+adj(0)) : Random.NormalIntRange(15+adj(0), 40+adj(0));
+		return enraged ? Random.NormalIntRange(30 + adj(0), 70 + adj(0)) : Random.NormalIntRange(15 + adj(0), 40 + adj(0));
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 20+adj(1);
+		return 20 + adj(1);
 	}
 
 	@Override
 	protected float attackDelay() {
 		return 1.2f;
 	}
+
 	@Override
 	public int dr() {
-		return 10+adj(0);
+		return 10 + adj(0);
 	}
 
 	@Override
@@ -88,17 +89,18 @@ public class Brute extends Mob {
 			spend(TICK);
 			if (Dungeon.visible[pos]) {
 				GLog.w(TXT_ENRAGED, name);
-				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Brute.class,"enraged"));
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Brute.class, "enraged"));
 			}
 		}
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Terror.class);
 	}

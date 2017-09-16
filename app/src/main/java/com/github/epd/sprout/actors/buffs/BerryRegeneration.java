@@ -22,9 +22,9 @@ import com.github.epd.sprout.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 
 public class BerryRegeneration extends Buff {
-	
+
 	private int regenleft = 0;
-	
+
 	private static final String REGENLEFT = "regenleft";
 
 	@Override
@@ -56,31 +56,34 @@ public class BerryRegeneration extends Buff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
-	public String desc() { return Messages.get(this,"desc", regenleft); }
+	public String desc() {
+		return Messages.get(this, "desc", regenleft);
+	}
+
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			   
+
 			if (target.HP < target.HT) {
-				target.HP += Math.min(1+Math.round(regenleft/25),(target.HT-target.HP));
+				target.HP += Math.min(1 + Math.round(regenleft / 25), (target.HT - target.HP));
 			}
-			
-				spend(TICK);
-				if (--regenleft <= 0) {
-					detach();
-				}
 
-			} else {
-
+			spend(TICK);
+			if (--regenleft <= 0) {
 				detach();
-
 			}
 
-			return true;
+		} else {
+
+			detach();
+
 		}
-	
+
+		return true;
+	}
+
 }

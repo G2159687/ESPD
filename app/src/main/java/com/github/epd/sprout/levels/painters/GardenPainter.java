@@ -20,7 +20,6 @@ package com.github.epd.sprout.levels.painters;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.blobs.Foliage;
 import com.github.epd.sprout.items.Ankh;
-import com.github.epd.sprout.items.EasterEgg;
 import com.github.epd.sprout.items.Honeypot;
 import com.github.epd.sprout.items.SteelHoneypot;
 import com.github.epd.sprout.levels.Level;
@@ -40,50 +39,53 @@ public class GardenPainter extends Painter {
 
 		room.entrance().set(Room.Door.Type.REGULAR);
 
-			int bushes = Random.Int(3);
-			if (bushes == 0) {
-				level.plant(new Sungrass.Seed(), room.random());
-			} else if (bushes == 1) {
-				level.plant(new BlandfruitBush.Seed(), room.random());
-			} else if (Random.Int(5) == 0) {
-				level.plant(new Sungrass.Seed(), room.random());
-				level.plant(new BlandfruitBush.Seed(), room.random());
-			}
+		int bushes = Random.Int(3);
+		if (bushes == 0) {
+			level.plant(new Sungrass.Seed(), room.random());
+		} else if (bushes == 1) {
+			level.plant(new BlandfruitBush.Seed(), room.random());
+		} else if (Random.Int(5) == 0) {
+			level.plant(new Sungrass.Seed(), room.random());
+			level.plant(new BlandfruitBush.Seed(), room.random());
+		}
 
-		if (Random.Int(100)==0){
+		if (Random.Int(100) == 0) {
 			int pos;
-			do {pos = room.random();}
+			do {
+				pos = room.random();
+			}
 			while (level.heaps.get(pos) != null);
 			level.drop(new SteelHoneypot(), pos);
 		}
-		
-		if (Random.Int(100)==0 && (Dungeon.getMonth()==4 || Dungeon.getMonth()==5)){
+
+		if (Dungeon.depth == 32 && Random.Float() < 0.75f) {
 			int pos;
-			do {pos = room.random();}
-			while (level.heaps.get(pos) != null);
-			level.drop(new EasterEgg(), pos);
-		}
-		
-		if (Dungeon.depth==32 && Random.Float() < 0.75f){
-			int pos;
-			do {pos = room.random();}
-			while (level.heaps.get(pos) != null);
-			level.drop(new Honeypot(), pos);	
-			
-			do {pos = room.random();}
+			do {
+				pos = room.random();
+			}
 			while (level.heaps.get(pos) != null);
 			level.drop(new Honeypot(), pos);
-			
-			do {pos = room.random();}
+
+			do {
+				pos = room.random();
+			}
+			while (level.heaps.get(pos) != null);
+			level.drop(new Honeypot(), pos);
+
+			do {
+				pos = room.random();
+			}
 			while (level.heaps.get(pos) != null);
 			level.drop(new Honeypot(), pos);
 		}
-		
-		if (Dungeon.depth==32 && Random.Float() < 0.75f){
+
+		if (Dungeon.depth == 32 && Random.Float() < 0.75f) {
 			int pos;
-			do {pos = room.random();}
+			do {
+				pos = room.random();
+			}
 			while (level.heaps.get(pos) != null);
-			level.drop(new Ankh(), pos);		
+			level.drop(new Ankh(), pos);
 		}
 
 		Foliage light = (Foliage) level.blobs.get(Foliage.class);

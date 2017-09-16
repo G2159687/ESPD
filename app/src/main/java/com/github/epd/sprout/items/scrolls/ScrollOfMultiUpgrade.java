@@ -27,11 +27,11 @@ import com.github.epd.sprout.windows.WndBag;
 
 public class ScrollOfMultiUpgrade extends InventoryScroll {
 
-	private static final String TXT_LOOKS_BETTER = Messages.get(ScrollOfMultiUpgrade.class,"better");
+	private static final String TXT_LOOKS_BETTER = Messages.get(ScrollOfMultiUpgrade.class, "better");
 
 	{
-		name = Messages.get(this,"name");
-		inventoryTitle = Messages.get(this,"title");
+		name = Messages.get(this, "name");
+		inventoryTitle = Messages.get(this, "title");
 		mode = WndBag.Mode.UPGRADEABLE;
 		consumedValue = 10;
 
@@ -44,8 +44,8 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 		ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
 		item.upgrade();
 
-		for(int i=1; i<6; i++){
-		  upgrade(curUser);
+		for (int i = 1; i < 6; i++) {
+			upgrade(curUser);
 		}
 		GLog.p(TXT_LOOKS_BETTER, item.name());
 	}
@@ -56,6 +56,6 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

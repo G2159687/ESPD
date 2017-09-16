@@ -23,11 +23,11 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class ClothArmor extends Armor {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_CLOTH;
 
 		bones = false; // Finding them in bones would be semi-frequent and
-						// disappointing.
+		// disappointing.
 	}
 
 	public ClothArmor() {
@@ -36,6 +36,6 @@ public class ClothArmor extends Armor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

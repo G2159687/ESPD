@@ -35,26 +35,26 @@ public class TouchArea extends Visual implements Signal.Listener<Touchscreen.Tou
 	//if true, this TouchArea will always block input, even when it is inactive
 	public boolean blockWhenInactive = false;
 
-	public TouchArea( Visual target ) {
-		super( 0, 0, 0, 0 );
+	public TouchArea(Visual target) {
+		super(0, 0, 0, 0);
 		this.target = target;
 
-		Touchscreen.event.add( this );
+		Touchscreen.event.add(this);
 	}
 
-	public TouchArea( float x, float y, float width, float height ) {
-		super( x, y, width, height );
+	public TouchArea(float x, float y, float width, float height) {
+		super(x, y, width, height);
 		this.target = this;
 
 		visible = false;
 
-		Touchscreen.event.add( this );
+		Touchscreen.event.add(this);
 	}
 
 	@Override
-	public void onSignal( Touch touch ) {
+	public void onSignal(Touch touch) {
 
-		boolean hit = touch != null && target.overlapsScreenPoint( (int)touch.current.x, (int)touch.current.y );
+		boolean hit = touch != null && target.overlapsScreenPoint((int) touch.current.x, (int) touch.current.y);
 
 		if (!isActive()) {
 			if (hit && blockWhenInactive) Touchscreen.event.cancel();
@@ -70,15 +70,15 @@ public class TouchArea extends Visual implements Signal.Listener<Touchscreen.Tou
 				if (this.touch == null) {
 					this.touch = touch;
 				}
-				onTouchDown( touch );
+				onTouchDown(touch);
 
 			} else {
 
-				onTouchUp( touch );
+				onTouchUp(touch);
 
 				if (this.touch == touch) {
 					this.touch = null;
-					onClick( touch );
+					onClick(touch);
 				}
 
 			}
@@ -86,27 +86,25 @@ public class TouchArea extends Visual implements Signal.Listener<Touchscreen.Tou
 		} else {
 
 			if (touch == null && this.touch != null) {
-				onDrag( this.touch );
-			}
-
-			else if (this.touch != null && !touch.down) {
-				onTouchUp( touch );
+				onDrag(this.touch);
+			} else if (this.touch != null && !touch.down) {
+				onTouchUp(touch);
 				this.touch = null;
 			}
 
 		}
 	}
 
-	protected void onTouchDown( Touch touch ) {
+	protected void onTouchDown(Touch touch) {
 	}
 
-	protected void onTouchUp( Touch touch ) {
+	protected void onTouchUp(Touch touch) {
 	}
 
-	protected void onClick( Touch touch ) {
+	protected void onClick(Touch touch) {
 	}
 
-	protected void onDrag( Touch touch ) {
+	protected void onDrag(Touch touch) {
 	}
 
 	public void reset() {
@@ -115,7 +113,7 @@ public class TouchArea extends Visual implements Signal.Listener<Touchscreen.Tou
 
 	@Override
 	public void destroy() {
-		Touchscreen.event.remove( this );
+		Touchscreen.event.remove(this);
 		super.destroy();
 	}
 }

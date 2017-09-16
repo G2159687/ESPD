@@ -38,7 +38,9 @@ public class PoisonTrap {
 
 		CellEmitter.center(pos).burst(PoisonParticle.SPLASH, 3);
 		Heap heap = Dungeon.level.heaps.get(pos);
-		if (heap != null) {heap.poison();}
+		if (heap != null) {
+			heap.poison();
+		}
 
 	}
 }

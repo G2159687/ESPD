@@ -54,7 +54,7 @@ public class BlobEmitter extends Emitter {
 		int cell;
 		for (int i = blob.area.left; i < blob.area.right; i++) {
 			for (int j = blob.area.top; j < blob.area.bottom; j++) {
-				cell = i + j*WIDTH;
+				cell = i + j * WIDTH;
 				if (map[cell] > 0 && Dungeon.visible[cell]) {
 					float x = (i + Random.Float()) * size;
 					float y = (j + Random.Float()) * size;

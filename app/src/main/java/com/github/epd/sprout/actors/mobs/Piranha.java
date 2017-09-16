@@ -37,13 +37,13 @@ import java.util.HashSet;
 public class Piranha extends Mob {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = PiranhaSprite.class;
 
 		baseSpeed = 2f;
 
 		EXP = 0;
-		
+
 	}
 
 	public Piranha() {
@@ -60,7 +60,7 @@ public class Piranha extends Mob {
 			return true;
 		} else {
 			// this causes pirahna to move away when a door is closed on them.
-			Dungeon.level.updateFieldOfView( this, Level.fieldOfView );
+			Dungeon.level.updateFieldOfView(this, Level.fieldOfView);
 			enemy = chooseEnemy();
 			if (state == this.HUNTING
 					&& !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)) {
@@ -99,13 +99,13 @@ public class Piranha extends Mob {
 	@Override
 	public void die(Object cause) {
 		Dungeon.level.drop(new Meat(), pos).sprite.drop();
-		
+
 		if (!Dungeon.limitedDrops.caveskey.dropped() && Statistics.deepestFloor > 10) {
 			Dungeon.limitedDrops.caveskey.drop();
 			Dungeon.level.drop(new CavesKey(), pos).sprite.drop();
-			explodeDew(pos);				
+			explodeDew(pos);
 		}
-		
+
 		super.die(cause);
 	}
 
@@ -121,9 +121,9 @@ public class Piranha extends Mob {
 			return false;
 		}
 
-		int step = Dungeon.findStep( this, pos, target,
+		int step = Dungeon.findStep(this, pos, target,
 				Level.water,
-				Level.fieldOfView );
+				Level.fieldOfView);
 		if (step != -1) {
 			move(step);
 			return true;
@@ -146,10 +146,11 @@ public class Piranha extends Mob {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Burning.class);
 		IMMUNITIES.add(Paralysis.class);

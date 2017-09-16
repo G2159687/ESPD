@@ -17,13 +17,10 @@
  */
 package com.github.epd.sprout.actors.mobs;
 
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
-import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
-import com.github.epd.sprout.actors.blobs.Web;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Burning;
 import com.github.epd.sprout.actors.buffs.Poison;
@@ -52,18 +49,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PoisonGoo extends Mob {
-	
-protected static final float SPAWN_DELAY = 2f;
 
-private boolean gooSplit = false;
+	protected static final float SPAWN_DELAY = 2f;
 
-private int gooGeneration = 0;
-private int goosAlive = 0;
+	private boolean gooSplit = false;
 
-private static final String GOOGENERATION = "gooGeneration";
+	private int gooGeneration = 0;
+	private int goosAlive = 0;
+
+	private static final String GOOGENERATION = "gooGeneration";
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		HP = HT = 50;
 		EXP = 10;
 		defenseSkill = 12;
@@ -75,8 +72,8 @@ private static final String GOOGENERATION = "gooGeneration";
 		FLEEING = new Fleeing();
 	}
 
-	private static final float SPLIT_DELAY = 1f;	
-	
+	private static final float SPLIT_DELAY = 1f;
+
 	@Override
 	protected boolean act() {
 		boolean result = super.act();
@@ -86,12 +83,12 @@ private static final String GOOGENERATION = "gooGeneration";
 			state = HUNTING;
 		}
 		if (Level.water[pos] && HP < HT) {
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			HP++;
-		} else if(Level.water[pos] && HP == HT && HT < 100){
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-			HT=HT+5;
-			HP=HT;
+		} else if (Level.water[pos] && HP == HT && HT < 100) {
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+			HT = HT + 5;
+			HP = HT;
 		}
 		return result;
 	}
@@ -111,10 +108,10 @@ private static final String GOOGENERATION = "gooGeneration";
 	public void move(int step) {
 		super.move(step);
 	}
-	
+
 	@Override
 	public int damageRoll() {
-			return Random.NormalIntRange(1, 10);
+		return Random.NormalIntRange(1, 10);
 	}
 
 	@Override
@@ -141,7 +138,7 @@ private static final String GOOGENERATION = "gooGeneration";
 
 	@Override
 	public int defenseProc(Char enemy, int damage) {
-		gooSplit = false;   
+		gooSplit = false;
 		for (Mob mob : Dungeon.level.mobs) {
 			if (mob instanceof Goo) {
 				gooSplit = true;
@@ -151,8 +148,8 @@ private static final String GOOGENERATION = "gooGeneration";
 			ArrayList<Integer> candidates = new ArrayList<Integer>();
 			boolean[] passable = Level.passable;
 
-			int[] neighbours = { pos + 1, pos - 1, pos + Level.getWidth(),
-					pos - Level.getWidth() };
+			int[] neighbours = {pos + 1, pos - 1, pos + Level.getWidth(),
+					pos - Level.getWidth()};
 			for (int n : neighbours) {
 				if (passable[n] && Actor.findChar(n) == null) {
 					candidates.add(n);
@@ -160,14 +157,14 @@ private static final String GOOGENERATION = "gooGeneration";
 			}
 
 			if (candidates.size() > 0) {
-				GLog.n(Messages.get(this,"divide"));
+				GLog.n(Messages.get(this, "divide"));
 				PoisonGoo clone = split();
 				clone.HP = (HP - damage) / 2;
 				clone.pos = Random.element(candidates);
 				clone.state = clone.HUNTING;
 
 				if (Dungeon.level.map[clone.pos] == Terrain.DOOR) {
-					Door.enter(clone.pos, clone);
+					Door.enter(clone.pos);
 				}
 
 				GameScene.add(clone, SPLIT_DELAY);
@@ -192,58 +189,55 @@ private static final String GOOGENERATION = "gooGeneration";
 		}
 		return clone;
 	}
-	
-	
-	
+
 
 	@Override
 	public void die(Object cause) {
-		
-		if (gooGeneration > 0){
-		lootChance = 0;
+
+		if (gooGeneration > 0) {
+			lootChance = 0;
 		}
 
 		super.die(cause);
-		   
+
 		for (Mob mob : Dungeon.level.mobs) {
-		
-		if (mob instanceof Goo || mob instanceof PoisonGoo){
-			   goosAlive++;
-			 }
-		
+
+			if (mob instanceof Goo || mob instanceof PoisonGoo) {
+				goosAlive++;
+			}
+
 		}
-		
-		 if(goosAlive==0){
-		   ((SewerBossLevel) Dungeon.level).unseal();
+
+		if (goosAlive == 0) {
+			((SewerBossLevel) Dungeon.level).unseal();
 
 			GameScene.bossSlain();
 			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
 
 			Dungeon.level.drop(new Gold(Random.Int(900, 2000)), pos).sprite.drop();
 
-			Badges.validateBossSlain();
 		} else {
 
-		Dungeon.level.drop(new Gold(Random.Int(100, 200)), pos).sprite.drop();
+			Dungeon.level.drop(new Gold(Random.Int(100, 200)), pos).sprite.drop();
 		}
-		
-		yell(Messages.get(this,"die"));
+
+		yell(Messages.get(this, "die"));
 	}
 
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(this,"notice"));
+		yell(Messages.get(this, "notice"));
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Death.class);
@@ -254,7 +248,7 @@ private static final String GOOGENERATION = "gooGeneration";
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;
 	}
-	
+
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 
 	static {
@@ -265,7 +259,7 @@ private static final String GOOGENERATION = "gooGeneration";
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
 	}
-	
+
 	private class Fleeing extends Mob.Fleeing {
 		@Override
 		protected void nowhereToRun() {
@@ -276,30 +270,30 @@ private static final String GOOGENERATION = "gooGeneration";
 			}
 		}
 	}
-	
-	
+
+
 	public static void spawnAround(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
-			GLog.n(Messages.get(PoisonGoo.class,"squeeze"));
+			GLog.n(Messages.get(PoisonGoo.class, "squeeze"));
 			int cell = pos + n;
 			if (Level.passable[cell] && Actor.findChar(cell) == null) {
 				spawnAt(cell);
-				GLog.n(Messages.get(PoisonGoo.class,"create"));
+				GLog.n(Messages.get(PoisonGoo.class, "create"));
 			}
 		}
 	}
-	
-	public static PoisonGoo spawnAt(int pos) {
-		
-        PoisonGoo b = new PoisonGoo();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
-	
-	
+	public static PoisonGoo spawnAt(int pos) {
+
+		PoisonGoo b = new PoisonGoo();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
+
+
 }

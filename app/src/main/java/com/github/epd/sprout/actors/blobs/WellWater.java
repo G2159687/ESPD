@@ -49,7 +49,7 @@ public class WellWater extends Blob {
 	@Override
 	protected void evolve() {
 		volume = off[pos] = cur[pos];
-		area.union(pos%WIDTH, pos/WIDTH);
+		area.union(pos % WIDTH, pos / WIDTH);
 
 		if (Dungeon.visible[pos]) {
 			if (this instanceof WaterOfAwareness) {
@@ -62,7 +62,7 @@ public class WellWater extends Blob {
 		}
 	}
 
-	
+
 	protected boolean affect() {
 
 		Heap heap;
@@ -132,13 +132,13 @@ public class WellWater extends Blob {
 		volume = cur[pos] = amount;
 
 		area.setEmpty();
-		area.union(cell%WIDTH, cell/WIDTH);
+		area.union(cell % WIDTH, cell / WIDTH);
 	}
 
 	public static void affectCell(int cell) {
 
-		Class<?>[] waters = { WaterOfHealth.class, WaterOfAwareness.class,
-				WaterOfTransmutation.class, WaterOfUpgradeEating.class };
+		Class<?>[] waters = {WaterOfHealth.class, WaterOfAwareness.class,
+				WaterOfTransmutation.class, WaterOfUpgradeEating.class};
 
 		for (Class<?> waterClass : waters) {
 			WellWater water = (WellWater) Dungeon.level.blobs.get(waterClass);
@@ -152,13 +152,13 @@ public class WellWater extends Blob {
 			}
 		}
 	}
-	
+
 	public static boolean affectCellPlant(int cell) {
-		
+
 		boolean transmuted = false;
 
-		Class<?>[] waters = { WaterOfHealth.class, WaterOfAwareness.class,
-				WaterOfTransmutation.class, WaterOfUpgradeEating.class };
+		Class<?>[] waters = {WaterOfHealth.class, WaterOfAwareness.class,
+				WaterOfTransmutation.class, WaterOfUpgradeEating.class};
 
 		for (Class<?> waterClass : waters) {
 			WellWater water = (WellWater) Dungeon.level.blobs.get(waterClass);
@@ -166,9 +166,9 @@ public class WellWater extends Blob {
 					&& water.affect()) {
 
 				GameScene.updateMap(cell);
-                transmuted = true;
+				transmuted = true;
 			}
 		}
-	    return transmuted;
+		return transmuted;
 	}
 }

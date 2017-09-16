@@ -25,7 +25,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class WandHolster extends Bag {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.HOLSTER;
 
 		size = 24;
@@ -60,6 +60,6 @@ public class WandHolster extends Bag {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

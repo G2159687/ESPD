@@ -35,73 +35,81 @@ import com.watabou.utils.Random;
 public class PixieParasol extends Food {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MUSHROOM_PIXIEPARASOL;
-		energy = (Hunger.STARVING - Hunger.HUNGRY)/10;
-		message = Messages.get(BlueMilk.class,"eat");
+		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
+		message = Messages.get(BlueMilk.class, "eat");
 		hornValue = 2;
 		bones = false;
 	}
 
-	private static final String TXT_PREVENTING = Messages.get(BlueMilk.class,"prevent");
-	private static final String TXT_EFFECT = Messages.get(PixieParasol.class,"effect");
+	private static final String TXT_PREVENTING = Messages.get(BlueMilk.class, "prevent");
+	private static final String TXT_EFFECT = Messages.get(PixieParasol.class, "effect");
 
 	@Override
 	public void execute(Hero hero, String action) {
-		
+
 		if (action.equals(AC_EAT)) {
-			
-			if (Dungeon.bossLevel()){
+
+			if (Dungeon.bossLevel()) {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
 
 		}
-		
-	   if (action.equals(AC_EAT)) {
-		   
-		   
-		   GLog.w(TXT_EFFECT);
-			
-		   switch (Random.Int(10)) {
-			case 1:
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-					if (mob.hostile) {
-						Buff.affect(mob, Drowsy.class);
-						Buff.prolong(mob, Paralysis.class, Random.IntRange(10, 16));
-						mob.sprite.centerEmitter().start(Speck.factory(Speck.NOTE), 0.3f, 5);
+
+		if (action.equals(AC_EAT)) {
+
+
+			GLog.w(TXT_EFFECT);
+
+			switch (Random.Int(10)) {
+				case 1:
+					for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+						if (mob.hostile) {
+							Buff.affect(mob, Drowsy.class);
+							Buff.prolong(mob, Paralysis.class, Random.IntRange(10, 16));
+							mob.sprite.centerEmitter().start(Speck.factory(Speck.NOTE), 0.3f, 5);
+						}
 					}
-				}
-				Buff.affect(hero, BerryRegeneration.class).level(hero.HT);
-				break;
-			case 0: case 2: case 3: case 4: case 5: 
-			case 6: case 7: case 8: case 9: case 10:
-				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-					if (mob.hostile) {
-						Buff.affect(mob, Drowsy.class);
-						Buff.prolong(mob, Paralysis.class, Random.IntRange(10, 16));
-						mob.sprite.centerEmitter().start(Speck.factory(Speck.NOTE), 0.3f, 5);
+					Buff.affect(hero, BerryRegeneration.class).level(hero.HT);
+					break;
+				case 0:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+					for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+						if (mob.hostile) {
+							Buff.affect(mob, Drowsy.class);
+							Buff.prolong(mob, Paralysis.class, Random.IntRange(10, 16));
+							mob.sprite.centerEmitter().start(Speck.factory(Speck.NOTE), 0.3f, 5);
+						}
 					}
-				}
-				Buff.affect(hero, Vertigo.class, 5f);
-				Buff.affect(hero, BerryRegeneration.class).level(hero.HT);
-				break;
+					Buff.affect(hero, Vertigo.class, 5f);
+					Buff.affect(hero, BerryRegeneration.class).level(hero.HT);
+					break;
 			}
 		}
-	   
-	   super.execute(hero, action);
-	}	
-	
+
+		super.execute(hero, action);
+	}
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public int price() {
 		return 20 * quantity;
 	}
-	
+
 	public PixieParasol() {
 		this(1);
 	}

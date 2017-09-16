@@ -23,7 +23,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 public class Mace extends MeleeWeapon {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.MACE;
 	}
 
@@ -33,6 +33,6 @@ public class Mace extends MeleeWeapon {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

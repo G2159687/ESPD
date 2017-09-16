@@ -57,294 +57,306 @@ import java.util.ArrayList;
 
 public class Wandmaker extends NPC {
 
-    {
-        name = Messages.get(Wandmaker.class, "name");
-        spriteClass = WandmakerSprite.class;
-    }
+	{
+		name = Messages.get(Wandmaker.class, "name");
+		spriteClass = WandmakerSprite.class;
 
-    private static final String TXT_BERRY1 = Messages.get(Wandmaker.class, "berry1");
+		properties.add(Property.IMMOVABLE);
+	}
 
-    private static final String TXT_DUST1 = Messages.get(Wandmaker.class, "dust1");
+	private static final String TXT_BERRY1 = Messages.get(Wandmaker.class, "berry1");
 
-    private static final String TXT_BERRY2 = Messages.get(Wandmaker.class, "berry2", Dungeon.hero.givenName());
+	private static final String TXT_DUST1 = Messages.get(Wandmaker.class, "dust1");
 
-    private static final String TXT_DUST2 = Messages.get(Wandmaker.class, "dust2", Dungeon.hero.givenName());
+	private static final String TXT_BERRY2 = Messages.get(Wandmaker.class, "berry2", Dungeon.hero.givenName());
 
-    @Override
-    protected boolean act() {
-        throwItem();
-        return super.act();
-    }
+	private static final String TXT_DUST2 = Messages.get(Wandmaker.class, "dust2", Dungeon.hero.givenName());
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
+	@Override
+	protected boolean act() {
+		throwItem();
+		return super.act();
+	}
 
-    @Override
-    public String defenseVerb() {
-        return Messages.get(Tinkerer1.class, "def");
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public String defenseVerb() {
+		return Messages.get(Tinkerer1.class, "def");
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public boolean reset() {
-        return true;
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean reset() {
+		return true;
+	}
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
-        if (Quest.given) {
+	@Override
+	public boolean interact() {
 
-            Item item = Quest.alternative ? Dungeon.hero.belongings
-                    .getItem(CorpseDust.class) : Dungeon.hero.belongings
-                    .getItem(Rotberry.Seed.class);
-            if (item != null) {
-                GameScene.show(new WndWandmaker(this, item));
-            } else {
-                tell(Quest.alternative ? TXT_DUST2 : TXT_BERRY2,
-                        Dungeon.hero.givenName());
-            }
+		sprite.turnTo(pos, Dungeon.hero.pos);
+		if (Quest.given) {
 
-        } else {
+			Item item = Quest.alternative ? Dungeon.hero.belongings
+					.getItem(CorpseDust.class) : Dungeon.hero.belongings
+					.getItem(Rotberry.Seed.class);
+			if (item != null) {
+				GameScene.show(new WndWandmaker(this, item));
+			} else {
+				tell(Quest.alternative ? TXT_DUST2 : TXT_BERRY2,
+						Dungeon.hero.givenName());
+			}
 
-            Quest.placeItem();
+		} else {
 
-            if (Quest.given)
-                tell(Quest.alternative ? TXT_DUST1 : TXT_BERRY1);
+			Quest.placeItem();
 
-            Journal.add(Journal.Feature.WANDMAKER);
-        }
-        return false;
-    }
+			if (Quest.given)
+				tell(Quest.alternative ? TXT_DUST1 : TXT_BERRY1);
 
-    private void tell(String format, Object... args) {
-        GameScene.show(new WndQuest(this, Utils.format(format, args)));
-    }
+			Journal.add(Journal.Feature.WANDMAKER);
+		}
+		return false;
+	}
 
-    @Override
-    public String description() {
-        return Messages.get(Wandmaker.class, "desc");
-    }
+	private void tell(String format, Object... args) {
+		GameScene.show(new WndQuest(this, Utils.format(format, args)));
+	}
 
-    public static class Quest {
+	@Override
+	public String description() {
+		return Messages.get(Wandmaker.class, "desc");
+	}
 
-        private static boolean spawned;
+	public static class Quest {
 
-        private static boolean alternative;
+		private static boolean spawned;
 
-        private static boolean given;
+		private static boolean alternative;
 
-        public static Wand wand1;
-        public static Wand wand2;
+		private static boolean given;
 
-        public static void reset() {
-            spawned = false;
+		public static Wand wand1;
+		public static Wand wand2;
 
-            wand1 = null;
-            wand2 = null;
-        }
+		public static void reset() {
+			spawned = false;
 
-        private static final String NODE = "wandmaker";
+			wand1 = null;
+			wand2 = null;
+		}
 
-        private static final String SPAWNED = "spawned";
-        private static final String ALTERNATIVE = "alternative";
-        private static final String GIVEN = "given";
-        private static final String WAND1 = "wand1";
-        private static final String WAND2 = "wand2";
+		private static final String NODE = "wandmaker";
 
-        public static void storeInBundle(Bundle bundle) {
+		private static final String SPAWNED = "spawned";
+		private static final String ALTERNATIVE = "alternative";
+		private static final String GIVEN = "given";
+		private static final String WAND1 = "wand1";
+		private static final String WAND2 = "wand2";
 
-            Bundle node = new Bundle();
+		public static void storeInBundle(Bundle bundle) {
 
-            node.put(SPAWNED, spawned);
+			Bundle node = new Bundle();
 
-            if (spawned) {
+			node.put(SPAWNED, spawned);
 
-                node.put(ALTERNATIVE, alternative);
+			if (spawned) {
 
-                node.put(GIVEN, given);
+				node.put(ALTERNATIVE, alternative);
 
-                node.put(WAND1, wand1);
-                node.put(WAND2, wand2);
-            }
+				node.put(GIVEN, given);
 
-            bundle.put(NODE, node);
-        }
+				node.put(WAND1, wand1);
+				node.put(WAND2, wand2);
+			}
 
-        public static void restoreFromBundle(Bundle bundle) {
+			bundle.put(NODE, node);
+		}
 
-            Bundle node = bundle.getBundle(NODE);
+		public static void restoreFromBundle(Bundle bundle) {
 
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
+			Bundle node = bundle.getBundle(NODE);
 
-                alternative = node.getBoolean(ALTERNATIVE);
+			if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
 
-                given = node.getBoolean(GIVEN);
+				alternative = node.getBoolean(ALTERNATIVE);
 
-                wand1 = (Wand) node.get(WAND1);
-                wand2 = (Wand) node.get(WAND2);
-            } else {
-                reset();
-            }
-        }
+				given = node.getBoolean(GIVEN);
 
-        public static void spawn(PrisonLevel level, Room room) {
-            if (!spawned && Dungeon.depth == 7) {
+				wand1 = (Wand) node.get(WAND1);
+				wand2 = (Wand) node.get(WAND2);
+			} else {
+				reset();
+			}
+		}
 
-                Wandmaker npc = new Wandmaker();
-                do {
-                    npc.pos = room.random();
-                } while (level.map[npc.pos] == Terrain.ENTRANCE
-                        || level.map[npc.pos] == Terrain.SIGN);
-                level.mobs.add(npc);
-                Actor.occupyCell(npc);
+		public static void spawn(PrisonLevel level, Room room) {
+			if (!spawned && Dungeon.depth == 7) {
 
-                spawned = true;
+				Wandmaker npc = new Wandmaker();
+				do {
+					npc.pos = room.random();
+				} while (level.map[npc.pos] == Terrain.ENTRANCE
+						|| level.map[npc.pos] == Terrain.SIGN);
+				level.mobs.add(npc);
+				Actor.occupyCell(npc);
 
+				spawned = true;
 
-                alternative = Random.Int(2) == 0;
 
+				alternative = Random.Int(2) == 0;
 
-                given = false;
 
-                wand1 = (Wand) Generator.random(Generator.Category.WAND);
-                wand1.random().upgrade();
-                if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
-                    wand1.upgrade(30);
-                }
-                do {
-                    wand2 = (Wand) Generator.random(Generator.Category.WAND);
-                } while (wand2.getClass().equals(wand1.getClass()));
-                wand2.random().upgrade();
-                if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
-                    wand2.upgrade(30);
-                }
-            }
-        }
+				given = false;
 
-        public static void placeItem() {
-            if (alternative) {
+				wand1 = (Wand) Generator.random(Generator.Category.WAND);
+				wand1.random().upgrade();
+				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+					wand1.upgrade(30);
+				}
+				do {
+					wand2 = (Wand) Generator.random(Generator.Category.WAND);
+				} while (wand2.getClass().equals(wand1.getClass()));
+				wand2.random().upgrade();
+				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+					wand2.upgrade(30);
+				}
+			}
+		}
 
-                ArrayList<Heap> candidates = new ArrayList<Heap>();
-                for (Heap heap : Dungeon.level.heaps.values()) {
-                    if (heap.type == Heap.Type.SKELETON) {
-                        candidates.add(heap);
-                    }
-                }
+		public static void placeItem() {
+			if (alternative) {
 
-                if (candidates.size() > 0) {
-                    Random.element(candidates).drop(new CorpseDust());
-                    given = true;
-                } else {
-                    int pos = Dungeon.level.randomRespawnCell();
-                    while (Dungeon.level.heaps.get(pos) != null) {
-                        pos = Dungeon.level.randomRespawnCell();
-                    }
+				ArrayList<Heap> candidates = new ArrayList<Heap>();
+				for (Heap heap : Dungeon.level.heaps.values()) {
+					if (heap.type == Heap.Type.SKELETON) {
+						candidates.add(heap);
+					}
+				}
 
-                    if (pos != -1) {
-                        Heap heap = Dungeon.level.drop(new CorpseDust(), pos);
-                        heap.type = Heap.Type.SKELETON;
-                        heap.sprite.link();
-                        given = true;
-                    }
-                }
+				if (candidates.size() > 0) {
+					Random.element(candidates).drop(new CorpseDust());
+					given = true;
+				} else {
+					int pos = Dungeon.level.randomRespawnCell();
+					while (Dungeon.level.heaps.get(pos) != null) {
+						pos = Dungeon.level.randomRespawnCell();
+					}
 
-            } else {
+					if (pos != -1) {
+						Heap heap = Dungeon.level.drop(new CorpseDust(), pos);
+						heap.type = Heap.Type.SKELETON;
+						heap.sprite.link();
+						given = true;
+					}
+				}
 
-                int shrubPos = Dungeon.level.randomRespawnCell();
-                while (Dungeon.level.heaps.get(shrubPos) != null) {
-                    shrubPos = Dungeon.level.randomRespawnCell();
-                }
+			} else {
 
-                if (shrubPos != -1) {
-                    Dungeon.level.plant(new Rotberry.Seed(), shrubPos);
-                    given = true;
-                }
+				int shrubPos = Dungeon.level.randomRespawnCell();
+				while (Dungeon.level.heaps.get(shrubPos) != null) {
+					shrubPos = Dungeon.level.randomRespawnCell();
+				}
 
-            }
-        }
+				if (shrubPos != -1) {
+					Dungeon.level.plant(new Rotberry.Seed(), shrubPos);
+					given = true;
+				}
 
-        public static void complete() {
-            wand1 = null;
-            wand2 = null;
+				int shrubPos2 = Dungeon.level.randomRespawnCell();
+				while (Dungeon.level.heaps.get(shrubPos2) != null) {
+					shrubPos2 = Dungeon.level.randomRespawnCell();
+				}
 
-            Journal.remove(Journal.Feature.WANDMAKER);
-        }
-    }
+				if (shrubPos2 != -1) {
+					Dungeon.level.plant(new Rotberry.Seed(), shrubPos2);
+					given = true;
+				}
 
-    public static class Rotberry extends Plant {
+			}
+		}
 
-        private static final String TXT_DESC = Messages.get(Wandmaker.class, "berrydesc");
+		public static void complete() {
+			wand1 = null;
+			wand2 = null;
 
-        {
-            image = 7;
-            plantName = Messages.get(Wandmaker.class, "berryname");
-        }
+			Journal.remove(Journal.Feature.WANDMAKER);
+		}
+	}
 
-        @Override
-        public void activate(Char ch) {
-            super.activate(ch);
+	public static class Rotberry extends Plant {
 
-            GameScene.add(Blob.seed(pos, 100, ToxicGas.class));
+		private static final String TXT_DESC = Messages.get(Wandmaker.class, "berrydesc");
 
-            Dungeon.level.drop(new Seed(), pos).sprite.drop();
+		{
+			image = 7;
+			plantName = Messages.get(Wandmaker.class, "berryname");
+		}
 
-            if (ch != null) {
-                Buff.prolong(ch, Roots.class, TICK * 3);
-            }
-        }
+		@Override
+		public void activate(Char ch) {
+			super.activate(ch);
 
-        @Override
-        public String desc() {
-            return TXT_DESC;
-        }
+			GameScene.add(Blob.seed(pos, 100, ToxicGas.class));
 
-        public static class Seed extends Plant.Seed {
-            {
-                plantName = Messages.get(Wandmaker.class, "berryname");
+			Dungeon.level.drop(new Seed(), pos).sprite.drop();
 
-                name = Messages.get(Wandmaker.class, "seedname", plantName);
-                image = ItemSpriteSheet.SEED_ROTBERRY;
+			if (ch != null) {
+				Buff.prolong(ch, Roots.class, TICK * 3);
+			}
+		}
 
-                plantClass = Rotberry.class;
-                alchemyClass = PotionOfStrength.class;
-            }
+		@Override
+		public String desc() {
+			return TXT_DESC;
+		}
 
-            @Override
-            public boolean doPickUp(Hero hero) {
-                if (super.doPickUp(hero)) {
+		public static class Seed extends Plant.Seed {
+			{
+				plantName = Messages.get(Wandmaker.class, "berryname");
 
-                    if (Dungeon.level != null) {
-                        for (Mob mob : Dungeon.level.mobs) {
-                            mob.beckon(Dungeon.hero.pos);
-                        }
+				name = Messages.get(Wandmaker.class, "seedname", plantName);
+				image = ItemSpriteSheet.SEED_ROTBERRY;
 
-                        GLog.w(Messages.get(Wandmaker.class, "pickup"));
-                        CellEmitter.center(Dungeon.hero.pos).start(
-                                Speck.factory(Speck.SCREAM), 0.3f, 3);
-                        Sample.INSTANCE.play(Assets.SND_CHALLENGE);
-                    }
+				plantClass = Rotberry.class;
+				alchemyClass = PotionOfStrength.class;
+			}
 
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+			@Override
+			public boolean doPickUp(Hero hero) {
+				if (super.doPickUp(hero)) {
 
-            @Override
-            public String desc() {
-                return TXT_DESC;
-            }
-        }
-    }
+					if (Dungeon.level != null) {
+						for (Mob mob : Dungeon.level.mobs) {
+							mob.beckon(Dungeon.hero.pos);
+						}
+
+						GLog.w(Messages.get(Wandmaker.class, "pickup"));
+						CellEmitter.center(Dungeon.hero.pos).start(
+								Speck.factory(Speck.SCREAM), 0.3f, 3);
+						Sample.INSTANCE.play(Assets.SND_CHALLENGE);
+					}
+
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			@Override
+			public String desc() {
+				return TXT_DESC;
+			}
+		}
+	}
 }

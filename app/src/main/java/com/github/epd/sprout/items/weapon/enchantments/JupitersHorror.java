@@ -37,7 +37,7 @@ import com.watabou.utils.Random;
 
 public class JupitersHorror extends Weapon.Enchantment {
 
-	private static final String TXT_ELDRITCH = Messages.get(JupitersHorror.class,"horror");
+	private static final String TXT_ELDRITCH = Messages.get(JupitersHorror.class, "horror");
 
 	private static ItemSprite.Glowing GREY = new ItemSprite.Glowing(0x222222);
 
@@ -45,7 +45,7 @@ public class JupitersHorror extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		// lvl 0 - 20%
@@ -60,7 +60,7 @@ public class JupitersHorror extends Weapon.Enchantment {
 			} else {
 				Buff.affect(defender, Terror.class, Terror.DURATION).object = attacker
 						.id();
-				if (Random.Int(level + 11) >= 10){
+				if (Random.Int(level + 11) >= 10) {
 					//doExplode(defender.pos);
 				}
 			}
@@ -70,34 +70,36 @@ public class JupitersHorror extends Weapon.Enchantment {
 			return false;
 		}
 	}
-	
-	   public void doExplode(int cell) {
-			
-			Camera.main.shake(3, 0.7f);
-			
-					if (Dungeon.visible[cell] && Level.passable[cell]) {
-						CellEmitter.center(cell).start(Speck.factory(Speck.ROCK), 0.07f, 10);
-					}
-					
-					Char ch = Actor.findChar(cell);
-					if (ch != null && ch!=Dungeon.hero) {
-						// those not at the center of the blast take damage less
-						// consistently.
-						int minDamage = Dungeon.depth + 5;
-						int maxDamage = 10 + Dungeon.depth * 3;
-						                    
-						
-						int dmg = Random.NormalIntRange(minDamage, maxDamage) - Random.Int(ch.dr());
-						
-						
-						if (dmg > 0) {
-							ch.damage(dmg, this);
-							if(Random.Int(15)==1){Buff.prolong(ch, Paralysis.class, 1);}
-						}
-												
-	     			}
 
-		}	
+	public void doExplode(int cell) {
+
+		Camera.main.shake(3, 0.7f);
+
+		if (Dungeon.visible[cell] && Level.passable[cell]) {
+			CellEmitter.center(cell).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+		}
+
+		Char ch = Actor.findChar(cell);
+		if (ch != null && ch != Dungeon.hero) {
+			// those not at the center of the blast take damage less
+			// consistently.
+			int minDamage = Dungeon.depth + 5;
+			int maxDamage = 10 + Dungeon.depth * 3;
+
+
+			int dmg = Random.NormalIntRange(minDamage, maxDamage) - Random.Int(ch.dr());
+
+
+			if (dmg > 0) {
+				ch.damage(dmg, this);
+				if (Random.Int(15) == 1) {
+					Buff.prolong(ch, Paralysis.class, 1);
+				}
+			}
+
+		}
+
+	}
 
 
 	@Override

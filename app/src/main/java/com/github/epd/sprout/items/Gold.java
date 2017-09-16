@@ -34,14 +34,14 @@ import java.util.ArrayList;
 
 public class Gold extends Item {
 
-	private static final String TXT_COLLECT = Messages.get(Gold.class,"collect");
-	private static final String TXT_INFO = Messages.get(Gold.class,"info")
+	private static final String TXT_COLLECT = Messages.get(Gold.class, "collect");
+	private static final String TXT_INFO = Messages.get(Gold.class, "info")
 			+ TXT_COLLECT;
-	private static final String TXT_INFO_1 = Messages.get(Gold.class,"one") + TXT_COLLECT;
+	private static final String TXT_INFO_1 = Messages.get(Gold.class, "one") + TXT_COLLECT;
 	private static final String TXT_VALUE = "%+d";
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.GOLD;
 		stackable = true;
 	}
@@ -91,12 +91,12 @@ public class Gold extends Item {
 	@Override
 	public String info() {
 		switch (quantity) {
-		case 0:
-			return TXT_COLLECT;
-		case 1:
-			return TXT_INFO_1;
-		default:
-			return Utils.format(TXT_INFO);
+			case 0:
+				return TXT_COLLECT;
+			case 1:
+				return TXT_INFO_1;
+			default:
+				return Utils.format(TXT_INFO);
 		}
 	}
 

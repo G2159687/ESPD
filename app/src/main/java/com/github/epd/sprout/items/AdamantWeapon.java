@@ -22,14 +22,13 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
 public class AdamantWeapon extends Item {
 
-		{
-		name = Messages.get(this,"name");
+	{
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ADAMANT_WEAPON;
 
 		unique = true;
 	}
 
-	
 
 	@Override
 	public boolean isUpgradable() {
@@ -41,10 +40,10 @@ public class AdamantWeapon extends Item {
 		return true;
 	}
 
-	
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
-	
+
 }

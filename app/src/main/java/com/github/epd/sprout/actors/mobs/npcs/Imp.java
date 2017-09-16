@@ -41,209 +41,211 @@ import com.watabou.utils.Random;
 
 public class Imp extends NPC {
 
-    {
-        name = Messages.get(Imp.class, "name");
-        spriteClass = ImpSprite.class;
-    }
+	{
+		name = Messages.get(Imp.class, "name");
+		spriteClass = ImpSprite.class;
 
-    private static final String TXT_GOLEMS1 = Messages.get(Imp.class, "golemone");
+		properties.add(Property.IMMOVABLE);
+	}
 
-    private static final String TXT_MONKS1 = Messages.get(Imp.class, "monkone");
+	private static final String TXT_GOLEMS1 = Messages.get(Imp.class, "golemone");
 
-    private static final String TXT_GOLEMS2 = Messages.get(Imp.class, "golemtwo");
+	private static final String TXT_MONKS1 = Messages.get(Imp.class, "monkone");
 
-    private static final String TXT_MONKS2 = Messages.get(Imp.class, "monktwo");
+	private static final String TXT_GOLEMS2 = Messages.get(Imp.class, "golemtwo");
 
-    private static final String TXT_CYA = Messages.get(Imp.class, "cya", Dungeon.hero.givenName());
-    private static final String TXT_HEY = Messages.get(Imp.class, "hey", Dungeon.hero.givenName());
+	private static final String TXT_MONKS2 = Messages.get(Imp.class, "monktwo");
 
-    private boolean seenBefore = false;
+	private static final String TXT_CYA = Messages.get(Imp.class, "cya", Dungeon.hero.givenName());
+	private static final String TXT_HEY = Messages.get(Imp.class, "hey", Dungeon.hero.givenName());
 
-    @Override
-    protected boolean act() {
+	private boolean seenBefore = false;
 
-        if (!Quest.given && Dungeon.visible[pos]) {
-            if (!seenBefore) {
-                yell(Utils.format(TXT_HEY, Dungeon.hero.givenName()));
-            }
-            seenBefore = true;
-        } else {
-            seenBefore = false;
-        }
+	@Override
+	protected boolean act() {
 
-        throwItem();
+		if (!Quest.given && Dungeon.visible[pos]) {
+			if (!seenBefore) {
+				yell(Utils.format(TXT_HEY, Dungeon.hero.givenName()));
+			}
+			seenBefore = true;
+		} else {
+			seenBefore = false;
+		}
 
-        return super.act();
-    }
+		throwItem();
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return 1000;
-    }
+		return super.act();
+	}
 
-    @Override
-    public String defenseVerb() {
-        return Messages.get(Imp.class, "def");
-    }
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 1000;
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-    }
+	@Override
+	public String defenseVerb() {
+		return Messages.get(Imp.class, "def");
+	}
 
-    @Override
-    public void add(Buff buff) {
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+	}
 
-    @Override
-    public boolean reset() {
-        return true;
-    }
+	@Override
+	public void add(Buff buff) {
+	}
 
-    @Override
-    public boolean interact() {
+	@Override
+	public boolean reset() {
+		return true;
+	}
 
-        sprite.turnTo(pos, Dungeon.hero.pos);
-        if (Quest.given) {
+	@Override
+	public boolean interact() {
 
-            DwarfToken tokens = Dungeon.hero.belongings
-                    .getItem(DwarfToken.class);
-            if (tokens != null
-                    && (tokens.quantity() >= 8 || (!Quest.alternative && tokens
-                    .quantity() >= 6))) {
-                GameScene.show(new WndImp(this, tokens));
-            } else {
-                tell(Quest.alternative ? TXT_MONKS2 : TXT_GOLEMS2,
-                        Dungeon.hero.givenName());
-            }
+		sprite.turnTo(pos, Dungeon.hero.pos);
+		if (Quest.given) {
 
-        } else {
-            tell(Quest.alternative ? TXT_MONKS1 : TXT_GOLEMS1);
-            Quest.given = true;
-            Quest.completed = false;
+			DwarfToken tokens = Dungeon.hero.belongings
+					.getItem(DwarfToken.class);
+			if (tokens != null
+					&& (tokens.quantity() >= 8 || (!Quest.alternative && tokens
+					.quantity() >= 6))) {
+				GameScene.show(new WndImp(this, tokens));
+			} else {
+				tell(Quest.alternative ? TXT_MONKS2 : TXT_GOLEMS2,
+						Dungeon.hero.givenName());
+			}
 
-            Journal.add(Journal.Feature.IMP);
-        }
-        return false;
-    }
+		} else {
+			tell(Quest.alternative ? TXT_MONKS1 : TXT_GOLEMS1);
+			Quest.given = true;
+			Quest.completed = false;
 
-    private void tell(String format, Object... args) {
-        GameScene.show(new WndQuest(this, Utils.format(format, args)));
-    }
+			Journal.add(Journal.Feature.IMP);
+		}
+		return false;
+	}
 
-    public void flee() {
+	private void tell(String format, Object... args) {
+		GameScene.show(new WndQuest(this, Utils.format(format, args)));
+	}
 
-        yell(Utils.format(TXT_CYA, Dungeon.hero.givenName()));
+	public void flee() {
 
-        destroy();
-        sprite.die();
-    }
+		yell(Utils.format(TXT_CYA, Dungeon.hero.givenName()));
 
-    @Override
-    public String description() {
-        return Messages.get(Imp.class, "desc");
-    }
+		destroy();
+		sprite.die();
+	}
 
-    public static class Quest {
+	@Override
+	public String description() {
+		return Messages.get(Imp.class, "desc");
+	}
 
-        private static boolean alternative;
+	public static class Quest {
 
-        private static boolean spawned;
-        private static boolean given;
-        private static boolean completed;
+		private static boolean alternative;
 
-        public static Ring reward;
+		private static boolean spawned;
+		private static boolean given;
+		private static boolean completed;
 
-        public static void reset() {
-            spawned = false;
+		public static Ring reward;
 
-            reward = null;
-        }
+		public static void reset() {
+			spawned = false;
 
-        private static final String NODE = "demon";
+			reward = null;
+		}
 
-        private static final String ALTERNATIVE = "alternative";
-        private static final String SPAWNED = "spawned";
-        private static final String GIVEN = "given";
-        private static final String COMPLETED = "completed";
-        private static final String REWARD = "reward";
+		private static final String NODE = "demon";
 
-        public static void storeInBundle(Bundle bundle) {
+		private static final String ALTERNATIVE = "alternative";
+		private static final String SPAWNED = "spawned";
+		private static final String GIVEN = "given";
+		private static final String COMPLETED = "completed";
+		private static final String REWARD = "reward";
 
-            Bundle node = new Bundle();
+		public static void storeInBundle(Bundle bundle) {
 
-            node.put(SPAWNED, spawned);
+			Bundle node = new Bundle();
 
-            if (spawned) {
-                node.put(ALTERNATIVE, alternative);
+			node.put(SPAWNED, spawned);
 
-                node.put(GIVEN, given);
-                node.put(COMPLETED, completed);
-                node.put(REWARD, reward);
-            }
+			if (spawned) {
+				node.put(ALTERNATIVE, alternative);
 
-            bundle.put(NODE, node);
-        }
+				node.put(GIVEN, given);
+				node.put(COMPLETED, completed);
+				node.put(REWARD, reward);
+			}
 
-        public static void restoreFromBundle(Bundle bundle) {
+			bundle.put(NODE, node);
+		}
 
-            Bundle node = bundle.getBundle(NODE);
+		public static void restoreFromBundle(Bundle bundle) {
 
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
-                alternative = node.getBoolean(ALTERNATIVE);
+			Bundle node = bundle.getBundle(NODE);
 
-                given = node.getBoolean(GIVEN);
-                completed = node.getBoolean(COMPLETED);
-                reward = (Ring) node.get(REWARD);
-            }
-        }
+			if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
+				alternative = node.getBoolean(ALTERNATIVE);
 
-        public static void spawn(CityLevel level) {
-            if (!spawned && Dungeon.depth > 16
-                //&& Random.Int(20 - Dungeon.depth) == 0
-                    ) {
+				given = node.getBoolean(GIVEN);
+				completed = node.getBoolean(COMPLETED);
+				reward = (Ring) node.get(REWARD);
+			}
+		}
 
-                Imp npc = new Imp();
-                do {
-                    npc.pos = level.randomRespawnCell();
-                } while (npc.pos == -1 || level.heaps.get(npc.pos) != null);
-                level.mobs.add(npc);
-                Actor.occupyCell(npc);
+		public static void spawn(CityLevel level) {
+			if (!spawned && Dungeon.depth > 16
+				//&& Random.Int(20 - Dungeon.depth) == 0
+					) {
 
-                spawned = true;
-                alternative = Random.Int(2) == 0;
+				Imp npc = new Imp();
+				do {
+					npc.pos = level.randomRespawnCell();
+				} while (npc.pos == -1 || level.heaps.get(npc.pos) != null);
+				level.mobs.add(npc);
+				Actor.occupyCell(npc);
 
-                given = false;
+				spawned = true;
+				alternative = Random.Int(2) == 0;
 
-                do {
-                    reward = (Ring) Generator.random(Generator.Category.RING);
-                } while (reward.cursed);
-                reward.upgrade(2);
-                if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
-                    reward.upgrade(30);
-                }
-                reward.cursed = true;
-            }
-        }
+				given = false;
 
-        public static void process(Mob mob) {
-            if (spawned && given && !completed) {
-                if ((alternative && mob instanceof Monk)
-                        || (!alternative && mob instanceof Golem)) {
+				do {
+					reward = (Ring) Generator.random(Generator.Category.RING);
+				} while (reward.cursed);
+				reward.upgrade(2);
+				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+					reward.upgrade(30);
+				}
+				reward.cursed = true;
+			}
+		}
 
-                    Dungeon.level.drop(new DwarfToken(), mob.pos).sprite.drop();
-                }
-            }
-        }
+		public static void process(Mob mob) {
+			if (spawned && given && !completed) {
+				if ((alternative && mob instanceof Monk)
+						|| (!alternative && mob instanceof Golem)) {
 
-        public static void complete() {
-            reward = null;
-            completed = true;
+					Dungeon.level.drop(new DwarfToken(), mob.pos).sprite.drop();
+				}
+			}
+		}
 
-            Journal.remove(Journal.Feature.IMP);
-        }
+		public static void complete() {
+			reward = null;
+			completed = true;
 
-        public static boolean isCompleted() {
-            return completed;
-        }
-    }
+			Journal.remove(Journal.Feature.IMP);
+		}
+
+		public static boolean isCompleted() {
+			return completed;
+		}
+	}
 }

@@ -26,7 +26,7 @@ public class PotionOfMight extends Potion {
 
 	{
 		initials = 6;
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 
 		bones = true;
 	}
@@ -38,13 +38,13 @@ public class PotionOfMight extends Potion {
 		hero.STR++;
 		hero.HT += 5;
 		hero.HP += 5;
-		hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this,"msg_1"));
-		GLog.p(Messages.get(this,"msg_2"));
+		hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "msg_1"));
+		GLog.p(Messages.get(this, "msg_2"));
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

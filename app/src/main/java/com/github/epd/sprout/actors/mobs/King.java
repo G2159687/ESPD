@@ -29,6 +29,7 @@ import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.items.OtilukesJournal;
+import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban4;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.wands.WandOfBlink;
@@ -56,7 +57,7 @@ public class King extends Mob {
 
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = KingSprite.class;
 
 		HP = HT = 500;
@@ -100,7 +101,7 @@ public class King extends Mob {
 
 	@Override
 	public String defenseVerb() {
-		return Messages.get(this,"def");
+		return Messages.get(this, "def");
 	}
 
 	@Override
@@ -143,37 +144,45 @@ public class King extends Mob {
 		boolean result = super.act();
 
 		if (HP < HT) {
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			HP = HP + REGEN;
 		}
 		return result;
 	}
-	
-	
-	private void summonLiches (int pos){
-		 DwarfLich.spawnAround(pos);
+
+
+	private void summonLiches(int pos) {
+		DwarfLich.spawnAround(pos);
 	}
-	
+
 	@Override
 	public void die(Object cause) {
-		            
-		int findTomb=Dungeon.hero.pos;
-		yell(Messages.get(this,"die", Dungeon.hero.givenName()));
-		 for (Mob mob : Dungeon.level.mobs) {
-				if (mob instanceof DwarfKingTomb){findTomb=mob.pos;}
-		 }
-		 
-		 Dungeon.level.drop(new Sokoban4(), pos).sprite.drop();
-		 
-		 if (!Dungeon.limitedDrops.journal.dropped()){ 
-			  Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-			  Dungeon.limitedDrops.journal.drop();
+
+		int findTomb = Dungeon.hero.pos;
+		yell(Messages.get(this, "die", Dungeon.hero.givenName()));
+		for (Mob mob : Dungeon.level.mobs) {
+			if (mob instanceof DwarfKingTomb) {
+				findTomb = mob.pos;
 			}
-		 
-		 summonLiches(findTomb);
-		 GLog.n(Messages.get(this,"release"));
-		 super.die(cause);
-							
+		}
+
+		Dungeon.level.drop(new Sokoban4(), pos).sprite.drop();
+
+		if (!Dungeon.limitedDrops.journal.dropped()) {
+			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
+			Dungeon.limitedDrops.journal.drop();
+		}
+
+		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
+		if (beacon != null) {
+			beacon.upgrade();
+			GLog.p(Messages.get(LloydsBeacon.class, "stronger"));
+		}
+
+		summonLiches(findTomb);
+		GLog.n(Messages.get(this, "release"));
+		super.die(cause);
+
 	}
 
 	private int maxArmySize() {
@@ -200,7 +209,8 @@ public class King extends Mob {
 		PathFinder.distance[pos] = Integer.MAX_VALUE;
 		int dist = 1;
 
-		undeadLabel: for (int i = 0; i < undeadsToSummon; i++) {
+		undeadLabel:
+		for (int i = 0; i < undeadsToSummon; i++) {
 			do {
 				for (int j = 0; j < Level.getLength(); j++) {
 					if (PathFinder.distance[j] == dist) {
@@ -222,7 +232,7 @@ public class King extends Mob {
 			} while (dist < undeadsToSummon);
 		}
 
-		yell(Messages.get(this,"summon"));
+		yell(Messages.get(this, "summon"));
 		HP += Random.Int(1, HT - HP);
 		sprite.emitter().burst(ElmoParticle.FACTORY, 5);
 	}
@@ -231,15 +241,16 @@ public class King extends Mob {
 	public void notice() {
 		super.notice();
 		BossHealthBar.assignBoss(this);
-		yell(Messages.get(this,"notice"));
+		yell(Messages.get(this, "notice"));
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(ToxicGas.class);
 		RESISTANCES.add(Death.class);
@@ -253,6 +264,7 @@ public class King extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Paralysis.class);
 		IMMUNITIES.add(Vertigo.class);
@@ -268,7 +280,7 @@ public class King extends Mob {
 		public static int count = 0;
 
 		{
-			name = Messages.get(King.class,"dname");
+			name = Messages.get(King.class, "dname");
 			spriteClass = UndeadSprite.class;
 
 			HP = HT = 50;
@@ -334,15 +346,16 @@ public class King extends Mob {
 
 		@Override
 		public String defenseVerb() {
-			return Messages.get(King.class,"ddef");
+			return Messages.get(King.class, "ddef");
 		}
 
 		@Override
 		public String description() {
-			return Messages.get(King.class,"ddesc");
+			return Messages.get(King.class, "ddesc");
 		}
 
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 		static {
 			IMMUNITIES.add(Death.class);
 			IMMUNITIES.add(Paralysis.class);

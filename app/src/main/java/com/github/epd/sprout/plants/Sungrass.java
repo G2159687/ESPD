@@ -33,11 +33,11 @@ import com.watabou.utils.Bundle;
 
 public class Sungrass extends Plant {
 
-	private static final String TXT_DESC = Messages.get(Sungrass.class,"desc");
+	private static final String TXT_DESC = Messages.get(Sungrass.class, "desc");
 
 	{
 		image = 4;
-		plantName = Messages.get(this,"name");
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override
@@ -60,9 +60,9 @@ public class Sungrass extends Plant {
 
 	public static class Seed extends Plant.Seed {
 		{
-			plantName = Messages.get(Sungrass.class,"name");
+			plantName = Messages.get(Sungrass.class, "name");
 
-			name = Messages.get(this,"name");
+			name = Messages.get(this, "name");
 			image = ItemSpriteSheet.SEED_SUNGRASS;
 
 			plantClass = Sungrass.class;
@@ -73,8 +73,9 @@ public class Sungrass extends Plant {
 
 		@Override
 		public String desc() {
-			return Messages.get(Plant.class,"seeddesc", plantName);
-		}	}
+			return Messages.get(Plant.class, "seeddesc", plantName);
+		}
+	}
 
 	public static class Health extends Buff {
 
@@ -110,9 +111,9 @@ public class Sungrass extends Plant {
 						healCurr++;
 					target.sprite.emitter().burst(Speck.factory(Speck.HEALING),
 							1);
-					if (target.HP == target.HT && target instanceof Hero){
-						((Hero)target).resting = false;
-						}
+					if (target.HP == target.HT && target instanceof Hero) {
+						((Hero) target).resting = false;
+					}
 				}
 				count = 1;
 			} else {
@@ -138,11 +139,13 @@ public class Sungrass extends Plant {
 
 		@Override
 		public String toString() {
-			return Utils.format(Messages.get(this,"name", level));
+			return Utils.format(Messages.get(this, "name", level));
 		}
 
 		@Override
-		public String desc() { return Messages.get(this,"desc", level); }
+		public String desc() {
+			return Messages.get(this, "desc", level);
+		}
 
 		private static final String POS = "pos";
 		private static final String HEALCURR = "healCurr";

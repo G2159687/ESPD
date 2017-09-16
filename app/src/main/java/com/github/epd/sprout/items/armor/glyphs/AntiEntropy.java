@@ -32,7 +32,7 @@ import com.watabou.utils.Random;
 
 public class AntiEntropy extends Glyph {
 
-	private static final String TXT_ANTI_ENTROPY = Messages.get(AntiEntropy.class,"name");
+	private static final String TXT_ANTI_ENTROPY = Messages.get(AntiEntropy.class, "name");
 
 	private static ItemSprite.Glowing BLUE = new ItemSprite.Glowing(0x0000FF);
 

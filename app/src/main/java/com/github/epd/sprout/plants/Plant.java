@@ -53,7 +53,7 @@ public class Plant implements Bundlable {
 	public int pos;
 
 	public PlantSprite sprite;
-	
+
 	//private static final float TIME_TO_EAT = 3f;
 
 	public void activate(Char ch) {
@@ -66,10 +66,10 @@ public class Plant implements Bundlable {
 	}
 
 	public static boolean checkPhase(int cell) {
-	Plant plant = Dungeon.level.plants.get(cell);
+		Plant plant = Dungeon.level.plants.get(cell);
 		return plant instanceof Phaseshift || plant instanceof Flytrap;
 	}
-	
+
 	public void wither() {
 		Dungeon.level.uproot(pos);
 
@@ -123,9 +123,9 @@ public class Plant implements Bundlable {
 
 	public static class Seed extends Item {
 
-		public static final String AC_PLANT = Messages.get(Plant.class,"ac_plant");
+		public static final String AC_PLANT = Messages.get(Plant.class, "ac_plant");
 
-		private static final String TXT_INFO = Messages.get(Plant.class,"info");
+		private static final String TXT_INFO = Messages.get(Plant.class, "info");
 
 		private static final float TIME_TO_PLANT = 1f;
 
@@ -143,19 +143,19 @@ public class Plant implements Bundlable {
 		public ArrayList<String> actions(Hero hero) {
 			ArrayList<String> actions = super.actions(hero);
 			actions.add(AC_PLANT);
-		//	actions.add(Food.AC_EAT);
+			//	actions.add(Food.AC_EAT);
 			return actions;
 		}
 
 		@Override
 		protected void onThrow(int cell) {
-			if (this instanceof Phaseshift.Seed && Phaseshift.checkWater()){
-				GLog.n(Messages.get(Plant.class,"prevent1"));
+			if (this instanceof Phaseshift.Seed && Phaseshift.checkWater()) {
+				GLog.n(Messages.get(Plant.class, "prevent1"));
 				super.onThrow(cell);
-			}	else if (this instanceof Flytrap.Seed && Flytrap.checkWater()){
-					GLog.n(Messages.get(Plant.class,"prevent2"));
-					super.onThrow(cell);
-			}	else if (Dungeon.level.map[cell] == Terrain.ALCHEMY || Level.pit[cell]) {
+			} else if (this instanceof Flytrap.Seed && Flytrap.checkWater()) {
+				GLog.n(Messages.get(Plant.class, "prevent2"));
+				super.onThrow(cell);
+			} else if (Dungeon.level.map[cell] == Terrain.ALCHEMY || Level.pit[cell]) {
 				super.onThrow(cell);
 			} else {
 				Dungeon.level.plant(this, cell);
@@ -171,18 +171,18 @@ public class Plant implements Bundlable {
 				((Seed) detach(hero.belongings.backpack)).onThrow(hero.pos);
 
 				hero.sprite.operate(hero.pos);
-				
-		//	} else if (action.equals(Food.AC_EAT)) {
-			//	detach(hero.belongings.backpack);
+
+				//	} else if (action.equals(Food.AC_EAT)) {
+				//	detach(hero.belongings.backpack);
 //
-	//			hero.sprite.operate(hero.pos);
-		//		hero.busy();
-			//	SpellSprite.show(hero, SpellSprite.FOOD);
-			//	Sample.INSTANCE.play(Assets.SND_EAT);
+				//			hero.sprite.operate(hero.pos);
+				//		hero.busy();
+				//	SpellSprite.show(hero, SpellSprite.FOOD);
+				//	Sample.INSTANCE.play(Assets.SND_EAT);
 
-			//	hero.spend(TIME_TO_EAT);
+				//	hero.spend(TIME_TO_EAT);
 
-			
+
 			} else {
 
 				super.execute(hero, action);

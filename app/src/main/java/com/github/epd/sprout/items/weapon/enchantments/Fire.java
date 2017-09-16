@@ -30,7 +30,7 @@ import com.watabou.utils.Random;
 
 public class Fire extends Weapon.Enchantment {
 
-	private static final String TXT_BLAZING = Messages.get(Fire.class,"name");
+	private static final String TXT_BLAZING = Messages.get(Fire.class, "name");
 
 	private static ItemSprite.Glowing ORANGE = new ItemSprite.Glowing(0xFF4400);
 
@@ -38,7 +38,7 @@ public class Fire extends Weapon.Enchantment {
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		// lvl 0 - 33%

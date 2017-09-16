@@ -27,12 +27,12 @@ import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.items.journalpages.JournalPage;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.misc.Spectacles.MagicSight;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
+import com.github.epd.sprout.utils.Utils;
 import com.github.epd.sprout.windows.WndBag;
 import com.github.epd.sprout.windows.WndOtiluke;
 import com.watabou.noosa.Game;
@@ -44,56 +44,55 @@ import java.util.ArrayList;
 
 public class OtilukesJournal extends Item {
 
-	private static final String TXT_PREVENTING = Messages.get(OtilukesJournal.class,"prevent");
+	private static final String TXT_PREVENTING = Messages.get(OtilukesJournal.class, "prevent");
 
-	
+
 	public final float TIME_TO_USE = 1;
 	public final int fullCharge = 1000;
-	
-	
-	public static final String AC_RETURN = Messages.get(OtilukesJournal.class,"ac_return");
-	public static final String AC_ADD = Messages.get(OtilukesJournal.class,"ac_add");
-	public static final String AC_PORT = Messages.get(OtilukesJournal.class,"ac_read");
-	
-	protected String inventoryTitle = Messages.get(OtilukesJournal.class,"title");
+
+
+	public static final String AC_RETURN = Messages.get(OtilukesJournal.class, "ac_return");
+	public static final String AC_ADD = Messages.get(OtilukesJournal.class, "ac_add");
+	public static final String AC_PORT = Messages.get(OtilukesJournal.class, "ac_read");
+
+	protected String inventoryTitle = Messages.get(OtilukesJournal.class, "title");
 	protected WndBag.Mode mode = WndBag.Mode.JOURNALPAGES;
 
-	
+
 	public int returnDepth = -1;
 	public int returnPos;
-	
+
 	public int charge = 0;
 	public int level = 1;
-	
-	public int checkReading(){
-		int lvl=1;			
-		if (Dungeon.hero.buff(MagicSight.class) != null){
-			lvl+=1;
+
+	public int checkReading() {
+		int lvl = 1;
+		if (Dungeon.hero.buff(MagicSight.class) != null) {
+			lvl += 1;
 		}
 		return lvl;
 	}
-	
-	public int reqCharges(){
-			
-		int calcCharges = Math.round(fullCharge/(level*checkReading()));
-		return calcCharges;
-		
-	}
-	
 
-	public boolean[] rooms = new boolean[10];	
-	public boolean[] firsts = new boolean[10];	
-		
+	public int reqCharges() {
+
+		return Math.round(fullCharge / (level * checkReading()));
+
+	}
+
+
+	public boolean[] rooms = new boolean[10];
+	public boolean[] firsts = new boolean[10];
+
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.OTILUKES_JOURNAL;
 
 		unique = true;
-		
+
 		//rooms[0] = true;
 		//firsts[0] = true;
 	}
-		
+
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 	private static final String ROOMS = "rooms";
@@ -128,17 +127,17 @@ public class OtilukesJournal extends Item {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		
+
 		actions.add(AC_ADD);
-		
-		if (returnDepth > 0 && (Dungeon.depth<56 || Dungeon.depth==68 || Dungeon.depth==69) && Dungeon.depth>49 && !hero.petfollow){
-		actions.add(AC_RETURN);
+
+		if (returnDepth > 0 && (Dungeon.depth < 56 || Dungeon.depth == 68 || Dungeon.depth == 69) && Dungeon.depth > 49 && !hero.petfollow) {
+			actions.add(AC_RETURN);
 		}
-		//charge >= reqCharges() &&		
-		if (charge >= reqCharges() && Dungeon.depth<26 && !hero.petfollow && (level>1 || rooms[0])){
-		actions.add(AC_PORT);
+		//charge >= reqCharges() &&
+		if (charge >= reqCharges() && Dungeon.depth < 26 && !hero.petfollow && (level > 1 || rooms[0])) {
+			actions.add(AC_PORT);
 		}
-				
+
 		return actions;
 	}
 
@@ -152,40 +151,40 @@ public class OtilukesJournal extends Item {
 				GLog.w(TXT_PREVENTING);
 				return;
 			}
-						
-			
+
+
 		}
 
 		if (action == AC_PORT) {
-				
-			GameScene.show(new WndOtiluke(rooms, this));
-			
-		}
-              
-       if (action == AC_RETURN) {
-    	   
-    	   hero.spend(TIME_TO_USE);
-    	   
-    	       IronKey key = hero.belongings.getKey(IronKey.class, Dungeon.depth);
-			   if (key!=null){key.detachAll(Dungeon.hero.belongings.backpack);}
-			   updateQuickslot();
-			   
-			   checkPetPort();
-			   
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;	
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene(InterlevelScene.class);
-				returnDepth=-1;
-			}
-               
-       if (action == AC_ADD) {
 
-    	   GameScene.selectItem(itemSelector, mode, inventoryTitle);
-			
-		}		
-					
-		 else {
+			GameScene.show(new WndOtiluke(rooms, this));
+
+		}
+
+		if (action == AC_RETURN) {
+
+			hero.spend(TIME_TO_USE);
+
+			IronKey key = hero.belongings.getKey(IronKey.class, Dungeon.depth);
+			if (key != null) {
+				key.detachAll(Dungeon.hero.belongings.backpack);
+			}
+			updateQuickslot();
+
+			checkPetPort();
+
+			InterlevelScene.mode = InterlevelScene.Mode.RETURN;
+			InterlevelScene.returnDepth = returnDepth;
+			InterlevelScene.returnPos = returnPos;
+			Game.switchScene(InterlevelScene.class);
+			returnDepth = -1;
+		}
+
+		if (action == AC_ADD) {
+
+			GameScene.selectItem(itemSelector, mode, inventoryTitle);
+
+		} else {
 
 			super.execute(hero, action);
 
@@ -194,9 +193,9 @@ public class OtilukesJournal extends Item {
 
 	@Override
 	public int price() {
-		return 300*quantity;
+		return 300 * quantity;
 	}
-	
+
 	public void reset() {
 		returnDepth = -1;
 	}
@@ -210,66 +209,70 @@ public class OtilukesJournal extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-	
-	private PET checkpet(){
+
+	private PET checkpet() {
 		for (Mob mob : Dungeon.level.mobs) {
-			if(mob instanceof PET) {
+			if (mob instanceof PET) {
 				return (PET) mob;
 			}
-		}	
+		}
 		return null;
 	}
-	
-	private boolean checkpetNear(){
+
+	private boolean checkpetNear() {
 		for (int n : PathFinder.NEIGHBOURS8) {
-			int c =  Dungeon.hero.pos + n;
+			int c = Dungeon.hero.pos + n;
 			if (Actor.findChar(c) instanceof PET) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private void checkPetPort(){
+
+	private void checkPetPort() {
 		PET pet = checkpet();
-		if(pet!=null){
-		  Dungeon.hero.petType=pet.type;
-		  Dungeon.hero.petLevel=pet.level;
-		  Dungeon.hero.petKills=pet.kills;	
-		  Dungeon.hero.petHP=pet.HP;
-		  Dungeon.hero.petExperience=pet.experience;
-		  Dungeon.hero.petCooldown=pet.cooldown;
-		  pet.destroy();
-		  Dungeon.hero.petfollow=true;
+		if (pet != null) {
+			Dungeon.hero.petType = pet.type;
+			Dungeon.hero.petLevel = pet.level;
+			Dungeon.hero.petKills = pet.kills;
+			Dungeon.hero.petHP = pet.HP;
+			Dungeon.hero.petExperience = pet.experience;
+			Dungeon.hero.petCooldown = pet.cooldown;
+			pet.destroy();
+			Dungeon.hero.petfollow = true;
 		} else Dungeon.hero.petfollow = Dungeon.hero.haspet && Dungeon.hero.petfollow;
-		
+
 	}
 
-		
+	@Override
+	public String status() {
+		return Utils.format("%d%%", charge < reqCharges() ? (100 * charge) / reqCharges() : 100);
+	}
+
+
 	@Override
 	public String info() {
-		
-		String strdesc = Messages.get(OtilukesJournal.class,"desc1");
-		
-		if(level>1){
-		  if (charge<reqCharges()){
-			
-			strdesc = strdesc +  Messages.get(OtilukesJournal.class,"desc2", ((100*charge)/reqCharges()));
-		  } else {			
-			strdesc = strdesc +  Messages.get(OtilukesJournal.class,"desc3");
-		  }
+
+		String strdesc = Messages.get(OtilukesJournal.class, "desc1");
+
+		if (level > 1) {
+			if (charge < reqCharges()) {
+				strdesc = strdesc + Messages.get(OtilukesJournal.class, "desc2", ((100 * charge) / reqCharges()));
+			} else {
+				strdesc = strdesc + Messages.get(OtilukesJournal.class, "desc3");
+			}
 		}
-		
+
 		return strdesc;
 	}
-	
+
 	protected WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect(Item item) {
 			if (item != null && item instanceof JournalPage) {
 				Hero hero = Dungeon.hero;
 				int room = ((JournalPage) item).room;
-			
+
 				hero.sprite.operate(hero.pos);
 				hero.busy();
 				hero.spend(2f);
@@ -277,21 +280,21 @@ public class OtilukesJournal extends Item {
 				hero.sprite.emitter().burst(ElmoParticle.FACTORY, 12);
 
 				item.detach(hero.belongings.backpack);
-				GLog.h(Messages.get(OtilukesJournal.class,"add"));
+				GLog.h(Messages.get(OtilukesJournal.class, "add"));
 				level++;
-				
-				if(charge<(fullCharge-500)){
-					charge=fullCharge;
-				}  else {
-					charge+=500; 
+
+				if (charge < (fullCharge - 500)) {
+					charge = fullCharge;
+				} else {
+					charge += 500;
 				}
-				
+
 				rooms[room] = true;
 				firsts[room] = true;
-				
+
+			}
 		}
-	 }
 	};
-	
+
 
 }

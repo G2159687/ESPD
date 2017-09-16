@@ -41,19 +41,19 @@ public class FishProtector extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(FishProtector.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(FishProtector.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = FishProtectorSprite.class;
 
 		EXP = 15;
 		state = HUNTING;
 		flying = true;
-		
+
 		HP = HT = 90;
 		defenseSkill = 25;
-		
+
 		loot = new VioletDewdrop();
 		lootChance = 1f;
 	}
@@ -73,10 +73,10 @@ public class FishProtector extends Mob implements Callback {
 		return 15;
 	}
 
-		
+
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -133,15 +133,16 @@ public class FishProtector extends Mob implements Callback {
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(this,"leave"));
+		yell(Messages.get(this, "leave"));
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 		RESISTANCES.add(Invisibility.class);

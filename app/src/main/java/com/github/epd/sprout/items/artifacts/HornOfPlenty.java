@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class HornOfPlenty extends Artifact {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARTIFACT_HORN1;
 
 		level = 0;
@@ -39,10 +39,10 @@ public class HornOfPlenty extends Artifact {
 
 	private static final float TIME_TO_EAT = 3f;
 
-	public static final String AC_EAT = Messages.get(HornOfPlenty.class,"ac_eat");
-	public static final String AC_STORE = Messages.get(HornOfPlenty.class,"ac_store");
+	public static final String AC_EAT = Messages.get(HornOfPlenty.class, "ac_eat");
+	public static final String AC_STORE = Messages.get(HornOfPlenty.class, "ac_store");
 
-	protected String inventoryTitle = Messages.get(this,"prompt");
+	protected String inventoryTitle = Messages.get(this, "prompt");
 	protected WndBag.Mode mode = WndBag.Mode.FOOD;
 
 	@Override
@@ -67,29 +67,29 @@ public class HornOfPlenty extends Artifact {
 		if (action.equals(AC_EAT)) {
 
 			if (!isEquipped(hero))
-				GLog.i(Messages.get(this,"equip"));
+				GLog.i(Messages.get(this, "equip"));
 			else if (charge == 0)
-				GLog.i(Messages.get(this,"no_food"));
+				GLog.i(Messages.get(this, "no_food"));
 			else {
 				hero.buff(Hunger.class).satisfy(50f * charge);
 
 				// if you get at least 100 food energy from the horn
 				if (charge >= 2) {
 					switch (hero.heroClass) {
-					case WARRIOR:
-						if (hero.HP < hero.HT) {
-							hero.HP = Math.min(hero.HP + 5, hero.HT);
-							hero.sprite.emitter().burst(
-									Speck.factory(Speck.HEALING), 1);
-						}
-						break;
-					case MAGE:
-						hero.belongings.charge(false);
-						ScrollOfRecharging.charge(hero);
-						break;
-					case ROGUE:
-					case HUNTRESS:
-						break;
+						case WARRIOR:
+							if (hero.HP < hero.HT) {
+								hero.HP = Math.min(hero.HP + 5, hero.HT);
+								hero.sprite.emitter().burst(
+										Speck.factory(Speck.HEALING), 1);
+							}
+							break;
+						case MAGE:
+							hero.belongings.charge(false);
+							ScrollOfRecharging.charge(hero);
+							break;
+						case ROGUE:
+						case HUNTRESS:
+							break;
 					}
 
 					if (charge >= 5) {
@@ -113,7 +113,7 @@ public class HornOfPlenty extends Artifact {
 				hero.busy();
 				SpellSprite.show(hero, SpellSprite.FOOD);
 				Sample.INSTANCE.play(Assets.SND_EAT);
-				GLog.i(Messages.get(this,"eat"));
+				GLog.i(Messages.get(this, "eat"));
 
 				hero.spend(TIME_TO_EAT);
 				image = ItemSpriteSheet.ARTIFACT_HORN1;
@@ -134,27 +134,27 @@ public class HornOfPlenty extends Artifact {
 
 	@Override
 	public String desc() {
-		String desc = Messages.get(this,"desc");
+		String desc = Messages.get(this, "desc");
 
 		if (charge == 0)
-			desc += Messages.get(this,"1");
+			desc += Messages.get(this, "1");
 		else if (charge < 3)
-			desc += Messages.get(this,"2");
+			desc += Messages.get(this, "2");
 		else if (charge < 7)
-			desc += Messages.get(this,"3");
+			desc += Messages.get(this, "3");
 		else if (charge < 10)
-			desc += Messages.get(this,"4");
+			desc += Messages.get(this, "4");
 		else
-			desc += Messages.get(this,"5");
+			desc += Messages.get(this, "5");
 
 		if (isEquipped(Dungeon.hero)) {
 			if (!cursed) {
-				desc += Messages.get(this,"6");
+				desc += Messages.get(this, "6");
 
 				if (level < 15)
-					desc += Messages.get(this,"desc_hint");
+					desc += Messages.get(this, "desc_hint");
 			} else {
-				desc += Messages.get(this,"desc_cursed");
+				desc += Messages.get(this, "desc_cursed");
 			}
 		}
 
@@ -187,7 +187,7 @@ public class HornOfPlenty extends Artifact {
 						image = ItemSpriteSheet.ARTIFACT_HORN1;
 
 					if (charge == chargeCap) {
-						GLog.p(Messages.get(HornOfPlenty.class,"full"));
+						GLog.p(Messages.get(HornOfPlenty.class, "full"));
 						partialCharge = 0;
 					}
 
@@ -209,7 +209,7 @@ public class HornOfPlenty extends Artifact {
 			if (item != null && item instanceof Food) {
 				if (item instanceof Blandfruit
 						&& ((Blandfruit) item).potionAttrib == null) {
-					GLog.w(Messages.get(HornOfPlenty.class,"reject"));
+					GLog.w(Messages.get(HornOfPlenty.class, "reject"));
 				} else {
 					Hero hero = Dungeon.hero;
 					hero.sprite.operate(hero.pos);
@@ -219,9 +219,9 @@ public class HornOfPlenty extends Artifact {
 					curItem.upgrade(((Food) item).hornValue);
 					if (curItem.level >= 30) {
 						curItem.level = 30;
-						GLog.p(Messages.get(HornOfPlenty.class,"maxlevel"));
+						GLog.p(Messages.get(HornOfPlenty.class, "maxlevel"));
 					} else
-						GLog.p(Messages.get(HornOfPlenty.class,"levelup"));
+						GLog.p(Messages.get(HornOfPlenty.class, "levelup"));
 					item.detach(hero.belongings.backpack);
 				}
 

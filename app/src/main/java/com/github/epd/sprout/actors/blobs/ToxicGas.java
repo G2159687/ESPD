@@ -39,16 +39,16 @@ public class ToxicGas extends Blob implements Hero.Doom {
 		Char ch;
 		int cell;
 
-		for (int i = area.left; i < area.right; i++){
-			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*WIDTH;
-				if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
+		for (int i = area.left; i < area.right; i++) {
+			for (int j = area.top; j < area.bottom; j++) {
+				cell = i + j * WIDTH;
+				if (cur[cell] > 0 && (ch = Actor.findChar(cell)) != null) {
 					int damage = (ch.HT + levelDamage) / 40;
-					if (Random.Int( 40 ) < (ch.HT + levelDamage) % 40) {
+					if (Random.Int(40) < (ch.HT + levelDamage) % 40) {
 						damage++;
 					}
 
-					ch.damage( damage, this );
+					ch.damage(damage, this);
 				}
 			}
 		}
@@ -63,12 +63,12 @@ public class ToxicGas extends Blob implements Hero.Doom {
 
 	@Override
 	public String tileDesc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override
 	public void onDeath() {
 		Dungeon.fail(ResultDescriptions.GAS);
-		GLog.n(Messages.get(this,"die"));
+		GLog.n(Messages.get(this, "die"));
 	}
 }

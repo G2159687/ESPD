@@ -35,12 +35,12 @@ import com.watabou.noosa.audio.Sample;
 
 public class MageArmor extends ClassArmor {
 
-	private static final String AC_SPECIAL = Messages.get(MageArmor.class,"ac_special");
+	private static final String AC_SPECIAL = Messages.get(MageArmor.class, "ac_special");
 
-	private static final String TXT_NOT_MAGE = Messages.get(MageArmor.class,"not_mage");
+	private static final String TXT_NOT_MAGE = Messages.get(MageArmor.class, "not_mage");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ARMOR_MAGE;
 	}
 
@@ -51,7 +51,7 @@ public class MageArmor extends ClassArmor {
 
 	@Override
 	public String desc() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	@Override

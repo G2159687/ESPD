@@ -32,10 +32,12 @@ public class Dewcharge extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
-	public String desc() { return Messages.get(this,"desc", Dungeon.hero.buff(Dewcharge.class).dispTurnsInt()); }
-	
+	public String desc() {
+		return Messages.get(this, "desc", Dungeon.hero.buff(Dewcharge.class).dispTurnsInt());
+	}
+
 }

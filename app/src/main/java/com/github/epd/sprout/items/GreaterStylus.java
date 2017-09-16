@@ -32,15 +32,15 @@ import java.util.ArrayList;
 
 public class GreaterStylus extends Item {
 
-	private static final String TXT_SELECT_ARMOR = Messages.get(GreaterStylus.class,"select");
-	private static final String TXT_INSCRIBED = Messages.get(GreaterStylus.class,"inscribed");
+	private static final String TXT_SELECT_ARMOR = Messages.get(GreaterStylus.class, "select");
+	private static final String TXT_INSCRIBED = Messages.get(GreaterStylus.class, "inscribed");
 
 	private static final float TIME_TO_INSCRIBE = 2;
 
-	private static final String AC_INSCRIBE = Messages.get(GreaterStylus.class,"ac");
+	private static final String AC_INSCRIBE = Messages.get(GreaterStylus.class, "ac");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.STYLUS;
 
 		stackable = true;
@@ -103,7 +103,7 @@ public class GreaterStylus extends Item {
 
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {

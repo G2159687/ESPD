@@ -19,26 +19,27 @@ package com.github.epd.sprout.actors.hero;
 
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.utils.Bundle;
+
 //TODO:Rework this
 public enum HeroSubClass {
 
-	NONE( null ),
+	NONE(null),
 
-	GLADIATOR( "gladiator" ),
-	BERSERKER( "berserker" ),
+	GLADIATOR("gladiator"),
+	BERSERKER("berserker"),
 
-	WARLOCK( "warlock" ),
-	BATTLEMAGE( "battlemage" ),
+	WARLOCK("warlock"),
+	BATTLEMAGE("battlemage"),
 
-	ASSASSIN( "assassin" ),
-	FREERUNNER( "freerunner" ),
+	ASSASSIN("assassin"),
+	FREERUNNER("freerunner"),
 
-	SNIPER( "sniper" ),
-	WARDEN( "warden" );
+	SNIPER("sniper"),
+	WARDEN("warden");
 
 	private String title;
 
-	HeroSubClass( String title ) {
+	HeroSubClass(String title) {
 		this.title = title;
 	}
 
@@ -47,7 +48,7 @@ public enum HeroSubClass {
 	}
 
 	public String desc() {
-		return Messages.get(this, title+"_desc");
+		return Messages.get(this, title + "_desc");
 	}
 
 	private static final String SUBCLASS = "subClass";

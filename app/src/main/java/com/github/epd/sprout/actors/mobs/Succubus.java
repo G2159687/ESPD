@@ -45,11 +45,11 @@ public class Succubus extends Mob {
 	private int delay = 0;
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = SuccubusSprite.class;
 
-		HP = HT = 100+(adj(0)*Random.NormalIntRange(5, 7));
-		defenseSkill = 27+adj(1);
+		HP = HT = 100 + (adj(0) * Random.NormalIntRange(5, 7));
+		defenseSkill = 27 + adj(1);
 		viewDistance = Light.DISTANCE;
 
 		EXP = 12;
@@ -57,14 +57,14 @@ public class Succubus extends Mob {
 
 		loot = new ScrollOfLullaby();
 		lootChance = 0.05f;
-		
+
 		lootOther = new Meat();
 		lootChanceOther = 0.1f; // by default, see die()
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(15, 25+adj(0));
+		return Random.NormalIntRange(15, 25 + adj(0));
 	}
 
 	@Override
@@ -100,36 +100,37 @@ public class Succubus extends Mob {
 
 	private void blink(int target) {
 
-		Ballistica route = new Ballistica( pos, target, Ballistica.PROJECTILE);
+		Ballistica route = new Ballistica(pos, target, Ballistica.PROJECTILE);
 		int cell = route.collisionPos;
 
 		//can't occupy the same cell as another char, so move back one.
-		if (Actor.findChar( cell ) != null && cell != this.pos)
-			cell = route.path.get(route.dist-1);
-		
-       if (!Level.pit[cell]){
-		WandOfBlink.appear(this, cell);
-       }
+		if (Actor.findChar(cell) != null && cell != this.pos)
+			cell = route.path.get(route.dist - 1);
+
+		if (!Level.pit[cell]) {
+			WandOfBlink.appear(this, cell);
+		}
 
 		delay = BLINK_DELAY;
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 40+adj(1);
+		return 40 + adj(1);
 	}
 
 	@Override
 	public int dr() {
-		return 10+adj(1);
+		return 10 + adj(1);
 	}
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Leech.class);
 	}
@@ -140,6 +141,7 @@ public class Succubus extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Sleep.class);
 	}

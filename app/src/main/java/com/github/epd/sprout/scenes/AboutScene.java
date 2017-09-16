@@ -23,7 +23,6 @@ package com.github.epd.sprout.scenes;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.messages.Languages;
@@ -40,6 +39,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.TouchArea;
+
 //TODO:UPDATE ME BEFORE PUSHING TO REDDIT!
 public class AboutScene extends PixelScene {
 
@@ -68,109 +68,108 @@ public class AboutScene extends PixelScene {
 
 		if (ShatteredPixelDungeon.language() != Languages.CHINESE) {
 
-		super.create();
+			super.create();
 
-		final float colWidth = Camera.main.width / (ShatteredPixelDungeon.landscape() ? 2 : 1);
-		final float colTop = (Camera.main.height / 2) - (ShatteredPixelDungeon.landscape() ? 30 : 90);
-		final float wataOffset = ShatteredPixelDungeon.landscape() ? colWidth : 0;
+			final float colWidth = Camera.main.width / (ShatteredPixelDungeon.landscape() ? 2 : 1);
+			final float colTop = (Camera.main.height / 2) - (ShatteredPixelDungeon.landscape() ? 30 : 90);
+			final float wataOffset = ShatteredPixelDungeon.landscape() ? colWidth : 0;
 
-		Image shpx = Icons.SHPX.get();
-		shpx.x = (colWidth - shpx.width()) / 2;
-		shpx.y = colTop;
-		align(shpx);
-		add( shpx );
+			Image shpx = Icons.SHPX.get();
+			shpx.x = (colWidth - shpx.width()) / 2;
+			shpx.y = colTop;
+			align(shpx);
+			add(shpx);
 
-		new Flare( 7, 64 ).color( 0x225511, true ).show( shpx, 0 ).angularSpeed = +20;
+			new Flare(7, 64).color(0x225511, true).show(shpx, 0).angularSpeed = +20;
 
-		RenderedText shpxtitle = renderText( TTL_SHPX, 8 );
-		shpxtitle.hardlight( Window.SHPX_COLOR );
-		add( shpxtitle );
+			RenderedText shpxtitle = renderText(TTL_SHPX, 8);
+			shpxtitle.hardlight(Window.SHPX_COLOR);
+			add(shpxtitle);
 
-		shpxtitle.x = (colWidth - shpxtitle.width()) / 2;
-		shpxtitle.y = shpx.y + shpx.height + 5;
-		align(shpxtitle);
+			shpxtitle.x = (colWidth - shpxtitle.width()) / 2;
+			shpxtitle.y = shpx.y + shpx.height + 5;
+			align(shpxtitle);
 
-		RenderedTextMultiline shpxtext = renderMultiline( TXT_SHPX, 8 );
-		shpxtext.maxWidth((int)Math.min(colWidth, 120));
-		add( shpxtext );
+			RenderedTextMultiline shpxtext = renderMultiline(TXT_SHPX, 8);
+			shpxtext.maxWidth((int) Math.min(colWidth, 120));
+			add(shpxtext);
 
-		shpxtext.setPos((colWidth - shpxtext.width()) / 2, shpxtitle.y + shpxtitle.height() + 12);
-		align(shpxtext);
+			shpxtext.setPos((colWidth - shpxtext.width()) / 2, shpxtitle.y + shpxtitle.height() + 12);
+			align(shpxtext);
 
-		RenderedTextMultiline shpxlink = renderMultiline( LNK_SHPX, 8 );
-		shpxlink.maxWidth(shpxtext.maxWidth());
-		shpxlink.hardlight( Window.SHPX_COLOR );
-		add( shpxlink );
+			RenderedTextMultiline shpxlink = renderMultiline(LNK_SHPX, 8);
+			shpxlink.maxWidth(shpxtext.maxWidth());
+			shpxlink.hardlight(Window.SHPX_COLOR);
+			add(shpxlink);
 
-		shpxlink.setPos((colWidth - shpxlink.width()) / 2, shpxtext.bottom() + 6);
-		align(shpxlink);
+			shpxlink.setPos((colWidth - shpxlink.width()) / 2, shpxtext.bottom() + 6);
+			align(shpxlink);
 
-		TouchArea shpxhotArea = new TouchArea( shpxlink.left(), shpxlink.top(), shpxlink.width(), shpxlink.height() ) {
-			@Override
-			protected void onClick( Touch touch ) {
-				Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "http://" + LNK_SHPX ) );
-				Game.instance.startActivity( intent );
-			}
-		};
-		add( shpxhotArea );
+			TouchArea shpxhotArea = new TouchArea(shpxlink.left(), shpxlink.top(), shpxlink.width(), shpxlink.height()) {
+				@Override
+				protected void onClick(Touch touch) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + LNK_SHPX));
+					Game.instance.startActivity(intent);
+				}
+			};
+			add(shpxhotArea);
 
-		Image wata = Icons.WATA.get();
-		wata.x = wataOffset + (colWidth - wata.width()) / 2;
-		wata.y = ShatteredPixelDungeon.landscape() ?
-				colTop:
-				shpxlink.top() + wata.height + 20;
-		align(wata);
-		add( wata );
+			Image wata = Icons.WATA.get();
+			wata.x = wataOffset + (colWidth - wata.width()) / 2;
+			wata.y = ShatteredPixelDungeon.landscape() ?
+					colTop :
+					shpxlink.top() + wata.height + 20;
+			align(wata);
+			add(wata);
 
-		new Flare( 7, 64 ).color( 0x112233, true ).show( wata, 0 ).angularSpeed = +20;
+			new Flare(7, 64).color(0x112233, true).show(wata, 0).angularSpeed = +20;
 
-		RenderedText wataTitle = renderText( TTL_WATA, 8 );
-		wataTitle.hardlight(Window.TITLE_COLOR);
-		add( wataTitle );
+			RenderedText wataTitle = renderText(TTL_WATA, 8);
+			wataTitle.hardlight(Window.TITLE_COLOR);
+			add(wataTitle);
 
-		wataTitle.x = wataOffset + (colWidth - wataTitle.width()) / 2;
-		wataTitle.y = wata.y + wata.height + 11;
-		align(wataTitle);
+			wataTitle.x = wataOffset + (colWidth - wataTitle.width()) / 2;
+			wataTitle.y = wata.y + wata.height + 11;
+			align(wataTitle);
 
-		RenderedTextMultiline wataText = renderMultiline( TXT_WATA, 8 );
-		wataText.maxWidth((int)Math.min(colWidth, 120));
-		add( wataText );
+			RenderedTextMultiline wataText = renderMultiline(TXT_WATA, 8);
+			wataText.maxWidth((int) Math.min(colWidth, 120));
+			add(wataText);
 
-		wataText.setPos(wataOffset + (colWidth - wataText.width()) / 2, wataTitle.y + wataTitle.height() + 12);
-		align(wataText);
+			wataText.setPos(wataOffset + (colWidth - wataText.width()) / 2, wataTitle.y + wataTitle.height() + 12);
+			align(wataText);
 
-		RenderedTextMultiline wataLink = renderMultiline( LNK_WATA, 8 );
-		wataLink.maxWidth((int)Math.min(colWidth, 120));
-		wataLink.hardlight(Window.TITLE_COLOR);
-		add(wataLink);
+			RenderedTextMultiline wataLink = renderMultiline(LNK_WATA, 8);
+			wataLink.maxWidth((int) Math.min(colWidth, 120));
+			wataLink.hardlight(Window.TITLE_COLOR);
+			add(wataLink);
 
-		wataLink.setPos(wataOffset + (colWidth - wataLink.width()) / 2 , wataText.bottom() + 6);
-		align(wataLink);
+			wataLink.setPos(wataOffset + (colWidth - wataLink.width()) / 2, wataText.bottom() + 6);
+			align(wataLink);
 
-		TouchArea hotArea = new TouchArea( wataLink.left(), wataLink.top(), wataLink.width(), wataLink.height() ) {
-			@Override
-			protected void onClick( Touch touch ) {
-				Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "http://" + LNK_WATA ) );
-				Game.instance.startActivity( intent );
-			}
-		};
-		add( hotArea );
+			TouchArea hotArea = new TouchArea(wataLink.left(), wataLink.top(), wataLink.width(), wataLink.height()) {
+				@Override
+				protected void onClick(Touch touch) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + LNK_WATA));
+					Game.instance.startActivity(intent);
+				}
+			};
+			add(hotArea);
 
 
-		Archs archs = new Archs();
-		archs.setSize( Camera.main.width, Camera.main.height );
-		addToBack( archs );
+			Archs archs = new Archs();
+			archs.setSize(Camera.main.width, Camera.main.height);
+			addToBack(archs);
 
-		ExitButton btnExit = new ExitButton();
-		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
-		add( btnExit );
+			ExitButton btnExit = new ExitButton();
+			btnExit.setPos(Camera.main.width - btnExit.width(), 0);
+			add(btnExit);
 
-		fadeIn();
-	}
-	else {
+			fadeIn();
+		} else {
 
-			String TXT1= "简单的发芽像素地牢";
-			String TXT2= "";
+			String TXT1 = "简单的发芽像素地牢";
+			String TXT2 = "";
 
 
 			super.create();
@@ -179,15 +178,15 @@ public class AboutScene extends PixelScene {
 			final float colTop = (Camera.main.height / 2) - (ShatteredPixelDungeon.landscape() ? 30 : 90);
 
 
-			RenderedText title = renderText( TXT1, 8 );
-			title.hardlight( 0xFFFF00 );
-			add( title );
+			RenderedText title = renderText(TXT1, 8);
+			title.hardlight(0xFFFF00);
+			add(title);
 
 			title.x = (colWidth - title.width()) / 2;
 			title.y = colTop;
 			align(title);
 
-			btn2= new NewRedButton("制作者") {
+			btn2 = new NewRedButton("制作者") {
 				@Override
 				protected void onClick() {
 					parent.add(new WndMessage("制作者联系方式：\nQQ：_3529858533_\nReddit：_g2159687_\n\n" +
@@ -197,18 +196,18 @@ public class AboutScene extends PixelScene {
 							"2.ESPD群（459684106），用于高级bug反馈、游戏建议等，但不解答与开发无关的问题，也不提供游戏攻略类信息。"));
 				}
 			};
-			btn2.setRect((colWidth - 80) / 2,title.y + title.height() + 12,80,18);
-			add (btn2);
+			btn2.setRect((colWidth - 80) / 2, title.y + title.height() + 12, 80, 18);
+			add(btn2);
 
 
-			RenderedTextMultiline text = renderMultiline( TXT2, 7 );
-			text.maxWidth((int)Math.min(colWidth, 120));
-		//	add( text );
+			RenderedTextMultiline text = renderMultiline(TXT2, 7);
+			text.maxWidth((int) Math.min(colWidth, 120));
+			//	add( text );
 
 			text.setPos((colWidth - text.width()) / 2, title.y + title.height() + 12);
-		//	align(text);
+			//	align(text);
 
-			btn= new NewRedButton("鸣谢") {
+			btn = new NewRedButton("鸣谢") {
 				@Override
 				protected void onClick() {
 					parent.add(new WndMessage("\n\n用于翻译本mod的代码由_00-Evan_制作，并由我移植到此版本，同时此版本也使用了很多来自破碎的像素地牢的代码，在此一并表示感谢。" +
@@ -220,24 +219,22 @@ public class AboutScene extends PixelScene {
 							"@youxia5325，@雷暴jj怪，@as1169344561，@圣人川川摩羯，@zpjsunny，@远逝之光，@zhbom，@zhongzhengze，@屠城管，@fyf672，@如日飞仙"));
 				}
 			};
-			btn.setRect((colWidth - 80) / 2,title.y + title.height() + 32,80,18);
-			add (btn);
+			btn.setRect((colWidth - 80) / 2, title.y + title.height() + 32, 80, 18);
+			add(btn);
 
-			Badges.loadGlobal();
-			btn3= new NewRedButton("游戏须知") {
+			btn3 = new NewRedButton("游戏须知") {
 				@Override
 				protected void onClick() {
-					if (!Badges.isUnlocked(Badges.Badge.SUPPORTER)) {Badges.validateSupporter();}
 					parent.add(new WndMessage("本应用遵守GPLv3并开源，源代码地址：" +
 							"\n\nhttps://github.com/G2159687/ESPD" +
 							"\n\n但是，尽管该应用是开源的，我仍然推荐从可信的渠道（如酷安以及由我组建的QQ群）下载" +
 							"以避免出现安全问题。"));
 				}
 			};
-			btn3.setRect((colWidth - 80) / 2,title.y + title.height() + 52,80,18);
-			add (btn3);
+			btn3.setRect((colWidth - 80) / 2, title.y + title.height() + 52, 80, 18);
+			add(btn3);
 
-			btn4= new NewRedButton("已知bug总览") {
+			btn4 = new NewRedButton("已知bug总览") {
 				@Override
 				protected void onClick() {
 					parent.add(new WndMessage("1、请_不要切换语言_！否则出现任何后果概不负责！！" +
@@ -247,16 +244,16 @@ public class AboutScene extends PixelScene {
 							"出现错误之前的操作以及出错的层数（基本上一个截图就能说明一切），我需要大量的信息来判断此错误的原因。"));
 				}
 			};
-			btn4.setRect((colWidth - 80) / 2,title.y + title.height() + 72,80,18);
-			add (btn4);
+			btn4.setRect((colWidth - 80) / 2, title.y + title.height() + 72, 80, 18);
+			add(btn4);
 
 			Archs archs = new Archs();
-			archs.setSize( Camera.main.width, Camera.main.height );
-			addToBack( archs );
+			archs.setSize(Camera.main.width, Camera.main.height);
+			addToBack(archs);
 
 			ExitButton btnExit = new ExitButton();
-			btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
-			add( btnExit );
+			btnExit.setPos(Camera.main.width - btnExit.width(), 0);
+			add(btnExit);
 
 			fadeIn();
 		}

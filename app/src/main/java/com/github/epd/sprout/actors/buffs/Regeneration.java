@@ -36,15 +36,15 @@ public class Regeneration extends Buff {
 
 				target.HP += 1;
 
-				if (regenBuff != null){
+				if (regenBuff != null) {
 					if ((!regenBuff.isCursed()) && regenBuff.level() > 10) {
-						EXTRA_REGEN = (float) Math.sqrt( regenBuff.level() - 10 ) * target.HT * 0.003f;
-						target.HP += Math.min( Math.round(EXTRA_REGEN) , target.HT - target.HP);
+						EXTRA_REGEN = (float) Math.sqrt(regenBuff.level() - 10) * target.HT * 0.003f;
+						target.HP += Math.min(Math.round(EXTRA_REGEN), target.HT - target.HP);
 					}
 				}
 
 				if (target.HP == target.HT)
-					((Hero)target).resting = false;
+					((Hero) target).resting = false;
 			}
 
 			if (regenBuff != null) {

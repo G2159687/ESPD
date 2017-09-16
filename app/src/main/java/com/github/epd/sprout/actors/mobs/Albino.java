@@ -29,10 +29,10 @@ import com.watabou.utils.Random;
 public class Albino extends Rat {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = AlbinoSprite.class;
 
-		HP = HT = 10+(Dungeon.depth*Random.NormalIntRange(1, 3));
+		HP = HT = 10 + (Dungeon.depth * Random.NormalIntRange(1, 3));
 
 		loot = new Meat();
 		lootChance = 1f;
@@ -54,6 +54,6 @@ public class Albino extends Rat {
 
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 }

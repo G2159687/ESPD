@@ -17,10 +17,8 @@
  */
 package com.github.epd.sprout.windows;
 
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer3;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.Mushroom;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;
@@ -31,10 +29,10 @@ import com.github.epd.sprout.utils.Utils;
 
 public class WndTinkerer3 extends Window {
 
-	private static final String TXT_MESSAGE = Messages.get(WndTinkerer3.class,"msg");
-	private static final String TXT_UPGRADE = Messages.get(WndTinkerer3.class,"upgrade");
-	
-	private static final String TXT_FARAWELL = Messages.get(WndTinkerer3.class,"farewell");
+	private static final String TXT_MESSAGE = Messages.get(WndTinkerer3.class, "msg");
+	private static final String TXT_UPGRADE = Messages.get(WndTinkerer3.class, "upgrade");
+
+	private static final String TXT_FARAWELL = Messages.get(WndTinkerer3.class, "farewell");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -66,22 +64,13 @@ public class WndTinkerer3 extends Window {
 				BTN_HEIGHT);
 		add(btnUpgrade);
 
-		
+
 		resize(WIDTH, (int) btnUpgrade.bottom());
 	}
 
 	private void selectUpgrade(Tinkerer3 tinkerer) {
 		hide();
-		
-		Mushroom mushroom = Dungeon.hero.belongings.getItem(Mushroom.class);
-		mushroom.detach(Dungeon.hero.belongings.backpack);
-		
-			Dungeon.dewWater=true;				
-			//Dungeon.dewDraw=true;
-			Dungeon.wings=true;
-	
-		
-		tinkerer.yell(Utils.format(TXT_FARAWELL, Dungeon.hero.givenName()));
+
 		tinkerer.destroy();
 
 		tinkerer.sprite.die();

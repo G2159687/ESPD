@@ -32,19 +32,18 @@ import java.util.ArrayList;
 public class ActiveMrDestructo extends Item {
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.ACTIVEMRD;
 		defaultAction = AC_ACTIVATETHROW;
 		stackable = true;
-        usesTargeting = true;
+		usesTargeting = true;
 	}
 
-	
+
 	private static boolean activate = false;
 
-	private static final String AC_ACTIVATETHROW = Messages.get(ActiveMrDestructo.class,"ac");
+	private static final String AC_ACTIVATETHROW = Messages.get(ActiveMrDestructo.class, "ac");
 
-	
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -66,7 +65,7 @@ public class ActiveMrDestructo extends Item {
 
 	@Override
 	protected void onThrow(int cell) {
-		
+
 		if (Actor.findChar(cell) != null) {
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8)
@@ -74,22 +73,22 @@ public class ActiveMrDestructo extends Item {
 					candidates.add(cell + i);
 			int newCell = candidates.isEmpty() ? cell : Random
 					.element(candidates);
-			
-			   if (!Level.pit[newCell] && activate) {
-				   MrDestructo.spawnAt(newCell);
-			   } else {
-			   Dungeon.level.drop(this, newCell).sprite.drop(cell);
-			   }
-			   
+
+			if (!Level.pit[newCell] && activate) {
+				MrDestructo.spawnAt(newCell);
+			} else {
+				Dungeon.level.drop(this, newCell).sprite.drop(cell);
+			}
+
 		} else if (!Level.pit[cell] && activate) {
-				MrDestructo.spawnAt(cell);
+			MrDestructo.spawnAt(cell);
 		} else {
-			
+
 			super.onThrow(cell);
 		}
 
 	}
-	
+
 
 	@Override
 	public boolean isUpgradable() {
@@ -101,13 +100,11 @@ public class ActiveMrDestructo extends Item {
 		return true;
 	}
 
-	
+
 	@Override
 	public String info() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
-		
-	
+
 }

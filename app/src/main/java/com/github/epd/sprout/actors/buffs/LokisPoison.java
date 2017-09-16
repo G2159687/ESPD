@@ -57,7 +57,7 @@ public class LokisPoison extends Buff implements Hero.Doom {
 
 	@Override
 	public String toString() {
-		return  Messages.get(this,"name");
+		return Messages.get(this, "name");
 	}
 
 	@Override
@@ -93,6 +93,6 @@ public class LokisPoison extends Buff implements Hero.Doom {
 	@Override
 	public void onDeath() {
 		Dungeon.fail(ResultDescriptions.POISON);
-		GLog.n( Messages.get(this,"die"));
+		GLog.n(Messages.get(this, "die"));
 	}
 }

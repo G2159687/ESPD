@@ -42,36 +42,37 @@ import java.util.HashSet;
 
 public class MrDestructo2dot0 extends Mob {
 
-	private static final String TXT_DEATHGAZE_KILLED = Messages.get(MrDestructo2dot0.class,"kill");
+	private static final String TXT_DEATHGAZE_KILLED = Messages.get(MrDestructo2dot0.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = MrDestructo2dot0Sprite.class;
 		hostile = false;
 		state = HUNTING;
-		HP = HT= 200;
-		defenseSkill = 35;	
+		HP = HT = 200;
+		defenseSkill = 35;
+
+		properties.add(Property.IMMOVABLE);
 	}
 
-	
+
 	private static final float SPAWN_DELAY = 0.1f;
-	
+
 	@Override
 	public int dr() {
 		return 35;
 	}
 
-	
+
 	@Override
 	protected boolean act() {
-		boolean result = super.act();
-		return result;
+		return super.act();
 	}
-	
+
 	@Override
-	public void move(int step) {		
+	public void move(int step) {
 	}
-		
+
 	@Override
 	protected Char chooseEnemy() {
 
@@ -89,40 +90,39 @@ public class MrDestructo2dot0 extends Mob {
 		return enemy;
 	}
 
-	
-	
-    public static MrDestructo2dot0 spawnAt(int pos) {
-		
-    	MrDestructo2dot0 b = new MrDestructo2dot0();  
-    	
-			b.pos = pos;
-			b.state = b.HUNTING;
-			GameScene.add(b, SPAWN_DELAY);
 
-			return b;
-     
-     }
+	public static MrDestructo2dot0 spawnAt(int pos) {
+
+		MrDestructo2dot0 b = new MrDestructo2dot0();
+
+		b.pos = pos;
+		b.state = b.HUNTING;
+		GameScene.add(b, SPAWN_DELAY);
+
+		return b;
+
+	}
 
 	private Ballistica beam;
 
 	@Override
-	protected boolean canAttack( Char enemy ) {
+	protected boolean canAttack(Char enemy) {
 
-		beam = new Ballistica( pos, enemy.pos, Ballistica.STOP_TERRAIN);
+		beam = new Ballistica(pos, enemy.pos, Ballistica.STOP_TERRAIN);
 
 		return beam.subPath(1, beam.dist).contains(enemy.pos);
 	}
 
 	@Override
 	public int attackSkill(Char target) {
-		return 30+(Dungeon.depth);
+		return 30 + (Dungeon.depth);
 	}
 
 	@Override
 	protected float attackDelay() {
 		return 0.5f;
 	}
-	
+
 	@Override
 	protected boolean doAttack(Char enemy) {
 
@@ -156,8 +156,8 @@ public class MrDestructo2dot0 extends Mob {
 			}
 
 			if (hit(this, ch, true)) {
-				ch.damage(Random.NormalIntRange(Dungeon.depth+20, Dungeon.depth+32), this);
-				yell(Messages.get(this,"atk"));
+				ch.damage(Random.NormalIntRange(Dungeon.depth + 20, Dungeon.depth + 32), this);
+				yell(Messages.get(this, "atk"));
 				damage(Random.NormalIntRange(5, 10), this);
 
 				if (Dungeon.visible[pos]) {
@@ -182,25 +182,25 @@ public class MrDestructo2dot0 extends Mob {
 	@Override
 	public void beckon(int cell) {
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
-	
+
 	@Override
 	public void die(Object cause) {
 
-		yell(Messages.get(this,"die"));
+		yell(Messages.get(this, "die"));
 		Dungeon.level.drop(new InactiveMrDestructo2(), pos);
 		super.die(cause);
 
-		
-	
+
 	}
-			
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(Death.class);
 		RESISTANCES.add(Leech.class);
@@ -212,6 +212,7 @@ public class MrDestructo2dot0 extends Mob {
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
+
 	static {
 		IMMUNITIES.add(Terror.class);
 		IMMUNITIES.add(ToxicGas.class);

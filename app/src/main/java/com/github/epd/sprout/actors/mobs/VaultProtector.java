@@ -40,19 +40,19 @@ public class VaultProtector extends Mob implements Callback {
 
 	private static final float TIME_TO_ZAP = 2f;
 
-	private static final String TXT_LIGHTNING_KILLED = Messages.get(VaultProtector.class,"kill");
+	private static final String TXT_LIGHTNING_KILLED = Messages.get(VaultProtector.class, "kill");
 
 	{
-		name = Messages.get(this,"name");
+		name = Messages.get(this, "name");
 		spriteClass = VaultProtectorSprite.class;
 
 		EXP = 5;
 		state = HUNTING;
 		flying = true;
-		
+
 		HP = HT = 50;
 		defenseSkill = 10;
-		
+
 		loot = new VioletDewdrop();
 		lootChance = 1f;
 	}
@@ -74,7 +74,7 @@ public class VaultProtector extends Mob implements Callback {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -131,15 +131,16 @@ public class VaultProtector extends Mob implements Callback {
 	@Override
 	public void notice() {
 		super.notice();
-		yell(Messages.get(this,"leave"));
+		yell(Messages.get(this, "leave"));
 	}
-	
+
 	@Override
 	public String description() {
-		return Messages.get(this,"desc");
+		return Messages.get(this, "desc");
 	}
 
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
+
 	static {
 		RESISTANCES.add(LightningTrap.Electricity.class);
 	}
