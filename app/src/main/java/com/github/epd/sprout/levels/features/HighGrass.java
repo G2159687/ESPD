@@ -168,11 +168,11 @@ public class HighGrass {
 
 			// Dew
 			if (naturalismLevel < 3 ? (Random.Int(3 - naturalismLevel) == 0) : (Random.Int(1) == 0)) {
-				if (naturalismLevel > 0 && (naturalismLevel < 21 ? (Random.Int(30 - naturalismLevel) == 0) : Random.Int(10) == 0)) {
+				if (naturalismLevel > 20 && (naturalismLevel < 21 ? (Random.Int(30 - naturalismLevel) == 0) : Random.Int(10) == 0)) {
 					dropDew(20, 2, new YellowDewdrop(), level, pos, "yellow");
-				} else if (naturalismLevel > 2 && (naturalismLevel < 31 ? (Random.Int(50 - naturalismLevel) == 0) : Random.Int(20) == 0)) {
+				} else if (naturalismLevel > 30 && (naturalismLevel < 31 ? (Random.Int(50 - naturalismLevel) == 0) : Random.Int(20) == 0)) {
 					dropDew(50, 5, new RedDewdrop(), level, pos, "red");
-				} else if (naturalismLevel > 9 && (naturalismLevel < 71 ? (Random.Int(100 - naturalismLevel) == 0) : Random.Int(30) == 0)) {
+				} else if (naturalismLevel > 40 && (naturalismLevel >= 48 ? (Random.Int(100 - naturalismLevel) == 0) : Random.Int(200) == 0)) {
 					dropDew(200, 50, new VioletDewdrop(), level, pos, "violet");
 				} else {
 					dropDew(10, 1, new Dewdrop(), level, pos, "dew");

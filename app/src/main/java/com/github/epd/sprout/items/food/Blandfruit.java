@@ -66,7 +66,6 @@ public class Blandfruit extends Food {
 		stackable = true;
 		image = ItemSpriteSheet.BLANDFRUIT;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 2;
-		hornValue = 6; // only applies when blandfruit is cooked
 
 		bones = true;
 	}

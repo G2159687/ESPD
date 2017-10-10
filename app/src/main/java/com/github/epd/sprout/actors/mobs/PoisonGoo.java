@@ -70,6 +70,9 @@ public class PoisonGoo extends Mob {
 		loot = new PotionOfMending();
 		lootChance = 1f;
 		FLEEING = new Fleeing();
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	private static final float SPLIT_DELAY = 1f;

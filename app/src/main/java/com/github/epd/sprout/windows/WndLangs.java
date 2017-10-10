@@ -67,18 +67,9 @@ public class WndLangs extends Window {
 				protected void onClick() {
 					super.onClick();
 					Messages.setup(langs.get(langIndex));
-					ShatteredPixelDungeon.switchNoFade(TitleScene.class, new Game.SceneChangeCallback() {
-						@Override
-						public void beforeCreate() {
-							ShatteredPixelDungeon.language(langs.get(langIndex));
-							RenderedText.clearCache();
-						}
-
-						@Override
-						public void afterCreate() {
-							Game.scene().add(new WndLangs());
-						}
-					});
+					ShatteredPixelDungeon.language(langs.get(langIndex));
+					RenderedText.clearCache();
+					ShatteredPixelDungeon.switchScene(TitleScene.class);
 				}
 			};
 			if (currLang == langs.get(i)) {

@@ -77,6 +77,8 @@ public class Wraith extends Mob {
 			lootOther = new ScrollOfUpgrade();
 			lootChanceOther = 0.075f;
 		}
+
+		properties.add(Property.UNDEAD);
 	}
 
 	protected static final String LEVEL = "level";

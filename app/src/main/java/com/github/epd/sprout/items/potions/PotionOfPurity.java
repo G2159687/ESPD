@@ -21,6 +21,7 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.blobs.ConfusionGas;
+import com.github.epd.sprout.actors.blobs.CorruptGas;
 import com.github.epd.sprout.actors.blobs.ParalyticGas;
 import com.github.epd.sprout.actors.blobs.StenchGas;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
@@ -61,6 +62,7 @@ public class PotionOfPurity extends Potion {
 				Dungeon.level.blobs.get(ParalyticGas.class),
 				Dungeon.level.blobs.get(ConfusionGas.class),
 				Dungeon.level.blobs.get(StenchGas.class),
+				Dungeon.level.blobs.get(CorruptGas.class),
 				Dungeon.level.blobs.get(VenomGas.class)};
 
 		for (int j = 0; j < blobs.length; j++) {

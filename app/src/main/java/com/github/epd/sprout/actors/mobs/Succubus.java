@@ -60,6 +60,8 @@ public class Succubus extends Mob {
 
 		lootOther = new Meat();
 		lootChanceOther = 0.1f; // by default, see die()
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override

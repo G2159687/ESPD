@@ -83,4 +83,14 @@ public class ScorpionSprite extends MobSprite {
 		}
 	}
 
+	@Override
+	public void killAndErase(){
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
+
+		super.killAndErase();
+	}
+
 }

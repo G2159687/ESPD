@@ -104,4 +104,14 @@ public class VioletDragonSprite extends MobSprite {
 			hpBar.killAndErase();
 		}
 	}
+
+	@Override
+	public void killAndErase(){
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
+
+		super.killAndErase();
+	}
 }

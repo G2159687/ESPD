@@ -33,7 +33,9 @@ import com.github.epd.sprout.effects.particles.SmokeParticle;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.RedDewdrop;
+import com.github.epd.sprout.items.VioletDewdrop;
 import com.github.epd.sprout.items.keys.SkeletonKey;
+import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
@@ -65,10 +67,11 @@ public class Tower extends Mob implements Callback {
 		hostile = false;
 		state = PASSIVE;
 
-		loot = new RedDewdrop();
-		lootChance = 1f;
+		loot = new VioletDewdrop();
+		lootChance = 0.95f;
 
 		properties.add(Property.IMMOVABLE);
+		properties.add(Property.BOSS);
 
 	}
 

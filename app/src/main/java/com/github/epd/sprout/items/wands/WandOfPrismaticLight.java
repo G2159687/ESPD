@@ -60,25 +60,6 @@ public class WandOfPrismaticLight extends Wand {
 		collisionProperties = Ballistica.MAGIC_BOLT;
 	}
 
-	//FIXME: this is sloppy
-	private static HashSet<Class> evilMobs = new HashSet<Class>(Arrays.asList(
-			//Any Location
-			Mimic.class, Wraith.class, RedWraith.class, BlueWraith.class,
-			//Sewers
-			Ghost.FetidRat.class,
-			Goo.class,
-			//Prison
-			Skeleton.class, Thief.class, Bandit.class, FossilSkeleton.class,
-			//Misc
-			Kupua.class, Gullin.class, Zot.class, ZotPhase.class,
-			//City
-			Warlock.class, Monk.class, Senior.class,
-			King.class, King.Undead.class,
-			//Halls
-			Succubus.class, Eye.class, Scorpio.class, Acidic.class,
-			Yog.class, Yog.RottingFist.class, Yog.BurningFist.class, Yog.Larva.class
-	));
-
 	@Override
 	protected void onZap(Ballistica beam) {
 		Char ch = Actor.findChar(beam.collisionPos);
@@ -88,26 +69,28 @@ public class WandOfPrismaticLight extends Wand {
 		affectMap(beam);
 
 		if (curUser.viewDistance < 4)
-			Buff.prolong(curUser, Light.class, 10f + level * 5);
+			Buff.prolong(curUser, Light.class, 10f + level() * 5);
 	}
 
 	private void affectTarget(Char ch) {
 
-		int dmg = Random.NormalIntRange(level, (int) (8 + (level * (level / 5f))));
+		int level = level();
 
-		//two in (5+lvl) chance of failing
-		if (Random.Int(5 + level) >= 2) {
+		int dmg = Random.NormalIntRange(level, 8 + level * 4);
+
+		//5 in (5+lvl) chance of failing
+		if (Random.Int(5 + level) >= 5) {
 			Buff.prolong(ch, Blindness.class, 2f + (level * 0.5f));
 			ch.sprite.emitter().burst(Speck.factory(Speck.LIGHT), 6);
 		}
 
-		if (evilMobs.contains(ch.getClass())) {
-			ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + level);
+		if (ch.properties().contains(Char.Property.UNDEAD)){
+			ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + level());
 			Sample.INSTANCE.play(Assets.SND_BURNING);
 
 			ch.damage((int) (dmg * 1.5), this);
 		} else {
-			ch.sprite.centerEmitter().burst(RainbowParticle.BURST, 10 + level);
+			ch.sprite.centerEmitter().burst(RainbowParticle.BURST, 10 + level());
 
 			ch.damage(dmg, this);
 		}
@@ -155,6 +138,6 @@ public class WandOfPrismaticLight extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", level, (int) (8 + (level * (level / 5f))));
+		return Messages.get(this, "desc", level(), (int) (8 + (level() * (level() / 5f))));
 	}
 }

@@ -65,6 +65,9 @@ public class Goo extends Mob {
 
 		lootOther = new Chainsaw().enchantBuzz().identify();
 		lootChanceOther = 1f;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	private int pumpedUp = 0;

@@ -18,6 +18,7 @@
 package com.github.epd.sprout.levels.traps;
 
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.npcs.SheepSokoban;
@@ -35,6 +36,7 @@ import com.github.epd.sprout.items.wands.WandOfFlock.Sheep;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.utils.GLog;
+import com.github.epd.sprout.utils.Utils;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Random;
@@ -69,7 +71,7 @@ public class FleecingTrap {
 					bag = (Bag) item;
 					item = Random.element(bag.items);
 				}
-				if (!(item == null || item.level > 0 || item.unique)) {
+				if (!(item == null || item.level > 5 || item.unique)) {
 					if (!item.stackable) {
 						item.detachAll(bag);
 						GLog.w(Messages.get(FleecingTrap.class, "one", item.name()));
@@ -88,23 +90,26 @@ public class FleecingTrap {
 				}
 			}
 
-			//Port back to 1,1 or something
-
 			Camera.main.shake(2, 0.3f);
 			ch.sprite.emitter().burst(ShadowParticle.UP, 5);
 
 			if (ch == Dungeon.hero && port) {
-				IronKey key = ((Hero) ch).belongings.getKey(IronKey.class, Dungeon.depth);
-				if (key != null) {
-					key.detachAll(Dungeon.hero.belongings.backpack);
+				Dungeon.hero.damage(Math.round(0.95f * (float)ch.HP), FLEECE);
+
+				if (!Dungeon.hero.isAlive()) {
+					Dungeon.fail(Utils.format(ResultDescriptions.TRAP, name));
+					GLog.n(Messages.get(FleecingTrap.class, "kill"));
 				}
-				InterlevelScene.mode = InterlevelScene.Mode.SOKOBANFAIL;
-				Game.switchScene(InterlevelScene.class);
 			}
 		}
 
 		Dungeon.hero.next();
 
+	}
+
+	public static final Fleece FLEECE = new Fleece();
+
+	public static class Fleece {
 	}
 
 }

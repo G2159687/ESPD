@@ -222,22 +222,12 @@ public class WndSettings extends WndTabbed {
 			btnAuto.checked(ShatteredPixelDungeon.autocollect());
 			add(btnAuto);
 
-			OptionSlider dewmode = new OptionSlider(Messages.get(WndSettings.class, "dewmode"), "0", "4", 0, 4) {
-				@Override
-				protected void onChange() {
-					ShatteredPixelDungeon.dewmode(getSelectedValue());
-				}
-			};
-			dewmode.setSelectedValue(ShatteredPixelDungeon.dewmode());
-			dewmode.setRect(0, btnAuto.bottom() + GAP, WIDTH, SLIDER_HEIGHT);
-			add(dewmode);
-
-			RenderedText barDesc = PixelScene.renderText("Toolbar Mode:", 9);
+			RenderedText barDesc = PixelScene.renderText(Messages.get(WndSettings.class,"toolbar_mode"), 9);
 			barDesc.x = (WIDTH - barDesc.width()) / 2;
-			barDesc.y = dewmode.bottom() + GAP_LRG;
+			barDesc.y = btnAuto.bottom() + GAP_LRG;
 			add(barDesc);
 
-			NewRedButton btnSplit = new NewRedButton("Split") {
+			NewRedButton btnSplit = new NewRedButton(Messages.get(WndSettings.class,"split")) {
 				@Override
 				protected void onClick() {
 					ShatteredPixelDungeon.toolbarMode(Toolbar.Mode.SPLIT.name());
@@ -247,7 +237,7 @@ public class WndSettings extends WndTabbed {
 			btnSplit.setRect(1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
 			add(btnSplit);
 
-			NewRedButton btnGrouped = new NewRedButton("Group") {
+			NewRedButton btnGrouped = new NewRedButton(Messages.get(WndSettings.class,"group")) {
 				@Override
 				protected void onClick() {
 					ShatteredPixelDungeon.toolbarMode(Toolbar.Mode.GROUP.name());
@@ -257,7 +247,7 @@ public class WndSettings extends WndTabbed {
 			btnGrouped.setRect(btnSplit.right() + 1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
 			add(btnGrouped);
 
-			NewRedButton btnCentered = new NewRedButton("Center") {
+			NewRedButton btnCentered = new NewRedButton(Messages.get(WndSettings.class,"center")) {
 				@Override
 				protected void onClick() {
 					ShatteredPixelDungeon.toolbarMode(Toolbar.Mode.CENTER.name());
@@ -267,7 +257,7 @@ public class WndSettings extends WndTabbed {
 			btnCentered.setRect(btnGrouped.right() + 1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
 			add(btnCentered);
 
-			CheckBox chkFlipToolbar = new CheckBox("Flip Toolbar") {
+			CheckBox chkFlipToolbar = new CheckBox(Messages.get(WndSettings.class,"flip_toolbar")) {
 				@Override
 				protected void onClick() {
 					super.onClick();
@@ -279,7 +269,7 @@ public class WndSettings extends WndTabbed {
 			chkFlipToolbar.checked(ShatteredPixelDungeon.flipToolbar());
 			add(chkFlipToolbar);
 
-			CheckBox chkFlipTags = new CheckBox("Flip Indicators") {
+			CheckBox chkFlipTags = new CheckBox(Messages.get(WndSettings.class,"flip_indicators")) {
 				@Override
 				protected void onClick() {
 					super.onClick();

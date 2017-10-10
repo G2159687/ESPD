@@ -15,15 +15,14 @@ public class WandOfVenom extends Wand {
 
 	{
 		name = Messages.get(this, "name");
-		//TODO: sprite
-		image = ItemSpriteSheet.WAND_ADAMANT;
+		image = ItemSpriteSheet.WAND_VENOM;
 
 		collisionProperties = Ballistica.STOP_TARGET | Ballistica.STOP_TERRAIN;
 	}
 
 	@Override
 	protected void onZap(Ballistica bolt) {
-		GameScene.add(Blob.seed(bolt.collisionPos, 40 + 20 * level, VenomGas.class));
+		GameScene.add(Blob.seed(bolt.collisionPos, 40 + 20 * level(), VenomGas.class));
 	}
 
 	@Override

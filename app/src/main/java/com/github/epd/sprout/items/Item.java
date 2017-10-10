@@ -75,7 +75,6 @@ public class Item implements Bundlable {
 	public int level = 0;
 	public int consumedValue = 0;
 	public boolean levelKnown = false;
-	public int levelCapNew;
 
 	public boolean cursed;
 	public boolean cursedKnown;

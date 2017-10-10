@@ -58,6 +58,10 @@ public class ShadowYog extends Mob {
 		EXP = 100;
 
 		state = PASSIVE;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
+		properties.add(Property.EVIL);
 	}
 
 	private int yogsAlive = 0;

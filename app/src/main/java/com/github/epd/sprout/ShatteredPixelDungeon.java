@@ -284,13 +284,11 @@ public class ShatteredPixelDungeon extends Game {
 
 	public static Languages language() {
 		String code = Preferences.INSTANCE.getString(Preferences.KEY_LANG, null);
-		if (code == null) {
-			Languages lang = Languages.matchLocale(Locale.getDefault());
-			if (lang.status() == Languages.Status.REVIEWED)
-				return lang;
-			else
-				return Languages.ENGLISH;
-		} else return Languages.matchCode(code);
+		if (code == null){
+			return Languages.matchLocale(Locale.getDefault());
+		} else {
+			return Languages.matchCode(code);
+		}
 	}
 
 	public static void classicFont(boolean classic) {
@@ -352,7 +350,7 @@ public class ShatteredPixelDungeon extends Game {
 	}
 
 	public static String toolbarMode() {
-		return Preferences.INSTANCE.getString(Preferences.KEY_BARMODE, !landscape() ? "SPLIT" : "GROUPED");
+		return Preferences.INSTANCE.getString(Preferences.KEY_BARMODE, !landscape() ? "SPLIT" : "GROUP");
 	}
 
 	public static void intro(boolean value) {

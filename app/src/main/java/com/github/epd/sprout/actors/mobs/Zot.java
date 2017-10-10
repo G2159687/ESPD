@@ -66,6 +66,10 @@ public class Zot extends Mob {
 		HP = HT = Dungeon.playtest ? 1000 : 10000;
 		EXP = 20;
 		defenseSkill = 70;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
+		properties.add(Property.EVIL);
 	}
 
 	private int timeToJump = JUMP_DELAY;
@@ -163,7 +167,7 @@ public class Zot extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return Ballistica.cast( pos, enemy.pos, false, true ) == enemy.pos;
 	}
 
 	@Override

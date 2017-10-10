@@ -65,6 +65,8 @@ public class DemonGoo extends Mob {
 
 		loot = new PotionOfMending();
 		lootChance = 1f;
+
+		properties.add(Property.UNDEAD);
 	}
 
 	private static final float SPLIT_DELAY = 1f;

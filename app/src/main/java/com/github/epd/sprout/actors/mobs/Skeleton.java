@@ -50,6 +50,8 @@ public class Skeleton extends Mob {
 		loot = Generator.Category.WEAPON;
 //		lootChance= (Dungeon.isChallenged(Challenges.NO_HERBALISM))?0.99f:0.2f;
 		lootChance = 0.2f;
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override

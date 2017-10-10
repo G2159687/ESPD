@@ -24,6 +24,7 @@ import com.github.epd.sprout.levels.Level;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+// TODO: Add new quest which allows to transmute items
 public abstract class NPC extends Mob {
 
 	{

@@ -43,7 +43,6 @@ public class Blueberry extends Food {
 		image = ItemSpriteSheet.SEED_BLUEBERRY;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(Blackberry.class, "eat");
-		hornValue = 6;
 		bones = false;
 	}
 

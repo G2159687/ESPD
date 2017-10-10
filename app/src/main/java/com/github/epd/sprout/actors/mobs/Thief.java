@@ -53,21 +53,16 @@ public class Thief extends Mob {
 
 		EXP = 5;
 
-		loot = new MasterThievesArmband().identify();
+		loot = Generator.Category.BERRY;
 		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-			lootChance = 0.01f;
+			lootChance = 0.1f;
 		} else {
-			lootChance = 0.5f;
-		}
-
-		lootOther = Generator.Category.BERRY;
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-			lootChanceOther = 0.1f;
-		} else {
-			lootChanceOther = 1f;
+			lootChance = 1f;
 		}
 
 		FLEEING = new Fleeing();
+
+		properties.add(Property.UNDEAD);
 	}
 
 	private static final String ITEM = "item";
@@ -107,6 +102,10 @@ public class Thief extends Mob {
 
 		if (item != null) {
 			Dungeon.level.drop(item, pos).sprite.drop();
+		}
+
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.01f){
+			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
 		}
 	}
 

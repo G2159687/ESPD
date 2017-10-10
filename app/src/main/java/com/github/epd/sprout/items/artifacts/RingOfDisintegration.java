@@ -86,7 +86,6 @@ public class RingOfDisintegration extends Artifact {
 				blast(hero.pos);
 				charge = 0;
 				updateQuickslot();
-				//	GLog.p(Messages.get(this,"blast"));
 
 			}
 
@@ -181,8 +180,8 @@ public class RingOfDisintegration extends Artifact {
 		}
 
 		int lvl = level + chars.size();
-		int dmgMin = lvl * lvl / 4;
-		int dmgMax = 10 + (3 * lvl * lvl) / 4;
+		int dmgMin = lvl * lvl / 32;
+		int dmgMax = 10 + (3 * lvl * lvl) / 40;
 		if (Dungeon.hero.buff(Strength.class) != null) {
 			dmgMin *= (int) 4f;
 			dmgMax *= (int) 4f;

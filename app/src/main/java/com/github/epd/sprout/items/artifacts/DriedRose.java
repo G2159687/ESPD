@@ -48,7 +48,6 @@ public class DriedRose extends Artifact {
 		chargeCap = 100;
 
 		reinforced = true;
-		levelCapNew = 1000;
 
 		defaultAction = AC_SUMMON;
 	}
@@ -254,6 +253,7 @@ public class DriedRose extends Artifact {
 			}
 			if (rose.level >= rose.levelCap) {
 				GLog.i(Messages.get(this, "no_room"));
+				hero.spendAndNext(TIME_TO_PICK_UP);
 				return true;
 			} else {
 
@@ -302,7 +302,7 @@ public class DriedRose extends Artifact {
 
 		public GhostHero(int roseLevel) {
 			this();
-			HP = HT = 10 + roseLevel * 3;
+			HP = HT = 10 + roseLevel * 4;
 		}
 
 		public void saySpawned() {
@@ -346,7 +346,7 @@ public class DriedRose extends Artifact {
 
 		@Override
 		protected boolean act() {
-			if (Random.Int(10) == 0)
+			if (Random.Int(20) == 0)
 				damage(1, this);
 			if (!isAlive())
 				return true;
@@ -391,14 +391,13 @@ public class DriedRose extends Artifact {
 
 		@Override
 		public int damageRoll() {
-			int lvl = (HT - 10) / 4;
-			return Random.NormalIntRange(3 + lvl / 2, 8 + lvl);
+			return Random.NormalIntRange(HT - 7, 8 + 5 * (HT - 10));
 		}
 
 		@Override
 		public int dr() {
 			// defence is equal to the level of rose.
-			return (HT - 10) / 3;
+			return HT - 10;
 		}
 
 		@Override

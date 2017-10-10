@@ -56,7 +56,7 @@ public class SandalsOfNature extends Artifact {
 			actions.add(AC_FEED);
 		if (isEquipped(hero) && charge > 0)
 			actions.add(AC_ROOT);
-		if (isEquipped(hero) && charge > 50)
+		if (isEquipped(hero) && charge > 150)
 			actions.add(AC_GROW);
 		return actions;
 	}
@@ -75,10 +75,10 @@ public class SandalsOfNature extends Artifact {
 
 			if (!isEquipped(hero))
 				GLog.i(Messages.get(SandalsOfNature.class, "equip"));
-			else if (charge == 0)
+			else if (charge <= 0)
 				GLog.i(Messages.get(SandalsOfNature.class, "no_charge"));
 			else {
-				Buff.affect(hero, Barkskin.class).level(charge / 2);
+				Buff.affect(hero, Barkskin.class).level(charge);
 				CellEmitter.bottom(hero.pos).start(EarthParticle.FACTORY,
 						0.05f, 8);
 				charge = 0;
@@ -88,11 +88,11 @@ public class SandalsOfNature extends Artifact {
 
 			if (!isEquipped(hero))
 				GLog.i(Messages.get(SandalsOfNature.class, "equip"));
-			else if (charge < 50)
+			else if (charge < 150)
 				GLog.i(Messages.get(SandalsOfNature.class, "no_charge"));
 			else {
 				growPlant();
-				charge = charge - 50;
+				charge = 0;
 				updateQuickslot();
 			}
 		}

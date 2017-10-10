@@ -36,7 +36,6 @@ public class GoldenJelly extends Food {
 		image = ItemSpriteSheet.MUSHROOM_GOLDENJELLY;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(BlueMilk.class, "eat");
-		hornValue = 2;
 		bones = false;
 	}
 

@@ -33,7 +33,6 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.effects.particles.ShadowParticle;
 import com.github.epd.sprout.items.RedDewdrop;
-import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
@@ -64,6 +63,8 @@ public class RedWraith extends Mob {
 
 		loot = new RedDewdrop();
 		lootChance = 0.5f;
+
+		properties.add(Property.UNDEAD);
 
 	}
 
@@ -110,29 +111,9 @@ public class RedWraith extends Mob {
 
 	@Override
 	public void die(Object cause) {
-
-		if (!Dungeon.limitedDrops.ringofwealth.dropped() && Random.Float() < 0.04f) {
-			Dungeon.limitedDrops.ringofwealth.drop();
-			Dungeon.level.drop(new RingOfWealth(), pos).sprite.drop();
-			explodeDew(pos);
-		} else {
-			explodeDew(pos);
-		}
-
+		explodeDew(pos);
 		super.die(cause);
-
 	}
-
-	//public void damage(int dmg, Object src) {
-	//	if (enemySeen
-	//			&& (src instanceof Wand || src instanceof LightningTrap.Electricity || src instanceof Char)) {
-	//		GLog.n("The attack passes through the wraith.");
-	//		sprite.showStatus(CharSprite.NEUTRAL, "missed");
-	//	} else {
-	//		super.damage(dmg, src);
-	//	}
-	//}
-
 
 	@Override
 	public String defenseVerb() {
@@ -152,6 +133,15 @@ public class RedWraith extends Mob {
 
 	public static void spawnAround(int pos) {
 		for (int n : PathFinder.NEIGHBOURS4) {
+			int cell = pos + n;
+			if (Level.passable[cell] && Actor.findChar(cell) == null) {
+				spawnAt(cell);
+			}
+		}
+	}
+
+	public static void spawnAround2x(int pos) {
+		for (int n : PathFinder.NEIGHBOURS8DIST2) {
 			int cell = pos + n;
 			if (Level.passable[cell] && Actor.findChar(cell) == null) {
 				spawnAt(cell);

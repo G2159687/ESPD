@@ -46,6 +46,7 @@ import java.util.ArrayList;
 public abstract class Wand extends KindOfWeapon {
 
 	//TODO: Damage balancing
+	//TODO: Add more attacking effects
 
 	private static final int USAGES_TO_KNOW = 20;
 
@@ -366,6 +367,10 @@ public abstract class Wand extends KindOfWeapon {
 		public void onSelect(Integer target) {
 
 			if (target != null) {
+
+				if (!(Item.curItem instanceof Wand)){
+					return;
+				}
 
 				final Wand curWand = (Wand) Item.curItem;
 

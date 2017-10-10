@@ -25,6 +25,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.MagicalSleep;
 import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.actors.buffs.Poison;
+import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.SpiderSprite;
@@ -133,14 +134,18 @@ public class Spider extends PET {
 
 		int curPos = pos;
 
-		moveSprite(pos, Dungeon.hero.pos);
-		move(Dungeon.hero.pos);
+		if (Level.passable[pos]) {
 
-		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-		Dungeon.hero.move(curPos);
+			moveSprite(pos, Dungeon.hero.pos);
+			move(Dungeon.hero.pos);
 
-		Dungeon.hero.spend(1 / Dungeon.hero.speed());
-		Dungeon.hero.busy();
+			Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+			Dungeon.hero.move(curPos);
+
+			Dungeon.hero.spend(1 / Dungeon.hero.speed());
+			Dungeon.hero.busy();
+
+		}
 
 		return true;
 	}

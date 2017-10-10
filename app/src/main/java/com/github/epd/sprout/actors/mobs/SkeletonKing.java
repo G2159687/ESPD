@@ -53,6 +53,9 @@ public class SkeletonKing extends Mob {
 
 		loot = new PotionOfLiquidFlame();
 		lootChance = 0.1f;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	@Override

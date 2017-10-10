@@ -133,9 +133,6 @@ public class ThiefBossLevel extends Level {
 				map[i] = Terrain.WALL_DECO;
 			}
 		}
-
-		//int sign = arenaDoor + WIDTH + 1;
-		//map[sign] = Terrain.SIGN;
 	}
 
 	public static int pedestal(boolean left) {
@@ -188,8 +185,8 @@ public class ThiefBossLevel extends Level {
 			Mob bandit1 = new BanditKing();
 			Mob bandit2 = new BanditKing();
 			boss.state = boss.WANDERING;
-			bandit1.state = bandit1.HUNTING;
-			bandit2.state = bandit2.HUNTING;
+			bandit1.state = bandit1.WANDERING;
+			bandit2.state = bandit2.WANDERING;
 			int count = 0;
 			do {
 				boss.pos = Random.Int(getLength());
@@ -201,11 +198,8 @@ public class ThiefBossLevel extends Level {
 					|| (Dungeon.visible[boss.pos] && count++ < 20));
 
 			GameScene.add(boss);
-
-
 			GameScene.add(bandit1);
 			GameScene.add(bandit2);
-
 
 			if (Dungeon.visible[boss.pos]) {
 				boss.notice();
@@ -213,8 +207,6 @@ public class ThiefBossLevel extends Level {
 				boss.sprite.parent.add(new AlphaTweener(boss.sprite, 1, 0.1f));
 			}
 
-			//set(arenaDoor, Terrain.WALL);
-			//GameScene.updateMap(arenaDoor);
 			Dungeon.observe();
 		}
 	}

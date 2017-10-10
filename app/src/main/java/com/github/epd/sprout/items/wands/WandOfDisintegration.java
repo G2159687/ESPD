@@ -91,7 +91,7 @@ public class WandOfDisintegration extends Wand {
 
 		int lvl = level + chars.size() + terrainBonus;
 		int dmgMin = lvl;
-		int dmgMax = 8 + lvl * lvl / 3;
+		int dmgMax = 8 + lvl * 4;
 		if (Dungeon.hero.buff(Strength.class) != null) {
 			dmgMin *= (int) 4f;
 			dmgMax *= (int) 4f;
@@ -120,6 +120,6 @@ public class WandOfDisintegration extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", level, 8 + level * level / 3);
+		return Messages.get(this, "desc", level, 8 + level() * level() / 3);
 	}
 }

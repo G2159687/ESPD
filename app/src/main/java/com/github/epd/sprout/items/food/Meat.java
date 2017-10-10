@@ -33,7 +33,6 @@ public class Meat extends Food {
 		image = ItemSpriteSheet.MEAT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
 		message = Messages.get(this, "eat");
-		hornValue = 1;
 		bones = false;
 	}
 

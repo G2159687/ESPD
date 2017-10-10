@@ -31,6 +31,7 @@ import com.github.epd.sprout.items.SanChikarah;
 import com.github.epd.sprout.items.SanChikarahDeath;
 import com.github.epd.sprout.items.SanChikarahLife;
 import com.github.epd.sprout.items.SanChikarahTranscend;
+import com.github.epd.sprout.items.artifacts.Artifact;
 import com.github.epd.sprout.items.quest.Anvil;
 import com.github.epd.sprout.items.quest.DarkGold;
 import com.github.epd.sprout.items.quest.Pickaxe;
@@ -114,33 +115,33 @@ public class Blacksmith extends NPC {
 
 			} else {
 				DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-				 if (gold == null || gold.quantity() < (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 30)) {
+				if (gold == null || gold.quantity() < 30) {
 					tell(Messages.get(Blacksmith.class, "three"));
 				} else {
 					tell(Messages.get(Blacksmith.class, "completed"));
+					if (gold.quantity != 30)
+						gold.detach(Dungeon.hero.belongings.backpack, 30);
+					else gold.detachAll(Dungeon.hero.belongings.backpack);
 
 					Quest.completed = true;
 					Quest.reforged = false;
+				}
 			}
-		}
+		} else if (checksan()) {
+			tell(Messages.get(Blacksmith.class, "collected"));
+			SanChikarah san = new SanChikarah();
+			Dungeon.sanchikarah = true;
+			if (san.doPickUp(Dungeon.hero)) {
+				GLog.i(Messages.get(Hero.class, "have"), san.name());
+			} else {
+				Dungeon.level.drop(san, Dungeon.hero.pos).sprite.drop();
+			}
 		} else if (!Quest.reforged) {
 			GameScene.show(new WndBlacksmith(this, Dungeon.hero));
-		} else {
-			if (checksan()) {
-				tell(Messages.get(Blacksmith.class, "collected"));
-				SanChikarah san = new SanChikarah();
-				Dungeon.sanchikarah = true;
-				if (san.doPickUp(Dungeon.hero)) {
-					GLog.i(Messages.get(Hero.class, "have"), san.name());
-				} else {
-					Dungeon.level.drop(san, Dungeon.hero.pos).sprite.drop();
-				}
-			} else {
-				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
-					GameScene.show(new WndBlacksmith(this, Dungeon.hero));
-				} else tell(Messages.get(Blacksmith.class, "lost"));
-			}
-		}
+		} else if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+			GameScene.show(new WndBlacksmith(this, Dungeon.hero));
+		} else tell(Messages.get(Blacksmith.class, "lost"));
+
 		return false;
 	}
 
@@ -170,7 +171,8 @@ public class Blacksmith extends NPC {
 			return Messages.get(Blacksmith.class, "reinforce");
 		}
 
-		if (!item1.isUpgradable() || !item2.isUpgradable()) {
+		if (!item1.isUpgradable() || !item2.isUpgradable()
+				|| item1 instanceof Artifact || item2 instanceof Artifact) {
 			return Messages.get(Blacksmith.class, "cant");
 		}
 
@@ -211,7 +213,6 @@ public class Blacksmith extends NPC {
 			}
 		}
 
-		GLog.p(Messages.get(Blacksmith.class, "keep"), first.name());
 		Dungeon.hero.spendAndNext(2f);
 
 		if (second.isEquipped(Dungeon.hero)) {
@@ -232,9 +233,9 @@ public class Blacksmith extends NPC {
 		SanChikarahTranscend san3 = Dungeon.hero.belongings.getItem(SanChikarahTranscend.class);
 
 		if (san1 != null && san2 != null && san3 != null) {
-			san1.detach(Dungeon.hero.belongings.backpack);
-			san2.detach(Dungeon.hero.belongings.backpack);
-			san3.detach(Dungeon.hero.belongings.backpack);
+			san1.detachAll(Dungeon.hero.belongings.backpack);
+			san2.detachAll(Dungeon.hero.belongings.backpack);
+			san3.detachAll(Dungeon.hero.belongings.backpack);
 			return true;
 		} else {
 			return false;

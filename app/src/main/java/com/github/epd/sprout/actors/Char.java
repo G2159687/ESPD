@@ -184,14 +184,14 @@ public abstract class Char extends Actor {
 				if (buff(RingOfDisintegration.ringRecharge.class).level() > 10) {
 					if (Random.Float() < (float) (buff(RingOfDisintegration.ringRecharge.class).level()) / 150f) {
 						this.sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.tileCenterToWorld(enemy.pos)));
-						enemy.damage(Random.NormalIntRange(2 * (buff(RingOfDisintegration.ringRecharge.class).level()), 4 * (buff(RingOfDisintegration.ringRecharge.class).level())), this);
+						enemy.damage(Random.NormalIntRange((buff(RingOfDisintegration.ringRecharge.class).level()), 4 * (buff(RingOfDisintegration.ringRecharge.class).level())), this);
 					}
 				}
 			}
 
 			if (buff(RingOfFrost.ringRecharge.class) != null && enemy.isAlive()) {
 				if (buff(RingOfFrost.ringRecharge.class).level() > 10) {
-					if (Random.Float() < (float) (buff(RingOfFrost.ringRecharge.class).level()) / 150f)
+					if (Random.Float() < (float) (buff(RingOfFrost.ringRecharge.class).level()) / 100f)
 						Freezing.affect(enemy.pos, null);
 				}
 			}
@@ -573,15 +573,12 @@ public abstract class Char extends Actor {
 
 	protected HashSet<Property> properties = new HashSet<>();
 
-	//TODO: implement more properties
-
 	public HashSet<Property> properties() {
 		return properties;
 	}
 
 	public enum Property {
 		BOSS,
-		MINIBOSS,
 		UNDEAD,
 		EVIL,
 		IMMOVABLE

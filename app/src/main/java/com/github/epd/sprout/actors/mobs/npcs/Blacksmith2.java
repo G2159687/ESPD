@@ -29,6 +29,7 @@ import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.armor.Armor;
 import com.github.epd.sprout.items.quest.DarkGold;
 import com.github.epd.sprout.items.rings.Ring;
+import com.github.epd.sprout.items.rings.RingOfHaste;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.melee.MeleeWeapon;
 import com.github.epd.sprout.items.weapon.missiles.Boomerang;
@@ -96,7 +97,7 @@ public class Blacksmith2 extends NPC {
 			return Messages.get(Blacksmith.class, "junk");
 		}
 
-		if (!item1.isUpgradable()) {
+		if (!item1.isUpgradable() || item1 instanceof RingOfHaste) {
 			return Messages.get(Blacksmith2.class, "cant");
 		}
 

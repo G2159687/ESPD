@@ -51,6 +51,8 @@ public class DwarfLich extends Mob {
 
 		lootOther = new Blackberry();
 		lootChanceOther = 0.333f;
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override
@@ -70,7 +72,7 @@ public class DwarfLich extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+		Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT);
 		return !Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
 	}
 

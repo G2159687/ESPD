@@ -27,6 +27,8 @@ public class Acidic extends Scorpio {
 	{
 		name = Messages.get(this, "name");
 		spriteClass = AcidicSprite.class;
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override

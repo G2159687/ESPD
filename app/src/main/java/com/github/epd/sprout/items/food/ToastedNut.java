@@ -33,7 +33,6 @@ public class ToastedNut extends Nut {
 		image = ItemSpriteSheet.SEED_TOASTEDDUNGEONNUT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
 		message = Messages.get(this, "eat");
-		hornValue = 2;
 	}
 
 	@Override

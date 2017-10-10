@@ -18,7 +18,6 @@ public class CapeOfThorns extends Artifact {
 
 		level = 0;
 		levelCap = 10;
-		levelCapNew = 200;
 
 		charge = 0;
 		chargeCap = 100;
@@ -69,17 +68,17 @@ public class CapeOfThorns extends Artifact {
 
 		public int proc(int damage, Char attacker, Char defender) {
 			if (cooldown == 0) {
-				if (attacker != null) charge += damage * (1 + level * 0.07);
+				if (attacker != null) charge += damage * (1 + level * 0.03);
 				if (charge >= chargeCap) {
 					charge = 0;
-					cooldown = (int) Math.round(10 + 10 * Math.sqrt(level / 10));
+					cooldown = 10 + 10 * level;
 					GLog.p(Messages.get(this, "radiating"));
 					BuffIndicator.refreshHero();
 				}
 			}
 
 			if (cooldown != 0) {
-				int deflected = (int) (Random.NormalIntRange(damage / 10, 4 * (damage / 5)) * Math.sqrt(Math.sqrt((double) ((level + 1)) / 20)));
+				int deflected = Random.NormalIntRange(Math.round(level * 0.004f * damage), Math.round(damage * (0.5f + level * 0.01f)));
 				if (deflected < damage) damage -= deflected;
 				else damage -= damage;
 

@@ -28,8 +28,7 @@ public class WandOfBlastWave extends Wand {
 
 	{
 		name = Messages.get(this, "name");
-		image = ItemSpriteSheet.WAND_ADAMANT;
-		//TODO: sprite
+		image = ItemSpriteSheet.WAND_BLASTWAVE;
 
 		collisionProperties = Ballistica.PROJECTILE;
 	}
@@ -39,7 +38,7 @@ public class WandOfBlastWave extends Wand {
 		Sample.INSTANCE.play(Assets.SND_BLAST);
 		BlastWave.blast(bolt.collisionPos);
 
-		int damage = Random.NormalIntRange(1, 6 + (int) (level * level / 4f));
+		int damage = Random.NormalIntRange(level() / 2, 6 + level() * 4);
 
 		//presses all tiles in the AOE first
 		for (int i : PathFinder.NEIGHBOURS9) {
@@ -55,7 +54,7 @@ public class WandOfBlastWave extends Wand {
 
 				if (ch.isAlive()) {
 					Ballistica trajectory = new Ballistica(ch.pos, ch.pos + i, Ballistica.MAGIC_BOLT);
-					int strength = 1 + ((level + 1) / 3);
+					int strength = 1 + ((level() + 1) / 3);
 					throwChar(ch, trajectory, strength);
 				}
 			}
@@ -68,7 +67,7 @@ public class WandOfBlastWave extends Wand {
 
 			if (ch.isAlive() && bolt.path.size() > bolt.dist) {
 				Ballistica trajectory = new Ballistica(ch.pos, bolt.path.get(bolt.dist + 1), Ballistica.MAGIC_BOLT);
-				int strength = level + 3;
+				int strength = level() + 3;
 				throwChar(ch, trajectory, strength);
 			}
 		}
@@ -154,6 +153,6 @@ public class WandOfBlastWave extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", 1, 6 + (int) (level * level / 4f));
+		return Messages.get(this, "desc", 1, 6 + (int) (level() * level() / 4f));
 	}
 }

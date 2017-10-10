@@ -50,8 +50,6 @@ public class WandOfFirebolt extends Wand {
 	@Override
 	protected void onZap(Ballistica bolt) {
 
-		int level = level();
-
 		for (int c : bolt.subPath(0, bolt.dist)) {
 			if (Level.flamable[c]) {
 				GameScene.add(Blob.seed(c, 1, Fire.class));
@@ -65,7 +63,7 @@ public class WandOfFirebolt extends Wand {
 		Char ch = Actor.findChar(cell);
 		if (ch != null) {
 
-			int damage = Random.Int(1, 8 + level * level);
+			int damage = Random.Int(1, 8 + level() * 4);
 			if (Dungeon.hero.buff(Strength.class) != null) {
 				damage *= (int) 4f;
 				Buff.detach(Dungeon.hero, Strength.class);
@@ -91,6 +89,6 @@ public class WandOfFirebolt extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", 1, 8 + level * level);
+		return Messages.get(this, "desc", 1, 8 + level() * level());
 	}
 }

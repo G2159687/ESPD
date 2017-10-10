@@ -27,7 +27,7 @@ public class HornOfPlenty extends Artifact {
 		image = ItemSpriteSheet.ARTIFACT_HORN1;
 
 		level = 0;
-		levelCap = 30;
+		levelCap = 10;
 
 		charge = 0;
 		partialCharge = 0;
@@ -50,7 +50,7 @@ public class HornOfPlenty extends Artifact {
 		ArrayList<String> actions = super.actions(hero);
 		if (isEquipped(hero) && charge > 0)
 			actions.add(AC_EAT);
-		if (isEquipped(hero) && level < 30 && !cursed)
+		if (isEquipped(hero) && level < 10 && !cursed)
 			actions.add(AC_STORE);
 		return actions;
 	}
@@ -93,15 +93,15 @@ public class HornOfPlenty extends Artifact {
 					}
 
 					if (charge >= 5) {
-						if (level > 30) {
+						if (level > 15) {
 							if (hero.HP < hero.HT) {
-								hero.HP = Math.min(hero.HP + Random.NormalIntRange(1, Math.round(0.1f * charge * (level - 30))), hero.HT);
+								hero.HP = Math.min(hero.HP + Random.NormalIntRange(1, Math.round(0.1f * charge * (level - 15))), hero.HT);
 								hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 							}
 						}
-						if (level > 150) {
-							if (Random.Float() < (level - 150) / 150f) {
-								hero.HT += Math.round(0.06f * charge * (level - 150));
+						if (level > 47) {
+							if (Random.Float() < (level - 47) / 5f) {
+								hero.HT += Math.round(0.06f * charge * (level - 40));
 								hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 							}
 						}
@@ -216,9 +216,9 @@ public class HornOfPlenty extends Artifact {
 					hero.busy();
 					hero.spend(TIME_TO_EAT);
 
-					curItem.upgrade(((Food) item).hornValue);
-					if (curItem.level >= 30) {
-						curItem.level = 30;
+					curItem.upgrade();
+					if (curItem.level >= 10) {
+						curItem.level = 10;
 						GLog.p(Messages.get(HornOfPlenty.class, "maxlevel"));
 					} else
 						GLog.p(Messages.get(HornOfPlenty.class, "levelup"));

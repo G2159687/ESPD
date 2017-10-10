@@ -469,7 +469,7 @@ public class Ghost extends NPC {
 
 		@Override
 		protected boolean canAttack(Char enemy) {
-			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT);
 			if (!Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos) {
 				combo++;
 				return true;
@@ -633,7 +633,7 @@ public class Ghost extends NPC {
 
 		@Override
 		protected boolean canAttack(Char enemy) {
-			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT);
 			return !Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
 		}
 

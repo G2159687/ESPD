@@ -35,7 +35,6 @@ public class PotionOfConstitution extends Food {
 		image = ItemSpriteSheet.POTION_HONEY;
 		bones = true;
 		message = Messages.get(this, "eat");
-		hornValue = 6;
 	}
 
 	@Override

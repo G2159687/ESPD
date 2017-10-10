@@ -35,7 +35,6 @@ public class Blackberry extends Food {
 		image = ItemSpriteSheet.SEED_BLACKBERRY;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(this, "eat");
-		hornValue = 6;
 		bones = false;
 	}
 

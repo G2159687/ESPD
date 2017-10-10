@@ -26,6 +26,7 @@ import com.github.epd.sprout.actors.buffs.Cripple;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.weapon.melee.Spork;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.BanditKingSprite;
@@ -47,12 +48,14 @@ public class BanditKing extends Thief {
 		maxLvl = 25;
 		flying = true;
 
-		// 1 in 30 chance to be a crazy bandit, equates to overall 1/90 chance.
-		lootChance = 0.333f;
+		lootChance = 0.05f;
 		defenseSkill = 20; //20
 		if (Dungeon.depth < 25) {
 			Dungeon.sporkAvail = false;
 		}
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 
 	}
 
@@ -108,13 +111,17 @@ public class BanditKing extends Thief {
 		super.die(cause);
 		if (Dungeon.depth < 25) {
 			yell(Messages.get(BanditKing.class, "die"));
-			GLog.n(Messages.get(BanditKing.class, "dis"));
+			GLog.w(Messages.get(BanditKing.class, "dis"));
 			if (!Dungeon.limitedDrops.spork.dropped()) {
 				Dungeon.level.drop(new Spork(), pos).sprite.drop();
 				Dungeon.limitedDrops.spork.drop();
 				Dungeon.sporkAvail = false;
 				yell(Messages.get(BanditKing.class, "spork"));
 			}
+		}
+
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.05f){
+			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
 		}
 	}
 

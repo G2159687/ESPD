@@ -47,6 +47,9 @@ public class DwarfKingTomb extends Mob {
 		loot = new RedDewdrop();
 		lootChance = 0.05f;
 
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
+
 	}
 
 	@Override

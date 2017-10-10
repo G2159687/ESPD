@@ -152,9 +152,7 @@ public class HermitCrab extends Mob implements Callback {
 	@Override
 	public void die(Object cause) {
 		super.die(cause);
-		if (Random.Int(1) == 0) {
-			Dungeon.level.drop(new GoldenSkeletonKey(0), pos).sprite.drop();
-		}
+		Dungeon.level.drop(new GoldenSkeletonKey(0), pos).sprite.drop();
 	}
 
 

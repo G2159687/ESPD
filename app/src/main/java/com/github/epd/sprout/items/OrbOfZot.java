@@ -86,8 +86,7 @@ public class OrbOfZot extends Item {
 			for (int i : PathFinder.NEIGHBOURS8)
 				if (Level.passable[cell + i])
 					candidates.add(cell + i);
-			int newCell = candidates.isEmpty() ? cell : Random
-					.element(candidates);
+			int newCell = candidates.isEmpty() ? cell : Random.element(candidates);
 
 			if (!Level.pit[newCell] && activate) {
 				OrbOfZotMob.spawnAt(newCell);

@@ -43,17 +43,9 @@ public class WandOfAmok extends Wand {
 	protected void onZap(Ballistica bolt) {
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null) {
-
-			if (ch == Dungeon.hero) {
-				Buff.affect(ch, Vertigo.class, Vertigo.duration(ch));
-			} else {
-				Buff.affect(ch, Amok.class, 3f + level());
-			}
-
+			Buff.affect(ch, Amok.class, 3f + level());
 		} else {
-
 			GLog.i(Messages.get(this, "effect"));
-
 		}
 	}
 

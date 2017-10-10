@@ -47,7 +47,7 @@ public class ShortSword extends MeleeWeapon {
 
 	private boolean equipped;
 
-	private float upgradeChance = 0.5f;
+	private float upgradeChance = 0.75f;
 
 	{
 		name = Messages.get(this, "name");
@@ -104,10 +104,6 @@ public class ShortSword extends MeleeWeapon {
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect(Item item) {
-			DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-			if (gold != null) {
-				upgradeChance = (upgradeChance + (gold.quantity() * 0.01f));
-			}
 			if (item != null && !(item instanceof Boomerang)) {
 				int i = 0;
 				while (i < level) {
@@ -122,7 +118,7 @@ public class ShortSword extends MeleeWeapon {
 							ScrollOfUpgrade.upgrade(curUser);
 							evoke(curUser);
 							item.upgrade();
-							upgradeChance = Math.max(0.5f, upgradeChance - 0.1f);
+							upgradeChance = 0.75f;
 						} else {
 							GLog.w(Messages.get(ShortSword.class, "notenough"), item.name());
 							i = level;

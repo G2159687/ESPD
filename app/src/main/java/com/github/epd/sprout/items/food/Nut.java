@@ -33,7 +33,6 @@ public class Nut extends Food {
 		image = ItemSpriteSheet.SEED_DUNGEONNUT;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 2;
 		message = Messages.get(this, "eat");
-		hornValue = 2;
 		bones = false;
 	}
 

@@ -54,6 +54,8 @@ public class CrabKing extends Mob {
 		HP = HT = 300;
 		EXP = 20;
 		defenseSkill = 30;
+
+		properties.add(Property.BOSS);
 	}
 
 	private int timeToJump = JUMP_DELAY;
@@ -79,6 +81,8 @@ public class CrabKing extends Mob {
 		boolean result = super.act();
 
 		int regen = Math.round(Dungeon.shellCharge / 10);
+		if (HP + regen > HT)
+			regen = HT - HP;
 
 		if (HP < HT && Dungeon.shellCharge > 10) {
 			sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);

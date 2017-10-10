@@ -22,6 +22,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.MagicalSleep;
 import com.github.epd.sprout.actors.buffs.Paralysis;
+import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.SteelBeeSprite;
 import com.github.epd.sprout.utils.GLog;
@@ -106,39 +107,20 @@ public class bee extends PET {
 
 		int curPos = pos;
 
-		moveSprite(pos, Dungeon.hero.pos);
-		move(Dungeon.hero.pos);
+		if (Level.passable[pos]) {
 
-		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-		Dungeon.hero.move(curPos);
+			moveSprite(pos, Dungeon.hero.pos);
+			move(Dungeon.hero.pos);
 
-		Dungeon.hero.spend(1 / Dungeon.hero.speed());
-		Dungeon.hero.busy();
+			Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+			Dungeon.hero.move(curPos);
 
+			Dungeon.hero.spend(1 / Dungeon.hero.speed());
+			Dungeon.hero.busy();
+
+		}
 		return true;
 	}
-/*
-    @Override
-	protected Char chooseEnemy() {
-		
-		if(enemy != null && !enemy.isAlive()){
-			kills++;
-		}
-		
-		if (enemy == null || !enemy.isAlive()) {
-			HashSet<Mob> enemies = new HashSet<Mob>();
-			for (Mob mob : Dungeon.level.mobs) {
-				if (!(mob instanceof PET) && mob.hostile && Level.fieldOfView[mob.pos]) {
-					enemies.add(mob);
-				}
-			}
-
-			enemy = enemies.size() > 0 ? Random.element(enemies) : null;
-		}
-
-		return enemy;
-}
-*/
 
 
 	@Override

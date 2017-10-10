@@ -62,15 +62,15 @@ public class BrokenRobot extends Mob {
 		defenseSkill = 20 + adj(1);
 		viewDistance = Light.DISTANCE;
 
-		EXP = 13;
+		EXP = 10;
 		maxLvl = 25;
 
 
 		lootOther = new RedDewdrop();
-		lootChanceOther = 0.5f;
+		lootChanceOther = 0.3f;
 
 		loot = new ScrollOfRecharging();
-		lootChance = 0.5f; // by default, see die()
+		lootChance = 0.3f; // by default, see die()
 	}
 
 	@Override
@@ -80,6 +80,8 @@ public class BrokenRobot extends Mob {
 
 	@Override
 	public boolean act() {
+
+		boolean result = super.act();
 
 		if (enemySeen) {
 			switch (Random.Int(50)) {
@@ -93,7 +95,7 @@ public class BrokenRobot extends Mob {
 			}
 		}
 
-		return super.act();
+		return result;
 	}
 
 

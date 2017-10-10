@@ -67,6 +67,8 @@ public class Eye extends Mob {
 
 		lootOther = new Meat();
 		lootChanceOther = 0.5f; // by default, see die()
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override

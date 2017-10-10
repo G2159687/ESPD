@@ -53,6 +53,9 @@ public class TenguDen extends Mob {
 		HP = HT = 400;
 		EXP = 20;
 		defenseSkill = 30;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	private int timeToJump = JUMP_DELAY;

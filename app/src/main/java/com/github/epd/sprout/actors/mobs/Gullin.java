@@ -51,6 +51,9 @@ public class Gullin extends Mob {
 
 		loot = new StoneOre();
 		lootChance = 0.8f;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
 	}
 
 	@Override

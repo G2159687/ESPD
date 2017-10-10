@@ -124,7 +124,7 @@ public class Dungeon {
 		nornstones,
 
 		// doesn't use Generator, so we have to enforce one armband drop here
-		armband, spork, royalspork, sewerkey, prisonkey, caveskey, citykey, hallskey, ringofwealth, vaultpage,
+		armband, spork, royalspork, sewerkey, prisonkey, caveskey, citykey, hallskey, vaultpage,
 		conchshell, ancientcoin, tengukey, bone, journal, safespotpage, dragoncave;
 
 		public int count = 0;
@@ -682,15 +682,13 @@ public class Dungeon {
 		switch (depth) {
 			case 1:
 				level = new SewerLevel();
+				break;
+			case 2:
+				level = new SewerLevel();
 				Dungeon.dewDraw = true;
 				Statistics.prevfloormoves = 500;
 				Buff.prolong(Dungeon.hero, Dewcharge.class, Dewcharge.DURATION + 50);
 				break;
-			case 2:
-				//level = new HallsLevel();
-				//hero.HT=999;
-				//hero.HP=hero.HT;
-				//break;
 			case 3:
 			case 4:
 				//level = new CavesLevel();
@@ -1316,6 +1314,7 @@ public class Dungeon {
 		if (hero.belongings.getItem(Ankh.class) == null) {
 			Rankings.INSTANCE.submit(false);
 		}
+		try {saveAll();} catch (Exception e){}
 	}
 
 	public static void win(String desc) {

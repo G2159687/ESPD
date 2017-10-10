@@ -12,6 +12,7 @@ import com.github.epd.sprout.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -124,6 +125,12 @@ public class CloakOfShadows extends Artifact {
 	}
 
 	@Override
+	public boolean isUpgradable() {
+		return true;
+	}
+
+	//TODO: desc
+	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc1");
 
@@ -163,8 +170,12 @@ public class CloakOfShadows extends Artifact {
 		@Override
 		public boolean act() {
 			if (charge < chargeCap) {
-				if (!stealthed)
-					partialCharge += (1f / (60 - (chargeCap - charge) * 2));
+				if (!stealthed) {
+					if (chargeCap - charge < 10)
+						partialCharge += (1f / (30 - (chargeCap - charge) * 2));
+					else
+						partialCharge += 1f / 10f;
+				}
 
 				if (partialCharge >= 1) {
 					charge++;
@@ -207,6 +218,7 @@ public class CloakOfShadows extends Artifact {
 
 		@Override
 		public boolean act() {
+			if (Random.Int(3) == 0)
 			charge--;
 			if (charge <= 0) {
 				detach();
@@ -244,7 +256,7 @@ public class CloakOfShadows extends Artifact {
 			if (target.invisible > 0)
 				target.invisible--;
 			stealthed = false;
-			cooldown = 10 - (level / 3);
+			cooldown = 2;
 
 			updateQuickslot();
 			super.detach();

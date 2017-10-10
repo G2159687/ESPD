@@ -117,7 +117,7 @@ public class WandOfMagicMissile extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", 3 + level, 6 + level * 2);
+		return Messages.get(this, "desc", 3 + level(), 6 + level() * 2);
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {

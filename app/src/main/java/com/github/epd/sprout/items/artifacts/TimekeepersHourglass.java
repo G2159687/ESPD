@@ -34,10 +34,11 @@ public class TimekeepersHourglass extends Artifact {
 
 		level = 0;
 		levelCap = 5;
+		reinforced = true;
 
-		charge = 10 + level * 2;
+		charge = 10 + level * 3;
 		partialCharge = 0;
-		chargeCap = 10 + level * 2;
+		chargeCap = 10 + level * 3;
 
 		defaultAction = AC_ACTIVATE;
 	}
@@ -89,6 +90,11 @@ public class TimekeepersHourglass extends Artifact {
 				});
 		} else
 			super.execute(hero, action);
+	}
+
+	@Override
+	public boolean isUpgradable() {
+		return true;
 	}
 
 	@Override
@@ -179,7 +185,7 @@ public class TimekeepersHourglass extends Artifact {
 		@Override
 		public boolean act() {
 			if (charge < chargeCap && !cursed) {
-				partialCharge += 1 / (60f - (chargeCap - charge) * 2f);
+				partialCharge += 1 / (level > 18 ? 2f : (float)(20 - level));
 
 				if (partialCharge >= 1) {
 					partialCharge--;

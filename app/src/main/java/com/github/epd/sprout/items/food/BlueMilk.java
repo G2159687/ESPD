@@ -37,7 +37,6 @@ public class BlueMilk extends Food {
 		image = ItemSpriteSheet.MUSHROOM_BLUEMILK;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(this, "eat");
-		hornValue = 2;
 		bones = false;
 	}
 

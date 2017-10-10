@@ -101,7 +101,7 @@ public class TalismanOfForesight extends Artifact {
 				if (level > 24) {
 					Buff.affect(hero, MindVision.class, (float) level);
 				}
-				if (level > 49 && Dungeon.depth > 50) {
+				if (level > 48 && Dungeon.depth > 50) {
 					//Magic mapping with sokoban
 					int length = Level.LENGTH;
 					int[] map = Dungeon.level.map;

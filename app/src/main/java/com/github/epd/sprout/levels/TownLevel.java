@@ -33,6 +33,7 @@ import com.github.epd.sprout.actors.mobs.npcs.Shopkeeper;
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer4;
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer5;
 import com.github.epd.sprout.items.ActiveMrDestructo;
+import com.github.epd.sprout.items.ActiveMrDestructo2;
 import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
@@ -42,6 +43,8 @@ import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.SeekingClusterBombItem;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.potions.PotionOfHealing;
+import com.github.epd.sprout.items.potions.PotionOfOverHealing;
+import com.github.epd.sprout.items.quest.DarkGold;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.levels.features.Chasm;
 import com.github.epd.sprout.levels.features.Door;
@@ -58,6 +61,7 @@ import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Phaseshift;
 import com.github.epd.sprout.plants.Plant;
 import com.github.epd.sprout.plants.Starflower;
+import com.github.epd.sprout.plants.Sungrass;
 import com.github.epd.sprout.scenes.GameScene;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -175,25 +179,25 @@ public class TownLevel extends Level {
 				prize = Generator.random(Generator.Category.SEEDRICH);
 				break;
 			case 2:
-				prize = new PotionOfHealing();
+				prize = new PotionOfOverHealing();
 				break;
 			case 3:
-				prize = new PotionOfHealing();
+				prize = new PotionOfOverHealing();
 				break;
 			case 5:
-				prize = (Random.Int(10) < 3) ? new ActiveMrDestructo() : new InactiveMrDestructo();
+				prize = new ActiveMrDestructo2();
 				break;
 			case 6:
 				prize = new SeekingClusterBombItem();
 				break;
 			case 7:
-				prize = new PotionOfHealing();
+				prize = new DarkGold().quantity(50);
 				break;
 			case 8:
-				prize = new PotionOfHealing();
+				prize = new DarkGold().quantity(50);
 				break;
 			case 9:
-				prize = new PotionOfHealing();
+				prize = new Sungrass.Seed().quantity(5);
 				break;
 			default:
 				prize = new PotionOfHealing();

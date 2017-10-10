@@ -63,12 +63,6 @@ public class DwarfHammer extends Item {
 				return;
 			}
 
-			//	if (Dungeon.depth > 24 || Dungeon.depth < 22) {
-			//		hero.spend(DwarfHammer.TIME_TO_USE);
-			//		GLog.w(TXT_PREVENTING);
-			//		return;
-			//	}
-
 			if (!Dungeon.visible[Dungeon.level.exit]) {
 				hero.spend(DwarfHammer.TIME_TO_USE);
 				GLog.w(TXT_PREVENTING);
@@ -80,8 +74,12 @@ public class DwarfHammer extends Item {
 
 		if (action == AC_BREAK) {
 
-			if (hero.pos != Dungeon.level.exit && Dungeon.depth != 24) {
-				detach(Dungeon.hero.belongings.backpack);
+			if (hero.pos != Dungeon.level.exit && (Dungeon.depth == 22 || Dungeon.depth == 23)) {
+
+				if (!(Dungeon.level.map[Dungeon.level.exit] == Terrain.EXIT)) {
+					GLog.w(TXT_UNSEAL);
+					detach(Dungeon.hero.belongings.backpack);
+				}
 
 				Dungeon.level.sealedlevel = false;
 
@@ -92,8 +90,6 @@ public class DwarfHammer extends Item {
 				Dungeon.level.map[Dungeon.level.exit] = Terrain.EXIT;
 				GameScene.updateMap(Dungeon.level.exit);
 				Dungeon.observe();
-
-				GLog.w(TXT_UNSEAL);
 
 			}
 

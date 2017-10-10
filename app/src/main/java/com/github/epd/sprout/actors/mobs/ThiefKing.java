@@ -22,6 +22,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.items.AdamantRing;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
+import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.levels.traps.LightningTrap;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
@@ -48,8 +49,8 @@ public class ThiefKing extends Mob implements Callback {
 		maxLvl = 14;
 		flying = true;
 
-		loot = Generator.Category.SCROLL;
-		lootChance = 0.33f;
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	@Override
@@ -79,6 +80,10 @@ public class ThiefKing extends Mob implements Callback {
 		Dungeon.level.drop(new AdamantRing(), pos).sprite.drop();
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
 		super.die(cause);
+
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.2f){
+			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
+		}
 
 		Dungeon.banditkingkilled = true;
 

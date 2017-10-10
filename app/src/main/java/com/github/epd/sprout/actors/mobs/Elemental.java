@@ -53,6 +53,8 @@ public class Elemental extends Mob {
 
 		lootOther = new ChargrilledMeat();
 		lootChanceOther = 0.5f; // by default, see die()
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override

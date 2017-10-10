@@ -54,6 +54,9 @@ public class TenguEscape extends Mob {
 		HP = HT = 100;
 		EXP = 0;
 		defenseSkill = 30;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	private int timeToJump = JUMP_DELAY;

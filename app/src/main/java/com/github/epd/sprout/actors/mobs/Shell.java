@@ -26,6 +26,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.items.RedDewdrop;
+import com.github.epd.sprout.items.keys.GoldenSkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
@@ -61,7 +62,7 @@ public class Shell extends Mob implements Callback {
 		hostile = false;
 		state = PASSIVE;
 
-		loot = new RedDewdrop();
+		loot = new GoldenSkeletonKey(0).quantity(Random.IntRange(2, 4));
 		lootChance = 1f;
 
 		properties.add(Property.IMMOVABLE);

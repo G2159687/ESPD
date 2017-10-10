@@ -17,12 +17,17 @@
  */
 package com.github.epd.sprout.actors.blobs;
 
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Journal;
 import com.github.epd.sprout.Journal.Feature;
 import com.github.epd.sprout.effects.BlobEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.ActiveMrDestructo;
 import com.github.epd.sprout.items.ActiveMrDestructo2;
+import com.github.epd.sprout.items.AdamantArmor;
+import com.github.epd.sprout.items.AdamantRing;
+import com.github.epd.sprout.items.AdamantWand;
+import com.github.epd.sprout.items.AdamantWeapon;
 import com.github.epd.sprout.items.Ankh;
 import com.github.epd.sprout.items.EasterEgg;
 import com.github.epd.sprout.items.Egg;
@@ -45,6 +50,7 @@ import com.github.epd.sprout.items.potions.PotionOfMight;
 import com.github.epd.sprout.items.potions.PotionOfOverHealing;
 import com.github.epd.sprout.items.potions.PotionOfStrength;
 import com.github.epd.sprout.items.rings.Ring;
+import com.github.epd.sprout.items.rings.RingOfHaste;
 import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
@@ -64,6 +70,7 @@ import com.github.epd.sprout.items.weapon.melee.Sword;
 import com.github.epd.sprout.items.weapon.melee.WarHammer;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Plant;
+import com.watabou.utils.Random;
 
 public class WaterOfTransmutation extends WellWater {
 
@@ -87,19 +94,22 @@ public class WaterOfTransmutation extends WellWater {
 		} else if (item instanceof ShatteredPot) {
 			item = changeHoneypot((ShatteredPot) item);
 		} else if (item instanceof InactiveMrDestructo) {
-			item = rechargeDestructo((InactiveMrDestructo) item);
+			item = rechargeDestructo();
 		} else if (item instanceof ActiveMrDestructo) {
-			item = upgradeDestructo((ActiveMrDestructo) item);
+			item = upgradeDestructo();
 		} else if (item instanceof InactiveMrDestructo2) {
-			item = rechargeDestructo2((InactiveMrDestructo2) item);
+			item = rechargeDestructo2();
 		} else if (item instanceof SteelShatteredPot) {
 			item = changeHoneypot((SteelShatteredPot) item);
 		} else if (item instanceof Honeypot) {
 			item = changeHoneypot((Honeypot) item);
 		} else if (item instanceof Ankh) {
-			item = changeAnkh((Ankh) item);
+			item = changeAnkh();
 		} else if (item instanceof Egg) {
-			item = changeEgg((Egg) item);
+			item = changeEgg();
+		} else if (item instanceof AdamantArmor || item instanceof AdamantRing
+				|| item instanceof AdamantWand || item instanceof AdamantWeapon){
+			item = changeAdamant(item);
 		} else {
 			item = null;
 		}
@@ -178,11 +188,16 @@ public class WaterOfTransmutation extends WellWater {
 
 		n.level = 0;
 
-		int level = r.level;
-		if (level > 0) {
-			n.upgrade(level);
-		} else if (level < 0) {
-			n.degrade(-level);
+		if (n instanceof RingOfHaste && r.level > 10){
+			n.upgrade(10);
+			Dungeon.level.drop(new ScrollOfUpgrade().quantity(r.level - 10), pos);
+		} else {
+			int level = r.level;
+			if (level > 0) {
+				n.upgrade(level);
+			} else if (level < 0) {
+				n.degrade(-level);
+			}
 		}
 
 		n.levelKnown = r.levelKnown;
@@ -284,7 +299,7 @@ public class WaterOfTransmutation extends WellWater {
 	}
 
 
-	private Potion changeAnkh(Ankh a) {
+	private Potion changeAnkh() {
 		return new PotionOfOverHealing();
 	}
 
@@ -300,22 +315,45 @@ public class WaterOfTransmutation extends WellWater {
 		return new SteelHoneypot();
 	}
 
-	private Item changeEgg(Egg d) {
+	private Item changeEgg() {
 		return new EasterEgg();
 	}
 
-	private Item rechargeDestructo(InactiveMrDestructo d) {
+	private Item rechargeDestructo() {
 		return new ActiveMrDestructo();
 	}
 
-	private Item upgradeDestructo(ActiveMrDestructo d) {
+	private Item upgradeDestructo() {
 		return new ActiveMrDestructo2();
 	}
 
-	private Item rechargeDestructo2(InactiveMrDestructo2 d) {
+	private Item rechargeDestructo2() {
 		return new ActiveMrDestructo2();
 	}
 
+	private Item changeAdamant(Item item){
+		Item a;
+		do {
+			switch (Random.Int(4)){
+				case 0:
+					a = new AdamantArmor();
+					break;
+				case 1:
+					a = new AdamantRing();
+					break;
+				case 2:
+					a = new AdamantWand();
+					break;
+				case 3:
+					a = new AdamantWeapon();
+					break;
+				default:
+					a = new AdamantWand();
+					break;
+			}
+		} while (item.getClass() == a.getClass());
+		return a;
+	}
 
 	@Override
 	public String tileDesc() {

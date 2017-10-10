@@ -42,7 +42,7 @@ public class BunnySprite extends MobSprite {
 		idle = new Animation(2, true);
 		idle.frames(frames, 0, 1, 0, 0);
 
-		run = new Animation(4, true);
+		run = new Animation(8, true);
 		run.frames(frames, 0, 0, 0, 2);
 
 		attack = new Animation(8, false);
@@ -86,5 +86,15 @@ public class BunnySprite extends MobSprite {
 		if (hpBar != null) {
 			hpBar.killAndErase();
 		}
+	}
+
+	@Override
+	public void killAndErase(){
+
+		if (hpBar != null) {
+			hpBar.killAndErase();
+		}
+
+		super.killAndErase();
 	}
 }

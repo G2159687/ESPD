@@ -22,6 +22,7 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.items.DewVial;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.keys.Key;
 import com.github.epd.sprout.items.keys.SkeletonKey;
@@ -35,16 +36,17 @@ import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.utils.Utils;
 import com.github.epd.sprout.windows.WndBag;
+import com.github.epd.sprout.windows.WndDewVial;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.PathFinder;
 
 public class QuickSlotButton extends Button implements WndBag.Listener {
 
-	private static final String TXT_SELECT_ITEM = Messages.get(QuickSlotButton.class, "select_item");
+	public static final String TXT_SELECT_ITEM = Messages.get(QuickSlotButton.class, "select_item");
 	public static final String TXT_CHARGE = "%d%%";
 
-	private static QuickSlotButton[] instance = new QuickSlotButton[4];
+	public static QuickSlotButton[] instance = new QuickSlotButton[4];
 	private int slotNum;
 
 	private ItemSlot slot;
@@ -207,7 +209,8 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 
 	@Override
 	protected boolean onLongClick() {
-		GameScene.selectItem(this, WndBag.Mode.QUICKSLOT, TXT_SELECT_ITEM);
+		if (select(slotNum) instanceof DewVial) GameScene.show(new WndDewVial(new DewVial(), slotNum));
+		else GameScene.selectItem(this, WndBag.Mode.QUICKSLOT, TXT_SELECT_ITEM);
 		return true;
 	}
 

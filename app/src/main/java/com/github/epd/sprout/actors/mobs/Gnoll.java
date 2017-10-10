@@ -44,10 +44,7 @@ public class Gnoll extends Mob {
 			lootChance = 0.75f;
 
 			lootOther = Generator.Category.POTION;
-			lootChanceOther = 0.8f;
-
-			lootThird = Gold.class;
-			lootChanceThird = 1f;
+			lootChanceOther = 1f;
 		} else {
 
 			loot = Gold.class;

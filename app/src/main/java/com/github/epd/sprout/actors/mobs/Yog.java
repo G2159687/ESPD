@@ -75,6 +75,8 @@ public class Yog extends Mob {
 
 		state = PASSIVE;
 		properties.add(Property.IMMOVABLE);
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	private static final int REGENERATION = 200;

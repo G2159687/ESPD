@@ -24,7 +24,7 @@ public class AutoPotion extends MiscEquippable {
 
 	{
 		name = Messages.get(this, "name");
-		image = ItemSpriteSheet.ARTIFACT;
+		image = ItemSpriteSheet.AUTOPOTION;
 	}
 
 	@Override

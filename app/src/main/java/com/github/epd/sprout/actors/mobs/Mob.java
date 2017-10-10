@@ -41,6 +41,7 @@ import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.RedDewdrop;
 import com.github.epd.sprout.items.VioletDewdrop;
 import com.github.epd.sprout.items.YellowDewdrop;
+import com.github.epd.sprout.items.artifacts.CloakOfShadows;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.rings.RingOfAccuracy;
@@ -483,6 +484,11 @@ public abstract class Mob extends Char {
 			if (((Hero) enemy).subClass == HeroSubClass.ASSASSIN) {
 				damage *= 1.34f;
 				Wound.hit(this);
+			} else if (enemy.buff(CloakOfShadows.cloakStealth.class) != null){
+				float damagebonus = enemy.buff(CloakOfShadows.cloakStealth.class) == null ? 0
+						: (enemy.buff(CloakOfShadows.cloakStealth.class).level() - 10) / 20f;
+				damage *= (1f + damagebonus);
+				Wound.hit(this);
 			} else {
 				Surprise.hit(this);
 			}
@@ -552,7 +558,6 @@ public abstract class Mob extends Char {
 				Statistics.qualifiedForNoKilling = false;
 			}
 
-			//if (Dungeon.hero.lvl <= maxLvl && EXP > 0) {
 			if (EXP > 0) {
 				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, TXT_EXP, EXP);
 				Dungeon.hero.earnExp(EXP);
@@ -609,12 +614,28 @@ public abstract class Mob extends Char {
 		float lootChance = this.lootChance;
 		float lootChanceOther = this.lootChanceOther;
 		int bonus = 0;
-		for (Buff buff : Dungeon.hero.buffs(RingOfWealth.Wealth.class)) {
-			bonus += ((RingOfWealth.Wealth) buff).level;
+		for (Buff buff : Dungeon.hero.buffs(MasterThievesArmband.Thievery.class)) {
+            if (((MasterThievesArmband.Thievery) buff).level() > 10)
+			    bonus += ((MasterThievesArmband.Thievery) buff).level() - 10;
 		}
 
-		lootChance *= Math.pow(1.1, bonus);
-		lootChanceOther *= Math.pow(1.1, bonus);
+		if (lootChanceOther == 0f){
+		    lootChance += 0.024f * bonus;
+			if (lootChance > 1f){
+				lootChance = 1f;
+			}
+		} else {
+            lootChance += 0.012f * bonus;
+			if (lootChance > 0.5f){
+				lootChance = 0.5f;
+			}
+        }
+
+
+		lootChanceOther += 0.024f * bonus;
+        if (lootChanceOther > 1f){
+            lootChanceOther = 1f;
+        }
 
 
 		if (Random.Float() < lootChance && Dungeon.hero.lvl <= maxLvl + 8000000) {
@@ -625,7 +646,6 @@ public abstract class Mob extends Char {
 					Dungeon.level.drop(loot, pos).sprite.drop();
 				}
 
-
 		} else if (Random.Float() < lootChanceOther
 				&& Dungeon.hero.lvl <= maxLvl + 8000000) {
 			Item lootOther = createLootOther();
@@ -633,17 +653,9 @@ public abstract class Mob extends Char {
 				if (lootOther instanceof Dewdrop || lootOther instanceof YellowDewdrop || lootOther instanceof RedDewdrop || lootOther instanceof VioletDewdrop) {
 					Dungeon.level.drop(lootOther, pos).sprite.drop();
 				}
-		} else if (Random.Float() < lootChanceThird
-				&& Dungeon.hero.lvl <= maxLvl + 8000000) {
-			Item lootThird = createLootThird();
-			if (lootThird != null)
-				if (lootThird instanceof Dewdrop || lootThird instanceof YellowDewdrop || lootThird instanceof RedDewdrop || lootThird instanceof VioletDewdrop) {
-					Dungeon.level.drop(lootThird, pos).sprite.drop();
-				}
 		}
 
 		QuickSlotButton.refresh();
-
 
 		if (Dungeon.hero.isAlive() && !Dungeon.visible[pos]) {
 			GLog.i(TXT_DIED);
@@ -652,10 +664,8 @@ public abstract class Mob extends Char {
 
 	protected Object loot = null;
 	protected Object lootOther = null;
-	protected Object lootThird = null;
 	protected float lootChance = 0;
 	protected float lootChanceOther = 0;
-	protected float lootChanceThird = 0;
 
 	@SuppressWarnings("unchecked")
 	protected Item createLoot() {
@@ -672,7 +682,7 @@ public abstract class Mob extends Char {
 			item = (Item) loot;
 		}
 
-		if (ShatteredPixelDungeon.autocollect()) {
+		if (ShatteredPixelDungeon.autocollect() && item != null) {
 			if (item instanceof Gold) {
 				Dungeon.gold += item.quantity;
 				MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
@@ -715,7 +725,7 @@ public abstract class Mob extends Char {
 			item = (Item) lootOther;
 
 		}
-		if (ShatteredPixelDungeon.autocollect()) {
+		if (ShatteredPixelDungeon.autocollect() && item != null) {
 			if (item instanceof Gold) {
 				Dungeon.gold += item.quantity;
 
@@ -740,41 +750,6 @@ public abstract class Mob extends Char {
 
 	DewVial vial = Dungeon.hero.belongings.getItem(DewVial.class);
 	Level level = Dungeon.level;
-
-	@SuppressWarnings("unchecked")
-	protected Item createLootThird() {
-		Item item;
-		if (lootThird instanceof Generator.Category) {
-
-			item = Generator.random((Generator.Category) lootThird);
-
-		} else if (lootThird instanceof Class<?>) {
-
-			item = Generator.random((Class<? extends Item>) lootThird);
-
-		} else {
-
-			item = (Item) lootThird;
-
-		}
-		if (ShatteredPixelDungeon.autocollect()) {
-			if (item instanceof Gold) {
-				Dungeon.gold += item.quantity;
-				MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
-				if (thievery != null)
-					thievery.collect(item.quantity);
-			} else {
-				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop))
-
-				{
-					if (item.doPickUp(Dungeon.hero)) {
-						GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
-					} else Dungeon.level.drop(item, pos).sprite.drop();
-				}
-			}
-		} else Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
-		return item;
-	}
 
 	public void explodeDew(int cell) {
 

@@ -31,9 +31,12 @@ import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.Archs;
 import com.github.epd.sprout.ui.DonateButton;
 import com.github.epd.sprout.ui.ExitButton;
+import com.github.epd.sprout.ui.HelpButton;
 import com.github.epd.sprout.ui.LanguageButton;
 import com.github.epd.sprout.ui.PrefsButton;
 import com.github.epd.sprout.ui.RenderedTextMultiline;
+import com.github.epd.sprout.ui.TroubleshootingButton;
+import com.github.epd.sprout.windows.WndChallenges;
 import com.watabou.input.Touchscreen;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
@@ -54,9 +57,6 @@ public class TitleScene extends PixelScene {
 
 		super.create();
 		Badges.loadGlobal();
-
-		Music.INSTANCE.play(Assets.THEME, true);
-		Music.INSTANCE.volume(1f);
 
 		uiCamera.visible = false;
 
@@ -98,16 +98,16 @@ public class TitleScene extends PixelScene {
 		signs.x = title.x + (title.width() - signs.width()) / 2f;
 		signs.y = title.y;
 
-		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2)) {
-			add(title);
-			add(signs);
-			placeTorch(title.x + 22, title.y + 46);
-			placeTorch(title.x + title.width - 22, title.y + 46);
-		}
+		//if (Badges.isUnlocked(Badges.Badge.SUPPORTER2)) {}
+		add(title);
+		add(signs);
+		placeTorch(title.x + 22, title.y + 46);
+		placeTorch(title.x + title.width - 22, title.y + 46);
+
 
 		RenderedTextMultiline hint = renderMultiline("请先查看设定->帮助后再开始游戏！\n前面加星号的为推荐阅读项目。", 7);
 		hint.hardlight(0xFFFF00);
-		if (!Badges.isUnlocked(Badges.Badge.SUPPORTER2)) add(hint);
+		//if (!Badges.isUnlocked(Badges.Badge.SUPPORTER2)) add(hint);
 
 		hint.setPos((topRegion - title.height()) / 2f, 16 + (topRegion - title.height() - 16) / 2f);
 		align(hint);
@@ -115,7 +115,7 @@ public class TitleScene extends PixelScene {
 		DashboardItem btnBadges = new DashboardItem(Messages.get(this, "badges"), 3) {
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade(BadgesScene.class);
+				parent.add(new WndChallenges(ShatteredPixelDungeon.challenges(), true));
 			}
 		};
 		add(btnBadges);
@@ -134,8 +134,8 @@ public class TitleScene extends PixelScene {
 				ShatteredPixelDungeon.switchNoFade(StartScene.class);
 			}
 		};
-		if (Badges.isUnlocked(Badges.Badge.SUPPORTER2))
-			add(btnPlay);
+		//if (Badges.isUnlocked(Badges.Badge.SUPPORTER2))
+		add(btnPlay);
 
 		DashboardItem btnRankings = new DashboardItem(Messages.get(this, "rankings"), 2) {
 			@Override
@@ -199,9 +199,17 @@ public class TitleScene extends PixelScene {
 		btnExit.setPos(w - btnExit.width(), 0);
 		add(btnExit);
 
+		HelpButton btnHelp = new HelpButton();
+		btnHelp.setPos(w / 4 - (btnHelp.width() / 2), (5 * h) / 6);
+		add(btnHelp);
+
 		DonateButton btnDonate = new DonateButton();
 		btnDonate.setPos(w / 2 - (btnDonate.width() / 2), (5 * h) / 6);
 		add(btnDonate);
+
+		TroubleshootingButton btnTs = new TroubleshootingButton();
+		btnTs.setPos((3 * w) / 4 - (btnTs.width() / 2), (5 * h) / 6);
+		add(btnTs);
 
 		fadeIn();
 	}

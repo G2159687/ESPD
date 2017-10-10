@@ -36,7 +36,6 @@ public class JackOLantern extends Food {
 		image = ItemSpriteSheet.MUSHROOM_LANTERN;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(BlueMilk.class, "eat");
-		hornValue = 2;
 		bones = false;
 	}
 

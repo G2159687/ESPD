@@ -150,8 +150,7 @@ public class WndTradeItem extends Window {
 				}
 			};
 
-			final MasterThievesArmband.Thievery thievery = Dungeon.hero
-					.buff(MasterThievesArmband.Thievery.class);
+			final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
 			if (thievery != null) {
 				final float chance = thievery.stealChance(price);
 				NewRedButton btnSteal = new NewRedButton(Utils.format(TXT_STEAL,

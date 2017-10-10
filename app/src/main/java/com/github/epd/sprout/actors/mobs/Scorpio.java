@@ -53,6 +53,8 @@ public class Scorpio extends Mob {
 
 		lootOther = new MysteryMeat();
 		lootChanceOther = 0.333f; // by default, see die()
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class Scorpio extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+		Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT);
 		return !Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
 	}
 

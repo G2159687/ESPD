@@ -31,7 +31,9 @@ public class WandOfFrost extends Wand {
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null) {
 
-			int damage = Random.NormalIntRange(5 + level, 10 + (level * level / 3));
+			int level = level();
+
+			int damage = Random.NormalIntRange(level, 8 + level * 4);
 
 			if (ch.buff(Frost.class) != null) {
 				return; //do nothing, can't affect a frozen target
@@ -73,6 +75,6 @@ public class WandOfFrost extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", 5 + level, 10 + (level * level / 3));
+		return Messages.get(this, "desc", 5 + level(), 10 + (level() * level() / 3));
 	}
 }

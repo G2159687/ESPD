@@ -27,7 +27,6 @@ public class ChargrilledMeat extends Food {
 		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.STEAK;
 		energy = Hunger.STARVING / 2;
-		hornValue = 2;
 		bones = false;
 	}
 

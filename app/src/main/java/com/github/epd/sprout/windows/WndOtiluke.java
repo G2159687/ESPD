@@ -19,6 +19,8 @@ package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.buffs.Buff;
+import com.github.epd.sprout.actors.buffs.Invisibility;
+import com.github.epd.sprout.actors.buffs.Levitation;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.items.OtilukesJournal;
@@ -128,6 +130,16 @@ public class WndOtiluke extends Window {
 				.buff(TimekeepersHourglass.timeFreeze.class);
 		if (buff != null)
 			buff.detach();
+
+		Buff buff2 = Dungeon.hero.buff(Levitation.class);
+		if (buff2 != null)
+			buff2.detach();
+
+		Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+		if (buffinv != null)
+			buffinv.detach();
+		Invisibility.dispel();
+		Dungeon.hero.invisible = 0;
 
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 			if (mob instanceof DriedRose.GhostHero)

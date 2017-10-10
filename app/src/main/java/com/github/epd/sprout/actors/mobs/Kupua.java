@@ -48,6 +48,9 @@ public class Kupua extends Mob {
 
 		loot = new StoneOre();
 		lootChance = 0.9f;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
 	}
 
 	@Override

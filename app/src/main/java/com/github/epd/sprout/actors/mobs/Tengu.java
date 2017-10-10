@@ -62,6 +62,9 @@ public class Tengu extends Mob {
 		HP = HT = 300;
 		EXP = 20;
 		defenseSkill = 30;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.BOSS);
 	}
 
 	private int timeToJump = JUMP_DELAY;
@@ -145,7 +148,7 @@ public class Tengu extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+		return Ballistica.cast( pos, enemy.pos, false, true ) == enemy.pos;
 	}
 
 	@Override
@@ -162,7 +165,7 @@ public class Tengu extends Mob {
 	private void jump() {
 		timeToJump = JUMP_DELAY;
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 2; i++) {
 			int trapPos;
 			do {
 				trapPos = Random.Int(Level.getLength());
@@ -176,12 +179,12 @@ public class Tengu extends Mob {
 		}
 
 		int newPos;
+
 		do {
 			newPos = Random.Int(Level.getLength());
 		} while (!Level.fieldOfView[newPos] || !Level.passable[newPos]
 				|| Level.adjacent(newPos, enemy.pos)
 				|| Actor.findChar(newPos) != null);
-
 		sprite.move(pos, newPos);
 		move(newPos);
 
@@ -189,6 +192,7 @@ public class Tengu extends Mob {
 			CellEmitter.get(newPos).burst(Speck.factory(Speck.WOOL), 6);
 			Sample.INSTANCE.play(Assets.SND_PUFF);
 		}
+
 
 		spend(1 / speed());
 	}

@@ -23,6 +23,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -37,6 +38,7 @@ public class WandOfBlink extends Wand {
 	{
 		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.WAND_BLINK;
+		collisionProperties = Ballistica.PROJECTILE;
 	}
 
 	private static final String TXT_PREVENTING = Messages.get(WandOfBlink.class, "prevent");
@@ -51,7 +53,8 @@ public class WandOfBlink extends Wand {
 		}
 
 		curUser.sprite.visible = true;
-		appear(Dungeon.hero, bolt.path.get(bolt.dist - 1));
+		appear(Dungeon.hero, bolt.path.get(bolt.dist));
+
 		Dungeon.observe();
 		GameScene.updateFog();
 

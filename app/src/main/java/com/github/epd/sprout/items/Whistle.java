@@ -52,7 +52,7 @@ public class Whistle extends Item {
 	}
 
 
-	public static final float TIME_TO_USE = 1;
+	public static final float TIME_TO_USE = 1f;
 
 	public static final String AC_CALL = Messages.get(Whistle.class, "ac");
 	public static final String TXT_ARRIVE = Messages.get(Whistle.class, "arrive");
@@ -78,7 +78,7 @@ public class Whistle extends Item {
 
 		if (action == AC_CALL) {
 			petCall();
-			GLog.i(TXT_TWEET);
+			//GLog.i(TXT_TWEET);
 
 		} else {
 
@@ -197,6 +197,7 @@ public class Whistle extends Item {
 		} else {
 
 			Dungeon.hero.spend(Whistle.TIME_TO_USE);
+			GLog.i(Messages.get(Whistle.class,"nothing"));
 
 		}
 

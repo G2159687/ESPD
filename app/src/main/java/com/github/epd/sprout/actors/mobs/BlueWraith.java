@@ -45,6 +45,9 @@ public class BlueWraith extends Wraith {
 		loot = new RedDewdrop();
 		lootChance = 1.0f; // by default, see die()
 
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
+
 	}
 
 	@Override

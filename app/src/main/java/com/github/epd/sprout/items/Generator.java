@@ -104,6 +104,7 @@ import com.github.epd.sprout.items.scrolls.ScrollOfRemoveCurse;
 import com.github.epd.sprout.items.scrolls.ScrollOfTeleportation;
 import com.github.epd.sprout.items.scrolls.ScrollOfTerror;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.epd.sprout.items.wands.RandomWand;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.wands.WandOfAmok;
 import com.github.epd.sprout.items.wands.WandOfAvalanche;
@@ -121,6 +122,7 @@ import com.github.epd.sprout.items.wands.WandOfRegrowth;
 import com.github.epd.sprout.items.wands.WandOfSlowness;
 import com.github.epd.sprout.items.wands.WandOfTelekinesis;
 import com.github.epd.sprout.items.wands.WandOfTeleportation;
+import com.github.epd.sprout.items.wands.WandOfTransfusion;
 import com.github.epd.sprout.items.wands.WandOfVenom;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.BattleAxe;
@@ -230,7 +232,7 @@ public class Generator {
 				ScrollOfMirrorImage.class, ScrollOfRegrowth.class};
 		Category.SCROLL2.probs = new float[]{8,
 				10, 4,
-				2, 15,
+				1, 15,
 				6, 10,
 				8, 8,
 				1, 4,
@@ -250,7 +252,7 @@ public class Generator {
 				10, 0,
 				20, 12,
 				10, 0,
-				10, 45,
+				10, 25,
 				4, 10};
 
 		Category.WAND.classes = new Class<?>[]{WandOfTeleportation.class,
@@ -260,7 +262,8 @@ public class Generator {
 				WandOfTelekinesis.class, WandOfFlock.class, WandOfMagicMissile.class,
 				WandOfDisintegration.class, WandOfAvalanche.class,
 				WandOfPrismaticLight.class, WandOfVenom.class,
-				WandOfFrost.class, WandOfBlastWave.class};
+				WandOfFrost.class, WandOfBlastWave.class, RandomWand.class,
+				WandOfTransfusion.class};
 		Category.WAND.probs = new float[]{10,
 				10, 10,
 				10, 10, 10,
@@ -268,7 +271,8 @@ public class Generator {
 				10, 8, 0,
 				10, 10,
 				10, 10,
-				10, 10};
+				10, 10, 5,
+				10};
 
 		Category.WEAPON.classes = new Class<?>[]{Dagger.class,
 				Knuckles.class, Quarterstaff.class, Spear.class, Mace.class,

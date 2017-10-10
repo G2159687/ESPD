@@ -27,7 +27,6 @@ public class Pasty extends Food {
 		name = Messages.get(this, "name");
 		image = ItemSpriteSheet.PASTY;
 		energy = Hunger.STARVING;
-		hornValue = 5;
 
 		bones = true;
 	}

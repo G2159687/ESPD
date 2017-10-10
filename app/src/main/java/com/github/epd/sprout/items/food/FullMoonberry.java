@@ -36,7 +36,6 @@ public class FullMoonberry extends Food {
 		image = ItemSpriteSheet.SEED_FULLMOONBERRY;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(Blackberry.class, "eat");
-		hornValue = 10;
 		bones = false;
 	}
 

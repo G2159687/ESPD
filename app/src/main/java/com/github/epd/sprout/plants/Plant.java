@@ -19,11 +19,15 @@ package com.github.epd.sprout.plants;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.actors.blobs.Blob;
+import com.github.epd.sprout.actors.blobs.WellWater;
 import com.github.epd.sprout.actors.buffs.Barkskin;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
+import com.github.epd.sprout.actors.mobs.npcs.NPC;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.particles.LeafParticle;
 import com.github.epd.sprout.items.Dewdrop;
@@ -149,13 +153,19 @@ public class Plant implements Bundlable {
 
 		@Override
 		protected void onThrow(int cell) {
-			if (this instanceof Phaseshift.Seed && Phaseshift.checkWater()) {
-				GLog.n(Messages.get(Plant.class, "prevent1"));
+			WellWater water = (WellWater)Dungeon.level.blobs.get(WellWater.class);
+			if (water != null && water.pos == cell){
+				super.onThrow(cell);
+			} else if (Actor.findChar(cell) != null && (Actor.findChar(cell) instanceof NPC)) {
+				super.onThrow(cell);
+			} else if (this instanceof Phaseshift.Seed && Phaseshift.checkWater()) {
+				GLog.w(Messages.get(Plant.class, "prevent1"));
 				super.onThrow(cell);
 			} else if (this instanceof Flytrap.Seed && Flytrap.checkWater()) {
-				GLog.n(Messages.get(Plant.class, "prevent2"));
+				GLog.w(Messages.get(Plant.class, "prevent2"));
 				super.onThrow(cell);
-			} else if (Dungeon.level.map[cell] == Terrain.ALCHEMY || Level.pit[cell]) {
+			} else if (Dungeon.level.map[cell] == Terrain.ALCHEMY || Level.pit[cell] || Dungeon.level.map[cell] == Terrain.ENTRANCE
+					|| Dungeon.level.map[cell] == Terrain.EXIT) {
 				super.onThrow(cell);
 			} else {
 				Dungeon.level.plant(this, cell);

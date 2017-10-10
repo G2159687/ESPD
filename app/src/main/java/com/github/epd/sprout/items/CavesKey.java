@@ -130,6 +130,7 @@ public class CavesKey extends Item {
 			if (buffinv != null)
 				buffinv.detach();
 			Invisibility.dispel();
+			Dungeon.hero.invisible = 0;
 
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 				if (mob instanceof DriedRose.GhostHero)

@@ -27,6 +27,7 @@ import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.levels.Room.Type;
@@ -637,12 +638,10 @@ public abstract class RegularLevel extends Level {
 
 		int nItems = 3;
 		int bonus = 0;
-		for (Buff buff : Dungeon.hero.buffs(RingOfWealth.Wealth.class)) {
-			bonus += ((RingOfWealth.Wealth) buff).level;
+		for (Buff buff : Dungeon.hero.buffs(MasterThievesArmband.Thievery.class)) {
+			bonus += ((MasterThievesArmband.Thievery)buff).level();
 		}
-		// just incase someone gets a ridiculous ring, cap this at 80%
-		bonus = Math.min(bonus, 10);
-		while (Random.Float() < (0.3f + bonus * 0.05f)) {
+		while (Random.Float() < (0.4f + bonus * 0.01f)) {
 			nItems++;
 		}
 

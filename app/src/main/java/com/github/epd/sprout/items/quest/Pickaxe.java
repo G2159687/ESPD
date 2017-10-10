@@ -19,31 +19,24 @@ package com.github.epd.sprout.items.quest;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Hunger;
 import com.github.epd.sprout.actors.hero.Hero;
-import com.github.epd.sprout.actors.mobs.Bat;
-import com.github.epd.sprout.actors.mobs.DwarfKingTomb;
-import com.github.epd.sprout.actors.mobs.Wraith;
+import com.github.epd.sprout.actors.mobs.RedWraith;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
-import com.github.epd.sprout.sprites.ItemSprite.Glowing;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.ui.BuffIndicator;
 import com.github.epd.sprout.utils.GLog;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -76,7 +69,7 @@ public class Pickaxe extends Item {
 
 		if (action == AC_MINE) {
 
-			if ((Dungeon.depth < 11 || Dungeon.depth > 15) && !(Dungeon.depth == 32) && !(Dungeon.depth > 55 || Dungeon.depth < 66)) {
+			if (!(Dungeon.depth > 10 && Dungeon.depth < 16 || Dungeon.depth > 55 && Dungeon.depth < 66)){
 				GLog.w(TXT_NO_VEIN);
 				return;
 			}
@@ -134,7 +127,7 @@ public class Pickaxe extends Item {
 							heap.type = Heap.Type.HEAP;
 							Sample.INSTANCE.play(Assets.SND_TOMB);
 							Camera.main.shake(1, 0.5f);
-							Wraith.spawnAround2x(hero.pos);
+							RedWraith.spawnAround2x(hero.pos);
 
 							heap.sprite.link();
 							heap.sprite.drop();
@@ -148,8 +141,6 @@ public class Pickaxe extends Item {
 					return;
 				}
 			}
-
-
 
 			GLog.w(TXT_NO_VEIN);
 

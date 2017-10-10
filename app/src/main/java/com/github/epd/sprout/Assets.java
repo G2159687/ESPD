@@ -172,7 +172,6 @@ public class Assets {
 	public static final String FONTS25X = "font25x.png";
 	public static final String FONTS3X = "font3x.png";
 
-	public static final String THEME = "theme.ogg";
 	public static final String TUNE = "game.ogg";
 
 	public static final String SND_CLICK = "snd_click.mp3";

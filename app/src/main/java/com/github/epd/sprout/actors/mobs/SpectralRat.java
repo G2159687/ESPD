@@ -55,6 +55,9 @@ public class SpectralRat extends Mob implements Callback {
 		loot = new Meat();
 		lootChance = 0.5f;
 
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
+
 	}
 
 

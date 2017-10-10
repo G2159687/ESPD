@@ -35,7 +35,6 @@ public class DeathCap extends Food {
 		image = ItemSpriteSheet.MUSHROOM_DEATHCAP;
 		energy = (Hunger.STARVING - Hunger.HUNGRY) / 10;
 		message = Messages.get(BlueMilk.class, "eat");
-		hornValue = 2;
 		bones = false;
 	}
 

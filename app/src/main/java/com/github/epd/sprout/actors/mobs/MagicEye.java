@@ -63,6 +63,9 @@ public class MagicEye extends Mob {
 
 		loot = new PotionOfMending();
 		lootChance = 0.05f;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
 	}
 
 	@Override

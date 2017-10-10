@@ -52,13 +52,12 @@ public class BlueCat extends Mob {
 
 		EXP = 5;
 
-		loot = new MasterThievesArmband().identify();
-		lootChance = 0.01f;
-
-		lootOther = Generator.Category.BERRY;
-		lootChanceOther = 1f; // by default, see die()
+		loot = Generator.Category.BERRY;
+		lootChance = 1f; // by default, see die()
 
 		FLEEING = new Fleeing();
+
+		properties.add(Property.UNDEAD);
 	}
 
 	private static final String ITEM = "item";
@@ -98,6 +97,10 @@ public class BlueCat extends Mob {
 
 		if (item != null) {
 			Dungeon.level.drop(item, pos).sprite.drop();
+		}
+
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.01f){
+			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
 		}
 	}
 

@@ -101,7 +101,7 @@ public class RingOfFrost extends Artifact {
 			if (mob.hostile) {
 				int dist = Level.distance(cell, mob.pos);
 				if (dist <= distance()) {
-					mob.damage(Random.Int(level(), (level() * level()) / 2 + 1), this);
+					mob.damage(Random.Int(level(), (level() * level()) / 10 + 1), this);
 					Buff.prolong(mob, Frost.class, Frost.duration(mob) * Random.Float(1f * level(), 1.5f * level()));
 					CellEmitter.get(mob.pos).start(SnowParticle.FACTORY, 0.2f, 6);
 				}

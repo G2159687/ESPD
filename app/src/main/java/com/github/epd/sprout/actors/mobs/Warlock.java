@@ -60,6 +60,8 @@ public class Warlock extends Mob implements Callback {
 
 		lootOther = new Meat();
 		lootChanceOther = 0.5f; // by default, see die()
+
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override

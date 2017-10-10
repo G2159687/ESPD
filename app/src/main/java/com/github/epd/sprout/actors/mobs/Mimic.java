@@ -49,6 +49,8 @@ public class Mimic extends Mob {
 	{
 		name = Messages.get(this, "name");
 		spriteClass = MimicSprite.class;
+
+		properties.add(Property.UNDEAD);
 	}
 
 	public ArrayList<Item> items;

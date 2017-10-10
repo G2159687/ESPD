@@ -33,7 +33,6 @@ public class UnstableSpellbook extends Artifact {
 
 		level = 0;
 		levelCap = 10;
-		levelCapNew = 150;
 
 		charge = (level / 2) + 3;
 		partialCharge = 0;
@@ -96,7 +95,7 @@ public class UnstableSpellbook extends Artifact {
 				charge--;
 
 				Scroll scroll;
-				if (level < 50) {
+				if (level < 48) {
 					do {
 						scroll = (Scroll) Generator
 								.random(Generator.Category.SCROLL);

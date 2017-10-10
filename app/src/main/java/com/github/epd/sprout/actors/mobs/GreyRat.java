@@ -21,10 +21,13 @@ import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.actors.blobs.CorruptGas;
 import com.github.epd.sprout.actors.blobs.StenchGas;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.buffs.Amok;
 import com.github.epd.sprout.actors.buffs.Burning;
+import com.github.epd.sprout.actors.buffs.Chill;
+import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.actors.buffs.Sleep;
 import com.github.epd.sprout.actors.buffs.Terror;
@@ -117,32 +120,18 @@ public class GreyRat extends Mob {
 
 	static {
 		RESISTANCES.add(ToxicGas.class);
-		RESISTANCES.add(Death.class);
-
+		RESISTANCES.add(Burning.class);
+		RESISTANCES.add(Vertigo.class);
+		RESISTANCES.add(Poison.class);
+		RESISTANCES.add(StenchGas.class);
+		RESISTANCES.add(CorruptGas.class);
+		RESISTANCES.add(Chill.class);
+		RESISTANCES.add(Paralysis.class);
 	}
 
 	@Override
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;
 	}
-
-	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
-
-	static {
-		IMMUNITIES.add(Amok.class);
-		IMMUNITIES.add(Sleep.class);
-		IMMUNITIES.add(Terror.class);
-		IMMUNITIES.add(Burning.class);
-		IMMUNITIES.add(ScrollOfPsionicBlast.class);
-		IMMUNITIES.add(Vertigo.class);
-		IMMUNITIES.add(Poison.class);
-		IMMUNITIES.add(StenchGas.class);
-	}
-
-	@Override
-	public HashSet<Class<?>> immunities() {
-		return IMMUNITIES;
-	}
-
 
 }

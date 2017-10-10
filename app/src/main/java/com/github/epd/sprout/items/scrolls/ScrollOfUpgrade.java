@@ -48,23 +48,25 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
 
 		if (item instanceof Artifact) {
-			if (item.level < ((Artifact) item).levelCap || item.level >= 150) {
+			if (item.level < ((Artifact) item).levelCap || item.level >= 50) {
 				GLog.w(Messages.get(this, "cannot"));
 				new ScrollOfUpgrade().collect();
 				return;
-			} else if (item instanceof HornOfPlenty)
-				item.upgrade(2);
+			}
 		}
 
 		if (Dungeon.isChallenged(Challenges.DARKNESS)) {
 			item.upgrade(10);
-			if (item instanceof HornOfPlenty) item.upgrade(18);
 		} else {
 			item.upgrade();
 		}
 
 		upgrade(curUser);
 		GLog.p(TXT_LOOKS_BETTER, item.name());
+
+		if (item instanceof Artifact && item.level > 50){
+			item.level = 50;
+		}
 	}
 
 	public static void upgrade(Hero hero) {

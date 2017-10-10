@@ -20,6 +20,7 @@ package com.github.epd.sprout.actors.mobs;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Amok;
 import com.github.epd.sprout.actors.buffs.Terror;
+import com.github.epd.sprout.items.Palantir;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.GreyOniSprite;
 import com.watabou.utils.Random;
@@ -37,6 +38,9 @@ public class GreyOni extends Mob {
 		defenseSkill = 35;
 
 		EXP = 22;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
 	}
 
 	@Override

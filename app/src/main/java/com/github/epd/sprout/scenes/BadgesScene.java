@@ -67,7 +67,7 @@ public class BadgesScene extends PixelScene {
 		text.setPos((colWidth - text.width()) / 2, title.y + title.height() + 12);
 		//	align(text);
 
-		btn = new NewRedButton(Messages.get(BadgesScene.class, "b1")) {
+/*		btn = new NewRedButton(Messages.get(BadgesScene.class, "b1")) {
 			@Override
 			protected void onClick() {
 				BadgesScene.this.add(new WndChallenges(ShatteredPixelDungeon
@@ -87,16 +87,7 @@ public class BadgesScene extends PixelScene {
 		btn2.setRect(colWidth / 2 - 50, colTop + 50, 100, 18);
 		add(btn2);
 
-		btn3 = new NewRedButton(Messages.get(BadgesScene.class, "ts")) {
-			@Override
-			protected void onClick() {
-				Game.scene().add(new WndHlpCatTS());
-			}
-		};
-		btn3.setRect(colWidth / 2 - 50, colTop + 70, 100, 18);
-		add(btn3);
-
-/*		btn3= new NewRedButton("Game Settings #3 (Unavailable)") {
+		btn3= new NewRedButton("Game Settings #3 (Unavailable)") {
             @Override
 			protected void onClick() {
 			}

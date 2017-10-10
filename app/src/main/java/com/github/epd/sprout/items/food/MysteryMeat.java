@@ -37,7 +37,6 @@ public class MysteryMeat extends Food {
 		image = ItemSpriteSheet.MYSTERYMEAT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
 		message = Messages.get(this, "eat_msg");
-		hornValue = 1;
 	}
 
 	@Override

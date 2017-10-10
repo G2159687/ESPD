@@ -61,6 +61,7 @@ import com.github.epd.sprout.items.Stylus;
 import com.github.epd.sprout.items.Torch;
 import com.github.epd.sprout.items.artifacts.AlchemistsToolkit;
 import com.github.epd.sprout.items.artifacts.DriedRose;
+import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.artifacts.TalismanOfForesight;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.food.Blandfruit;
@@ -117,6 +118,7 @@ public abstract class Level implements Bundlable {
 	 * 
 	 */
 
+	//TODO: Change some levels' width & height
 	public static int WIDTH = 48;
 	public static int HEIGHT = 48;
 	public static int LENGTH = WIDTH * HEIGHT;
@@ -230,10 +232,10 @@ public abstract class Level implements Bundlable {
 			}
 
 			int bonus = 0;
-			for (Buff buff : Dungeon.hero.buffs(RingOfWealth.Wealth.class)) {
-				bonus += ((RingOfWealth.Wealth) buff).level;
+			for (Buff buff : Dungeon.hero.buffs(MasterThievesArmband.Thievery.class)) {
+				bonus += ((MasterThievesArmband.Thievery)buff).level();
 			}
-			if (Random.Float() > Math.pow(0.95, bonus)) {
+			if (Random.Float() > Math.pow(0.99, bonus)) {
 				if (Random.Int(2) == 0)
 					addItemToSpawn(new ScrollOfMagicalInfusion());
 				else
@@ -1391,8 +1393,8 @@ public abstract class Level implements Bundlable {
 				sense = Math.max(((MindVision) b).distance, sense);
 			}
 			if (c.buff(TalismanOfForesight.Foresight.class) != null) {
-				if (c.buff(TalismanOfForesight.Foresight.class).level() > 39)
-					sense = (c.buff(TalismanOfForesight.Foresight.class).level() < 50) ? 2 : 3;
+				if (c.buff(TalismanOfForesight.Foresight.class).level() > 35)
+					sense = (c.buff(TalismanOfForesight.Foresight.class).level() < 48) ? 2 : 3;
 			}
 		}
 

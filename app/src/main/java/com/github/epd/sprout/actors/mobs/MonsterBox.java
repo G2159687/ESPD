@@ -47,6 +47,9 @@ public class MonsterBox extends Mob {
 	{
 		name = Messages.get(this, "name");
 		spriteClass = MonsterBoxSprite.class;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
 	}
 
 	public ArrayList<Item> items;

@@ -32,7 +32,6 @@ public class GoldenNut extends Nut {
 		image = ItemSpriteSheet.SEED_GOLDENDUNGEONNUT;
 		energy = Hunger.STARVING;
 		message = Messages.get(this, "eat");
-		hornValue = 10;
 	}
 
 	@Override

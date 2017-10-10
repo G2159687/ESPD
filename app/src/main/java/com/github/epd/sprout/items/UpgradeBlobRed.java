@@ -19,6 +19,9 @@ package com.github.epd.sprout.items;
 
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.artifacts.Artifact;
+import com.github.epd.sprout.items.artifacts.HornOfPlenty;
+import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -83,6 +86,14 @@ public class UpgradeBlobRed extends Item {
 	private void upgrade(Item item) {
 
 		detach(curUser.belongings.backpack);
+
+		if (item instanceof Artifact) {
+			if (item.level < ((Artifact) item).levelCap || item.level >= 50) {
+				GLog.w(Messages.get(ScrollOfUpgrade.class, "cannot"));
+				new UpgradeBlobRed().collect();
+				return;
+			}
+		}
 
 		GLog.p(TXT_UPGRADED, item.name());
 

@@ -114,8 +114,7 @@ public class WndBlacksmith2 extends Window {
 				btnPressed.item(item);
 
 				if (btnItem1.item != null && btnItem2.item != null) {
-					String result = Blacksmith2.verify(btnItem1.item,
-							btnItem2.item);
+					String result = Blacksmith2.verify(btnItem1.item, btnItem2.item);
 					if (result != null) {
 						GameScene.show(new WndMessage(result));
 						btnReforge.enable(false);

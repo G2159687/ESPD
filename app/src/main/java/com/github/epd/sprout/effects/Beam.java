@@ -65,6 +65,12 @@ public class Beam extends Image {
 		}
 	}
 
+	public static class HealthRay extends Beam{
+		public HealthRay(PointF s, PointF e){
+			super(s, e, Effects.Type.HEALTH_RAY, 0.75f);
+		}
+	}
+
 	@Override
 	public void update() {
 		super.update();

@@ -21,6 +21,7 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.buffs.Buff;
+import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.pets.PET;
@@ -122,6 +123,12 @@ public class HallsKey extends Item {
 					.buff(TimekeepersHourglass.timeFreeze.class);
 			if (buff != null)
 				buff.detach();
+
+			Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+			if (buffinv != null)
+				buffinv.detach();
+			Invisibility.dispel();
+			Dungeon.hero.invisible = 0;
 
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 				if (mob instanceof DriedRose.GhostHero)

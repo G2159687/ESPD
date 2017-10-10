@@ -1,5 +1,6 @@
 package com.github.epd.sprout.items.artifacts;
 
+import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -13,6 +14,7 @@ public class MasterThievesArmband extends Artifact {
 
 		level = 0;
 		levelCap = 10;
+		reinforced = true;
 
 		charge = 0;
 	}
@@ -20,10 +22,16 @@ public class MasterThievesArmband extends Artifact {
 	private int exp = 0;
 
 	@Override
+	public boolean isUpgradable() {
+		return true;
+	}
+
+	@Override
 	protected ArtifactBuff passiveBuff() {
 		return new Thievery();
 	}
 
+	// TODO: desc
 	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc");
@@ -62,9 +70,16 @@ public class MasterThievesArmband extends Artifact {
 					exp += value;
 				}
 			}
-			while (exp >= 600 && level < levelCap) {
-				exp -= 600;
-				upgrade();
+			if (!Dungeon.isChallenged(Challenges.NO_ARMOR)){
+				while (exp >= 600 && level < levelCap) {
+					exp -= 600;
+					upgrade();
+				}
+			} else {
+				while (exp >= 1 && level < levelCap) {
+					exp -= 1;
+					upgrade();
+				}
 			}
 			return true;
 		}

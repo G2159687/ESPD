@@ -118,31 +118,23 @@ public class ShopPainter extends Painter {
 
 		switch (Dungeon.depth) {
 			case 6:
-				itemsToSpawn.add(new OtilukesJournal().identify());
-				Dungeon.limitedDrops.journal.drop();
-				itemsToSpawn.add((Random.Int(2) == 0 ? new Quarterstaff()
-						: new Spear()).identify());
-				itemsToSpawn.add(Random.Int(2) == 0 ? new IncendiaryDart()
-						.quantity(Random.NormalIntRange(2, 4)) : new CurareDart()
-						.quantity(Random.NormalIntRange(1, 3)));
+				itemsToSpawn.add((Random.Int(2) == 0 ? new Quarterstaff() : new Spear()).identify());
+				itemsToSpawn.add(Random.Int(2) == 0 ? new IncendiaryDart().quantity(Random.NormalIntRange(2, 4))
+						: new CurareDart().quantity(Random.NormalIntRange(1, 3)));
 				itemsToSpawn.add(new MailArmor().identify());
 				break;
 
 			case 11:
-				itemsToSpawn.add((Random.Int(2) == 0 ? new Sword() : new Mace())
-						.identify());
-				itemsToSpawn.add(Random.Int(2) == 0 ? new CurareDart()
-						.quantity(Random.NormalIntRange(2, 5)) : new Shuriken()
-						.quantity(Random.NormalIntRange(3, 6)));
+				itemsToSpawn.add((Random.Int(2) == 0 ? new Sword() : new Mace()).identify());
+				itemsToSpawn.add(Random.Int(2) == 0 ? new CurareDart().quantity(Random.NormalIntRange(2, 5))
+						: new Shuriken().quantity(Random.NormalIntRange(3, 6)));
 				itemsToSpawn.add(new ScaleArmor().identify());
 				break;
 
 			case 16:
-				itemsToSpawn.add((Random.Int(2) == 0 ? new Longsword()
-						: new BattleAxe()).identify());
-				itemsToSpawn.add(Random.Int(2) == 0 ? new Shuriken()
-						.quantity(Random.NormalIntRange(4, 7)) : new Javelin()
-						.quantity(Random.NormalIntRange(3, 6)));
+				itemsToSpawn.add((Random.Int(2) == 0 ? new Longsword() : new BattleAxe()).identify());
+				itemsToSpawn.add(Random.Int(2) == 0 ? new Shuriken().quantity(Random.NormalIntRange(4, 7))
+						: new Javelin().quantity(Random.NormalIntRange(3, 6)));
 				itemsToSpawn.add(new PlateArmor().identify());
 				break;
 

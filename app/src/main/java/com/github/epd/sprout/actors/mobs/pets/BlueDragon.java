@@ -189,14 +189,18 @@ public class BlueDragon extends PET implements Callback {
 
 		int curPos = pos;
 
-		moveSprite(pos, Dungeon.hero.pos);
-		move(Dungeon.hero.pos);
+		if (Level.passable[pos]) {
 
-		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-		Dungeon.hero.move(curPos);
+			moveSprite(pos, Dungeon.hero.pos);
+			move(Dungeon.hero.pos);
 
-		Dungeon.hero.spend(1 / Dungeon.hero.speed());
-		Dungeon.hero.busy();
+			Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+			Dungeon.hero.move(curPos);
+
+			Dungeon.hero.spend(1 / Dungeon.hero.speed());
+			Dungeon.hero.busy();
+
+		}
 
 		return true;
 	}

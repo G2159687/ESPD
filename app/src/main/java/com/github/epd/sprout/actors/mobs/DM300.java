@@ -73,6 +73,8 @@ public class DM300 extends Mob implements Callback {
 
 		loot = new CapeOfThorns().identify();
 		lootChance = 0.333f;
+
+		properties.add(Property.BOSS);
 	}
 
 	private int bossAlive = 0;

@@ -60,6 +60,8 @@ public class MineSentinel extends Mob {
 
 		EXP = 25;
 		state = PASSIVE;
+
+		properties.add(Property.EVIL);
 	}
 
 	private static final int REGENERATION = 100;

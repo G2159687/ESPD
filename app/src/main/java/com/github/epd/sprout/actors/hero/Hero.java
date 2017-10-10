@@ -122,7 +122,6 @@ import com.github.epd.sprout.ui.QuickSlotButton;
 import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.windows.WndAscend;
 import com.github.epd.sprout.windows.WndDescend;
-import com.github.epd.sprout.windows.WndDewVial;
 import com.github.epd.sprout.windows.WndMessage;
 import com.github.epd.sprout.windows.WndResurrect;
 import com.github.epd.sprout.windows.WndTradeItem;
@@ -770,10 +769,6 @@ public class Hero extends Char {
 						} else {
 							GLog.i(Messages.get(this, "have"), item.name());
 						}
-
-						if (item instanceof DewVial) {
-							GameScene.show(new WndDewVial(item));
-						}
 					}
 
 					if (!heap.isEmpty()) {
@@ -973,6 +968,12 @@ public class Hero extends Char {
 			Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
 			if (buff != null) buff.detach();
 
+			Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+			if (buffinv != null)
+				buffinv.detach();
+			Invisibility.dispel();
+			Dungeon.hero.invisible = 0;
+
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 				if (mob instanceof DriedRose.GhostHero)
 					mob.destroy();
@@ -1035,6 +1036,12 @@ public class Hero extends Char {
 				if (buff != null)
 					buff.detach();
 
+				Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+				if (buffinv != null)
+					buffinv.detach();
+				Invisibility.dispel();
+				Dungeon.hero.invisible = 0;
+
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 					if (mob instanceof DriedRose.GhostHero)
 						mob.destroy();
@@ -1066,6 +1073,12 @@ public class Hero extends Char {
 				Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
 				if (buff != null)
 					buff.detach();
+
+				Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+				if (buffinv != null)
+					buffinv.detach();
+				Invisibility.dispel();
+				Dungeon.hero.invisible = 0;
 
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 					if (mob instanceof DriedRose.GhostHero)
@@ -1104,6 +1117,12 @@ public class Hero extends Char {
 				Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
 				if (buff != null)
 					buff.detach();
+
+				Buff buffinv = Dungeon.hero.buff(Invisibility.class);
+				if (buffinv != null)
+					buffinv.detach();
+				Invisibility.dispel();
+				Dungeon.hero.invisible = 0;
 
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))
 					if (mob instanceof DriedRose.GhostHero)

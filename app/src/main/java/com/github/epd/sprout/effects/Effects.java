@@ -58,7 +58,7 @@ public class Effects {
 				icon.frame(icon.texture.uvRect(16, 23, 32, 31));
 				break;
 			case HEALTH_RAY:
-				icon.frame(icon.texture.uvRect(16, 30, 32, 38));
+				icon.frame(icon.texture.uvRect(16, 23, 32, 31));
 				break;
 		}
 		return icon;

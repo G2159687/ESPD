@@ -56,8 +56,10 @@ public class WandOfLightning extends Wand {
 		float multiplier = (0.6f + 0.4f * affected.size()) / affected.size();
 		if (Level.water[bolt.collisionPos]) multiplier *= 1.5f;
 
+		int level = level();
+
 		int min = 5 + level;
-		int max = Math.round(10 + (level * level / 4f));
+		int max = 10 + level * 5;
 
 		for (Char ch : affected) {
 			ch.damage(Math.round(Random.NormalIntRange(min, max) * multiplier), LightningTrap.LIGHTNING);
@@ -126,6 +128,6 @@ public class WandOfLightning extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", 5 + level, Math.round(10 + (level * level / 4f)));
+		return Messages.get(this, "desc", 5 + level(), Math.round(10 + (level() * level() / 4f)));
 	}
 }

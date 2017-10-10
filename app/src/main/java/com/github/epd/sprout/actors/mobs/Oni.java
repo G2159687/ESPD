@@ -39,6 +39,9 @@ public class Oni extends Mob {
 
 		EXP = 22;
 		maxLvl = 40;
+
+		properties.add(Property.UNDEAD);
+		properties.add(Property.EVIL);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class SokobanSentinelSprite extends MobSprite {
 		idle = new Animation(2, true);
 		idle.frames(frames, 0, 0, 0, 0, 0, 1, 1);
 
-		run = new Animation(2, true);
+		run = new Animation(15, true);
 		run.frames(frames, 2, 3, 4, 5, 6, 7);
 
 		attack = new Animation(4, false);

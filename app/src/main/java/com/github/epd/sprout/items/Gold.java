@@ -64,8 +64,7 @@ public class Gold extends Item {
 
 		Dungeon.gold += quantity;
 
-		MasterThievesArmband.Thievery thievery = hero
-				.buff(MasterThievesArmband.Thievery.class);
+		MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
 		if (thievery != null)
 			thievery.collect(quantity);
 
