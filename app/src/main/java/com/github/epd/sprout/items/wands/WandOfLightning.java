@@ -130,4 +130,46 @@ public class WandOfLightning extends Wand {
 	public String desc() {
 		return Messages.get(this, "desc", 5 + level(), Math.round(10 + (level() * level() / 4f)));
 	}
+
+	private ArrayList<Char> affected2 = new ArrayList<>();
+
+	private ArrayList<Lightning.Arc> arcs2 = new ArrayList<>();
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (defender.isAlive())
+			if (level > Random.IntRange(0, 50)) {
+
+				affected2.clear();
+				affected2.add(attacker);
+
+				arcs2.clear();
+				arcs2.add(new Lightning.Arc(attacker.pos, defender.pos));
+				hit(defender, Random.Int(1, damage / 2));
+
+				attacker.sprite.parent.add(new Lightning(arcs2, null));
+
+			}
+	}
+
+	private void hit(Char ch, int damage) {
+
+		if (damage < 1) {
+			return;
+		}
+
+		affected2.add(ch);
+		ch.damage(Level.water[ch.pos] && !ch.flying ? (int) (damage * 2) : damage, LightningTrap.LIGHTNING);
+
+		ch.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
+		ch.sprite.flash();
+
+		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
+			Char n = Actor.findChar(ch.pos + PathFinder.NEIGHBOURS8[i]);
+			if (n != null && !affected2.contains(n)) {
+				arcs2.add(new Lightning.Arc(ch.pos, n.pos));
+				hit(n, Random.Int(damage / 2, damage));
+			}
+		}
+	}
 }

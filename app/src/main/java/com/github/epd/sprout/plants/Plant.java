@@ -21,8 +21,10 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
-import com.github.epd.sprout.actors.blobs.Blob;
-import com.github.epd.sprout.actors.blobs.WellWater;
+import com.github.epd.sprout.actors.blobs.WaterOfAwareness;
+import com.github.epd.sprout.actors.blobs.WaterOfHealth;
+import com.github.epd.sprout.actors.blobs.WaterOfTransmutation;
+import com.github.epd.sprout.actors.blobs.WaterOfUpgradeEating;
 import com.github.epd.sprout.actors.buffs.Barkskin;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.hero.Hero;
@@ -94,14 +96,7 @@ public class Plant implements Bundlable {
 			if (Random.Int(5 - (naturalismLevel / 2)) == 0) {
 				Item seed = Generator.random(Generator.Category.SEED);
 
-				if (seed instanceof BlandfruitBush.Seed) {
-					if (Random.Int(15)
-							- Dungeon.limitedDrops.blandfruitSeed.count >= 0) {
-						Dungeon.level.drop(seed, pos).sprite.drop();
-						Dungeon.limitedDrops.blandfruitSeed.count++;
-					}
-				} else
-					Dungeon.level.drop(seed, pos).sprite.drop();
+				Dungeon.level.drop(seed, pos).sprite.drop();
 			}
 			if (Random.Int(5 - naturalismLevel) == 0) {
 				Dungeon.level.drop(new Dewdrop(), pos).sprite.drop();
@@ -153,8 +148,17 @@ public class Plant implements Bundlable {
 
 		@Override
 		protected void onThrow(int cell) {
-			WellWater water = (WellWater)Dungeon.level.blobs.get(WellWater.class);
-			if (water != null && water.pos == cell){
+			WaterOfUpgradeEating wateru = (WaterOfUpgradeEating) Dungeon.level.blobs.get(WaterOfUpgradeEating.class);
+			WaterOfAwareness watera = (WaterOfAwareness) Dungeon.level.blobs.get(WaterOfAwareness.class);
+			WaterOfHealth waterh = (WaterOfHealth) Dungeon.level.blobs.get(WaterOfHealth.class);
+			WaterOfTransmutation watert = (WaterOfTransmutation) Dungeon.level.blobs.get(WaterOfTransmutation.class);
+			if (wateru != null && wateru.pos == cell) {
+				super.onThrow(cell);
+			} else if (watera != null && watera.pos == cell) {
+				super.onThrow(cell);
+			} else if (waterh != null && waterh.pos == cell) {
+				super.onThrow(cell);
+			} else if (watert != null && watert.pos == cell) {
 				super.onThrow(cell);
 			} else if (Actor.findChar(cell) != null && (Actor.findChar(cell) instanceof NPC)) {
 				super.onThrow(cell);

@@ -24,6 +24,7 @@ import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.items.Amulet;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.TownReturnBeacon;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
@@ -121,19 +122,19 @@ public class OtilukeNPC extends NPC {
 		if (Badges.checkOtilukeRescued()) {
 			tell(TXT_DUNGEON4);
 			if (!Statistics.orbObtained)
-				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
+				Item.autocollect(new Amulet(), Dungeon.hero.pos);
 		} else if (first && beacon == null) {
 			Badges.validateOtilukeRescued();
 			first = false;
 			tell(TXT_DUNGEON2);
-			Dungeon.level.drop(new TownReturnBeacon(), Dungeon.hero.pos).sprite.drop();
+			Item.autocollect(new TownReturnBeacon(), Dungeon.hero.pos);
 			if (!Statistics.orbObtained)
-				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
+				Item.autocollect(new Amulet(), Dungeon.hero.pos);
 		} else {
 			Badges.validateOtilukeRescued();
 			tell(TXT_DUNGEON);
 			if (!Statistics.orbObtained)
-				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos).sprite.drop();
+				Item.autocollect(new Amulet(), Dungeon.hero.pos);
 		}
 
 		Statistics.orbObtained = true;

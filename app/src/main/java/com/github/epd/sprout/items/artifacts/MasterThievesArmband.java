@@ -6,6 +6,8 @@ import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
+// TODO: usage of wealth should cost charge; write descs
+
 public class MasterThievesArmband extends Artifact {
 
 	{
@@ -43,6 +45,9 @@ public class MasterThievesArmband extends Artifact {
 	}
 
 	public class Thievery extends ArtifactBuff {
+
+		// TODO: Add effects in SPD
+
 		public void collect(int gold) {
 			charge += gold / 2;
 		}

@@ -17,18 +17,13 @@
  */
 package com.github.epd.sprout.scenes;
 
-import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.Archs;
 import com.github.epd.sprout.ui.ExitButton;
 import com.github.epd.sprout.ui.NewRedButton;
 import com.github.epd.sprout.ui.RenderedTextMultiline;
-import com.github.epd.sprout.windows.WndChallenges;
-import com.github.epd.sprout.windows.help.HelpIndex;
-import com.github.epd.sprout.windows.help.WndHlpCatTS;
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
 
 public class BadgesScene extends PixelScene {

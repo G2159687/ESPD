@@ -17,8 +17,6 @@
  */
 package com.github.epd.sprout.items;
 
-import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 
@@ -40,20 +38,6 @@ public class SanChikarahDeath extends Item {
 	@Override
 	public boolean isIdentified() {
 		return true;
-	}
-
-	@Override
-	public boolean doPickUp(Hero hero) {
-		if (super.doPickUp(hero)) {
-
-			if (Dungeon.level != null && Dungeon.depth == 31) {
-				Dungeon.sanchikarahdeath = true;
-			}
-
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	@Override

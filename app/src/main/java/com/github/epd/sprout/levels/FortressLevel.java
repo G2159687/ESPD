@@ -18,7 +18,6 @@
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.items.Rice;
 import com.github.epd.sprout.items.SanChikarahLife;
 import com.github.epd.sprout.levels.Room.Type;
@@ -162,9 +161,7 @@ public class FortressLevel extends RegularLevel {
 			}
 			if (map[i] == Terrain.EXIT) {
 				map[i] = Terrain.PEDESTAL;
-				if (!Dungeon.sanchikarahlife) {
-					drop(new SanChikarahLife(), i);
-				}
+				drop(new SanChikarahLife(), i);
 			}
 			if (map[i] == Terrain.CHASM) {
 				map[i] = Terrain.EMPTY;

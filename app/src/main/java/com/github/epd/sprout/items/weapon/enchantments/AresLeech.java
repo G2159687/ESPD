@@ -21,6 +21,7 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.levels.Level;
@@ -39,6 +40,11 @@ public class AresLeech extends Weapon.Enchantment {
 
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
+		return false;
+	}
+
+	@Override
+	public boolean proc(Wand weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
 

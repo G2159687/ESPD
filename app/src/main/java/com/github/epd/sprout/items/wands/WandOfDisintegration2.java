@@ -116,6 +116,9 @@ public class WandOfDisintegration2 extends Wand {
 	}
 
 	@Override
+	public void proc(Char attacker, Char defender, int damage) {}
+
+	@Override
 	public String desc() {
 		return Messages.get(this, "desc");
 	}

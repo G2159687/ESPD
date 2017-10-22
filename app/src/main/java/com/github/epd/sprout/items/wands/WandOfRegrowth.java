@@ -19,18 +19,22 @@ package com.github.epd.sprout.items.wands;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.blobs.Regrowth;
+import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
+import com.github.epd.sprout.plants.Sungrass;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 public class WandOfRegrowth extends Wand {
 
@@ -70,6 +74,14 @@ public class WandOfRegrowth extends Wand {
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.foliage(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		int maxValue = damage * (level + 2) / (level + 6);
+		int effValue = Math.min( Random.IntRange(0, maxValue), attacker.HT - attacker.HP );
+
+		Buff.affect(attacker, Sungrass.Health.class).level =  effValue;
 	}
 
 	@Override

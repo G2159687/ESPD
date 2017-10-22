@@ -31,7 +31,6 @@ import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Honeypot;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.Stylus;
 import com.github.epd.sprout.items.Torch;
 import com.github.epd.sprout.items.Weightstone;

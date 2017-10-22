@@ -29,16 +29,13 @@ import com.github.epd.sprout.effects.particles.ShadowParticle;
 import com.github.epd.sprout.items.Ankh;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.bags.Bag;
-import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.items.wands.WandOfFlock.Sheep;
 import com.github.epd.sprout.messages.Messages;
-import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.utils.Utils;
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
 import com.watabou.utils.Random;
 
 public class FleecingTrap {

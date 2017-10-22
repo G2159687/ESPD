@@ -23,6 +23,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.effects.Lightning;
 import com.github.epd.sprout.effects.particles.SparkParticle;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.levels.Level;
@@ -39,6 +40,11 @@ public class NeptuneShock extends Weapon.Enchantment {
 	@Override
 	public boolean proc(Weapon weapon, Char attacker, Char defender, int damage) {
 
+		return false;
+	}
+
+	@Override
+	public boolean proc(Wand weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
 

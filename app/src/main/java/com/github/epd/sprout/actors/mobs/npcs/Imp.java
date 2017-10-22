@@ -27,6 +27,7 @@ import com.github.epd.sprout.actors.mobs.Golem;
 import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.Monk;
 import com.github.epd.sprout.items.Generator;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.quest.DwarfToken;
 import com.github.epd.sprout.items.rings.Ring;
 import com.github.epd.sprout.levels.CityLevel;
@@ -232,7 +233,7 @@ public class Imp extends NPC {
 				if ((alternative && mob instanceof Monk)
 						|| (!alternative && mob instanceof Golem)) {
 
-					Dungeon.level.drop(new DwarfToken(), mob.pos).sprite.drop();
+					Item.autocollect(new DwarfToken(), mob.pos);
 				}
 			}
 		}

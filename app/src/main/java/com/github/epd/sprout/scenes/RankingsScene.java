@@ -17,7 +17,6 @@
  */
 package com.github.epd.sprout.scenes;
 
-import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Rankings;
 import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.effects.Flare;
@@ -35,7 +34,6 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.RenderedText;
-import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.GameMath;
 

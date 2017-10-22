@@ -26,6 +26,7 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.levels.Level;
@@ -43,6 +44,11 @@ public class JupitersHorror extends Weapon.Enchantment {
 
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
+		return false;
+	}
+
+	@Override
+	public boolean proc(Wand weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
 

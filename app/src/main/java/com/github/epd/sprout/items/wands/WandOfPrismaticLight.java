@@ -7,30 +7,8 @@ import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Blindness;
 import com.github.epd.sprout.actors.buffs.Buff;
+import com.github.epd.sprout.actors.buffs.Cripple;
 import com.github.epd.sprout.actors.buffs.Light;
-import com.github.epd.sprout.actors.mobs.Acidic;
-import com.github.epd.sprout.actors.mobs.Bandit;
-import com.github.epd.sprout.actors.mobs.BlueWraith;
-import com.github.epd.sprout.actors.mobs.Eye;
-import com.github.epd.sprout.actors.mobs.FossilSkeleton;
-import com.github.epd.sprout.actors.mobs.Goo;
-import com.github.epd.sprout.actors.mobs.Gullin;
-import com.github.epd.sprout.actors.mobs.King;
-import com.github.epd.sprout.actors.mobs.Kupua;
-import com.github.epd.sprout.actors.mobs.Mimic;
-import com.github.epd.sprout.actors.mobs.Monk;
-import com.github.epd.sprout.actors.mobs.RedWraith;
-import com.github.epd.sprout.actors.mobs.Scorpio;
-import com.github.epd.sprout.actors.mobs.Senior;
-import com.github.epd.sprout.actors.mobs.Skeleton;
-import com.github.epd.sprout.actors.mobs.Succubus;
-import com.github.epd.sprout.actors.mobs.Thief;
-import com.github.epd.sprout.actors.mobs.Warlock;
-import com.github.epd.sprout.actors.mobs.Wraith;
-import com.github.epd.sprout.actors.mobs.Yog;
-import com.github.epd.sprout.actors.mobs.Zot;
-import com.github.epd.sprout.actors.mobs.ZotPhase;
-import com.github.epd.sprout.actors.mobs.npcs.Ghost;
 import com.github.epd.sprout.effects.Beam;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
@@ -47,9 +25,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 public class WandOfPrismaticLight extends Wand {
 
@@ -134,6 +109,12 @@ public class WandOfPrismaticLight extends Wand {
 		curUser.sprite.parent.add(
 				new Beam.LightRay(curUser.sprite.center(), DungeonTilemap.tileCenterToWorld(beam.collisionPos)));
 		callback.call();
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		Buff.prolong(defender, Cripple.class, 1f + level);
+		Buff.prolong(defender, Cripple.class, 1f + level);
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.SpellSprite;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.HornOfPlenty;
 import com.github.epd.sprout.items.scrolls.ScrollOfRecharging;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -62,6 +63,7 @@ public class Food extends Item {
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_EAT)) {
 
+			int hungerori = hero.buff(Hunger.class).hungerLevel();
 			detach(hero.belongings.backpack);
 
 			hero.buff(Hunger.class).satisfy(energy);
@@ -93,6 +95,17 @@ public class Food extends Item {
 						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 					}
 					break;
+			}
+
+			if (hero.buff(HornOfPlenty.hornRecharge.class) != null && hero.buff(HornOfPlenty.hornRecharge.class).level() > 48) {
+				if (hungerori - hero.buff(Hunger.class).hungerLevel() >= hungerori) {
+					int extra = ((int) energy - hungerori) / 20;
+					if (extra > 0 && hero.HP < hero.HT){
+						hero.HP = Math.min(hero.HP + extra, hero.HT);
+						hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+						GLog.p(Messages.get(HornOfPlenty.class,"overfull"));
+					}
+				}
 			}
 
 			hero.sprite.operate(hero.pos);

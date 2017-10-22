@@ -28,7 +28,7 @@ import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
-import com.github.epd.sprout.items.OtilukesJournal;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban4;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
@@ -169,12 +169,7 @@ public class King extends Mob {
 			}
 		}
 
-		Dungeon.level.drop(new Sokoban4(), pos).sprite.drop();
-
-		if (!Dungeon.limitedDrops.journal.dropped()) {
-			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-			Dungeon.limitedDrops.journal.drop();
-		}
+		Item.autocollect(new Sokoban4(), pos);
 
 		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
 		if (beacon != null) {

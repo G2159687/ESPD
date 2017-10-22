@@ -38,6 +38,7 @@ import com.github.epd.sprout.items.Heap.Type;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.potions.PotionOfStrength;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.epd.sprout.items.weapon.enchantments.Instability;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.mechanics.Ballistica;
@@ -186,6 +187,12 @@ public class WandOfTelekinesis extends Wand {
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.force(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		// TODO: add special effect
+		new Instability().proc(this, attacker, defender, damage);
 	}
 
 	@Override

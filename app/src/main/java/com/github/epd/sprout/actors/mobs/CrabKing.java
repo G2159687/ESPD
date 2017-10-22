@@ -27,6 +27,7 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.AdamantArmor;
 import com.github.epd.sprout.items.Gold;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
@@ -100,9 +101,8 @@ public class CrabKing extends Mob {
 		GameScene.bossSlain();
 
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
-		Dungeon.level.drop(new AdamantArmor(), pos).sprite.drop();
+		Item.autocollect(new AdamantArmor(), pos);
 		Dungeon.crabkingkilled = true;
-
 
 		super.die(cause);
 

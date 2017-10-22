@@ -19,7 +19,6 @@ package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer3;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;
 import com.github.epd.sprout.ui.NewRedButton;
@@ -28,11 +27,6 @@ import com.github.epd.sprout.ui.Window;
 import com.github.epd.sprout.utils.Utils;
 
 public class WndTinkerer3 extends Window {
-
-	private static final String TXT_MESSAGE = Messages.get(WndTinkerer3.class, "msg");
-	private static final String TXT_UPGRADE = Messages.get(WndTinkerer3.class, "upgrade");
-
-	private static final String TXT_FARAWELL = Messages.get(WndTinkerer3.class, "farewell");
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -49,12 +43,12 @@ public class WndTinkerer3 extends Window {
 		add(titlebar);
 
 		RenderedTextMultiline message = PixelScene
-				.renderMultiline(TXT_MESSAGE, 6);
+				.renderMultiline("", 6);
 		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
-		NewRedButton btnUpgrade = new NewRedButton(TXT_UPGRADE) {
+		NewRedButton btnUpgrade = new NewRedButton("") {
 			@Override
 			protected void onClick() {
 				selectUpgrade(tinkerer);
@@ -70,11 +64,7 @@ public class WndTinkerer3 extends Window {
 
 	private void selectUpgrade(Tinkerer3 tinkerer) {
 		hide();
-
 		tinkerer.destroy();
-
 		tinkerer.sprite.die();
-
-		//Wandmaker.Quest.complete();
 	}
 }

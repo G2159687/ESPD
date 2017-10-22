@@ -24,14 +24,10 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.items.Bomb;
 import com.github.epd.sprout.items.DewVial;
-import com.github.epd.sprout.items.EasterEgg;
 import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.TomeOfMastery;
-import com.github.epd.sprout.items.Whistle;
 import com.github.epd.sprout.items.armor.ClothArmor;
-import com.github.epd.sprout.items.artifacts.AlchemistsToolkit;
 import com.github.epd.sprout.items.artifacts.CloakOfShadows;
-import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.bags.AnkhChain;
 import com.github.epd.sprout.items.bags.KeyRing;
 import com.github.epd.sprout.items.bags.PotionBandolier;
@@ -112,9 +108,6 @@ public enum HeroClass {
 		new WandHolster().identify().collect();
 		new AnkhChain().identify().collect();
 		new OtilukesJournal().identify().collect();
-		Dungeon.limitedDrops.journal.drop();
-
-		//TODO: remove other otiluke journal entry
 
 		initDebug();
 	}

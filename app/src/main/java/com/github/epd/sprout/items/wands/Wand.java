@@ -46,7 +46,6 @@ import java.util.ArrayList;
 public abstract class Wand extends KindOfWeapon {
 
 	//TODO: Damage balancing
-	//TODO: Add more attacking effects
 
 	private static final int USAGES_TO_KNOW = 20;
 
@@ -332,6 +331,10 @@ public abstract class Wand extends KindOfWeapon {
 		return price;
 	}
 
+	@Override
+	public void proc(Char attacker, Char defender, int damage){
+
+	}
 
 	private static final String UNFAMILIRIARITY = "unfamiliarity";
 	private static final String MAX_CHARGES = "maxCharges";

@@ -31,6 +31,7 @@ import com.github.epd.sprout.actors.buffs.Sleep;
 import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
+import com.github.epd.sprout.actors.mobs.npcs.NPC;
 import com.github.epd.sprout.effects.Surprise;
 import com.github.epd.sprout.effects.Wound;
 import com.github.epd.sprout.items.DewVial;
@@ -45,7 +46,6 @@ import com.github.epd.sprout.items.artifacts.CloakOfShadows;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.rings.RingOfAccuracy;
-import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.features.HighGrass;
 import com.github.epd.sprout.messages.Messages;
@@ -484,7 +484,7 @@ public abstract class Mob extends Char {
 			if (((Hero) enemy).subClass == HeroSubClass.ASSASSIN) {
 				damage *= 1.34f;
 				Wound.hit(this);
-			} else if (enemy.buff(CloakOfShadows.cloakStealth.class) != null){
+			} else if (enemy.buff(CloakOfShadows.cloakStealth.class) != null) {
 				float damagebonus = enemy.buff(CloakOfShadows.cloakStealth.class) == null ? 0
 						: (enemy.buff(CloakOfShadows.cloakStealth.class).level() - 10) / 20f;
 				damage *= (1f + damagebonus);
@@ -555,7 +555,6 @@ public abstract class Mob extends Char {
 
 			if (hostile) {
 				Statistics.enemiesSlain++;
-				Statistics.qualifiedForNoKilling = false;
 			}
 
 			if (EXP > 0) {
@@ -584,7 +583,6 @@ public abstract class Mob extends Char {
 
 		super.die(cause);
 
-
 		int generation = 0;
 
 		if (this instanceof Swarm) {
@@ -592,11 +590,11 @@ public abstract class Mob extends Char {
 			generation = swarm.generation;
 		}
 
-		if (Dungeon.hero.buff(Dewcharge.class) != null && generation == 0) {
+		if (Dungeon.hero.buff(Dewcharge.class) != null && generation == 0 && !(this instanceof NPC)) {
 			explodeDewHigh(pos);
 		}
 
-		if (!Dungeon.level.cleared && originalgen && !checkOriginalGenMobs() && Dungeon.dewDraw && Dungeon.depth > 2 && Dungeon.depth < 25 && !Dungeon.bossLevel(Dungeon.depth)) {
+		if (!Dungeon.level.cleared && originalgen && !checkOriginalGenMobs() && Dungeon.depth > 2 && Dungeon.depth < 25 && !Dungeon.bossLevel(Dungeon.depth)) {
 			Dungeon.level.cleared = true;
 			GameScene.levelCleared();
 			if (Dungeon.depth > 0) {
@@ -615,39 +613,37 @@ public abstract class Mob extends Char {
 		float lootChanceOther = this.lootChanceOther;
 		int bonus = 0;
 		for (Buff buff : Dungeon.hero.buffs(MasterThievesArmband.Thievery.class)) {
-            if (((MasterThievesArmband.Thievery) buff).level() > 10)
-			    bonus += ((MasterThievesArmband.Thievery) buff).level() - 10;
+			if (((MasterThievesArmband.Thievery) buff).level() > 10)
+				bonus += ((MasterThievesArmband.Thievery) buff).level() - 10;
 		}
 
-		if (lootChanceOther == 0f){
-		    lootChance += 0.024f * bonus;
-			if (lootChance > 1f){
-				lootChance = 1f;
+		if (lootChance != 0f) {
+			if (lootChanceOther == 0f) {
+				lootChance += 0.024f * bonus;
+				if (lootChance > 1f) {
+					lootChance = 1f;
+				}
+			} else {
+				lootChance += 0.012f * bonus;
+				if (lootChance > 0.5f) {
+					lootChance = 0.5f;
+				}
 			}
-		} else {
-            lootChance += 0.012f * bonus;
-			if (lootChance > 0.5f){
-				lootChance = 0.5f;
+
+			lootChanceOther += 0.024f * bonus;
+			if (lootChanceOther > 1f) {
+				lootChanceOther = 1f;
 			}
-        }
+		}
 
 
-		lootChanceOther += 0.024f * bonus;
-        if (lootChanceOther > 1f){
-            lootChanceOther = 1f;
-        }
-
-
-		if (Random.Float() < lootChance && Dungeon.hero.lvl <= maxLvl + 8000000) {
+		if (Random.Float() < lootChance) {
 			Item loot = createLoot();
-
 			if (loot != null)
 				if (loot instanceof Dewdrop || loot instanceof YellowDewdrop || loot instanceof RedDewdrop || loot instanceof VioletDewdrop) {
 					Dungeon.level.drop(loot, pos).sprite.drop();
 				}
-
-		} else if (Random.Float() < lootChanceOther
-				&& Dungeon.hero.lvl <= maxLvl + 8000000) {
+		} else if (Random.Float() < lootChanceOther) {
 			Item lootOther = createLootOther();
 			if (lootOther != null)
 				if (lootOther instanceof Dewdrop || lootOther instanceof YellowDewdrop || lootOther instanceof RedDewdrop || lootOther instanceof VioletDewdrop) {
@@ -689,11 +685,7 @@ public abstract class Mob extends Char {
 				if (thievery != null) thievery.collect(item.quantity);
 			} else {
 				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop)) {
-					if (item.doPickUp(Dungeon.hero)) {
-						GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
-					} else {
-						Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
-					}
+					Item.autocollect(item, Dungeon.hero.pos);
 				}
 
 			}
@@ -733,14 +725,8 @@ public abstract class Mob extends Char {
 				if (thievery != null)
 					thievery.collect(item.quantity);
 			} else {
-				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop))
-
-				{
-					if (item.doPickUp(Dungeon.hero)) {
-						GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
-					} else {
-						Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
-					}
+				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop)) {
+					Item.autocollect(item, Dungeon.hero.pos);
 				}
 			}
 		} else Dungeon.level.drop(item, pos).sprite.drop();
@@ -753,76 +739,73 @@ public abstract class Mob extends Char {
 
 	public void explodeDew(int cell) {
 
-		if (Dungeon.dewDraw) {
-			Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
-			for (int n : PathFinder.NEIGHBOURS9) {
-				int c = cell + n;
-				if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
-					if (Random.Int(10) == 1) {
-						if (ShatteredPixelDungeon.autocollect() && vial != null) {
-							if (!vial.isFull()) {
-								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
-								GLog.i(Messages.get(HighGrass.class, "red"));
-								if (vial.isFull()) {
-									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class, "full");
-								}
-							} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+		for (int n : PathFinder.NEIGHBOURS9) {
+			int c = cell + n;
+			if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+				if (Random.Int(10) == 1) {
+					if (ShatteredPixelDungeon.autocollect() && vial != null) {
+						if (!vial.isFull()) {
+							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
+							GLog.i(Messages.get(HighGrass.class, "red"));
+							if (vial.isFull()) {
+								vial.volume = DewVial.MAX_VOLUME();
+								Messages.get(DewVial.class, "full");
+							}
 						} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-					} else if (Random.Int(3) == 1) {
-						if (ShatteredPixelDungeon.autocollect() && vial != null) {
-							if (!vial.isFull()) {
-								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
-								GLog.i(Messages.get(HighGrass.class, "yellow"));
-								if (vial.isFull()) {
-									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class, "full");
-								}
-							} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
+					} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+				} else if (Random.Int(3) == 1) {
+					if (ShatteredPixelDungeon.autocollect() && vial != null) {
+						if (!vial.isFull()) {
+							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
+							GLog.i(Messages.get(HighGrass.class, "yellow"));
+							if (vial.isFull()) {
+								vial.volume = DewVial.MAX_VOLUME();
+								Messages.get(DewVial.class, "full");
+							}
 						} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
-					}
+					} else Dungeon.level.drop(new YellowDewdrop(), c).sprite.drop();
 				}
 			}
-			QuickSlotButton.refresh();
 		}
+		QuickSlotButton.refresh();
+
 	}
 
 	public void explodeDewHigh(int cell) {
 
-		if (Dungeon.dewDraw) {
-			Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+		Sample.INSTANCE.play(Assets.SND_BLAST, 2);
 
-			for (int n : PathFinder.NEIGHBOURS9) {
-				int c = cell + n;
-				if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
-					if (Random.Int(8) == 1) {
-						if (ShatteredPixelDungeon.autocollect() && vial != null) {
-							if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
-								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 200 : 50);
-								GLog.i(Messages.get(HighGrass.class, "violet"));
-								if (vial.isFull()) {
-									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class, "full");
-								}
-							} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
+		for (int n : PathFinder.NEIGHBOURS9) {
+			int c = cell + n;
+			if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+				if (Random.Int(8) == 1) {
+					if (ShatteredPixelDungeon.autocollect() && vial != null) {
+						if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
+							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 200 : 50);
+							GLog.i(Messages.get(HighGrass.class, "violet"));
+							if (vial.isFull()) {
+								vial.volume = DewVial.MAX_VOLUME();
+								Messages.get(DewVial.class, "full");
+							}
 						} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
-					} else if (Random.Int(2) == 1) {
-						if (ShatteredPixelDungeon.autocollect() && vial != null) {
-							if (!vial.isFull()) {
-								vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
-								GLog.i(Messages.get(HighGrass.class, "red"));
-								if (vial.isFull()) {
-									vial.volume = DewVial.MAX_VOLUME();
-									Messages.get(DewVial.class, "full");
-								}
-							} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
+					} else Dungeon.level.drop(new VioletDewdrop(), c).sprite.drop();
+				} else if (Random.Int(2) == 1) {
+					if (ShatteredPixelDungeon.autocollect() && vial != null) {
+						if (!vial.isFull()) {
+							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
+							GLog.i(Messages.get(HighGrass.class, "red"));
+							if (vial.isFull()) {
+								vial.volume = DewVial.MAX_VOLUME();
+								Messages.get(DewVial.class, "full");
+							}
 						} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
-					}
+					} else Dungeon.level.drop(new RedDewdrop(), c).sprite.drop();
 				}
 			}
-			QuickSlotButton.refresh();
 		}
+		QuickSlotButton.refresh();
 	}
 
 	public boolean reset() {

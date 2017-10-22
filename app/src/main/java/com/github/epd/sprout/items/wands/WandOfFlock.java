@@ -117,6 +117,11 @@ public class WandOfFlock extends Wand {
 		return Messages.get(this, "desc");
 	}
 
+	@Override
+	public void proc(Char attacker, Char defender, int damage){
+		// TODO: add special effect <sheep transmutation>
+	}
+
 	public static class Sheep extends NPC {
 
 		private static final String[] QUOTES = {Messages.get(WandOfFlock.class, "1"), Messages.get(WandOfFlock.class, "2"), Messages.get(WandOfFlock.class, "3"),

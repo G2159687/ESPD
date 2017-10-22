@@ -121,19 +121,19 @@ public class AlbinoPiranha extends Mob {
 	@Override
 	public void die(Object cause) {
 		explodeDew(pos);
-		if (Random.Int(105 - Math.min(Statistics.albinoPiranhasKilled, 100)) == 0) {
+		if (Random.Int(55 - Math.min(Statistics.albinoPiranhasKilled, 50)) == 0) {
 			Item mushroom = Generator.random(Generator.Category.MUSHROOM);
-			Dungeon.level.drop(mushroom, pos).sprite.drop();
+			Item.autocollect(mushroom, pos);
 		}
 
-		if (!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 50 && Random.Int(10) == 0) {
+		if (!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 30 && Random.Int(10) == 0) {
 			Dungeon.limitedDrops.conchshell.drop();
-			Dungeon.level.drop(new ConchShell(), pos).sprite.drop();
+			Item.autocollect(new ConchShell(), pos);
 		}
 
-		if (!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 100) {
+		if (!Dungeon.limitedDrops.conchshell.dropped() && Statistics.albinoPiranhasKilled > 50) {
 			Dungeon.limitedDrops.conchshell.drop();
-			Dungeon.level.drop(new ConchShell(), pos).sprite.drop();
+			Item.autocollect(new ConchShell(), pos);
 		}
 
 		super.die(cause);

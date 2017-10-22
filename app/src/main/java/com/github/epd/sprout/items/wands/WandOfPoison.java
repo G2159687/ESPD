@@ -24,13 +24,16 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.actors.buffs.Strength;
+import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.MagicMissile;
+import com.github.epd.sprout.effects.particles.PoisonParticle;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 public class WandOfPoison extends Wand {
 
@@ -69,6 +72,14 @@ public class WandOfPoison extends Wand {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", 5 + level() * 2);
+		return Messages.get(this, "desc", 3 + level());
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (level > Random.IntRange(0, 50)){
+			Buff.affect(defender, Poison.class).set(Poison.durationFactor(defender) * Math.min(level, 20));
+			CellEmitter.center(defender.pos).burst(PoisonParticle.SPLASH, 5);
+		}
 	}
 }

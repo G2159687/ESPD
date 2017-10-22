@@ -18,6 +18,7 @@
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Terror;
@@ -26,6 +27,7 @@ import com.github.epd.sprout.items.AncientCoin;
 import com.github.epd.sprout.items.CityKey;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.weapon.missiles.Shuriken;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.CharSprite;
@@ -94,22 +96,31 @@ public class GoldThief extends Mob {
 	@Override
 	public void die(Object cause) {
 
-		if (!Dungeon.limitedDrops.citykey.dropped() && Dungeon.depth < 27) {
-			Dungeon.limitedDrops.citykey.drop();
-			Dungeon.level.drop(new CityKey(), pos).sprite.drop();
+		if (Dungeon.depth < 27) {
+			Item.autocollect(new CityKey(), pos);
 			explodeDew(pos);
 		} else {
 			explodeDew(pos);
 		}
 
-		if (!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 50 && Random.Int(10) == 0) {
+		if (!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 30 && Random.Int(10) == 0) {
 			Dungeon.limitedDrops.ancientcoin.drop();
-			Dungeon.level.drop(new AncientCoin(), pos).sprite.drop();
+			Item.autocollect(new AncientCoin(), pos);
 		}
 
-		if (!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 100) {
+		if (!Dungeon.limitedDrops.ancientcoin.dropped() && Statistics.goldThievesKilled > 50) {
 			Dungeon.limitedDrops.ancientcoin.drop();
-			Dungeon.level.drop(new AncientCoin(), pos).sprite.drop();
+			Item.autocollect(new AncientCoin(), pos);
+		}
+
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.05f && Statistics.goldThievesKilled > 50){
+			Item.autocollect(new MasterThievesArmband().identify(), pos);
+			Dungeon.limitedDrops.armband.drop();
+		}
+
+		if (!Dungeon.limitedDrops.armband.dropped() && Statistics.goldThievesKilled > 100){
+			Item.autocollect(new MasterThievesArmband().identify(), pos);
+			Dungeon.limitedDrops.armband.drop();
 		}
 
 		Statistics.goldThievesKilled++;
@@ -117,13 +128,20 @@ public class GoldThief extends Mob {
 		super.die(cause);
 
 		if (item != null) {
-			Dungeon.level.drop(item, pos).sprite.drop();
+			Item.autocollect(item, pos);
 		}
 	}
 
+	// TODO: Add more loots when shop tweaks enabled
 	@Override
 	protected Item createLoot() {
-		return new Gold(Random.NormalIntRange(goldtodrop + 50, goldtodrop + 100));
+		Item item = new Gold(Random.NormalIntRange(goldtodrop + 50, goldtodrop + 100));
+		if (ShatteredPixelDungeon.autocollect()) {
+			Dungeon.gold += item.quantity;
+			MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
+			if (thievery != null) thievery.collect(item.quantity);
+		} else Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
+		return item;
 	}
 
 	@Override

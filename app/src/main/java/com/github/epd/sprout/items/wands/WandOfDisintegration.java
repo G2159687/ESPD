@@ -122,4 +122,13 @@ public class WandOfDisintegration extends Wand {
 	public String desc() {
 		return Messages.get(this, "desc", level, 8 + level() * level() / 3);
 	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (defender.isAlive())
+			if (level > Random.IntRange(0, 50)) {
+				attacker.sprite.parent.add(new Beam.DeathRay(attacker.sprite.center(), DungeonTilemap.tileCenterToWorld(defender.pos)));
+				defender.damage(Random.NormalIntRange(level, 2 * level), this);
+			}
+	}
 }

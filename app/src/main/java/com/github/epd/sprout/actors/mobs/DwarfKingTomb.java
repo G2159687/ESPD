@@ -22,6 +22,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.items.ArmorKit;
 import com.github.epd.sprout.items.Gold;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.RedDewdrop;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.messages.Messages;
@@ -120,7 +121,7 @@ public class DwarfKingTomb extends Mob {
 		}
 
 		GameScene.bossSlain();
-		Dungeon.level.drop(new ArmorKit(), pos).sprite.drop();
+		Item.autocollect(new ArmorKit(), pos);
 		Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
 		Dungeon.level.drop(new Gold(Random.Int(4900, 10000)), pos).sprite.drop();
 

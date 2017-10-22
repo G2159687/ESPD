@@ -77,8 +77,6 @@ public class Flytrap extends Plant {
 	public static boolean checkWater() {
 
 		WellWater water = (WellWater) Dungeon.level.blobs.get(WaterOfUpgradeEating.class);
-		if (water == null) {
-			return false;
-		} else return !(water != null && water.volume == 0);
+		return water != null && !(water.volume == 0);
 	}
 }

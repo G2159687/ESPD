@@ -20,8 +20,8 @@ package com.github.epd.sprout.actors.mobs;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.items.AdamantRing;
-import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.levels.traps.LightningTrap;
 import com.github.epd.sprout.mechanics.Ballistica;
@@ -77,12 +77,13 @@ public class ThiefKing extends Mob implements Callback {
 	public void die(Object cause) {
 
 		GameScene.bossSlain();
-		Dungeon.level.drop(new AdamantRing(), pos).sprite.drop();
+		Item.autocollect(new AdamantRing(), pos);
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
 		super.die(cause);
 
 		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.2f){
-			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
+			Dungeon.limitedDrops.armband.drop();
+			Item.autocollect(new MasterThievesArmband(), pos);
 		}
 
 		Dungeon.banditkingkilled = true;

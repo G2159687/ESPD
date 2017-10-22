@@ -28,7 +28,7 @@ import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Egg;
-import com.github.epd.sprout.items.OtilukesJournal;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.TomeOfMastery;
 import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban2;
@@ -105,14 +105,9 @@ public class Tengu extends Mob {
 				break;
 		}
 		if (!Badges.isUnlocked(badgeToCheck)) {
-			Dungeon.level.drop(new TomeOfMastery(), pos).sprite.drop();
+			Item.autocollect(new TomeOfMastery(), pos);
 		} else {
-			Dungeon.level.drop(new Egg(), pos).sprite.drop();
-		}
-
-		if (!Dungeon.limitedDrops.journal.dropped()) {
-			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-			Dungeon.limitedDrops.journal.drop();
+			Item.autocollect(new Egg(), pos);
 		}
 
 		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
@@ -121,8 +116,7 @@ public class Tengu extends Mob {
 			GLog.p(Messages.get(LloydsBeacon.class, "stronger"));
 		}
 
-		Dungeon.level.drop(new Sokoban2(), pos).sprite.drop();
-
+		Item.autocollect(new Sokoban2(), pos);
 
 		GameScene.bossSlain();
 		Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();

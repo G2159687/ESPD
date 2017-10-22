@@ -28,7 +28,6 @@ import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
-import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.levels.Room.Type;
 import com.github.epd.sprout.levels.painters.Painter;
@@ -476,8 +475,7 @@ public abstract class RegularLevel extends Level {
 					if (Dungeon.depth <= 1) {
 						map[door] = Terrain.DOOR;
 					} else {
-						boolean secret = (Dungeon.depth < 6 ? Random
-								.Int(12 - Dungeon.depth) : Random.Int(6)) == 0;
+						boolean secret = (Dungeon.depth < 6 ? Random.Int(15 - Dungeon.depth) : Random.Int(8)) == 0;
 						map[door] = secret ? Terrain.SECRET_DOOR : Terrain.DOOR;
 						if (secret) {
 							secretDoors++;

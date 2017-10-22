@@ -22,12 +22,9 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.messages.Messages;
-import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.windows.WndBag;
 
 public class ScrollOfMultiUpgrade extends InventoryScroll {
-
-	private static final String TXT_LOOKS_BETTER = Messages.get(ScrollOfMultiUpgrade.class, "better");
 
 	{
 		name = Messages.get(this, "name");
@@ -47,7 +44,6 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 		for (int i = 1; i < 6; i++) {
 			upgrade(curUser);
 		}
-		GLog.p(TXT_LOOKS_BETTER, item.name());
 	}
 
 	public static void upgrade(Hero hero) {

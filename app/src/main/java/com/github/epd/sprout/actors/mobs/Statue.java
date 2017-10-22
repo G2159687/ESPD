@@ -23,6 +23,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.items.Generator;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.Weapon.Enchantment;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -126,7 +127,7 @@ public class Statue extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		Dungeon.level.drop(weapon, pos).sprite.drop();
+		Item.autocollect(weapon, pos);
 		super.die(cause);
 	}
 

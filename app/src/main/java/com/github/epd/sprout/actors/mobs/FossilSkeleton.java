@@ -21,9 +21,7 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ResultDescriptions;
-import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.actors.Char;
-import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.messages.Messages;
@@ -102,11 +100,9 @@ public class FossilSkeleton extends Mob {
 				loot = l;
 			}
 		}
-		if (ShatteredPixelDungeon.autocollect()) {
-			if (loot.doPickUp(Dungeon.hero))
-				GLog.i("\n" + Messages.get(Hero.class, "have", loot.name()));
-			else Dungeon.level.drop(loot, Dungeon.hero.pos).sprite.drop();
-		} else Dungeon.level.drop(loot, pos).sprite.drop();
+
+		Item.autocollect(loot, pos);
+
 		return loot;
 	}
 

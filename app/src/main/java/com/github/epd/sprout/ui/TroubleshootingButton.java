@@ -21,7 +21,6 @@
 package com.github.epd.sprout.ui;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.windows.WndMessage;
 import com.github.epd.sprout.windows.help.WndHlpCatTS;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;

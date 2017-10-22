@@ -91,4 +91,14 @@ public class WandOfFirebolt extends Wand {
 	public String desc() {
 		return Messages.get(this, "desc", 1, 8 + level() * level());
 	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (defender.isAlive())
+			if (level > Random.IntRange(0, 50)) {
+				Buff.affect(defender, Burning.class).reignite(defender);
+				defender.damage(Random.Int(1, level + 2), this);
+				defender.sprite.emitter().burst(FlameParticle.FACTORY, level < 10 ? level + 1 : 10);
+			}
+	}
 }

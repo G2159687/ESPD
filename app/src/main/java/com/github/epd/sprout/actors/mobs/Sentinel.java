@@ -24,6 +24,7 @@ import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.HallsKey;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.Weapon.Enchantment;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -131,10 +132,9 @@ public class Sentinel extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		Dungeon.level.drop(weapon, pos).sprite.drop();
-		if (!Dungeon.limitedDrops.hallskey.dropped() && Dungeon.depth == 24) {
-			Dungeon.limitedDrops.hallskey.drop();
-			Dungeon.level.drop(new HallsKey(), pos).sprite.drop();
+		Item.autocollect(weapon, pos);
+		if (Dungeon.depth == 24) {
+			Item.autocollect(new HallsKey(), pos);
 			explodeDew(pos);
 		}
 		super.die(cause);

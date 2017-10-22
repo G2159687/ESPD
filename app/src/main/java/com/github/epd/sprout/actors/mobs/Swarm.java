@@ -148,17 +148,13 @@ public class Swarm extends Mob {
 		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
 			lootChance = 1f;
 		} else {
-			lootChance = 0.5f / ((5 + Dungeon.limitedDrops.swarmHP.count) / (generation + 1));
+			lootChance = 0.5f / (5 / (generation + 1));
 		}
 		super.die(cause);
 	}
 
 	@Override
 	protected Item createLoot() {
-		Dungeon.limitedDrops.swarmHP.count++;
-		if (Dungeon.limitedDrops.swarmHP.count > 5) {
-			Dungeon.limitedDrops.swarmHP.count = 5;
-		}
 		return super.createLoot();
 	}
 

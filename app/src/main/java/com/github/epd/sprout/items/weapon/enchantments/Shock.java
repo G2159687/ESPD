@@ -21,6 +21,7 @@ import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.effects.Lightning;
 import com.github.epd.sprout.effects.particles.SparkParticle;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.levels.Level;
@@ -39,6 +40,33 @@ public class Shock extends Weapon.Enchantment {
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
+	}
+
+	@Override
+	public boolean proc(Wand weapon, Char attacker, Char defender, int damage) {
+		// lvl 0 - 25%
+		// lvl 1 - 40%
+		// lvl 2 - 50%
+		int level = Math.max(0, weapon.level);
+
+		if (Random.Int(level + 4) >= 3) {
+
+			affected.clear();
+			affected.add(attacker);
+
+			arcs.clear();
+			arcs.add(new Lightning.Arc(attacker.pos, defender.pos));
+			hit(defender, Random.Int(1, damage / 2));
+
+			attacker.sprite.parent.add(new Lightning(arcs, null));
+
+			return true;
+
+		} else {
+
+			return false;
+
+		}
 	}
 
 	@Override

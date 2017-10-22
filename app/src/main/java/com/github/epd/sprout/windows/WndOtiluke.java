@@ -23,10 +23,17 @@ import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.actors.buffs.Levitation;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.Mob;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.OtilukesJournal;
+import com.github.epd.sprout.items.Towel;
+import com.github.epd.sprout.items.Whistle;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
+import com.github.epd.sprout.items.food.Food;
+import com.github.epd.sprout.items.misc.AutoPotion;
+import com.github.epd.sprout.items.misc.Spectacles;
 import com.github.epd.sprout.messages.Messages;
+import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;
@@ -104,11 +111,55 @@ public class WndOtiluke extends Window {
 				NewRedButton btn = new NewRedButton(roomNames[i]) {
 					@Override
 					protected void onClick() {
-						item.returnDepth = Dungeon.depth;
-						item.returnPos = Dungeon.hero.pos;
-						port(portnum, item.firsts[portnum]);
-						item.firsts[portnum] = false;
-						item.charge = 0;
+						hide();
+						if ((portnum == 0 || portnum == 5 || portnum == 6 || portnum == 7) || !item.firsts[portnum]) {
+							item.returnDepth = Dungeon.depth;
+							item.returnPos = Dungeon.hero.pos;
+							port(portnum, item.firsts[portnum]);
+							item.firsts[portnum] = false;
+							item.charge = 0;
+						} else {
+							GameScene.show(
+								new WndOptions(Messages.get(WndOtiluke.class, "sokoban_title"),
+										Messages.get(WndOtiluke.class, "sokoban_msg"),
+										Messages.titleCase(Messages.get(WndOtiluke.class,"sokoban_yes")),
+										Messages.titleCase(Messages.get(WndOtiluke.class,"sokoban_no"))) {
+
+									@Override
+									protected void onSelect(int index) {
+
+										Item prize;
+										if (index == 0) {
+											switch (portnum){
+												case 1:
+													prize = new Towel();
+													break;
+												case 2:
+													prize = new Spectacles().identify();
+													break;
+												case 3:
+													prize = new AutoPotion().identify();
+													break;
+												case 4:
+													prize = new Whistle().identify();
+													break;
+												default:
+													prize = new Food().identify();
+													break;
+											}
+											Dungeon.level.drop(prize, Dungeon.hero.pos).sprite.drop();
+											item.firsts[portnum] = false;
+											item.charge = 0;
+										} else {
+											item.returnDepth = Dungeon.depth;
+											item.returnPos = Dungeon.hero.pos;
+											port(portnum, item.firsts[portnum]);
+											item.firsts[portnum] = false;
+											item.charge = 0;
+										}
+									}
+								});
+						}
 					}
 				};
 

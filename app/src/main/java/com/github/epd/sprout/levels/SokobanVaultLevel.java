@@ -34,7 +34,6 @@ import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.keys.IronKey;
-import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.items.wands.WandOfFlock.Sheep;
 import com.github.epd.sprout.levels.features.Chasm;
@@ -612,7 +611,7 @@ public class SokobanVaultLevel extends Level {
 		}
 		for (int i = 0; i < LENGTH; i++) {
 			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Int(100) > 70) {
-				if (first && !ringDrop) {
+				if (first && !ringDrop && !Dungeon.limitedDrops.armband.dropped()) {
 					drop(new MasterThievesArmband().identify(), i).type = Heap.Type.CHEST;
 					ringDrop = true;
 				} else if (first && Random.Int(50) == 0) {

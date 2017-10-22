@@ -71,7 +71,7 @@ public class Badges {
 	private static final String BADGES = "badges";
 
 	private static HashSet<Badge> restore(Bundle bundle) {
-		HashSet<Badge> badges = new HashSet<Badge>();
+		HashSet<Badge> badges = new HashSet<>();
 
 		String[] names = bundle.getStringArray(BADGES);
 		for (int i = 0; i < names.length; i++) {
@@ -112,7 +112,7 @@ public class Badges {
 				global = restore(bundle);
 
 			} catch (Exception e) {
-				global = new HashSet<Badge>();
+				global = new HashSet<>();
 			}
 		}
 	}
@@ -174,7 +174,7 @@ public class Badges {
 		}
 	}
 
-	public static void validateSupporter() {
+	/*public static void validateSupporter() {
 		loadGlobal();
 		global.add(Badge.SUPPORTER);
 		saveNeeded = true;
@@ -185,7 +185,7 @@ public class Badges {
 		global.add(Badge.SUPPORTER2);
 		saveNeeded = true;
 	}
-
+*/
 	private static void displayBadge(Badge badge) {
 
 		if (badge == null) {

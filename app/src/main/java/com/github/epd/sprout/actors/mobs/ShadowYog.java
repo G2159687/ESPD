@@ -31,6 +31,7 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.OrbOfZot;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -146,7 +147,7 @@ public class ShadowYog extends Mob {
 		super.die(cause);
 
 		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-			Dungeon.level.drop(new OrbOfZot(), pos).sprite.drop();
+			Item.autocollect(new OrbOfZot(), pos);
 		}
 
 		Statistics.shadowYogsKilled++;
@@ -162,7 +163,7 @@ public class ShadowYog extends Mob {
 			GameScene.bossSlain();
 			Dungeon.shadowyogkilled = true;
 
-			Dungeon.level.drop(new OrbOfZot(), pos).sprite.drop();
+			Item.autocollect(new OrbOfZot(), pos);
 
 			for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
 				if (mob instanceof Rat || mob instanceof GreyOni || mob instanceof SpectralRat || mob instanceof Eye) {

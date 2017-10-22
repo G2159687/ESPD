@@ -143,9 +143,6 @@ public class CloakOfShadows extends Artifact {
 		else
 			desc += Messages.get(this, "desc5");
 
-		if (isEquipped(Dungeon.hero))
-			desc += Messages.get(this, "desc6");
-
 		return desc;
 	}
 

@@ -36,6 +36,7 @@ import com.github.epd.sprout.actors.mobs.npcs.Wandmaker;
 import com.github.epd.sprout.items.Ankh;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.TalismanOfForesight;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.rings.Ring;
 import com.github.epd.sprout.items.scrolls.Scroll;
@@ -112,19 +113,13 @@ public class Dungeon {
 	// nicer for bundling/initializing.
 	public enum limitedDrops {
 		// limited world drops
-		strengthPotions, upgradeScrolls, arcaneStyli, berries,
-
-		// all unlimited health potion sources
-		swarmHP, batHP, warlockHP, scorpioHP, cookingHP,
-		// blandfruit, which can technically be an unlimited health potion
-		// source
-		blandfruitSeed, upgradeEaterSeed,
+		strengthPotions, upgradeScrolls, arcaneStyli, berries, upgradeEaterSeed,
 
 		//Norn Stones
 		nornstones,
 
 		// doesn't use Generator, so we have to enforce one armband drop here
-		armband, spork, royalspork, sewerkey, prisonkey, caveskey, citykey, hallskey, vaultpage,
+		armband, spork, royalspork, vaultpage, caveskey,
 		conchshell, ancientcoin, tengukey, bone, journal, safespotpage, dragoncave;
 
 		public int count = 0;
@@ -142,14 +137,7 @@ public class Dungeon {
 
 	public static int[] pars;
 
-	public static boolean earlygrass = false;
 	public static boolean playtest = false;
-	public static boolean gnollspawned = false;
-	public static boolean skeletonspawned = false;
-	public static boolean goldthiefspawned = false;
-	public static boolean sanchikarah = false;
-	public static boolean sanchikarahdeath = false;
-	public static boolean sanchikarahlife = false;
 	public static boolean sanchikarahtranscend = false;
 	public static boolean shadowyogkilled = false;
 	public static boolean crabkingkilled = false;
@@ -157,16 +145,12 @@ public class Dungeon {
 	public static boolean skeletonkingkilled = false;
 	public static boolean tengukilled = false;
 	public static boolean tengudenkilled = false;
-	public static boolean dewDraw = false;
 	public static boolean dewWater = false;
-	public static boolean wings = false;
-	//public static boolean secondQuest = false;
 
 	public static int challenges;
 
 	public static int ratChests = 0;
 	public static int petHasteLevel = 0;
-	public static int zotDrains = 0;
 	public static int shellCharge = 20;
 	public static boolean sporkAvail = false;
 
@@ -211,14 +195,14 @@ public class Dungeon {
 		depth = 0;
 		gold = 0;
 
-		droppedItems = new SparseArray<ArrayList<Item>>();
+		droppedItems = new SparseArray<>();
 
 		for (limitedDrops a : limitedDrops.values())
 			a.count = 0;
 
 		transmutation = Random.IntRange(6, 14);
 
-		chapters = new HashSet<Integer>();
+		chapters = new HashSet<>();
 
 		Ghost.Quest.reset();
 		Wandmaker.Quest.reset();
@@ -236,14 +220,7 @@ public class Dungeon {
 
 		StartScene.curClass.initHero(hero);
 
-		earlygrass = false;
 		playtest = false;
-		gnollspawned = false;
-		skeletonspawned = false;
-		goldthiefspawned = false;
-		sanchikarah = false;
-		sanchikarahdeath = false;
-		sanchikarahlife = false;
 		sanchikarahtranscend = false;
 		shadowyogkilled = false;
 		crabkingkilled = false;
@@ -253,12 +230,9 @@ public class Dungeon {
 		skeletonkingkilled = false;
 		petHasteLevel = 0;
 		ratChests = 0;
-		zotDrains = 0;
 		shellCharge = 20;
 		sporkAvail = false;
-		dewDraw = false;
 		dewWater = false;
-		wings = false;
 
 		pars = new int[100];
 
@@ -284,8 +258,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -304,8 +276,6 @@ public class Dungeon {
 		level = new BattleLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -326,8 +296,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -346,8 +314,6 @@ public class Dungeon {
 		level = new VaultLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -368,8 +334,6 @@ public class Dungeon {
 		level = new HallsBossLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -392,8 +356,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -407,7 +369,6 @@ public class Dungeon {
 		}
 
 		Dungeon.dewWater = true;
-		Dungeon.wings = true;
 
 		Arrays.fill(visible, false);
 
@@ -415,8 +376,6 @@ public class Dungeon {
 		level = new FortressLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -437,8 +396,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -458,7 +415,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
 		if (Statistics.deepestFloor > 24) {
 			Statistics.deepestFloor = depth;
 		}
@@ -483,8 +439,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -503,8 +457,6 @@ public class Dungeon {
 		level = new SkeletonBossLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -525,8 +477,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -545,8 +495,6 @@ public class Dungeon {
 		level = new ThiefBossLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -567,8 +515,6 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -587,8 +533,6 @@ public class Dungeon {
 		level = new ZotBossLevel();
 
 		level.create();
-
-		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		return level;
 	}
@@ -647,8 +591,6 @@ public class Dungeon {
 		Level.first = first;
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-
 		return level;
 	}
 
@@ -665,15 +607,6 @@ public class Dungeon {
 
 		if (depth > Statistics.deepestFloor && depth < 27) {
 			Statistics.deepestFloor = depth;
-
-			Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
-		}
-
-		if (depth == 6) {
-			Statistics.sewerKills = Statistics.enemiesSlain;
-		}
-		if (depth == 10) {
-			Statistics.prisonKills = Statistics.enemiesSlain - Statistics.sewerKills;
 		}
 
 		Arrays.fill(visible, false);
@@ -685,7 +618,6 @@ public class Dungeon {
 				break;
 			case 2:
 				level = new SewerLevel();
-				Dungeon.dewDraw = true;
 				Statistics.prevfloormoves = 500;
 				Buff.prolong(Dungeon.hero, Dewcharge.class, Dewcharge.DURATION + 50);
 				break;
@@ -771,8 +703,7 @@ public class Dungeon {
 
 		level.create();
 
-		Statistics.qualifiedForNoKilling = !bossLevel();
-		if (depth < 25 && depth != 21 && !Dungeon.bossLevel(depth) && Dungeon.dewDraw) {
+		if (depth < 25 && depth != 21 && !Dungeon.bossLevel(depth)) {
 			Buff.prolong(Dungeon.hero, Dewcharge.class, Dewcharge.DURATION + (Math.max(Statistics.prevfloormoves, 1)));
 		}
 		GLog.p(Messages.get(Dungeon.class, "dewcharge"));
@@ -882,7 +813,7 @@ public class Dungeon {
 		ArrayList<Item> dropped = Dungeon.droppedItems
 				.get(depth);
 		if (dropped == null) {
-			Dungeon.droppedItems.put(depth, dropped = new ArrayList<Item>());
+			Dungeon.droppedItems.put(depth, dropped = new ArrayList<>());
 		}
 		dropped.add(item);
 	}
@@ -935,7 +866,6 @@ public class Dungeon {
 	private static final String DROPPED = "dropped%d";
 	private static final String LEVEL = "level";
 	private static final String LIMDROPS = "limiteddrops";
-	private static final String DV = "dewVial";
 	private static final String WT = "transmutation";
 	private static final String CHAPTERS = "chapters";
 	private static final String QUESTS = "quests";
@@ -944,13 +874,9 @@ public class Dungeon {
 
 	private static final String RATCHESTS = "ratChests";
 	private static final String PETHASTELEVEL = "petHasteLevel";
-	private static final String EARLYGRASS = "earlygrass";
 	private static final String GNOLLSPAWN = "gnollspawned";
 	private static final String SKELETONSPAWN = "skeletonspawned";
 	private static final String THIEFSPAWN = "goldthiefspawned";
-	private static final String STRI = "sanchikarah";
-	private static final String STRID = "sanchikarahdeath";
-	private static final String STRIL = "sanchikarahlife";
 	private static final String STRIT = "sanchikarahtranscend";
 	private static final String SYOGKILL = "shadowyogkilled";
 	private static final String CRABKILL = "crabkingkilled";
@@ -959,14 +885,10 @@ public class Dungeon {
 	private static final String SKELETONKILL = "skeletonkingkilled";
 	private static final String BANDITKILL = "banditkingkilled";
 	private static final String SPORK = "sporkAvail";
-	private static final String DEWDRAW = "dewDraw";
 	private static final String DEWWATER = "dewWater";
-	private static final String WINGS = "wings";
-	private static final String ZOTDRAINS = "zotDrains";
 	private static final String SHELLCHARGE = "shellCharge";
 	private static final String PLAYTEST = "playtest";
 	private static final String PARS = "pars";
-	//private static final String SECONDQUEST = "secondQuest";
 
 	private static final String POS = "potionsOfStrength";
 	private static final String SOU = "scrollsOfEnhancement";
@@ -1008,17 +930,8 @@ public class Dungeon {
 			bundle.put(GOLD, gold);
 			bundle.put(DEPTH, depth);
 
-			//bundle.put(SECONDQUEST, secondQuest);
 			bundle.put(PETHASTELEVEL, petHasteLevel);
 			bundle.put(RATCHESTS, ratChests);
-			bundle.put(ZOTDRAINS, zotDrains);
-			bundle.put(EARLYGRASS, earlygrass);
-			bundle.put(GNOLLSPAWN, gnollspawned);
-			bundle.put(SKELETONSPAWN, skeletonspawned);
-			bundle.put(THIEFSPAWN, goldthiefspawned);
-			bundle.put(STRI, sanchikarah);
-			bundle.put(STRID, sanchikarahdeath);
-			bundle.put(STRIL, sanchikarahlife);
 			bundle.put(STRIT, sanchikarahtranscend);
 			bundle.put(SYOGKILL, shadowyogkilled);
 			bundle.put(CRABKILL, crabkingkilled);
@@ -1027,9 +940,7 @@ public class Dungeon {
 			bundle.put(BANDITKILL, banditkingkilled);
 			bundle.put(SKELETONKILL, skeletonkingkilled);
 			bundle.put(SPORK, sporkAvail);
-			bundle.put(DEWDRAW, dewDraw);
 			bundle.put(DEWWATER, dewWater);
-			bundle.put(WINGS, wings);
 			bundle.put(SHELLCHARGE, shellCharge);
 			bundle.put(PLAYTEST, playtest);
 			bundle.put(PARS, pars);
@@ -1175,7 +1086,7 @@ public class Dungeon {
 				limitedDrops.arcaneStyli.count = bundle.getInt(AS);
 			}
 
-			chapters = new HashSet<Integer>();
+			chapters = new HashSet<>();
 			int ids[] = bundle.getIntArray(CHAPTERS);
 			if (ids != null) {
 				for (int id : ids) {
@@ -1214,15 +1125,7 @@ public class Dungeon {
 
 		ratChests = bundle.getInt(RATCHESTS);
 		petHasteLevel = bundle.getInt(PETHASTELEVEL);
-		zotDrains = bundle.getInt(ZOTDRAINS);
 		shellCharge = bundle.getInt(SHELLCHARGE);
-		earlygrass = bundle.getBoolean(EARLYGRASS);
-		gnollspawned = bundle.getBoolean(GNOLLSPAWN);
-		skeletonspawned = bundle.getBoolean(SKELETONSPAWN);
-		goldthiefspawned = bundle.getBoolean(THIEFSPAWN);
-		sanchikarah = bundle.getBoolean(STRI);
-		sanchikarahdeath = bundle.getBoolean(STRID);
-		sanchikarahlife = bundle.getBoolean(STRIL);
 		sanchikarahtranscend = bundle.getBoolean(STRIT);
 		shadowyogkilled = bundle.getBoolean(SYOGKILL);
 		crabkingkilled = bundle.getBoolean(CRABKILL);
@@ -1231,21 +1134,17 @@ public class Dungeon {
 		banditkingkilled = bundle.getBoolean(BANDITKILL);
 		skeletonkingkilled = bundle.getBoolean(SKELETONKILL);
 		sporkAvail = bundle.getBoolean(SPORK);
-		dewDraw = bundle.getBoolean(DEWDRAW);
 		dewWater = bundle.getBoolean(DEWWATER);
-		wings = bundle.getBoolean(WINGS);
 		playtest = bundle.getBoolean(PLAYTEST);
 		pars = bundle.getIntArray(PARS);
-		//add version check
-		//secondQuest = bundle.getBoolean(SECONDQUEST);
 
 		Statistics.restoreFromBundle(bundle);
 		Journal.restoreFromBundle(bundle);
 		Generator.restoreFromBundle(bundle);
 
-		droppedItems = new SparseArray<ArrayList<Item>>();
+		droppedItems = new SparseArray<>();
 		for (int i = 2; i <= Statistics.realdeepestFloor + 1; i++) {
-			ArrayList<Item> dropped = new ArrayList<Item>();
+			ArrayList<Item> dropped = new ArrayList<>();
 			for (Bundlable b : bundle.getCollection(String.format(DROPPED, i))) {
 				dropped.add((Item) b);
 			}
@@ -1350,7 +1249,8 @@ public class Dungeon {
 		for (int y = ay; y <= by; y++, pos += Level.WIDTH) {
 			BArray.or(level.visited, visible, pos, len, level.visited);
 		}
-		if (hero.buff(MindVision.class) != null || hero.buff(Awareness.class) != null)
+		if (hero.buff(MindVision.class) != null || hero.buff(Awareness.class) != null
+				|| (hero.buff(TalismanOfForesight.Foresight.class) != null && hero.buff(TalismanOfForesight.Foresight.class).level() > 35))
 			GameScene.updateFog();
 		else
 			GameScene.updateFog(ax, ay, len, by - ay);

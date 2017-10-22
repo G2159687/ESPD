@@ -27,6 +27,7 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.AdamantRing;
 import com.github.epd.sprout.items.Gold;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
@@ -85,7 +86,7 @@ public class TenguDen extends Mob {
 		Dungeon.tengudenkilled = true;
 		yell(Messages.get(this, "die"));
 
-		Dungeon.level.drop(new AdamantRing(), pos).sprite.drop();
+		Item.autocollect(new AdamantRing(), pos);
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
 
 		super.die(cause);

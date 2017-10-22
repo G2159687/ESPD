@@ -44,7 +44,6 @@ import com.github.epd.sprout.items.food.ToastedNut;
 import com.github.epd.sprout.items.nornstone.NornStone;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.potions.PotionOfExperience;
-import com.github.epd.sprout.items.potions.PotionOfHealing;
 import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
@@ -85,7 +84,7 @@ public class Heap implements Bundlable {
 	public ItemSprite sprite;
 	public boolean seen = false;
 
-	public LinkedList<Item> items = new LinkedList<Item>();
+	public LinkedList<Item> items = new LinkedList<>();
 
 	public int image() {
 		switch (type) {
@@ -462,48 +461,6 @@ public class Heap implements Bundlable {
 		}
 	}
 
-	public void dryup() {
-
-		if (type != Type.HEAP) {
-			return;
-		}
-
-		boolean evaporated = false;
-
-		for (Item item : items.toArray(new Item[0])) {
-			if (item instanceof Dewdrop) {
-				items.remove(item);
-				evaporated = true;
-			} else if (item instanceof VioletDewdrop) {
-				items.remove(item);
-				evaporated = true;
-			} else if (item instanceof RedDewdrop) {
-				items.remove(item);
-				evaporated = true;
-			} else if (item instanceof YellowDewdrop) {
-				items.remove(item);
-				evaporated = true;
-			}
-		}
-
-		if (evaporated) {
-
-			if (Dungeon.visible[pos]) {
-
-				evaporateFX(pos);
-
-			}
-
-			if (isEmpty()) {
-				destroy();
-			} else if (sprite != null) {
-				sprite.view(image(), glowing());
-			}
-
-		}
-	}
-
-
 	public int dewdrops() {
 
 		if (type != Type.HEAP) {
@@ -596,9 +553,11 @@ public class Heap implements Bundlable {
 				replace(item, FrozenCarpaccio.cook((MysteryMeat) item));
 				frozen = true;
 			} else if (item instanceof Potion) {
-				items.remove(item);
-				((Potion) item).shatter(pos);
-				frozen = true;
+				if (items != null) {
+					items.remove(item);
+					((Potion) item).shatter(pos);
+					frozen = true;
+				}
 			} else if (item instanceof Egg) {
 				((Egg) item).freezes++;
 				frozen = true;
@@ -700,12 +659,6 @@ public class Heap implements Bundlable {
 			if (bonus > 0)
 				if (Random.Int(1000 / bonus) == 0)
 					return new PotionOfExperience();
-
-			while (potion instanceof PotionOfHealing && Random.Int(100) < Dungeon.limitedDrops.cookingHP.count)
-				potion = Generator.random(Generator.Category.POTION);
-
-			if (potion instanceof PotionOfHealing)
-				Dungeon.limitedDrops.cookingHP.count++;
 
 			return potion;
 
@@ -846,7 +799,7 @@ public class Heap implements Bundlable {
 			case REMAINS:
 				return Messages.get(this, "remains_desc");
 			case HARD_TOMB:
-				return Messages.get(this,"hardtomb_desc");
+				return Messages.get(this, "hardtomb_desc");
 			default:
 				return peek().info();
 		}

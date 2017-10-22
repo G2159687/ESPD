@@ -204,6 +204,16 @@ public class Item implements Bundlable {
 		return collect(Dungeon.hero.belongings.backpack);
 	}
 
+	public static void autocollect(Item item, int pos){
+		if (ShatteredPixelDungeon.autocollect()) {
+			if (item.doPickUp(Dungeon.hero)) {
+				GLog.i("\n" + Messages.get(Hero.class, "have", item.name()));
+			} else {
+				Dungeon.level.drop(item, Dungeon.hero.pos).sprite.drop();
+			}
+		} else Dungeon.level.drop(item, pos).sprite.drop();
+	}
+
 	public final Item detach(Bag container) {
 
 		if (quantity <= 0) {
@@ -241,6 +251,8 @@ public class Item implements Bundlable {
 	}
 
 	public final Item detach(Bag container, Integer quant) {
+
+		// TODO: Maybe optimize this method to prevent 0 quantity items
 
 		if (quantity <= 0) {
 

@@ -21,6 +21,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Hunger;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.SpellSprite;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.messages.Messages;
@@ -37,6 +38,11 @@ public class Nomnom extends Weapon.Enchantment {
 
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
+		return false;
+	}
+
+	@Override
+	public boolean proc(Wand weapon, Char attacker, Char defender, int damage) {
 		return false;
 	}
 

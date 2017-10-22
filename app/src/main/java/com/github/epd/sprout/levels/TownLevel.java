@@ -38,7 +38,6 @@ import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Heap;
-import com.github.epd.sprout.items.InactiveMrDestructo;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.SeekingClusterBombItem;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;

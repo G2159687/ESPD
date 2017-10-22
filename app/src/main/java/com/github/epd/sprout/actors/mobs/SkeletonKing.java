@@ -25,6 +25,7 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.buffs.Weakness;
 import com.github.epd.sprout.items.AdamantWeapon;
 import com.github.epd.sprout.items.Gold;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.potions.PotionOfLiquidFlame;
 import com.github.epd.sprout.items.wands.WandOfFirebolt;
 import com.github.epd.sprout.items.weapon.enchantments.Fire;
@@ -102,7 +103,7 @@ public class SkeletonKing extends Mob {
 
 		GameScene.bossSlain();
 		Dungeon.level.drop(new Gold(Random.Int(1900, 4000)), pos).sprite.drop();
-		Dungeon.level.drop(new AdamantWeapon(), pos).sprite.drop();
+		Item.autocollect(new AdamantWeapon(), pos);
 		Dungeon.skeletonkingkilled = true;
 
 		super.die(cause);

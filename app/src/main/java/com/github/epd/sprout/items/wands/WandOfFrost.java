@@ -9,6 +9,7 @@ import com.github.epd.sprout.actors.blobs.Freezing;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Chill;
 import com.github.epd.sprout.actors.buffs.Frost;
+import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.levels.Level;
@@ -76,5 +77,13 @@ public class WandOfFrost extends Wand {
 	@Override
 	public String desc() {
 		return Messages.get(this, "desc", 5 + level(), 10 + (level() * level() / 3));
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (defender.buff(Chill.class) == null && level > Random.IntRange(0, 50)) {
+			Buff.affect(defender, Chill.class, level);
+		} else if (defender.buff(Chill.class) != null && level > Random.IntRange(0, 50))
+			Buff.affect(defender, Paralysis.class, 1f);
 	}
 }

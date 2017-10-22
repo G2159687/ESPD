@@ -38,7 +38,6 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Pushing;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ShadowParticle;
-import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -208,14 +207,8 @@ public class Yog extends Mob {
 			}
 		}
 
-		if (!Dungeon.limitedDrops.journal.dropped()) {
-			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-			Dungeon.limitedDrops.journal.drop();
-		}
-
 		GameScene.bossSlain();
 		Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
-		//Dungeon.level.drop(new Gold(Random.Int(6000, 8000)), pos).sprite.drop();
 		super.die(cause);
 
 		yell(Messages.get(this, "die"));

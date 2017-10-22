@@ -19,7 +19,6 @@ package com.github.epd.sprout;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -54,16 +53,6 @@ public class ShatteredPixelDungeon extends Game {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		/*
-	     * if (android.os.Build.VERSION.SDK_INT >= 19) {
-		 * getWindow().getDecorView().setSystemUiVisibility(
-		 * View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-		 * View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-		 * View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-		 * View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
-		 * | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY ); }
-		 */
 
 		updateImmersiveMode();
 
@@ -120,11 +109,6 @@ public class ShatteredPixelDungeon extends Game {
 		switchScene(c);
 	}
 
-	public static void switchNoFade(Class<? extends PixelScene> c, SceneChangeCallback callback) {
-		PixelScene.noFade = true;
-		switchScene(c, callback);
-	}
-
 	/*
 	 * ---> Prefernces
 	 */
@@ -170,29 +154,6 @@ public class ShatteredPixelDungeon extends Game {
 			requestedReset = true;
 			immersiveModeChanged = false;
 		}
-	}
-
-	private void updateDisplaySize() {
-		DisplayMetrics m = new DisplayMetrics();
-		if (immersed() && Build.VERSION.SDK_INT >= 19)
-			getWindowManager().getDefaultDisplay().getRealMetrics(m);
-		else
-			getWindowManager().getDefaultDisplay().getMetrics(m);
-		dispHeight = m.heightPixels;
-		dispWidth = m.widthPixels;
-
-		float dispRatio = dispWidth / (float) dispHeight;
-
-		float renderWidth = dispRatio > 1 ? PixelScene.MIN_WIDTH_L : PixelScene.MIN_WIDTH_P;
-		float renderHeight = dispRatio > 1 ? PixelScene.MIN_HEIGHT_L : PixelScene.MIN_HEIGHT_P;
-
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				view.getHolder().setSizeFromLayout();
-			}
-		});
-
 	}
 
 	@SuppressLint("NewApi")

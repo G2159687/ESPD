@@ -25,6 +25,7 @@ import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.KindOfWeapon;
 import com.github.epd.sprout.items.rings.RingOfFuror;
 import com.github.epd.sprout.items.rings.RingOfSharpshooting;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.enchantments.AresLeech;
 import com.github.epd.sprout.items.weapon.enchantments.BuzzSaw;
 import com.github.epd.sprout.items.weapon.enchantments.CromLuck;
@@ -332,13 +333,14 @@ public class Weapon extends KindOfWeapon {
 
 	public static abstract class Enchantment implements Bundlable {
 
-		private static final Class<?>[] enchants = new Class<?>[]{Fire.class,
-				Poison.class, Death.class, Paralysis.class, Leech.class,
-				Slow.class, Shock.class, Instability.class, Horror.class,
-				Luck.class, Nomnom.class, BuzzSaw.class, NeptuneShock.class,
-				CromLuck.class, AresLeech.class};
-		private static final float[] chances = new float[]{10, 10, 1, 2, 1,
-				2, 6, 3, 2, 2, 0, 0, 0, 0, 0};
+		private static final Class<?>[] enchants = new Class<?>[]{
+				Fire.class, Poison.class, Death.class, Paralysis.class, Leech.class,
+				Slow.class, Shock.class, Instability.class, Horror.class, Luck.class,
+				Nomnom.class, BuzzSaw.class, NeptuneShock.class, CromLuck.class, AresLeech.class};
+		private static final float[] chances = new float[]{
+				8, 8, 1, 2, 1,
+				2, 6, 3, 2, 2,
+				0, 0, 0, 0, 0};
 
 		private static final float[] chancesLow = new float[]{10, 10, 0, 0, 1,
 				2, 6, 0, 0, 2, 0, 0, 0, 0, 0};
@@ -378,6 +380,9 @@ public class Weapon extends KindOfWeapon {
 
 
 		public abstract boolean proc(RelicMeleeWeapon weapon, Char attacker,
+		                             Char defender, int damage);
+
+		public abstract boolean proc(Wand weapon, Char attacker,
 		                             Char defender, int damage);
 
 		public String name(String weaponName) {

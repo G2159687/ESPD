@@ -61,7 +61,6 @@ import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Amulet;
 import com.github.epd.sprout.items.Ankh;
-import com.github.epd.sprout.items.DewVial;
 import com.github.epd.sprout.items.Dewdrop;
 import com.github.epd.sprout.items.EasterEgg;
 import com.github.epd.sprout.items.Egg;
@@ -74,6 +73,7 @@ import com.github.epd.sprout.items.ShadowDragonEgg;
 import com.github.epd.sprout.items.armor.glyphs.Viscosity;
 import com.github.epd.sprout.items.artifacts.CapeOfThorns;
 import com.github.epd.sprout.items.artifacts.DriedRose;
+import com.github.epd.sprout.items.artifacts.HornOfPlenty;
 import com.github.epd.sprout.items.artifacts.TalismanOfForesight;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.keys.GoldenKey;
@@ -490,9 +490,7 @@ public class Hero extends Char {
 
 		Statistics.moves++;
 
-		if (Dungeon.dewDraw) {
-			Dungeon.level.currentmoves++;
-		}
+		Dungeon.level.currentmoves++;
 
 		if (paralysed > 0) {
 
@@ -806,7 +804,7 @@ public class Hero extends Char {
 				theKey = null;
 				theSkeletonKey = null;
 
-				if (heap.type == Type.LOCKED_CHEST || heap.type == Type.CRYSTAL_CHEST){
+				if (heap.type == Type.LOCKED_CHEST || heap.type == Type.CRYSTAL_CHEST) {
 
 					theKey = belongings.getKey(GoldenKey.class, Dungeon.depth);
 					theSkeletonKey = belongings.getKey(GoldenSkeletonKey.class, 0);
@@ -818,8 +816,8 @@ public class Hero extends Char {
 					}
 				}
 
-				if (heap.type == Type.HARD_TOMB){
-					GLog.w(Messages.get(Hero.class,"hardtomb"));
+				if (heap.type == Type.HARD_TOMB) {
+					GLog.w(Messages.get(Hero.class, "hardtomb"));
 					ready();
 				}
 
@@ -917,16 +915,16 @@ public class Hero extends Char {
 	private boolean actDescend(HeroAction.Descend action) {
 		int stairs = action.dst;
 
-		if (!Dungeon.level.forcedone && Dungeon.dewDraw && (Dungeon.level.checkdew() > 0
-				|| Dungeon.hero.buff(Dewcharge.class) != null)){
+		if (!Dungeon.level.forcedone && (Dungeon.level.checkdew() > 0
+				|| Dungeon.hero.buff(Dewcharge.class) != null)) {
 
 			GameScene.show(new WndDescend());
 			ready();
 			return false;
 		}
 
-		if (!Dungeon.level.forcedone && Dungeon.dewDraw && !Dungeon.level.cleared
-				&& !Dungeon.notClearableLevel(Dungeon.depth)){
+		if (!Dungeon.level.forcedone && !Dungeon.level.cleared
+				&& !Dungeon.notClearableLevel(Dungeon.depth)) {
 
 			GameScene.show(new WndDescend());
 			ready();
@@ -938,20 +936,10 @@ public class Hero extends Char {
 
 			curAction = null;
 
-			if (Dungeon.dewDraw) {
-				for (int i = 0; i < Level.LENGTH; i++) {
-					Heap heap = Dungeon.level.heaps.get(i);
-					if (heap != null)
-						heap.dryup();
-				}
-
-				if (!Dungeon.level.cleared && Dungeon.dewDraw && !Dungeon.notClearableLevel(Dungeon.depth)) {
-					Dungeon.level.cleared = true;
-					Statistics.prevfloormoves = 0;
-				}
-
+			if (!Dungeon.level.cleared && !Dungeon.notClearableLevel(Dungeon.depth)) {
+				Dungeon.level.cleared = true;
+				Statistics.prevfloormoves = 0;
 			}
-
 
 			PET pet = checkpet();
 			if (pet != null && checkpetNear()) {
@@ -1187,7 +1175,7 @@ public class Hero extends Char {
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon
 				: belongings.weapon;
 
-		if (wep != null)
+		if (wep != null && !(wep instanceof Wand))
 			wep.proc(this, enemy, damage);
 
 		switch (subClass) {
@@ -1199,6 +1187,8 @@ public class Hero extends Char {
 			case BATTLEMAGE:
 				if (wep instanceof Wand) {
 					Wand wand = (Wand) wep;
+					wand.proc(this, enemy, damage);
+
 					if (wand.curCharges < wand.maxCharges && damage > 0) {
 
 						wand.curCharges++;
@@ -1213,8 +1203,7 @@ public class Hero extends Char {
 				break;
 			case SNIPER:
 				if (rangedWeapon != null) {
-					Buff.prolong(this, SnipersMark.class, attackDelay() * 1.1f).object = enemy
-							.id();
+					Buff.prolong(this, SnipersMark.class, attackDelay() * 1.1f).object = enemy.id();
 				}
 				break;
 			default:
@@ -1547,6 +1536,12 @@ public class Hero extends Char {
 				sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			}
 			buff(Hunger.class).satisfy(100);
+		}
+
+		if (buff(HornOfPlenty.hornRecharge.class) != null) {
+			if (buff(HornOfPlenty.hornRecharge.class).level() > 30) {
+				buff(Hunger.class).satisfy(exp * 5);
+			}
 		}
 	}
 

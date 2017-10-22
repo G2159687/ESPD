@@ -18,6 +18,7 @@
 package com.github.epd.sprout.items.weapon.enchantments;
 
 import com.github.epd.sprout.actors.Char;
+import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.messages.Messages;
@@ -33,6 +34,23 @@ public class Luck extends Weapon.Enchantment {
 	@Override
 	public boolean proc(RelicMeleeWeapon weapon, Char attacker, Char defender, int damage) {
 		return false;
+	}
+
+	@Override
+	public boolean proc(Wand weapon, Char attacker, Char defender, int damage) {
+		int level = Math.max(0, weapon.level);
+
+		int dmg = damage;
+		for (int i = 1; i <= level + 1; i++) {
+			dmg = Math.max(dmg, attacker.damageRoll() - i);
+		}
+
+		if (dmg > damage) {
+			defender.damage(dmg - damage, this);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

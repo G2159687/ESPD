@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class Artifact extends KindofMisc {
 
+	// TODO: Add cursed effects for sprouted's new artifact
+
 	private static final String TXT_TO_STRING = "%s";
 	private static final String TXT_TO_STRING_CHARGE = "%s (%d/%d)";
 	private static final String TXT_TO_STRING_LVL = "%s%+d";

@@ -20,6 +20,7 @@ package com.github.epd.sprout.actors.mobs.npcs;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.TownReturnBeacon;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -99,7 +100,7 @@ public class Tinkerer5 extends NPC {
 		if (first) {
 			first = false;
 			tell(TXT_DUNGEON3);
-			Dungeon.level.drop(new TownReturnBeacon(), Dungeon.hero.pos).sprite.drop();
+			Item.autocollect(new TownReturnBeacon(), Dungeon.hero.pos);
 		} else if (Random.Int(2) == 0) {
 			tell(TXT_DUNGEON);
 		} else {

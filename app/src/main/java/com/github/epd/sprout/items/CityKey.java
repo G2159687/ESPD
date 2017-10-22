@@ -171,16 +171,6 @@ public class CityKey extends Item {
 		return null;
 	}
 
-	private boolean checkpetNear() {
-		for (int n : PathFinder.NEIGHBOURS8) {
-			int c = Dungeon.hero.pos + n;
-			if (Actor.findChar(c) instanceof PET) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private void checkPetPort() {
 		PET pet = checkpet();
 		if (pet != null) {

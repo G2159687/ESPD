@@ -135,9 +135,7 @@ public class CatacombLevel extends RegularLevel {
 			}
 			if (map[i] == Terrain.EXIT) {
 				map[i] = Terrain.PEDESTAL;
-				if (!Dungeon.sanchikarahdeath) {
-					drop(new SanChikarahDeath(), i);
-				}
+				drop(new SanChikarahDeath(), i);
 			}
 			if (map[i] == Terrain.CHASM) {
 				map[i] = Terrain.EMPTY;

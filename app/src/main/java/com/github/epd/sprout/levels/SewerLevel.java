@@ -121,22 +121,10 @@ public class SewerLevel extends RegularLevel {
 	@Override
 	protected void createItems() {
 		if (Dungeon.depth == 1) {
-	/*		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-				addItemToSpawn(new DewVial());
-				Dungeon.limitedDrops.dewVial.drop();
-				addItemToSpawn(new SeedPouch());
-				Dungeon.limitedDrops.seedBag.drop();
-			}
-	*/
 			addItemToSpawn(new Moonberry());
 			addItemToSpawn(new Blueberry());
 			addItemToSpawn(new Cloudberry());
 			addItemToSpawn(new Blackberry());
-
-			//addItemToSpawn(new Spectacles());
-			//addItemToSpawn(new Towel());
-
-			//addItemToSpawn(new Egg());
 		}
 
 		Ghost.Quest.spawn(this);
@@ -149,7 +137,7 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	public static void spawnGnoll(SewerLevel level) {
-		if (Dungeon.depth == 4 && !Dungeon.gnollspawned) {
+		if (Dungeon.depth == 4) {
 
 			GnollArcher gnoll = new Ghost.GnollArcher();
 			do {
@@ -157,8 +145,6 @@ public class SewerLevel extends RegularLevel {
 			} while (gnoll.pos == -1);
 			level.mobs.add(gnoll);
 			Actor.occupyCell(gnoll);
-
-			Dungeon.gnollspawned = true;
 		}
 	}
 

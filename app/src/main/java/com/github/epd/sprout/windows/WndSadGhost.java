@@ -17,6 +17,7 @@
  */
 package com.github.epd.sprout.windows;
 
+import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.npcs.Ghost;
@@ -109,6 +110,10 @@ public class WndSadGhost extends Window {
 			GLog.i(Messages.get(Hero.class, "have"), reward.name());
 		} else {
 			Dungeon.level.drop(reward, ghost.pos).sprite.drop();
+		}
+
+		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
+			GLog.h(Messages.get(Ghost.class, "challenge"));
 		}
 
 		ghost.yell(Messages.get(WndSadGhost.class, "farewell"));

@@ -29,6 +29,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 public class WandOfSlowness extends Wand {
 
@@ -55,6 +56,12 @@ public class WandOfSlowness extends Wand {
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.slowness(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (level > Random.IntRange(0, 25))
+		Buff.affect(defender, Slow.class, level);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ import com.github.epd.sprout.actors.buffs.Roots;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
-import com.github.epd.sprout.items.Egg;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban1;
 import com.github.epd.sprout.items.keys.SkeletonKey;
@@ -218,10 +218,7 @@ public class Goo extends Mob {
 			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
 
 		}
-
-		Dungeon.level.drop(new Sokoban1(), pos).sprite.drop();
-
-
+		Item.autocollect(new Sokoban1(), pos);
 		yell(Messages.get(this, "die"));
 	}
 

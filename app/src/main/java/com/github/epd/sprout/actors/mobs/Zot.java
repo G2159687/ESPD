@@ -63,8 +63,8 @@ public class Zot extends Mob {
 		spriteClass = ZotSprite.class;
 		baseSpeed = 2f;
 
-		HP = HT = Dungeon.playtest ? 1000 : 10000;
-		EXP = 20;
+		HP = HT = Dungeon.playtest ? 600 : 6000;
+		EXP = 200;
 		defenseSkill = 70;
 
 		properties.add(Property.UNDEAD);

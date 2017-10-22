@@ -18,22 +18,17 @@
 package com.github.epd.sprout.levels.painters;
 
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.mobs.npcs.RatKing;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.journalpages.Town;
-import com.github.epd.sprout.items.weapon.missiles.MissileWeapon;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Room;
 import com.github.epd.sprout.levels.Terrain;
 import com.watabou.utils.Random;
 
 public class RatKingPainter extends Painter {
-
-	static boolean page = false;
 
 	public static void paint(Level level, Room room) {
 
@@ -81,12 +76,8 @@ public class RatKingPainter extends Painter {
 				break;
 		}
 
-		if (!page && Statistics.enemiesSlain < 21 && Dungeon.limitedDrops.journal.dropped()) {
-			level.drop(new Town(), pos);
-			page = true;
-		} else {
-			level.drop(prize, pos).type = Heap.Type.CHEST;
-			Dungeon.ratChests++;
-		}
+		level.drop(prize, pos).type = Heap.Type.CHEST;
+		Dungeon.ratChests++;
 	}
 }
+

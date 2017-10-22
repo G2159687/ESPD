@@ -23,14 +23,11 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.Artifact;
-import com.github.epd.sprout.items.artifacts.HornOfPlenty;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.windows.WndBag;
 
 public class ScrollOfUpgrade extends InventoryScroll {
-
-	private static final String TXT_LOOKS_BETTER = Messages.get(ScrollOfUpgrade.class, "looks_better");
 
 	{
 		initials = 11;
@@ -62,7 +59,6 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		}
 
 		upgrade(curUser);
-		GLog.p(TXT_LOOKS_BETTER, item.name());
 
 		if (item instanceof Artifact && item.level > 50){
 			item.level = 50;

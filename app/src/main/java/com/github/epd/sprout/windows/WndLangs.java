@@ -29,7 +29,6 @@ import com.github.epd.sprout.ui.NewRedButton;
 import com.github.epd.sprout.ui.RenderedTextMultiline;
 import com.github.epd.sprout.ui.Window;
 import com.watabou.noosa.ColorBlock;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
 
 import java.util.ArrayList;

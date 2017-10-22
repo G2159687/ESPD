@@ -113,15 +113,16 @@ public class BanditKing extends Thief {
 			yell(Messages.get(BanditKing.class, "die"));
 			GLog.w(Messages.get(BanditKing.class, "dis"));
 			if (!Dungeon.limitedDrops.spork.dropped()) {
-				Dungeon.level.drop(new Spork(), pos).sprite.drop();
+				Item.autocollect(new Spork(), pos);
 				Dungeon.limitedDrops.spork.drop();
 				Dungeon.sporkAvail = false;
 				yell(Messages.get(BanditKing.class, "spork"));
 			}
 		}
 
-		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.05f){
-			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.1f){
+			Dungeon.limitedDrops.armband.drop();
+			Item.autocollect(new MasterThievesArmband().identify(), pos);
 		}
 	}
 

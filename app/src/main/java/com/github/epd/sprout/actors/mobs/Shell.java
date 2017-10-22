@@ -25,7 +25,6 @@ import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.effects.particles.SparkParticle;
-import com.github.epd.sprout.items.RedDewdrop;
 import com.github.epd.sprout.items.keys.GoldenSkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;

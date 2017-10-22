@@ -23,7 +23,6 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Journal;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
-import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.EquipableItem;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
@@ -87,12 +86,8 @@ public class Blacksmith extends NPC {
 						Quest.placeItem();
 					}
 
-					Pickaxe pick = new Pickaxe();
-					if (pick.doPickUp(Dungeon.hero)) {
-						GLog.i(Messages.get(Hero.class, "have"), pick.name());
-					} else {
-						Dungeon.level.drop(pick, Dungeon.hero.pos).sprite.drop();
-					}
+					Item.autocollect(new Pickaxe(), Dungeon.hero.pos);
+
 				}
 			});
 
@@ -129,13 +124,7 @@ public class Blacksmith extends NPC {
 			}
 		} else if (checksan()) {
 			tell(Messages.get(Blacksmith.class, "collected"));
-			SanChikarah san = new SanChikarah();
-			Dungeon.sanchikarah = true;
-			if (san.doPickUp(Dungeon.hero)) {
-				GLog.i(Messages.get(Hero.class, "have"), san.name());
-			} else {
-				Dungeon.level.drop(san, Dungeon.hero.pos).sprite.drop();
-			}
+			Item.autocollect(new SanChikarah(), Dungeon.hero.pos);
 		} else if (!Quest.reforged) {
 			GameScene.show(new WndBlacksmith(this, Dungeon.hero));
 		} else if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
@@ -223,6 +212,10 @@ public class Blacksmith extends NPC {
 			gold.detachAll(Dungeon.hero.belongings.backpack);
 		}
 		Quest.reforged = true;
+
+		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+			GLog.h(Messages.get(Blacksmith.class, "challenge"));
+		}
 
 		Journal.remove(Journal.Feature.TROLL);
 	}

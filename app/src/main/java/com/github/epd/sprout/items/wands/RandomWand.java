@@ -43,6 +43,7 @@ import com.github.epd.sprout.items.Bomb;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.scrolls.ScrollOfRecharging;
 import com.github.epd.sprout.items.scrolls.ScrollOfTeleportation;
+import com.github.epd.sprout.items.weapon.enchantments.Instability;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
@@ -55,8 +56,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class RandomWand extends Wand {
-
-	//TODO: Add more effects
 
 	{
 		name = Messages.get(this, "name");
@@ -330,5 +329,10 @@ public class RandomWand extends Wand {
 
 				break;
 		}
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		new Instability().proc(this, attacker, defender, damage);
 	}
 }

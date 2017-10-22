@@ -95,6 +95,15 @@ public class WandOfAvalanche extends Wand {
 	}
 
 	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (defender.isAlive())
+			if (level > Random.IntRange(0, 50)) {
+				CellEmitter.get(defender.pos).start(Speck.factory(Speck.ROCK), 0.07f, 3);
+				Buff.prolong(defender, Paralysis.class, Random.IntRange(2, 6));
+			}
+	}
+
+	@Override
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.earth(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);

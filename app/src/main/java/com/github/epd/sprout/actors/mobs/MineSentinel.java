@@ -32,7 +32,7 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Generator;
-import com.github.epd.sprout.items.HallsKey;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.Weapon.Enchantment;
@@ -228,12 +228,7 @@ public class MineSentinel extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		Dungeon.level.drop(weapon, pos).sprite.drop();
-		if (!Dungeon.limitedDrops.hallskey.dropped() && Dungeon.depth == 24) {
-			Dungeon.limitedDrops.hallskey.drop();
-			Dungeon.level.drop(new HallsKey(), pos).sprite.drop();
-			explodeDew(pos);
-		}
+		Item.autocollect(weapon, pos);
 		super.die(cause);
 	}
 

@@ -23,9 +23,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Weakness;
 import com.github.epd.sprout.items.Generator;
-import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.food.Meat;
-import com.github.epd.sprout.items.potions.PotionOfHealing;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.mechanics.Ballistica;
@@ -134,23 +132,6 @@ public class Warlock extends Mob implements Callback {
 	@Override
 	public void call() {
 		next();
-	}
-
-	@Override
-	public Item createLoot() {
-		Item loot = super.createLoot();
-
-		if (loot instanceof PotionOfHealing) {
-
-			// count/10 chance of not dropping potion
-			if (Random.Int(10) - Dungeon.limitedDrops.warlockHP.count < 0) {
-				return null;
-			} else
-				Dungeon.limitedDrops.warlockHP.count++;
-
-		}
-
-		return loot;
 	}
 
 	@Override

@@ -18,12 +18,6 @@
 package com.github.epd.sprout.items.weapon.melee;
 
 import com.github.epd.sprout.actors.Char;
-import com.github.epd.sprout.actors.mobs.Gullin;
-import com.github.epd.sprout.actors.mobs.Kupua;
-import com.github.epd.sprout.actors.mobs.MineSentinel;
-import com.github.epd.sprout.actors.mobs.Otiluke;
-import com.github.epd.sprout.actors.mobs.Zot;
-import com.github.epd.sprout.actors.mobs.ZotPhase;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;

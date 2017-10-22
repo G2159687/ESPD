@@ -68,7 +68,7 @@ public class ScrollOfPsionicBlast extends Scroll {
 		curUser.spendAndNext(TIME_TO_READ);
 
 		if (!checkOriginalGenMobs() &&
-				!Dungeon.level.cleared && Dungeon.dewDraw && Dungeon.depth > 2 && Dungeon.depth < 25 && !Dungeon.bossLevel(Dungeon.depth)
+				!Dungeon.level.cleared && Dungeon.depth > 2 && Dungeon.depth < 25 && !Dungeon.bossLevel(Dungeon.depth)
 				) {
 			Dungeon.level.cleared = true;
 			GameScene.levelCleared();

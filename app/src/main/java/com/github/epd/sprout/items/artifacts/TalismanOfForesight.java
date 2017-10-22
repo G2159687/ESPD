@@ -186,9 +186,7 @@ public class TalismanOfForesight extends Artifact {
 
 			for (int y = ay; y <= by; y++) {
 				for (int x = ax, p = ax + y * Level.getWidth(); x <= bx; x++, p++) {
-
-					if (Dungeon.visible[p] && Level.secret[p]
-							&& Dungeon.level.map[p] != Terrain.SECRET_DOOR)
+					if (Dungeon.visible[p] && Level.secret[p])
 						smthFound = true;
 				}
 			}

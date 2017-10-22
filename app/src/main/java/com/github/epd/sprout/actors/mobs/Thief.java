@@ -101,18 +101,18 @@ public class Thief extends Mob {
 		super.die(cause);
 
 		if (item != null) {
-			Dungeon.level.drop(item, pos).sprite.drop();
+			Item.autocollect(item, pos);
 		}
 
-		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.01f){
-			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.05f){
+			Dungeon.limitedDrops.armband.drop();
+			Item.autocollect(new MasterThievesArmband(), pos);
 		}
 	}
 
 	@Override
 	protected Item createLoot() {
 		if (!Dungeon.limitedDrops.armband.dropped()) {
-			Dungeon.limitedDrops.armband.drop();
 			return super.createLoot();
 		} else {
 			if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {

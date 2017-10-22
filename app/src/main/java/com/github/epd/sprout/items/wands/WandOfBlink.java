@@ -21,9 +21,10 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Invisibility;
+import com.github.epd.sprout.actors.hero.Hero;
+import com.github.epd.sprout.actors.hero.HeroSubClass;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.effects.Speck;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -89,5 +90,14 @@ public class WandOfBlink extends Wand {
 	@Override
 	public String desc() {
 		return Messages.get(this, "desc");
+	}
+
+	@Override
+	public int reachFactor(Hero hero){
+		int reach = super.reachFactor(hero);
+		if (hero.subClass == HeroSubClass.BATTLEMAGE){
+			reach++;
+		}
+		return reach;
 	}
 }

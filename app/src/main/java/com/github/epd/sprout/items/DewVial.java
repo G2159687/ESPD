@@ -59,7 +59,7 @@ public class DewVial extends Item {
 
 
 	public static int MAX_VOLUME() {
-		return Dungeon.wings ? EXT_VOLUME : MAX_VOLUME;
+		return Dungeon.dewWater ? EXT_VOLUME : MAX_VOLUME;
 	}
 
 	private static final String AC_SIP = Messages.get(DewVial.class, "ac_sip");
@@ -83,7 +83,6 @@ public class DewVial extends Item {
 	private static final String TXT_PROCEED = Messages.get(DewVial.class, "proceed");
 	private static final String TXT_FULL = Messages.get(DewVial.class, "full");
 	private static final String TXT_EMPTY = Messages.get(DewVial.class, "empty");
-	private static final String TXT_LOOKS_BETTER = Messages.get(DewVial.class, "better");
 	private static final String TXT_SELECT = Messages.get(DewVial.class, "select");
 
 	{
@@ -300,7 +299,7 @@ public class DewVial extends Item {
 		} else if (action.equals(AC_SPLASH)) {
 			Buff.affect(hero, Haste.class, Haste.DURATION);
 			Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
-			if (Dungeon.wings && Dungeon.depth < 51) {
+			if (Dungeon.dewWater && Dungeon.depth < 51) {
 				Buff.affect(hero, Levitation.class, Levitation.DURATION);
 				GLog.i(Messages.get(DewVial.class, "float"));
 			}
@@ -310,28 +309,11 @@ public class DewVial extends Item {
 			volume = volume - 10;
 			updateQuickslot();
 
-		} else if (action.equals(AC_BLESS) && !Dungeon.dewDraw) {
-
-			boolean procced = uncurse(hero, hero.belongings.backpack.items.toArray(new Item[0]));
-			procced = uncurse(hero, hero.belongings.weapon,
-					hero.belongings.armor, hero.belongings.misc1,
-					hero.belongings.misc2, hero.belongings.misc3,
-					hero.belongings.misc4)
-					|| procced;
-
-			if (procced) {
-				GLog.p(TXT_PROCEED);
-			}
-
-			volume = volume - 50;
-			updateQuickslot();
-
-		} else if (action.equals(AC_BLESS) && Dungeon.dewDraw) {
+		} else if (action.equals(AC_BLESS)) {
 
 			curUser = hero;
 			GameScene.selectItem(itemSelector, WndBag.Mode.UPGRADEDEW, TXT_SELECT);
 			updateQuickslot();
-
 
 		} else if (action.equals(AC_CHOOSE)) {
 
@@ -398,7 +380,6 @@ public class DewVial extends Item {
 				item.upgrade();
 				proccedUp = true;
 				hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 2);
-				GLog.p(TXT_LOOKS_BETTER, item.name());
 			}
 
 			if (item instanceof Bag) {
@@ -417,7 +398,6 @@ public class DewVial extends Item {
 						bagItem.upgrade();
 						proccedUp = true;
 						hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
-						GLog.p(TXT_LOOKS_BETTER, bagItem.name());
 					}
 				}
 			}
@@ -435,15 +415,13 @@ public class DewVial extends Item {
 		public void onSelect(Item item) {
 			if (item != null) {
 				upgrade(item);
-				volume = volume - 90;
+				volume = volume - 50;
 				updateQuickslot();
 			}
 		}
 	};
 
 	private void upgrade(Item item) {
-
-		GLog.p(TXT_LOOKS_BETTER, item.name());
 
 		item.upgrade();
 

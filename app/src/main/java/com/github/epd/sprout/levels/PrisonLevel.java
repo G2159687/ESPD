@@ -92,7 +92,7 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	public static void spawnSkeleton(PrisonLevel level) {
-		if (Dungeon.depth == 9 && !Dungeon.skeletonspawned) {
+		if (Dungeon.depth == 9) {
 
 			MossySkeleton skeleton = new MossySkeleton();
 			do {
@@ -100,8 +100,6 @@ public class PrisonLevel extends RegularLevel {
 			} while (skeleton.pos == -1);
 			level.mobs.add(skeleton);
 			Actor.occupyCell(skeleton);
-
-			Dungeon.skeletonspawned = true;
 		}
 	}
 

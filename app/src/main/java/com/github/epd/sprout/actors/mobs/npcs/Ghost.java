@@ -590,8 +590,7 @@ public class Ghost extends NPC {
 
 			Quest.process();
 
-			Dungeon.level.drop(new MysteryMeat(), pos);
-			Dungeon.level.drop(new MysteryMeat(), pos).sprite.drop();
+			Item.autocollect(new MysteryMeat(), pos);
 		}
 
 		@Override
@@ -601,6 +600,8 @@ public class Ghost extends NPC {
 	}
 
 	public static class GnollArcher extends Gnoll {
+
+		// TODO: Auto collect items dropped by these mobs
 
 		private static final String TXT_KILLCOUNT = Messages.get(Ghost.class, "killcount");
 
@@ -656,34 +657,38 @@ public class Ghost extends NPC {
 		public void die(Object cause) {
 
 			if (Dungeon.depth > 25) {
-				Dungeon.level.drop(new ForestDart(3), pos).sprite.drop();
+				Item.autocollect(new ForestDart(3), pos);
 			}
 
 			Statistics.archersKilled++;
 			GLog.h(TXT_KILLCOUNT, Statistics.archersKilled);
 
 			super.die(cause);
-			if (!Dungeon.limitedDrops.sewerkey.dropped() && Dungeon.depth < 27) {
-				Dungeon.limitedDrops.sewerkey.drop();
-				Dungeon.level.drop(new SewersKey(), pos).sprite.drop();
+			if (Dungeon.depth < 27) {
+				Item.autocollect(new SewersKey(), pos);
 				explodeDew(pos);
 			} else {
 				explodeDew(pos);
 			}
 
-			if (!Dungeon.limitedDrops.tengukey.dropped() && Dungeon.tengukilled && Statistics.archersKilled > 50 && Random.Int(10) == 0) {
+			if (!Dungeon.limitedDrops.tengukey.dropped() && Dungeon.tengukilled && Statistics.archersKilled > 30 && Random.Int(10) == 0) {
 				Dungeon.limitedDrops.tengukey.drop();
-				Dungeon.level.drop(new TenguKey(), pos).sprite.drop();
+				Item.autocollect(new TenguKey(), pos);
 			}
 
-			if (!Dungeon.limitedDrops.tengukey.dropped() && Dungeon.tengukilled && Statistics.archersKilled > 100) {
+			if (!Dungeon.limitedDrops.tengukey.dropped() && Dungeon.tengukilled && Statistics.archersKilled > 50) {
 				Dungeon.limitedDrops.tengukey.drop();
-				Dungeon.level.drop(new TenguKey(), pos).sprite.drop();
+				Item.autocollect(new TenguKey(), pos);
 			}
 
-			if (!Dungeon.limitedDrops.safespotpage.dropped() && Statistics.archersKilled > 20 && Random.Int(10) == 0) {
+			if (!Dungeon.limitedDrops.safespotpage.dropped() && Statistics.archersKilled > 15 && Random.Int(10) == 0) {
 				Dungeon.limitedDrops.safespotpage.drop();
-				Dungeon.level.drop(new SafeSpotPage(), pos).sprite.drop();
+				Item.autocollect(new SafeSpotPage(), pos);
+			}
+
+			if (!Dungeon.limitedDrops.safespotpage.dropped() && Statistics.archersKilled > 50) {
+				Dungeon.limitedDrops.safespotpage.drop();
+				Item.autocollect(new SafeSpotPage(), pos);
 			}
 		}
 

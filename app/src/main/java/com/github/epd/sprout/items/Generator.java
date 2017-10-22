@@ -231,12 +231,12 @@ public class Generator {
 				ScrollOfMagicalInfusion.class, ScrollOfPsionicBlast.class,
 				ScrollOfMirrorImage.class, ScrollOfRegrowth.class};
 		Category.SCROLL2.probs = new float[]{8,
-				10, 4,
-				1, 15,
-				6, 10,
-				8, 8,
-				1, 4,
-				10, 5};
+				10, 10,
+				1, 10,
+				10, 10,
+				10, 10,
+				1, 8,
+				10, 8};
 
 		Category.POTION.classes = new Class<?>[]{PotionOfHealing.class,
 				PotionOfExperience.class, PotionOfToxicGas.class,
@@ -268,10 +268,10 @@ public class Generator {
 				10, 10,
 				10, 10, 10,
 				10, 10,
-				10, 8, 0,
+				10, 10, 0,
 				10, 10,
 				10, 10,
-				10, 10, 5,
+				10, 10, 10,
 				10};
 
 		Category.WEAPON.classes = new Class<?>[]{Dagger.class,
@@ -328,7 +328,7 @@ public class Generator {
 		Category.SEED.probs = new float[]{12, 12, 12, 12, 12,
 				12, 12, 0, 2, 12,
 				12, 48, 20, 4, 16,
-				2, 1, 1, 4, (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 12 : 8)};
+				2, 1, 1, 4, (Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 12 : 8)};
 
 
 		Category.SEED2.classes = new Class<?>[]{Firebloom.Seed.class,
@@ -558,3 +558,5 @@ public class Generator {
 		}
 	}
 }
+
+// TODO: Make wands a bit "unique" like artifacts

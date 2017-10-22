@@ -20,6 +20,7 @@ package com.github.epd.sprout.windows;
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.hero.Hero;
+import com.github.epd.sprout.actors.mobs.npcs.Ghost;
 import com.github.epd.sprout.actors.mobs.npcs.Wandmaker;
 import com.github.epd.sprout.items.AdamantWand;
 import com.github.epd.sprout.items.Item;
@@ -102,6 +103,11 @@ public class WndWandmaker extends Window {
 			}
 		}
 
+		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
+			GLog.h(Messages.get(Ghost.class, "challenge"));
+		}
+
+		if (item != null)
 		item.detach(Dungeon.hero.belongings.backpack);
 
 		if (item != null)
@@ -112,10 +118,6 @@ public class WndWandmaker extends Window {
 			GLog.i(Messages.get(Hero.class, "have"), reward.name());
 		} else {
 			Dungeon.level.drop(reward, wandmaker.pos).sprite.drop();
-		}
-
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
-			Dungeon.level.drop(new AdamantWand(), wandmaker.pos).sprite.drop();
 		}
 
 		wandmaker.yell(Utils.format(TXT_FARAWELL, Dungeon.hero.givenName()));

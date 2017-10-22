@@ -31,7 +31,7 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.effects.particles.SparkParticle;
-import com.github.epd.sprout.items.OtilukesJournal;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.CapeOfThorns;
 import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.journalpages.Sokoban3;
@@ -220,18 +220,13 @@ public class DM300 extends Mob implements Callback {
 			Dungeon.level.drop(new SkeletonKey(Dungeon.depth), pos).sprite.drop();
 		}
 
-		if (!Dungeon.limitedDrops.journal.dropped()) {
-			Dungeon.level.drop(new OtilukesJournal(), pos).sprite.drop();
-			Dungeon.limitedDrops.journal.drop();
-		}
-
 		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
 		if (beacon != null) {
 			beacon.upgrade();
 			GLog.p(Messages.get(LloydsBeacon.class, "stronger"));
 		}
 
-		Dungeon.level.drop(new Sokoban3(), pos).sprite.drop();
+		Item.autocollect(new Sokoban3(), pos);
 
 		yell(Messages.get(DM300.class, "die"));
 	}

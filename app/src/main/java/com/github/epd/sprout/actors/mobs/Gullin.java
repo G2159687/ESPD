@@ -25,6 +25,7 @@ import com.github.epd.sprout.actors.blobs.CorruptGas;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.items.Generator;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.StoneOre;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
@@ -83,9 +84,9 @@ public class Gullin extends Mob {
 				&& Random.Int(5) < 3
 				) {
 			if (Dungeon.hero.heroClass == HeroClass.HUNTRESS) {
-				Dungeon.level.drop(Generator.random(Generator.Category.NORNSTONE), pos).sprite.drop();
+				Item.autocollect(Generator.random(Generator.Category.NORNSTONE), pos);
 			} else {
-				Dungeon.level.drop(Generator.random(Generator.Category.NORNSTONE2), pos).sprite.drop();
+				Item.autocollect(Generator.random(Generator.Category.NORNSTONE2), pos);
 			}
 			Dungeon.limitedDrops.nornstones.count++;
 		}

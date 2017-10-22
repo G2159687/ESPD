@@ -49,7 +49,6 @@ public class HallsKey extends Item {
 
 	public static final String AC_PORT = Messages.get(CavesKey.class, "ac");
 
-	private int specialLevel = 25;
 	private int returnDepth = -1;
 	private int returnPos;
 
@@ -92,14 +91,6 @@ public class HallsKey extends Item {
 	public void execute(Hero hero, String action) {
 
 		if (action == AC_PORT) {
-
-			/* 
-	        if (Dungeon.bossLevel()) {
-				hero.spend(TIME_TO_USE);
-				GLog.w(TXT_PREVENTING);
-				return;
-			}
-			*/
 
 			if (Dungeon.depth > 25 || hero.petfollow) {
 				hero.spend(TIME_TO_USE);
@@ -174,20 +165,9 @@ public class HallsKey extends Item {
 		return null;
 	}
 
-	private boolean checkpetNear() {
-		for (int n : PathFinder.NEIGHBOURS8) {
-			int c = Dungeon.hero.pos + n;
-			if (Actor.findChar(c) instanceof PET) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private void checkPetPort() {
 		PET pet = checkpet();
 		if (pet != null) {
-			//GLog.i("I see pet");
 			Dungeon.hero.petType = pet.type;
 			Dungeon.hero.petLevel = pet.level;
 			Dungeon.hero.petKills = pet.kills;

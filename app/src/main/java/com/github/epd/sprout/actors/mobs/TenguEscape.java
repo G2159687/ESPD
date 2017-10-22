@@ -27,6 +27,7 @@ import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.TenguKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -91,7 +92,7 @@ public class TenguEscape extends Mob {
 			yell(Messages.get(this, "e2", Dungeon.hero.givenName()));
 			if (!Dungeon.limitedDrops.tengukey.dropped()) {
 				Dungeon.limitedDrops.tengukey.drop();
-				Dungeon.level.drop(new TenguKey(), pos).sprite.drop();
+				Item.autocollect(new TenguKey(), pos);
 			}
 		}
 		destroy();

@@ -22,6 +22,7 @@ import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.items.Generator;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.keys.GoldenSkeletonKey;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.traps.LightningTrap;
@@ -152,7 +153,7 @@ public class HermitCrab extends Mob implements Callback {
 	@Override
 	public void die(Object cause) {
 		super.die(cause);
-		Dungeon.level.drop(new GoldenSkeletonKey(0), pos).sprite.drop();
+		Item.autocollect(new GoldenSkeletonKey(0), pos);
 	}
 
 

@@ -112,7 +112,7 @@ public class CityLevel extends RegularLevel {
 	}
 
 	public static void spawnGoldThief(CityLevel level) {
-		if (Dungeon.depth == 19 && !Dungeon.goldthiefspawned) {
+		if (Dungeon.depth == 19) {
 
 			GoldThief thief = new GoldThief();
 			do {
@@ -120,8 +120,6 @@ public class CityLevel extends RegularLevel {
 			} while (thief.pos == -1);
 			level.mobs.add(thief);
 			Actor.occupyCell(thief);
-
-			Dungeon.goldthiefspawned = true;
 		}
 	}
 

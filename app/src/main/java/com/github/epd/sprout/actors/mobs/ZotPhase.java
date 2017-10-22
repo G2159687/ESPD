@@ -48,7 +48,7 @@ public class ZotPhase extends Mob implements Callback {
 		name = Messages.get(Zot.class, "name");
 		spriteClass = ZotPhaseSprite.class;
 
-		HP = HT = 1000;
+		HP = HT = 800;
 		defenseSkill = 40 + adj(1);
 		baseSpeed = 2f;
 

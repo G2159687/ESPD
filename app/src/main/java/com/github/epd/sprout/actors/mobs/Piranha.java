@@ -26,6 +26,7 @@ import com.github.epd.sprout.actors.buffs.Frost;
 import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.actors.buffs.Roots;
 import com.github.epd.sprout.items.CavesKey;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.food.Meat;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
@@ -62,8 +63,7 @@ public class Piranha extends Mob {
 			// this causes pirahna to move away when a door is closed on them.
 			Dungeon.level.updateFieldOfView(this, Level.fieldOfView);
 			enemy = chooseEnemy();
-			if (state == this.HUNTING
-					&& !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)) {
+			if (state == this.HUNTING && !(enemy.isAlive() && Level.fieldOfView[enemy.pos] && enemy.invisible <= 0)) {
 				state = this.WANDERING;
 				int oldPos = pos;
 				int i = 0;
@@ -98,11 +98,11 @@ public class Piranha extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		Dungeon.level.drop(new Meat(), pos).sprite.drop();
+		Item.autocollect(new Meat(), pos);
 
-		if (!Dungeon.limitedDrops.caveskey.dropped() && Statistics.deepestFloor > 10) {
+		if (Statistics.deepestFloor > 10 && !Dungeon.limitedDrops.caveskey.dropped()) {
+			Item.autocollect(new CavesKey(), pos);
 			Dungeon.limitedDrops.caveskey.drop();
-			Dungeon.level.drop(new CavesKey(), pos).sprite.drop();
 			explodeDew(pos);
 		}
 

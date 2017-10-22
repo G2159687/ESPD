@@ -10,12 +10,15 @@ import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.scrolls.Scroll;
 import com.github.epd.sprout.items.scrolls.ScrollOfIdentify;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicMapping;
+import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.epd.sprout.items.scrolls.ScrollOfRemoveCurse;
+import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.windows.WndBag;
+import com.github.epd.sprout.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -33,6 +36,8 @@ public class UnstableSpellbook extends Artifact {
 
 		level = 0;
 		levelCap = 10;
+
+		// TODO: Change max charge & charge rate of this book
 
 		charge = (level / 2) + 3;
 		partialCharge = 0;
@@ -80,7 +85,7 @@ public class UnstableSpellbook extends Artifact {
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute(final Hero hero, String action) {
 		if (action.equals(AC_READ)) {
 
 			if (hero.buff(Blindness.class) != null)
@@ -93,32 +98,61 @@ public class UnstableSpellbook extends Artifact {
 				GLog.i(Messages.get(this, "cursed"));
 			else {
 				charge--;
+				updateQuickslot();
 
 				Scroll scroll;
-				if (level < 48) {
+				Scroll scroll2;
+				if (level < 30) {
 					do {
 						scroll = (Scroll) Generator
 								.random(Generator.Category.SCROLL);
 					} while (scroll == null ||
-							// gotta reduce the rate on these scrolls or that'll be all the
-							// item does.
-							((scroll instanceof ScrollOfIdentify || scroll instanceof ScrollOfMagicMapping) && Random.Int(4) == 0) ||
-							(scroll instanceof ScrollOfRemoveCurse) && Random.Int(5) == 0);
+							((scroll instanceof ScrollOfIdentify || scroll instanceof ScrollOfMagicMapping || scroll instanceof ScrollOfRemoveCurse) && Random.Int(2) == 0) ||
+							(scroll instanceof ScrollOfUpgrade || scroll instanceof ScrollOfMagicalInfusion) && Random.Int(3) == 0);
 
 					scroll.ownedByBook = true;
 					scroll.execute(hero, AC_READ);
-				} else {
+				} else if (level < 45) {
 					do {
 						scroll = (Scroll) Generator
 								.random(Generator.Category.SCROLL2);
 					} while (scroll == null ||
-							// gotta reduce the rate on these scrolls or that'll be all the
-							// item does.
-							((scroll instanceof ScrollOfIdentify || scroll instanceof ScrollOfMagicMapping) && Random.Int(4) == 0) ||
-							(scroll instanceof ScrollOfRemoveCurse) && Random.Int(5) == 0);
+							((scroll instanceof ScrollOfIdentify || scroll instanceof ScrollOfMagicMapping || scroll instanceof ScrollOfRemoveCurse) && Random.Int(2) == 0));
 
 					scroll.ownedByBook = true;
 					scroll.execute(hero, AC_READ);
+				} else {
+
+					do {
+						scroll = (Scroll) Generator.random(Generator.Category.SCROLL2);
+					} while (scroll == null ||
+							((scroll instanceof ScrollOfIdentify || scroll instanceof ScrollOfMagicMapping) && Random.Int(2) == 0) ||
+							(scroll instanceof ScrollOfRemoveCurse) && Random.Int(5) == 0);
+
+					do {
+						scroll2 = (Scroll) Generator.random(Generator.Category.SCROLL2);
+					} while (scroll2 == null || scroll2.getClass() == scroll.getClass() ||
+							((scroll2 instanceof ScrollOfIdentify || scroll2 instanceof ScrollOfMagicMapping) && Random.Int(2) == 0) ||
+							(scroll2 instanceof ScrollOfRemoveCurse) && Random.Int(5) == 0);
+
+					final Scroll finalScroll = scroll;
+					final Scroll finalScroll2 = scroll2;
+					GameScene.show(
+							new WndOptions(Messages.get(UnstableSpellbook.class, "multi_title"),
+									Messages.get(UnstableSpellbook.class, "multi_msg"),
+									Messages.titleCase(finalScroll.name()),
+									Messages.titleCase(finalScroll2.name())) {
+
+								@Override
+								protected void onSelect(int index) {
+
+									if (index == 0) {
+										finalScroll.execute(hero, AC_READ);
+									} else {
+										finalScroll2.execute(hero, AC_READ);
+									}
+								}
+							});
 				}
 			}
 

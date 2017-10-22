@@ -44,7 +44,6 @@ import com.github.epd.sprout.items.food.Moonberry;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
-import com.github.epd.sprout.plants.BlandfruitBush;
 import com.github.epd.sprout.plants.Flytrap;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.ui.QuickSlotButton;
@@ -136,15 +135,8 @@ public class HighGrass {
 			if (naturalismLevel < 5 ? (Random.Int(18 - ((int) (naturalismLevel * 3.34))) == 0) : (Random.Int(5) == 0)) {
 				Item seed = Generator.random(Generator.Category.SEED);
 
-				if (seed instanceof BlandfruitBush.Seed) {
-					if (Random.Int(Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 150 : 15)
-							- Dungeon.limitedDrops.blandfruitSeed.count >= 0) {
-						dropItems(level, seed, pos);
-						Dungeon.limitedDrops.blandfruitSeed.count++;
-					}
-
-				} else if (seed instanceof Flytrap.Seed) {
-					if (Random.Int(Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 150 : 15)
+				if (seed instanceof Flytrap.Seed) {
+					if (Random.Int(Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 150 : 15)
 							- Dungeon.limitedDrops.upgradeEaterSeed.count >= 0) {
 						dropItems(level, seed, pos);
 						Dungeon.limitedDrops.upgradeEaterSeed.count++;

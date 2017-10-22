@@ -17,7 +17,6 @@
  */
 package com.github.epd.sprout.actors.mobs;
 
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Cripple;
@@ -100,8 +99,7 @@ public class Scorpio extends Mob {
 	protected Item createLoot() {
 		// 5/count+5 total chance of getting healing, failing the 2nd roll drops
 		// mystery meat instead.
-		if (Random.Int(5 + Dungeon.limitedDrops.scorpioHP.count) <= 4) {
-			Dungeon.limitedDrops.scorpioHP.count++;
+		if (Random.Int(5) <= 4) {
 			return (Item) loot;
 		} else {
 			return new MysteryMeat();

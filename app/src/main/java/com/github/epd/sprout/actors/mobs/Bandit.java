@@ -58,8 +58,9 @@ public class Bandit extends Thief {
 	public void die(Object cause) {
 		super.die(cause);
 
-		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.05f){
-			Dungeon.level.drop(new MasterThievesArmband().identify(), pos).sprite.drop();
+		if (!Dungeon.limitedDrops.armband.dropped() && Random.Float() < 0.1f){
+			Dungeon.limitedDrops.armband.drop();
+			Item.autocollect(new MasterThievesArmband().identify(), pos);
 		}
 
 	}

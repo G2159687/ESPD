@@ -124,10 +124,9 @@ public class WndHero extends WndTabbed {
 		stats = new StatsTab();
 		add(stats);
 
-		if (Dungeon.dewDraw) {
-			levelstats = new LevelStatsTab();
-			add(levelstats);
-		}
+		levelstats = new LevelStatsTab();
+		add(levelstats);
+
 		PET heropet = checkpet();
 
 		if (heropet != null) {
@@ -147,15 +146,14 @@ public class WndHero extends WndTabbed {
 			}
 		});
 
-		if (Dungeon.dewDraw) {
-			add(new LabeledTab(TXT_LEVELSTATS) {
-				@Override
-				protected void select(boolean value) {
-					super.select(value);
-					levelstats.visible = levelstats.active = selected;
-				}
-			});
-		}
+		add(new LabeledTab(TXT_LEVELSTATS) {
+			@Override
+			protected void select(boolean value) {
+				super.select(value);
+				levelstats.visible = levelstats.active = selected;
+			}
+		});
+
 
 		if (heropet != null) {
 			add(new LabeledTab(TXT_PET) {
@@ -308,7 +306,6 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected boolean onLongClick() {
 					Hero heroToBuff = Dungeon.hero;
-					// (heroToBuff.belongings.weapon == null ){
 					heroToBuff.heroClass.playtest(heroToBuff);
 					GLog.i(Messages.get(WndHero.class, "test"));
 					Dungeon.hero.HT = Dungeon.hero.HP = 999;
@@ -319,7 +316,6 @@ public class WndHero extends WndTabbed {
 					sk1.collect();
 					JournalPage sk2 = new Sokoban2();
 					sk2.collect();
-					//}
 					return true;
 				}
 			};
@@ -341,7 +337,7 @@ public class WndHero extends WndTabbed {
 			pos = btnCatalogus.bottom() + GAP;
 
 
-			if (Dungeon.dewDraw && Dungeon.depth < 26) {
+			if (Dungeon.depth < 26) {
 				statSlot(TXT_MOVES2, Dungeon.level.currentmoves);
 				statSlot(TXT_MOVES3, Dungeon.pars[Dungeon.depth]);
 				statSlot(TXT_MOVES4, Statistics.prevfloormoves);
@@ -589,7 +585,10 @@ public class WndHero extends WndTabbed {
 	private void feed(Item item) {
 
 		PET heropet = checkpet();
-		boolean nomnom = checkFood(heropet.type, item);
+		boolean nomnom = false;
+		if (heropet != null) {
+			nomnom = checkFood(heropet.type, item);
+		}
 		boolean nearby = checkpetNear();
 
 		if (nomnom && nearby) {

@@ -174,12 +174,6 @@ public class SokobanSentinel extends Mob {
 	}
 
 	@Override
-	public void die(Object cause) {
-		//Dungeon.level.drop(weapon, pos).sprite.drop();
-		super.die(cause);
-	}
-
-	@Override
 	public String description() {
 		return Messages.get(this, "desc", weapon.name());
 	}

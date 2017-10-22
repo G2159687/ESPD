@@ -18,10 +18,8 @@
 package com.github.epd.sprout.items.weapon.melee;
 
 import com.github.epd.sprout.Assets;
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.quest.DarkGold;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.items.weapon.missiles.Boomerang;
 import com.github.epd.sprout.messages.Messages;

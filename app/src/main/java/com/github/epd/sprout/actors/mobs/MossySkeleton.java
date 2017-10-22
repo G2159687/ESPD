@@ -23,6 +23,7 @@ import com.github.epd.sprout.ResultDescriptions;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.items.Bone;
+import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.PrisonKey;
 import com.github.epd.sprout.items.RedDewdrop;
 import com.github.epd.sprout.items.YellowDewdrop;
@@ -49,7 +50,7 @@ public class MossySkeleton extends Mob {
 		EXP = 1;
 		maxLvl = 10;
 
-		baseSpeed = 0.5f + (Math.min(2f, Statistics.skeletonsKilled / 50));
+		baseSpeed = 0.5f + Math.min(2f, Statistics.skeletonsKilled / 50);
 
 		loot = new YellowDewdrop();
 		lootChance = 0.5f; // by default, see die()
@@ -79,22 +80,21 @@ public class MossySkeleton extends Mob {
 		Statistics.skeletonsKilled++;
 		GLog.h(TXT_KILLCOUNT, Statistics.skeletonsKilled);
 
-		if (!Dungeon.limitedDrops.prisonkey.dropped() && Dungeon.depth < 27) {
-			Dungeon.limitedDrops.prisonkey.drop();
-			Dungeon.level.drop(new PrisonKey(), pos).sprite.drop();
+		if (Dungeon.depth < 27) {
+			Item.autocollect(new PrisonKey(), pos);
 			explodeDew(pos);
 		} else {
 			explodeDew(pos);
 		}
 
-		if (!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 50 && Random.Int(10) == 0) {
+		if (!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 30 && Random.Int(10) == 0) {
 			Dungeon.limitedDrops.bone.drop();
-			Dungeon.level.drop(new Bone(), pos).sprite.drop();
+			Item.autocollect(new Bone(), pos);
 		}
 
-		if (!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 100) {
+		if (!Dungeon.limitedDrops.bone.dropped() && Statistics.skeletonsKilled > 50) {
 			Dungeon.limitedDrops.bone.drop();
-			Dungeon.level.drop(new Bone(), pos).sprite.drop();
+			Item.autocollect(new Bone(), pos);
 		}
 
 		boolean heroKilled = false;

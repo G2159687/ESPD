@@ -67,7 +67,6 @@ import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.food.Blandfruit;
 import com.github.epd.sprout.items.potions.PotionOfMight;
 import com.github.epd.sprout.items.potions.PotionOfStrength;
-import com.github.epd.sprout.items.rings.RingOfWealth;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.levels.features.Chasm;
@@ -108,6 +107,8 @@ import java.util.HashSet;
 
 public abstract class Level implements Bundlable {
 
+	// TODO: Add more room types
+
 	public enum Feeling {
 		NONE, CHASM, WATER, GRASS, DARK
 	}
@@ -118,7 +119,7 @@ public abstract class Level implements Bundlable {
 	 * 
 	 */
 
-	//TODO: Change some levels' width & height
+	//TODO: Change some levels' width & height, add rooms
 	public static int WIDTH = 48;
 	public static int HEIGHT = 48;
 	public static int LENGTH = WIDTH * HEIGHT;
@@ -251,7 +252,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			if (Dungeon.depth > 1 && Dungeon.depth < 6) {
-				if (Dungeon.depth == 4 && !Dungeon.earlygrass) {
+				if (Dungeon.depth == 4) {
 					feeling = Feeling.GRASS;
 				} else {
 					switch (Random.Int(10)) {
@@ -267,7 +268,6 @@ public abstract class Level implements Bundlable {
 						case 3:
 						case 4:
 							feeling = Feeling.GRASS;
-							Dungeon.earlygrass = true;
 							break;
 					}
 				}
@@ -345,10 +345,10 @@ public abstract class Level implements Bundlable {
 			pitRoomNeeded = pitNeeded;
 			weakFloorCreated = false;
 
-			mobs = new HashSet<Mob>();
-			heaps = new SparseArray<Heap>();
-			blobs = new HashMap<Class<? extends Blob>, Blob>();
-			plants = new SparseArray<Plant>();
+			mobs = new HashSet<>();
+			heaps = new SparseArray<>();
+			blobs = new HashMap<>();
+			plants = new SparseArray<>();
 
 		} while (!build());
 		decorate();
@@ -552,8 +552,9 @@ public abstract class Level implements Bundlable {
 
 			@Override
 			protected boolean act() {
-				if ((Dungeon.dewDraw && Dungeon.level.cleared && mobs.size() < nMobs()) || (!Dungeon.dewDraw && mobs.size() < nMobs()) ||
-						(Dungeon.depth == 1 && mobs.size() < nMobs()) || (Dungeon.depth == 2 && mobs.size() < nMobs())) {
+				if ((Dungeon.level.cleared && mobs.size() < nMobs()) ||
+						(Dungeon.depth == 1 && mobs.size() < nMobs()) ||
+						(Dungeon.depth == 2 && mobs.size() < nMobs())) {
 
 					Mob mob = Bestiary.mutable(Dungeon.depth);
 					mob.state = mob.WANDERING;

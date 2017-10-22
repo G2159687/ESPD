@@ -155,6 +155,17 @@ public class WandOfTransfusion extends Wand {
 	}
 
 	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		// TODO: add effect
+		/*if (Random.Int( level() + 10 ) >= 9){
+			//grants a free use of the staff
+			freeCharge = true;
+			GLog.p( Messages.get(this, "charged") );
+			attacker.sprite.emitter().burst(BloodParticle.BURST, 20);
+		}*/
+	}
+
+	@Override
 	public String desc() {
 		return Messages.get(this,"desc");
 	}

@@ -17,7 +17,6 @@
  */
 package com.github.epd.sprout.actors.mobs;
 
-import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Item;
@@ -88,13 +87,12 @@ public class Bat extends Mob {
 	@Override
 	public void die(Object cause) {
 		// sets drop chance
-		lootChance = 1f / ((6 + Dungeon.limitedDrops.batHP.count));
+		lootChance = 1f / 6;
 		super.die(cause);
 	}
 
 	@Override
 	protected Item createLoot() {
-		Dungeon.limitedDrops.batHP.count++;
 		return super.createLoot();
 	}
 

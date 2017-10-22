@@ -130,6 +130,8 @@ public class Blacksmith2 extends NPC {
 		item1.reinforced = true;
 		if (!Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
 			item2.detach(Dungeon.hero.belongings.backpack);
+		} else {
+			GLog.h(Messages.get(Blacksmith2.class,"challenge"));
 		}
 		DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
 		if (gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {

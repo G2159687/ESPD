@@ -19,7 +19,6 @@ package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer1;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;
@@ -29,21 +28,6 @@ import com.github.epd.sprout.ui.Window;
 import com.github.epd.sprout.utils.Utils;
 
 public class WndTinkerer extends Window {
-
-	private static final String TXT_MESSAGE = Messages.get(WndTinkerer.class, "msg");
-
-	private static final String TXT_MESSAGE_WATER = Messages.get(WndTinkerer.class, "msgwater");
-
-
-	private static final String TXT_MESSAGE_DRAW = Messages.get(WndDewDrawInfo.class, "msg1") + Messages.get(WndDewDrawInfo.class, "msg2") + Messages.get(WndDewDrawInfo.class, "msg3") + Messages.get(WndDewDrawInfo.class, "msg4");
-
-	private static final String TXT_WATER = Messages.get(WndTinkerer.class, "water");
-	private static final String TXT_DRAW = Messages.get(WndTinkerer.class, "draw");
-	private static final String TXT_DRAW_INFO = Messages.get(WndTinkerer.class, "info");
-
-	private static final String TXT_FARAWELL = Messages.get(WndTinkerer.class, "farewell");
-	private static final String TXT_FARAWELL_DRAW = Messages.get(WndTinkerer.class, "farewelldraw");
-
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 20;
@@ -60,12 +44,12 @@ public class WndTinkerer extends Window {
 		add(titlebar);
 
 		RenderedTextMultiline message = PixelScene
-				.renderMultiline(TXT_MESSAGE, 6);
+				.renderMultiline("", 6);
 		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
 		add(message);
 
-		NewRedButton btnBattle = new NewRedButton(TXT_WATER) {
+		NewRedButton btnBattle = new NewRedButton("") {
 			@Override
 			protected void onClick() {
 				selectUpgrade(tinkerer, 1);
@@ -75,16 +59,7 @@ public class WndTinkerer extends Window {
 				BTN_HEIGHT);
 		add(btnBattle);
 
-		/*
-	    BitmapTextMultiline message_draw = PixelScene
-				.createMultiline(TXT_MESSAGE_DRAW, 6);
-		message_draw.maxWidth = WIDTH;
-		message_draw.measure();
-		message_draw.y = btnBattle.bottom() + GAP;
-		add(message_draw);
-		*/
-
-		NewRedButton btnNonBattle = new NewRedButton(TXT_DRAW) {
+		NewRedButton btnNonBattle = new NewRedButton("") {
 			@Override
 			protected void onClick() {
 				selectUpgrade(tinkerer, 2);
@@ -94,7 +69,7 @@ public class WndTinkerer extends Window {
 		btnNonBattle.setRect(0, btnBattle.bottom() + GAP, WIDTH, BTN_HEIGHT);
 		add(btnNonBattle);
 
-		NewRedButton btnNonBattle2 = new NewRedButton(TXT_DRAW_INFO) {
+		NewRedButton btnNonBattle2 = new NewRedButton("") {
 			@Override
 			protected void onClick() {
 				GameScene.show(new WndDewDrawInfo(item));
@@ -107,11 +82,8 @@ public class WndTinkerer extends Window {
 	}
 
 	private void selectUpgrade(Tinkerer1 tinkerer, int type) {
-
 		hide();
-
 		tinkerer.destroy();
-
 		tinkerer.sprite.die();
 	}
 }

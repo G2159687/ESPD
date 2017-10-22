@@ -101,12 +101,27 @@ public class WandOfBlastWave extends Wand {
 			Paralysis.prolong(ch, Paralysis.class, Random.NormalIntRange((dist + 1) / 2, dist));
 		}
 
+		Dungeon.level.press(ch.pos, ch);
+		if (ch == Dungeon.hero){
+			Dungeon.observe();
+		}
+
 	}
 
 	@Override
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.slowness(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (defender.isAlive())
+			if (level > Random.IntRange(0, 50)) {
+				int oppositeHero = defender.pos + (defender.pos - attacker.pos);
+				Ballistica trajectory = new Ballistica(defender.pos, oppositeHero, Ballistica.MAGIC_BOLT);
+				throwChar(defender, trajectory, Random.IntRange(level / 2, 2 * level));
+			}
 	}
 
 	public static class BlastWave extends Image {

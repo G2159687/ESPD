@@ -71,16 +71,15 @@ public class HornOfPlenty extends Artifact {
 			else if (charge == 0)
 				GLog.i(Messages.get(this, "no_food"));
 			else {
-				hero.buff(Hunger.class).satisfy(50f * charge);
+				hero.buff(Hunger.class).satisfy(70f * charge);
 
-				// if you get at least 100 food energy from the horn
+				// if you get at least 140 food energy from the horn
 				if (charge >= 2) {
 					switch (hero.heroClass) {
 						case WARRIOR:
 							if (hero.HP < hero.HT) {
 								hero.HP = Math.min(hero.HP + 5, hero.HT);
-								hero.sprite.emitter().burst(
-										Speck.factory(Speck.HEALING), 1);
+								hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 							}
 							break;
 						case MAGE:
@@ -92,17 +91,19 @@ public class HornOfPlenty extends Artifact {
 							break;
 					}
 
-					if (charge >= 5) {
+					if (charge >= 8) {
 						if (level > 15) {
 							if (hero.HP < hero.HT) {
-								hero.HP = Math.min(hero.HP + Random.NormalIntRange(1, Math.round(0.1f * charge * (level - 15))), hero.HT);
+								hero.HP = hero.HP + Random.IntRange(1, hero.HT - hero.HP);
 								hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+								GLog.p(Messages.get(HornOfPlenty.class,"hp"));
 							}
 						}
 						if (level > 47) {
-							if (Random.Float() < (level - 47) / 5f) {
-								hero.HT += Math.round(0.06f * charge * (level - 40));
-								hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+							if (Random.Float() < 0.7f) {
+								hero.HT += Random.IntRange(5, 10);
+								hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2);
+								GLog.p(Messages.get(HornOfPlenty.class,"ht"));
 							}
 						}
 					}
@@ -122,7 +123,6 @@ public class HornOfPlenty extends Artifact {
 			}
 
 		} else if (action.equals(AC_STORE)) {
-
 			GameScene.selectItem(itemSelector, mode, inventoryTitle);
 		}
 	}
@@ -169,8 +169,7 @@ public class HornOfPlenty extends Artifact {
 
 				// generates 0.25 food value every round, +0.015 value per level
 				// to a max of 0.70 food value per round (0.25+0.5, at level 30)
-				if (level < 51) partialCharge += 0.25f + (0.015f * level);
-				else partialCharge += 1f;
+				partialCharge += 0.25f + (0.05f * level);
 
 				// charge is in increments of 36 food value.
 				if (partialCharge >= 50) {

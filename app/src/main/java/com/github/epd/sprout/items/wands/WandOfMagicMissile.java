@@ -24,6 +24,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Strength;
 import com.github.epd.sprout.actors.hero.Hero;
+import com.github.epd.sprout.effects.SpellSprite;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.quest.DarkGold;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
@@ -113,6 +114,14 @@ public class WandOfMagicMissile extends Wand {
 	@Override
 	protected int initialCharges() {
 		return 3;
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		if (curCharges < maxCharges){
+			SpellSprite.show(attacker, SpellSprite.CHARGE);
+			curCharges++;
+		}
 	}
 
 	@Override

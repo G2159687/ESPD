@@ -1,6 +1,7 @@
 package com.github.epd.sprout.items.wands;
 
 import com.github.epd.sprout.Assets;
+import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.blobs.VenomGas;
 import com.github.epd.sprout.effects.MagicMissile;
@@ -29,6 +30,11 @@ public class WandOfVenom extends Wand {
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.poison(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		// TODO: add effect
 	}
 
 	@Override

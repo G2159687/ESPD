@@ -84,7 +84,7 @@ public class Sungrass extends Plant {
 		private int pos;
 		private int healCurr = 1;
 		private int count = 0;
-		private int level;
+		public int level;
 
 		@Override
 		public boolean attachTo(Char target) {

@@ -24,6 +24,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.mobs.npcs.NPC;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.items.scrolls.ScrollOfTeleportation;
+import com.github.epd.sprout.items.weapon.enchantments.Instability;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -81,6 +82,12 @@ public class WandOfTeleportation extends Wand {
 	protected void fx(Ballistica bolt, Callback callback) {
 		MagicMissile.coldLight(curUser.sprite.parent, bolt.sourcePos, bolt.collisionPos, callback);
 		Sample.INSTANCE.play(Assets.SND_ZAP);
+	}
+
+	@Override
+	public void proc(Char attacker, Char defender, int damage) {
+		// TODO: add effect
+		new Instability().proc(this, attacker, defender, damage);
 	}
 
 	@Override
