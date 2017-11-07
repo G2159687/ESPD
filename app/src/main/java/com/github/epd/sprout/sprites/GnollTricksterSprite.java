@@ -1,8 +1,8 @@
 package com.github.epd.sprout.sprites;
 
 import com.github.epd.sprout.Assets;
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.items.weapon.missiles.CurareDart;
-import com.github.epd.sprout.levels.Level;
 import com.watabou.noosa.MovieClip;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Callback;
@@ -37,7 +37,7 @@ public class GnollTricksterSprite extends MobSprite {
 
 	@Override
 	public void attack(int cell) {
-		if (!Level.adjacent(cell, ch.pos)) {
+		if (!Dungeon.level.adjacent(cell, ch.pos)) {
 
 			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new CurareDart(), new Callback() {

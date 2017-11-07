@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -76,9 +59,6 @@ public class SokobanCastle extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -568,15 +548,16 @@ public class SokobanCastle extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		map = SokobanLayouts.SOKOBAN_CASTLE.clone();
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
 
-		entrance = 24 + WIDTH * 22;
+		entrance = 24 + getWidth() * 22;
 		exit = 0;
 
 
@@ -584,60 +565,33 @@ public class SokobanCastle extends Level {
 	}
 
 	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
-	@Override
 	protected void createMobs() {
-		
-		/*
-		    SokobanSentinel mob = new SokobanSentinel();
-			mob.pos = 38 + WIDTH * 21;
-			mobs.add(mob);
-			Actor.occupyCell(mob);
-		*/
+
 		SokobanSentinel mob2 = new SokobanSentinel();
-		mob2.pos = 38 + WIDTH * 20;
+		mob2.pos = 38 + getWidth() * 20;
 		mobs.add(mob2);
-		Actor.occupyCell(mob2);
-		/*	
-		    SokobanSentinel mob3 = new SokobanSentinel();
-			mob3.pos = 2 + WIDTH * 43;
-			mobs.add(mob3);
-			Actor.occupyCell(mob3);	
-		*/	
-			/*
-			AdultDragonViolet mob3 = new AdultDragonViolet();
-			mob3.pos = 18 + WIDTH * 23;
-			mobs.add(mob3);
-			Actor.occupyCell(mob3);	
-			*/
+
 	}
 
 
 	protected void createSheep() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				SheepSokoban npc = new SheepSokoban();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				SheepSokobanCorner npc = new SheepSokobanCorner();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
 				SheepSokobanSwitch npc = new SheepSokobanSwitch();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
 				SheepSokobanBlack npc = new SheepSokobanBlack();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.PORT_WELL) {
 				/*
 					Portal portal = new Portal();
@@ -653,26 +607,26 @@ public class SokobanCastle extends Level {
 	protected void createSwitches() {
 
 		//spots where your portals are
-		teleportspots[0] = 4 + WIDTH * 3;
-		teleportspots[1] = 7 + WIDTH * 27;
-		teleportspots[2] = 37 + WIDTH * 35;
+		teleportspots[0] = 4 + getWidth() * 3;
+		teleportspots[1] = 7 + getWidth() * 27;
+		teleportspots[2] = 37 + getWidth() * 35;
 
 
 		//spots where your portal switches are
-		portswitchspots[0] = 32 + WIDTH * 40;
+		portswitchspots[0] = 32 + getWidth() * 40;
 
 
 		//assign each switch to a portal
-		teleportassign[0] = 37 + WIDTH * 35;
+		teleportassign[0] = 37 + getWidth() * 35;
 
 
 		//assign each switch to a destination spot
-		destinationassign[0] = 9 + WIDTH * 37;
+		destinationassign[0] = 9 + getWidth() * 37;
 
 
 		//set the original destination of portals
-		destinationspots[0] = 24 + WIDTH * 22; //6 + WIDTH * 5;
-		destinationspots[1] = 1 + WIDTH * 27;
+		destinationspots[0] = 24 + getWidth() * 22; //6 + WIDTH * 5;
+		destinationspots[1] = 1 + getWidth() * 27;
 		destinationspots[2] = 0;
 
 
@@ -687,7 +641,7 @@ public class SokobanCastle extends Level {
 			goldmin = 400;
 			goldmax = 800;
 		}
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_HEAP) {
 				if (first && Random.Int(5) == 0) {
 					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
@@ -697,24 +651,24 @@ public class SokobanCastle extends Level {
 			}
 		}
 
-		addItemToGen(new IronKey(Dungeon.depth), 0, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth), 1, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth), 2, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth), 3, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth), 4, 24 + WIDTH * 22);
-		addItemToGen(new IronKey(Dungeon.depth), 5, 24 + WIDTH * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 0, 24 + getWidth() * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 1, 24 + getWidth() * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 2, 24 + getWidth() * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 3, 24 + getWidth() * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 4, 24 + getWidth() * 22);
+		addItemToGen(new IronKey(Dungeon.depth), 5, 24 + getWidth() * 22);
 
 
 		//	if (first){
-		addItemToGen(new Phaseshift.Seed(), 6, 30 + WIDTH * 23);
-		addItemToGen(new Starflower.Seed(), 7, 18 + WIDTH * 23);
-		addItemToGen(new Spectacles(), 8, 25 + WIDTH * 2);
-		addItemToGen(new ScrollOfMagicalInfusion(), 9, 26 + WIDTH * 2);
-		addItemToGen(new ScrollOfMagicalInfusion(), 10, 8 + WIDTH * 37);
-		addItemToGen(new ScrollOfRegrowth(), 11, 10 + WIDTH * 37);
+		addItemToGen(new Phaseshift.Seed(), 6, 30 + getWidth() * 23);
+		addItemToGen(new Starflower.Seed(), 7, 18 + getWidth() * 23);
+		addItemToGen(new Spectacles(), 8, 25 + getWidth() * 2);
+		addItemToGen(new ScrollOfMagicalInfusion(), 9, 26 + getWidth() * 2);
+		addItemToGen(new ScrollOfMagicalInfusion(), 10, 8 + getWidth() * 37);
+		addItemToGen(new ScrollOfRegrowth(), 11, 10 + getWidth() * 37);
 		//	}
 
-		drop(new PotionOfLiquidFlame(), 9 + WIDTH * 24).type = Heap.Type.CHEST;
+		drop(new PotionOfLiquidFlame(), 9 + getWidth() * 24).type = Heap.Type.CHEST;
 	}
 
 	@Override

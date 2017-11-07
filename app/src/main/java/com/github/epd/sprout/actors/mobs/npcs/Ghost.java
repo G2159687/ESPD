@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs.npcs;
 
 import com.github.epd.sprout.Assets;
@@ -22,7 +6,6 @@ import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Journal;
 import com.github.epd.sprout.Statistics;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.blobs.Fire;
@@ -40,13 +23,12 @@ import com.github.epd.sprout.actors.mobs.Rat;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Generator;
-import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.SewersKey;
-import com.github.epd.sprout.items.TenguKey;
+import com.github.epd.sprout.items.teleporter.TenguKey;
 import com.github.epd.sprout.items.armor.Armor;
 import com.github.epd.sprout.items.food.MysteryMeat;
-import com.github.epd.sprout.items.journalpages.SafeSpotPage;
+import com.github.epd.sprout.items.teleporter.SafeSpotPage;
+import com.github.epd.sprout.items.teleporter.SewersKey;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.missiles.CurareDart;
@@ -175,8 +157,6 @@ public class Ghost extends NPC {
 						}
 					}
 					if (newPos != -1) {
-
-						Actor.freeCell(pos);
 
 						CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT),
 								0.2f, 3);
@@ -316,7 +296,6 @@ public class Ghost extends NPC {
 					ghost.pos = level.randomRespawnCell();
 				} while (ghost.pos == -1);
 				level.mobs.add(ghost);
-				Actor.occupyCell(ghost);
 
 				spawned = true;
 				// dungeon depth determines type of quest.
@@ -470,7 +449,7 @@ public class Ghost extends NPC {
 		@Override
 		protected boolean canAttack(Char enemy) {
 			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT);
-			if (!Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos) {
+			if (!Dungeon.level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos) {
 				combo++;
 				return true;
 			} else {
@@ -503,7 +482,7 @@ public class Ghost extends NPC {
 		@Override
 		protected boolean getCloser(int target) {
 			combo = 0; // if he's moving, he isn't attacking, reset combo.
-			if (Level.adjacent(pos, enemy.pos)) {
+			if (Dungeon.level.adjacent(pos, enemy.pos)) {
 				return getFurther(target);
 			} else {
 				return super.getCloser(target);
@@ -601,8 +580,6 @@ public class Ghost extends NPC {
 
 	public static class GnollArcher extends Gnoll {
 
-		// TODO: Auto collect items dropped by these mobs
-
 		private static final String TXT_KILLCOUNT = Messages.get(Ghost.class, "killcount");
 
 		{
@@ -618,10 +595,10 @@ public class Ghost extends NPC {
 
 			state = WANDERING;
 
-			loot = Gold.class;
+			loot = Generator.random(Generator.Category.SEED);
 			lootChance = 0.01f;
 
-			lootOther = Gold.class;
+			lootOther = Generator.random(Generator.Category.MUSHROOM);
 			lootChanceOther = 0.01f;
 
 		}
@@ -635,7 +612,7 @@ public class Ghost extends NPC {
 		@Override
 		protected boolean canAttack(Char enemy) {
 			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT);
-			return !Level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
+			return !Dungeon.level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
 		}
 
 		@Override
@@ -646,7 +623,7 @@ public class Ghost extends NPC {
 
 		@Override
 		protected boolean getCloser(int target) {
-			if (Level.adjacent(pos, enemy.pos)) {
+			if (Dungeon.level.adjacent(pos, enemy.pos)) {
 				return getFurther(target);
 			} else {
 				return super.getCloser(target);

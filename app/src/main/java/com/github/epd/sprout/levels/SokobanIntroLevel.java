@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -31,7 +14,7 @@ import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanSwitch;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.Towel;
+import com.github.epd.sprout.items.misc.Towel;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
@@ -70,9 +53,6 @@ public class SokobanIntroLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -228,39 +208,6 @@ public class SokobanIntroLevel extends Level {
 				trap = false;
 				if (ch != null) {
 					ActivatePortalTrap.trigger(cell, ch);
-
-				/*	
-				int arraypos = -1; //position in array of teleport switch
-				int portpos = -1; //position on map of teleporter
-				int portarraypos = -1; //position in array of teleporter
-				int destpos = -1; //destination position assigned to switch
-				
-				for(int i = 0; i < portswitchspots.length; i++) {
-				  if(portswitchspots[i] == cell) {
-				     arraypos = i;
-				     break;
-				  }
-				}
-				
-				portpos = teleportassign[arraypos];
-				destpos = destinationassign[arraypos];
-				
-				// Stepping on switch deactivates the portal 
-				destpos = -1;
-				
-				for(int i = 0; i < teleportspots.length; i++) {
-					  if(teleportspots[i] == portpos) {
-						     portarraypos = i;
-						     break;
-						  }
-				}
-				
-				if (map[portpos] == Terrain.PORT_WELL){
-					destinationspots[portarraypos]=destpos;	
-					GLog.i(Messages.get(SokobanIntroLevel.class,"dea"));
-				}
-				
-				*/
 				}
 				break;
 
@@ -502,87 +449,48 @@ public class SokobanIntroLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 30);
+
 		map = SokobanLayouts.SOKOBAN_INTRO_LEVEL.clone();
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
 
-		entrance = 7 + WIDTH * 3;
+		entrance = 7 + getWidth() * 3;
 		exit = 0;
 
 
 		return true;
 	}
 
-
-	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
 	@Override
 	protected void createMobs() {
-		/*
-		    SokobanSentinel mob = new SokobanSentinel();
-			mob.pos = 38 + WIDTH * 21;
-			mobs.add(mob);
-			Actor.occupyCell(mob);
-			
-			SokobanSentinel mob2 = new SokobanSentinel();
-			mob2.pos = 25 + WIDTH * 36;
-			mobs.add(mob2);
-			Actor.occupyCell(mob2);		
-			*/
+
 	}
-	
-	
-/*
-	public static final int FLEECING_TRAP = 65;
-	public static final int WOOL_RUG = 66;
-	public static final int SOKOBAN_SHEEP = 67;
-	public static final int CORNER_SOKOBAN_SHEEP = 68;
-	public static final int SWITCH_SOKOBAN_SHEEP = 69;
-	public static final int CHANGE_SHEEP_TRAP = 70;
-	public static final int SOKOBAN_ITEM_REVEAL = 71;
-	public static final int SOKOBAN_HEAP = 72;
-	public static final int BLACK_SOKOBAN_SHEEP = 73;
-	public static final int SOKOBAN_PORT_SWITCH = 75;
-	public static final int PORT_WELL = 74;	
-	
-*/
+
 
 	protected void createSheep() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				SheepSokoban npc = new SheepSokoban();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				SheepSokobanCorner npc = new SheepSokobanCorner();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
 				SheepSokobanSwitch npc = new SheepSokobanSwitch();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
 				SheepSokobanBlack npc = new SheepSokobanBlack();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.PORT_WELL) {
-				
-					/*
-					Portal portal = new Portal();
-				portal.seed(i, 1);
-				blobs.put(Portal.class, portal);
-				*/
+
 			}
 
 		}
@@ -592,16 +500,16 @@ public class SokobanIntroLevel extends Level {
 	protected void createSwitches() {
 
 		//spots where your portals are
-		teleportspots[0] = 7 + WIDTH * 21;
+		teleportspots[0] = 7 + getWidth() * 21;
 
 		//spots where your portal switches are
-		portswitchspots[0] = 8 + WIDTH * 27;
+		portswitchspots[0] = 8 + getWidth() * 27;
 
 		//assign each switch to a portal
-		teleportassign[0] = 7 + WIDTH * 21;
+		teleportassign[0] = 7 + getWidth() * 21;
 
 		//assign each switch to a destination spot
-		destinationassign[0] = 34 + WIDTH * 8;
+		destinationassign[0] = 34 + getWidth() * 8;
 
 		//set the original destination of portals
 		destinationspots[0] = 0;
@@ -679,7 +587,7 @@ public class SokobanIntroLevel extends Level {
 			goldmin = 300;
 			goldmax = 500;
 		}
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_HEAP) {
 				if (first && Random.Int(5) == 0) {
 					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
@@ -689,13 +597,13 @@ public class SokobanIntroLevel extends Level {
 			}
 		}
 
-		addItemToGen(new IronKey(Dungeon.depth), 0, 24 + WIDTH * 21);
+		addItemToGen(new IronKey(Dungeon.depth), 0, 24 + getWidth() * 21);
 
 
 		//	if (first){
-		addItemToGen(new Towel(), 1, 37 + WIDTH * 21);
+		addItemToGen(new Towel(), 1, 37 + getWidth() * 21);
 		//	} else {
-		//		addItemToGen(new Gold(1) , 1, 37 + WIDTH * 21);
+		//		addItemToGen(new Gold(1) , 1, 37 + getWidth() * 21);
 		//	}
 
 	}

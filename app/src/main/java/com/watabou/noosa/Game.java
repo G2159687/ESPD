@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
 
 package com.watabou.noosa;
 
@@ -24,6 +8,7 @@ import android.media.AudioManager;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -210,7 +195,7 @@ public class Game extends Activity implements GLSurfaceView.Renderer, View.OnTou
 		}
 
 		SystemTime.tick();
-		long rightNow = SystemTime.now;
+		long rightNow = SystemClock.elapsedRealtime();
 		step = (now == 0 ? 0 : rightNow - now);
 		now = rightNow;
 

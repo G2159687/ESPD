@@ -1,33 +1,17 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.npcs.Blacksmith;
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer2;
-import com.github.epd.sprout.items.Bomb;
-import com.github.epd.sprout.items.Mushroom;
-import com.github.epd.sprout.levels.Room.Type;
+import com.github.epd.sprout.items.bombs.Bomb;
+import com.github.epd.sprout.items.quest.Mushroom;
+import com.github.epd.sprout.levels.painters.CavesPainter;
 import com.github.epd.sprout.levels.painters.Painter;
+import com.github.epd.sprout.levels.rooms.Room;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -35,7 +19,8 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
-import com.watabou.utils.Rect;
+
+import java.util.ArrayList;
 
 public class CavesLevel extends RegularLevel {
 
@@ -47,6 +32,30 @@ public class CavesLevel extends RegularLevel {
 	}
 
 	@Override
+	protected ArrayList<Room> initRooms() {
+		return Blacksmith.Quest.spawn(super.initRooms());
+	}
+
+	@Override
+	protected int standardRooms() {
+		//6 to 9, average 7.333
+		return 6+Random.chances(new float[]{2, 3, 3, 1});
+	}
+
+	@Override
+	protected int specialRooms() {
+		//1 to 3, average 2.2
+		return 1+Random.chances(new float[]{2, 4, 4});
+	}
+
+	@Override
+	protected Painter painter() {
+		return new CavesPainter()
+				.setWater(feeling == Feeling.WATER ? 0.85f : 0.30f, 6)
+				.setGrass(feeling == Feeling.GRASS ? 0.65f : 0.15f, 3);
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_CAVES;
 	}
@@ -54,16 +63,6 @@ public class CavesLevel extends RegularLevel {
 	@Override
 	public String waterTex() {
 		return Assets.WATER_CAVES;
-	}
-
-	@Override
-	protected boolean[] water() {
-		return Patch.generate(feeling == Feeling.WATER ? 0.60f : 0.45f, 6);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(feeling == Feeling.GRASS ? 0.55f : 0.35f, 3);
 	}
 
 	@Override
@@ -80,7 +79,6 @@ public class CavesLevel extends RegularLevel {
 				npc.pos = randomRespawnCell();
 			} while (npc.pos == -1 || heaps.get(npc.pos) != null);
 			mobs.add(npc);
-			Actor.occupyCell(npc);
 		}
 
 		if (Dungeon.depth == 11) {
@@ -91,143 +89,6 @@ public class CavesLevel extends RegularLevel {
 			addItemToSpawn(new Bomb());
 		}
 		super.createItems();
-	}
-
-
-	@Override
-	protected boolean assignRoomType() {
-		super.assignRoomType();
-
-		return !(!Blacksmith.Quest.spawn(rooms) && Dungeon.depth == 14);
-
-	}
-
-	@Override
-	protected void decorate() {
-
-		for (Room room : rooms) {
-			if (room.type != Room.Type.STANDARD) {
-				continue;
-			}
-
-			if (room.width() <= 3 || room.height() <= 3) {
-				continue;
-			}
-
-			int s = room.square();
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.left + 1) + (room.top + 1) * getWidth();
-				if (map[corner - 1] == Terrain.WALL
-						&& map[corner - getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.right - 1) + (room.top + 1) * getWidth();
-				if (map[corner + 1] == Terrain.WALL
-						&& map[corner - getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.left + 1) + (room.bottom - 1) * getWidth();
-				if (map[corner - 1] == Terrain.WALL
-						&& map[corner + getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.right - 1) + (room.bottom - 1) * getWidth();
-				if (map[corner + 1] == Terrain.WALL
-						&& map[corner + getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			for (Room n : room.connected.keySet()) {
-				if ((n.type == Room.Type.STANDARD || n.type == Room.Type.TUNNEL)
-						&& Random.Int(3) == 0) {
-					Painter.set(this, room.connected.get(n), Terrain.EMPTY_DECO);
-				}
-			}
-		}
-
-		for (int i = getWidth() + 1; i < getLength() - getWidth(); i++) {
-			if (map[i] == Terrain.EMPTY) {
-				int n = 0;
-				if (map[i + 1] == Terrain.WALL) {
-					n++;
-				}
-				if (map[i - 1] == Terrain.WALL) {
-					n++;
-				}
-				if (map[i + getWidth()] == Terrain.WALL) {
-					n++;
-				}
-				if (map[i - getWidth()] == Terrain.WALL) {
-					n++;
-				}
-				if (Random.Int(6) <= n) {
-					map[i] = Terrain.EMPTY_DECO;
-				}
-			}
-		}
-
-		for (int i = 0; i < getLength(); i++) {
-			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
-				map[i] = Terrain.WALL_DECO;
-			}
-		}
-
-		while (true) {
-			int pos = roomEntrance.random();
-			if (pos != entrance) {
-				map[pos] = Terrain.SIGN;
-				break;
-			}
-		}
-
-		setPar();
-
-		if (Dungeon.bossLevel(Dungeon.depth + 1)) {
-			return;
-		}
-
-		for (Room r : rooms) {
-			if (r.type == Type.STANDARD) {
-				for (Room n : r.neigbours) {
-					if (n.type == Type.STANDARD && !r.connected.containsKey(n)) {
-						Rect w = r.intersect(n);
-						if (w.left == w.right && w.bottom - w.top >= 5) {
-
-							w.top += 2;
-							w.bottom -= 1;
-
-							w.right++;
-
-							Painter.fill(this, w.left, w.top, 1, w.height(),
-									Terrain.CHASM);
-
-						} else if (w.top == w.bottom && w.right - w.left >= 5) {
-
-							w.left += 2;
-							w.right -= 1;
-
-							w.bottom++;
-
-							Painter.fill(this, w.left, w.top, w.width(), 1,
-									Terrain.CHASM);
-						}
-					}
-				}
-			}
-		}
-
-
 	}
 
 	@Override
@@ -269,7 +130,7 @@ public class CavesLevel extends RegularLevel {
 	}
 
 	public static void addVisuals(Level level, Scene scene) {
-		for (int i = 0; i < getLength(); i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (level.map[i] == Terrain.WALL_DECO) {
 				scene.add(new Vein(i));
 			}

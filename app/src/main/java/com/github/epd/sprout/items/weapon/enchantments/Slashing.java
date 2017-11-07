@@ -1,27 +1,11 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items.weapon.enchantments;
 
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.Weapon;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSprite;
 import com.github.epd.sprout.sprites.ItemSprite.Glowing;
@@ -48,13 +32,13 @@ public class Slashing extends Weapon.Enchantment {
 
 	public static final int[] NEIGHBOURS8 = {+1,
 			-1,
-			+Level.getWidth(),
-			-Level.getWidth(),
+			+Dungeon.level.getWidth(),
+			-Dungeon.level.getWidth(),
 
-			+1 + Level.getWidth(),
-			+1 - Level.getWidth(),
-			-1 + Level.getWidth(),
-			-1 - Level.getWidth()};
+			+1 + Dungeon.level.getWidth(),
+			+1 - Dungeon.level.getWidth(),
+			-1 + Dungeon.level.getWidth(),
+			-1 - Dungeon.level.getWidth()};
 
 	/*  -W-1 -W  -W+1
 	 *  -1    P  +1
@@ -68,27 +52,27 @@ public class Slashing extends Weapon.Enchantment {
 
 		if (defender.pos - attacker.pos == 1) {
 
-			//		points[0] = [attacker.pos-Level.W]
+			//		points[0] = [attacker.pos-Dungeon.level.W]
 
 		} else if (defender.pos - attacker.pos == -1) {
 
 
-		} else if (defender.pos - attacker.pos == Level.getWidth()) {
+		} else if (defender.pos - attacker.pos == Dungeon.level.getWidth()) {
 
 
-		} else if (defender.pos - attacker.pos == -Level.getWidth()) {
+		} else if (defender.pos - attacker.pos == -Dungeon.level.getWidth()) {
 
 
-		} else if (defender.pos - attacker.pos == Level.getWidth() + 1) {
+		} else if (defender.pos - attacker.pos == Dungeon.level.getWidth() + 1) {
 
 
-		} else if (defender.pos - attacker.pos == Level.getWidth() - 1) {
+		} else if (defender.pos - attacker.pos == Dungeon.level.getWidth() - 1) {
 
 
-		} else if (defender.pos - attacker.pos == -Level.getWidth() - 1) {
+		} else if (defender.pos - attacker.pos == -Dungeon.level.getWidth() - 1) {
 
 
-		} else if (defender.pos - attacker.pos == -Level.getWidth() + 1) {
+		} else if (defender.pos - attacker.pos == -Dungeon.level.getWidth() + 1) {
 
 
 		} else {

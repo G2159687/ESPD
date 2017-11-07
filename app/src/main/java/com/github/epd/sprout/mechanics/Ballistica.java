@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.mechanics;
 
 import com.github.epd.sprout.Dungeon;
@@ -53,7 +37,7 @@ public class Ballistica {
 	}
 
 	private void build(int from, int to, boolean stopTarget, boolean stopChars, boolean stopTerrain, boolean stopSolid) {
-		int w = Level.getWidth();
+		int w = Dungeon.level.getWidth();
 
 		int x0 = from % w;
 		int x1 = to % w;
@@ -106,7 +90,7 @@ public class Ballistica {
 					|| (cell != sourcePos && stopChars && Actor.findChar(cell) != null)
 					|| (cell == to && stopTarget)
 					|| (stopSolid && cell != sourcePos && Level.solid[cell])
-					|| (cell % Level.WIDTH == 0 || cell % Level.WIDTH == Level.WIDTH - 1)) {
+					|| (cell % Dungeon.level.getWidth() == 0 || cell % Dungeon.level.getWidth() == Dungeon.level.getWidth() - 1)) {
 				collide(cell);
 			}
 
@@ -137,12 +121,12 @@ public class Ballistica {
 		}
 	}
 
-	public static int[] trace = new int[Math.max(Level.getWidth(), Level.HEIGHT)];
+	public static int[] trace = new int[Math.max(Dungeon.level.getWidth(), Dungeon.level.getHeight())];
 	public static int distance;
 
 	public static int cast(int from, int to, boolean magic, boolean hitChars) {
 
-		int w = Level.getWidth();
+		int w = Dungeon.level.getWidth();
 
 		int x0 = from % w;
 		int x1 = to % w;

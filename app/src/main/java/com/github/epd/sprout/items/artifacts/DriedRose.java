@@ -362,7 +362,7 @@ public class DriedRose extends Artifact {
 		@Override
 		protected boolean getCloser(int target) {
 			if (state == WANDERING
-					|| Level.distance(target, Dungeon.hero.pos) > 6)
+					|| Dungeon.level.distance(target, Dungeon.hero.pos) > 6)
 				this.target = target = Dungeon.hero.pos;
 			return super.getCloser(target);
 		}

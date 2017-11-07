@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors;
 
 import android.util.SparseArray;
@@ -25,12 +9,10 @@ import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.Mob;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.scenes.GameScene;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 public abstract class Actor implements Bundlable {
@@ -97,21 +79,20 @@ public abstract class Actor implements Bundlable {
 	// **********************
 	// *** Static members ***
 
-	private static HashSet<Actor> all = new HashSet<Actor>();
+	private static HashSet<Actor> all = new HashSet<>();
+	private static HashSet<Char> chars = new HashSet<>();
 	private static volatile Actor current;
 
 	private static SparseArray<Actor> ids = new SparseArray<Actor>();
 
 	private static float now = 0;
 
-	private static Char[] chars = new Char[Level.getLength()];
-
 	public static synchronized void clear() {
 
 		now = 0;
 
-		Arrays.fill(chars, null);
 		all.clear();
+		chars.clear();
 
 		ids.clear();
 	}
@@ -163,14 +144,6 @@ public abstract class Actor implements Bundlable {
 		nextID = 1;
 	}
 
-	public static void occupyCell(Char ch) {
-		chars[ch.pos] = ch;
-	}
-
-	public static void freeCell(int pos) {
-		chars[pos] = null;
-	}
-
 	/* protected */
 	public void next() {
 		if (current == this) {
@@ -191,8 +164,6 @@ public abstract class Actor implements Bundlable {
 
 			current = null;
 
-			Arrays.fill(chars, null);
-
 			if (!interrupted) {
 				now = Float.MAX_VALUE;
 				for (Actor actor : all) {
@@ -204,11 +175,6 @@ public abstract class Actor implements Bundlable {
 							|| (actor instanceof Char && actor.time == now && !(current instanceof Hero))) {
 						now = actor.time;
 						current = actor;
-					}
-
-					if (actor instanceof Char) {
-						Char ch = (Char) actor;
-						chars[ch.pos] = ch;
 					}
 				}
 			}
@@ -295,7 +261,7 @@ public abstract class Actor implements Bundlable {
 
 		if (actor instanceof Char) {
 			Char ch = (Char) actor;
-			chars[ch.pos] = ch;
+			chars.add( ch );
 			for (Buff buff : ch.buffs()) {
 				all.add(buff);
 				buff.onAdd();
@@ -307,6 +273,7 @@ public abstract class Actor implements Bundlable {
 
 		if (actor != null) {
 			all.remove(actor);
+			chars.remove( actor );
 			actor.onRemove();
 
 			if (actor.id > 0) {
@@ -315,8 +282,12 @@ public abstract class Actor implements Bundlable {
 		}
 	}
 
-	public static synchronized Char findChar(int pos) {
-		return chars[pos];
+	public static Char findChar( int pos ) {
+		for (Char ch : chars){
+			if (ch.pos == pos)
+				return ch;
+		}
+		return null;
 	}
 
 	public static synchronized Actor findById(int id) {
@@ -326,4 +297,6 @@ public abstract class Actor implements Bundlable {
 	public static synchronized HashSet<Actor> all() {
 		return new HashSet<Actor>(all);
 	}
+
+	public static HashSet<Char> chars() { return chars; }
 }

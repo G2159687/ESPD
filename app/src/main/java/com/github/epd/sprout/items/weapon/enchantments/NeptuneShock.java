@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items.weapon.enchantments;
 
 import com.github.epd.sprout.Dungeon;
@@ -69,7 +53,7 @@ public class NeptuneShock extends Weapon.Enchantment {
 
 			boolean visible = Level.fieldOfView[mob.pos];
 
-			if (Level.distance(attacker.pos, mob.pos) < distance && mob.isAlive() && !mob.isPassive() && Random.Int(10) < 5) {
+			if (Dungeon.level.distance(attacker.pos, mob.pos) < distance && mob.isAlive() && !mob.isPassive() && Random.Int(10) < 5) {
 
 				// int dmg = 20;
 				attacker.sprite.parent.add(new Lightning(mob.pos, attacker.pos, null));

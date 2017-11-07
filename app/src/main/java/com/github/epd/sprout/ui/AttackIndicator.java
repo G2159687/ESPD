@@ -1,26 +1,9 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.ui;
 
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.mobs.Mob;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.CharSprite;
 import com.watabou.noosa.Game;
@@ -102,8 +85,8 @@ public class AttackIndicator extends Tag {
 		for (int i = 0; i < v; i++) {
 			Mob mob = Dungeon.hero.visibleEnemy(i);
 			if (Dungeon.hero.belongings.weapon != null ?
-					Level.distance(heroPos, mob.pos) <= Dungeon.hero.belongings.weapon.reachFactor(Dungeon.hero)
-					: Level.adjacent(heroPos, mob.pos)) {
+					Dungeon.level.distance(heroPos, mob.pos) <= Dungeon.hero.belongings.weapon.reachFactor(Dungeon.hero)
+					: Dungeon.level.adjacent(heroPos, mob.pos)) {
 				candidates.add(mob);
 			}
 		}

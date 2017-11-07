@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Dungeon;
@@ -80,7 +64,7 @@ public class MineSentinel extends Mob {
 		weapon.upgrade(10);
 
 
-		HP = HT = 500 + Dungeon.depth * 20;
+		HP = HT = 500 + Dungeon.depth * 10;
 		//HP = HT = 5;
 		defenseSkill = 20 + adj(1);
 		//defenseSkill = 2;
@@ -111,7 +95,7 @@ public class MineSentinel extends Mob {
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 				int p = pos + PathFinder.NEIGHBOURS8[i];
 				Char ch = Actor.findChar(p);
-				if (ch != null && ch instanceof MineSentinel && Random.Int(10) < 2) {
+				if (ch != null && ch instanceof MineSentinel && Random.Int(20) < 1) {
 					ch.damage(1, this);
 					if (((Mob) ch).state == PASSIVE) {
 						((Mob) ch).state = HUNTING;
@@ -134,7 +118,6 @@ public class MineSentinel extends Mob {
 			if (spawnPoints.size() > 0) {
 				int newPos;
 				newPos = Random.element(spawnPoints);
-				Actor.freeCell(pos);
 				CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 				pos = newPos;
 				sprite.place(pos);
@@ -152,7 +135,6 @@ public class MineSentinel extends Mob {
 					}
 				}
 				if (newPos != -1) {
-					Actor.freeCell(pos);
 					CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 					pos = newPos;
 					sprite.place(pos);

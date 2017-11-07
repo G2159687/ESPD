@@ -10,7 +10,6 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.particles.EarthParticle;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Plant;
 import com.github.epd.sprout.scenes.GameScene;
@@ -100,7 +99,7 @@ public class SandalsOfNature extends Artifact {
 
 	protected void growPlant() {
 		Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-		int length = Level.getLength();
+		int length = Dungeon.level.getLength();
 		for (int i = 0; i < length; i++) {
 			GameScene.add(Blob.seed(i, (2) * 20, Water.class));
 		}

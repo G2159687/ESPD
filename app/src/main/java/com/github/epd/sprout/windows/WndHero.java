@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.Assets;
@@ -29,7 +13,6 @@ import com.github.epd.sprout.actors.mobs.Mob;
 import com.github.epd.sprout.actors.mobs.pets.PET;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.food.Blackberry;
 import com.github.epd.sprout.items.food.Blueberry;
 import com.github.epd.sprout.items.food.ChargrilledMeat;
@@ -41,9 +24,10 @@ import com.github.epd.sprout.items.food.Moonberry;
 import com.github.epd.sprout.items.food.MysteryMeat;
 import com.github.epd.sprout.items.food.Nut;
 import com.github.epd.sprout.items.food.ToastedNut;
-import com.github.epd.sprout.items.journalpages.JournalPage;
-import com.github.epd.sprout.items.journalpages.Sokoban1;
-import com.github.epd.sprout.items.journalpages.Sokoban2;
+import com.github.epd.sprout.items.teleporter.JournalPage;
+import com.github.epd.sprout.items.teleporter.OtilukesJournal;
+import com.github.epd.sprout.items.teleporter.Sokoban1;
+import com.github.epd.sprout.items.teleporter.Sokoban2;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Plant;

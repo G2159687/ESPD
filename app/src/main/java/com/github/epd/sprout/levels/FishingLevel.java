@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -23,7 +7,7 @@ import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.mobs.Bestiary;
 import com.github.epd.sprout.actors.mobs.Mob;
-import com.github.epd.sprout.items.FishingBomb;
+import com.github.epd.sprout.items.bombs.FishingBomb;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.potions.PotionOfLevitation;
 import com.github.epd.sprout.levels.painters.Painter;
@@ -42,10 +26,10 @@ public class FishingLevel extends Level {
 		viewDistance = 8;
 	}
 
-	private static final int ROOM_LEFT = getWidth() / 2 - 2;
-	private static final int ROOM_RIGHT = getWidth() / 2 + 2;
-	private static final int ROOM_TOP = HEIGHT / 2 - 2;
-	private static final int ROOM_BOTTOM = HEIGHT / 2 + 2;
+	private static final int ROOM_LEFT = 48 / 2 - 2;
+	private static final int ROOM_RIGHT = 48 / 2 + 2;
+	private static final int ROOM_TOP = 48 / 2 - 2;
+	private static final int ROOM_BOTTOM = 48 / 2 + 2;
 
 	@Override
 	public String tilesTex() {
@@ -60,6 +44,8 @@ public class FishingLevel extends Level {
 
 	@Override
 	protected boolean build() {
+
+		setSize(48, 48);
 
 		int topMost = Integer.MAX_VALUE;
 
@@ -77,7 +63,7 @@ public class FishingLevel extends Level {
 				bottom = ROOM_BOTTOM + 3;
 			} else {
 				top = ROOM_LEFT - 3;
-				bottom = Random.Int(ROOM_TOP + 3, HEIGHT - 1);
+				bottom = Random.Int(ROOM_TOP + 3, getHeight() - 1);
 			}
 
 			Painter.fill(this, left, top, right - left + 1, bottom - top + 1,
@@ -107,17 +93,17 @@ public class FishingLevel extends Level {
 			}
 		}
 
-		boolean[] patch = Patch.generate(0.45f, 6);
+		boolean[] patch = Patch.generate( getWidth(), getHeight(), 0.30f, 6, true );
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.WATER && patch[i]) {
 				map[i] = Terrain.EMPTY;
 			}
 		}
+		decorate();
 
 		return true;
 	}
 
-	@Override
 	protected void decorate() {
 
 		for (int i = getWidth() + 1; i < getLength() - getWidth(); i++) {
@@ -152,10 +138,6 @@ public class FishingLevel extends Level {
 
 	}
 
-	//@Override
-	//protected void createMobs() {
-	//}
-
 	@Override
 	protected void createItems() {
 
@@ -164,13 +146,6 @@ public class FishingLevel extends Level {
 		drop(new PotionOfLevitation(), pos);
 
 	}
-
-
-	//@Override
-	//public int randomRespawnCell() {
-	//	return -1;
-	//}
-
 
 	@Override
 	public String tileName(int tile) {
@@ -226,7 +201,6 @@ public class FishingLevel extends Level {
 				mob.pos = randomRespawnCellFishMob();
 			} while (mob.pos == -1);
 			mobs.add(mob);
-			Actor.occupyCell(mob);
 		}
 	}
 

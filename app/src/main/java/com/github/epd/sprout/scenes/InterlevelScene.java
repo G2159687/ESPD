@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.scenes;
 
 import com.github.epd.sprout.Assets;
@@ -100,6 +84,7 @@ public class InterlevelScene extends PixelScene {
 
 	private Thread thread;
 	private Exception error = null;
+	private float waitingTime;
 
 	@Override
 	public void create() {
@@ -282,11 +267,14 @@ public class InterlevelScene extends PixelScene {
 			}
 		};
 		thread.start();
+		waitingTime = 0f;
 	}
 
 	@Override
 	public void update() {
 		super.update();
+
+		waitingTime += Game.elapsed;
 
 		float p = timeLeft / TIME_TO_FADE;
 
@@ -324,10 +312,7 @@ public class InterlevelScene extends PixelScene {
 					else if (error instanceof IOException)
 						errorMsg = ERR_IO;
 
-					else
-						throw new RuntimeException(
-								"fatal error occured while moving between floors",
-								error);
+					else throw new RuntimeException("fatal error occured while moving between floors", error);
 
 					add(new WndError(errorMsg) {
 						@Override
@@ -337,6 +322,11 @@ public class InterlevelScene extends PixelScene {
 						}
 					});
 					error = null;
+				} else if ((int)waitingTime == 10){
+					waitingTime = 11f;
+					Throwable t = new Throwable();
+					t.setStackTrace(thread.getStackTrace());
+					throw new RuntimeException("waited more than 10 seconds on levelgen.", t);
 				}
 				break;
 		}
@@ -384,14 +374,12 @@ public class InterlevelScene extends PixelScene {
 			Dungeon.depth++;
 			level = Dungeon.loadLevel(Dungeon.hero.heroClass);
 		}
-		Dungeon.switchLevel(level,
-				fallIntoPit ? level.pitCell() : level.randomRespawnCell());
+		Dungeon.switchLevel( level, fallIntoPit ? level.pitCell() : level.randomRespawnCell() );
 	}
 
 	private void ascend() throws IOException {
 		Actor.fixTime();
 
-		Dungeon.saveAll();
 		if (Dungeon.depth == 41) {
 			Dungeon.depth = 40;
 			Level level = Dungeon.loadLevel(Dungeon.hero.heroClass);
@@ -414,8 +402,7 @@ public class InterlevelScene extends PixelScene {
 		Dungeon.saveAll();
 		Dungeon.depth = returnDepth;
 		Level level = Dungeon.loadLevel(Dungeon.hero.heroClass);
-		Dungeon.switchLevel(level,
-				Level.resizingNeeded ? level.adjustPos(returnPos) : returnPos);
+		Dungeon.switchLevel(level, returnPos);
 	}
 
 	private void returnToSave() throws IOException {
@@ -443,9 +430,7 @@ public class InterlevelScene extends PixelScene {
 			Dungeon.switchLevel(Dungeon.loadLevel(StartScene.curClass), -1);
 		} else {
 			Level level = Dungeon.loadLevel(StartScene.curClass);
-			Dungeon.switchLevel(level,
-					Level.resizingNeeded ? level.adjustPos(Dungeon.hero.pos)
-							: Dungeon.hero.pos);
+			Dungeon.switchLevel(level, Dungeon.hero.pos);
 		}
 	}
 
@@ -522,7 +507,7 @@ public class InterlevelScene extends PixelScene {
 
 	private void journalPortal(int branch) throws IOException {
 		//checkPetPort();
-		if (branch == 0 || branch == 5) {
+		if (branch == 0 || branch == 5 || branch == 8) {
 			checkPetPort();
 		}
 		Actor.fixTime();

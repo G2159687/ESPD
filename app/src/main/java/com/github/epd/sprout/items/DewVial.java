@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items;
 
 import com.github.epd.sprout.Assets;
@@ -35,7 +19,6 @@ import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ShadowParticle;
 import com.github.epd.sprout.items.artifacts.Artifact;
 import com.github.epd.sprout.items.bags.Bag;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -256,28 +239,28 @@ public class DewVial extends Item {
 				distance = 1;
 			}
 
-			int cx = hero.pos % Level.getWidth();
-			int cy = hero.pos / Level.getWidth();
+			int cx = hero.pos % Dungeon.level.getWidth();
+			int cy = hero.pos / Dungeon.level.getWidth();
 			int ax = cx - distance;
 			if (ax < 0) {
 				ax = 0;
 			}
 			int bx = cx + distance;
-			if (bx >= Level.getWidth()) {
-				bx = Level.getWidth() - 1;
+			if (bx >= Dungeon.level.getWidth()) {
+				bx = Dungeon.level.getWidth() - 1;
 			}
 			int ay = cy - distance;
 			if (ay < 0) {
 				ay = 0;
 			}
 			int by = cy + distance;
-			if (by >= Level.HEIGHT) {
-				by = Level.HEIGHT - 1;
+			if (by >= Dungeon.level.getHeight()) {
+				by = Dungeon.level.getHeight() - 1;
 			}
 
 
 			for (int y = ay; y <= by; y++) {
-				for (int x = ax, p = ax + y * Level.getWidth(); x <= bx; x++, p++) {
+				for (int x = ax, p = ax + y * Dungeon.level.getWidth(); x <= bx; x++, p++) {
 
 					if (Dungeon.visible[p]) {
 						int c = Dungeon.level.map[p];

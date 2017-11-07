@@ -1,31 +1,15 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.GoldThief;
 import com.github.epd.sprout.actors.mobs.npcs.Imp;
-import com.github.epd.sprout.items.Bomb;
-import com.github.epd.sprout.levels.Room.Type;
+import com.github.epd.sprout.items.bombs.Bomb;
+import com.github.epd.sprout.levels.painters.CityPainter;
+import com.github.epd.sprout.levels.painters.Painter;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Scene;
 import com.watabou.noosa.particles.Emitter;
@@ -41,6 +25,18 @@ public class CityLevel extends RegularLevel {
 	}
 
 	@Override
+	protected int standardRooms() {
+		//7 to 10, average 7.9
+		return 7+Random.chances(new float[]{4, 3, 2, 1});
+	}
+
+	@Override
+	protected int specialRooms() {
+		//2 to 3, average 2.33
+		return 2 + Random.chances(new float[]{2, 1});
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_CITY;
 	}
@@ -51,53 +47,15 @@ public class CityLevel extends RegularLevel {
 	}
 
 	@Override
-	protected boolean[] water() {
-		return Patch.generate(feeling == Feeling.WATER ? 0.65f : 0.45f, 4);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 3);
+	protected Painter painter() {
+		return new CityPainter()
+				.setWater(feeling == Feeling.WATER ? 0.90f : 0.30f, 4)
+				.setGrass(feeling == Feeling.GRASS ? 0.80f : 0.20f, 3);
 	}
 
 	@Override
 	protected void setPar() {
 		Dungeon.pars[Dungeon.depth] = 200 + (Dungeon.depth * 50) + (secretDoors * 20);
-	}
-
-	@Override
-	protected boolean assignRoomType() {
-		super.assignRoomType();
-
-		for (Room r : rooms) {
-			if (r.type == Type.TUNNEL) {
-				r.type = Type.PASSAGE;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
-	protected void decorate() {
-
-		for (int i = 0; i < getLength(); i++) {
-			if (map[i] == Terrain.EMPTY && Random.Int(10) == 0) {
-				map[i] = Terrain.EMPTY_DECO;
-			} else if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
-				map[i] = Terrain.WALL_DECO;
-			}
-		}
-
-		while (true) {
-			int pos = roomEntrance.random();
-			if (pos != entrance) {
-				map[pos] = Terrain.SIGN;
-				break;
-			}
-		}
-
-		setPar();
 	}
 
 	@Override
@@ -119,7 +77,6 @@ public class CityLevel extends RegularLevel {
 				thief.pos = level.randomRespawnCell();
 			} while (thief.pos == -1);
 			level.mobs.add(thief);
-			Actor.occupyCell(thief);
 		}
 	}
 
@@ -164,7 +121,7 @@ public class CityLevel extends RegularLevel {
 	}
 
 	public static void addVisuals(Level level, Scene scene) {
-		for (int i = 0; i < getLength(); i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (level.map[i] == Terrain.WALL_DECO) {
 				scene.add(new Smoke(i));
 			}

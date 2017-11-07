@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import android.opengl.GLES20;
@@ -23,15 +7,15 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.hero.HeroClass;
-import com.github.epd.sprout.actors.mobs.Sentinel;
-import com.github.epd.sprout.items.Bomb;
+import com.github.epd.sprout.items.bombs.Bomb;
 import com.github.epd.sprout.items.Torch;
+import com.github.epd.sprout.levels.painters.HallsPainter;
+import com.github.epd.sprout.levels.painters.Painter;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Scene;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
@@ -46,6 +30,18 @@ public class HallsLevel extends RegularLevel {
 
 		color1 = 0x801500;
 		color2 = 0xa68521;
+	}
+
+	@Override
+	protected int standardRooms() {
+		//8 to 10, average 8.67
+		return 8+Random.chances(new float[]{3, 2, 1});
+	}
+
+	@Override
+	protected int specialRooms() {
+		//2 to 3, average 2.5
+		return 2 + Random.chances(new float[]{1, 1});
 	}
 
 	@Override
@@ -70,68 +66,10 @@ public class HallsLevel extends RegularLevel {
 	}
 
 	@Override
-	protected boolean[] water() {
-		return Patch.generate(feeling == Feeling.WATER ? 0.55f : 0.40f, 6);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(feeling == Feeling.GRASS ? 0.55f : 0.30f, 3);
-	}
-
-	@Override
-	protected void decorate() {
-
-		for (int i = getWidth() + 1; i < getLength() - getWidth() - 1; i++) {
-			if (map[i] == Terrain.EMPTY) {
-
-				int count = 0;
-				for (int j = 0; j < PathFinder.NEIGHBOURS8.length; j++) {
-					if ((Terrain.flags[map[i + PathFinder.NEIGHBOURS8[j]]] & Terrain.PASSABLE) > 0) {
-						count++;
-					}
-				}
-
-				if (Random.Int(80) < count) {
-					map[i] = Terrain.EMPTY_DECO;
-				}
-
-			} else if (map[i] == Terrain.WALL
-					&& map[i - 1] != Terrain.WALL_DECO
-					&& map[i - getWidth()] != Terrain.WALL_DECO
-					&& Random.Int(20) == 0) {
-
-				map[i] = Terrain.WALL_DECO;
-
-			}
-		}
-
-		while (true) {
-			int pos = roomEntrance.random();
-			if (pos != entrance) {
-				map[pos] = Terrain.SIGN;
-				break;
-			}
-		}
-
-		for (int i = 0; i < getLength(); i++) {
-
-			if (map[i] == Terrain.EXIT) {
-				map[i] = Terrain.PEDESTAL;
-				sealedlevel = true;
-				if (Dungeon.depth == 24) {
-					map[i] = Terrain.EMBERS;
-					Sentinel sentinel = new Sentinel();
-					sentinel.pos = i;
-					mobs.add(sentinel);
-				}
-			}
-
-		}
-
-		setPar();
-
-
+	protected Painter painter() {
+		return new HallsPainter()
+				.setWater(feeling == Feeling.WATER ? 0.70f : 0.15f, 6)
+				.setGrass(feeling == Feeling.GRASS ? 0.65f : 0.10f, 3);
 	}
 
 	@Override
@@ -181,7 +119,7 @@ public class HallsLevel extends RegularLevel {
 	}
 
 	public static void addVisuals(Level level, Scene scene) {
-		for (int i = 0; i < getLength(); i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (level.map[i] == 63) {
 				scene.add(new Stream(i));
 			}

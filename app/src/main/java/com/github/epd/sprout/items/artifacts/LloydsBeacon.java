@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items.artifacts;
 //If it weren't super obvious, this is going to become an artifact soon.
 
@@ -40,6 +24,7 @@ import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.github.epd.sprout.ui.QuickSlotButton;
 import com.github.epd.sprout.utils.GLog;
 import com.github.epd.sprout.utils.Utils;
+import com.github.epd.sprout.windows.WndOtiluke2;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -60,6 +45,7 @@ public class LloydsBeacon extends Artifact {
 	public static final String AC_ZAP = Messages.get(LloydsBeacon.class, "ac_zap");
 	public static final String AC_SET = Messages.get(LloydsBeacon.class, "ac_set");
 	public static final String AC_RETURN = Messages.get(LloydsBeacon.class, "ac_return");
+	public static final String AC_PORTREGULAR = Messages.get(LloydsBeacon.class, "ac_regular");
 
 	private int returnDepth = -1;
 	private int returnPos;
@@ -108,11 +94,20 @@ public class LloydsBeacon extends Artifact {
 		if (returnDepth != -1 && Dungeon.depth < 25 && !Dungeon.bossLevel()) {
 			actions.add(AC_RETURN);
 		}
+		if (Dungeon.depth < 26 && !hero.petfollow && !Dungeon.bossLevel()) {
+			actions.add(AC_PORTREGULAR);
+		}
 		return actions;
 	}
 
 	@Override
 	public void execute(Hero hero, String action) {
+
+		if (action == AC_PORTREGULAR) {
+
+			GameScene.show(new WndOtiluke2());
+
+		}
 
 		if (action == AC_SET || action == AC_RETURN) {
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {

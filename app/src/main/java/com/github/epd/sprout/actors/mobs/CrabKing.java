@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
@@ -25,7 +9,7 @@ import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
-import com.github.epd.sprout.items.AdamantArmor;
+import com.github.epd.sprout.items.consumables.AdamantArmor;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
@@ -128,7 +112,7 @@ public class CrabKing extends Mob {
 	@Override
 	protected boolean doAttack(Char enemy) {
 		timeToJump--;
-		if (timeToJump <= 0 && Level.adjacent(pos, enemy.pos)) {
+		if (timeToJump <= 0 && Dungeon.level.adjacent(pos, enemy.pos)) {
 			jump();
 			return true;
 		} else {
@@ -141,9 +125,9 @@ public class CrabKing extends Mob {
 
 		int newPos;
 		do {
-			newPos = Random.Int(Level.getLength());
+			newPos = Random.Int(Dungeon.level.getLength());
 		} while (!Level.fieldOfView[newPos] || !Level.passable[newPos]
-				|| Level.adjacent(newPos, enemy.pos)
+				|| Dungeon.level.adjacent(newPos, enemy.pos)
 				|| Actor.findChar(newPos) != null);
 
 		sprite.move(pos, newPos);

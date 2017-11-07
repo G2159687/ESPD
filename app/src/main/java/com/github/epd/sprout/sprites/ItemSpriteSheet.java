@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.sprites;
 
 public class ItemSpriteSheet {
@@ -258,7 +242,6 @@ public class ItemSpriteSheet {
 	public static final int SCROLL_NCOSRANE         = SCROLLS + 10;
 	public static final int SCROLL_TIWAZ            = SCROLLS + 11;
 	public static final int SCROLL_NENDIL           = SCROLLS + 12;
-	public static final int JOURNAL_PAGE            = SCROLLS + 13;
 
 	private static final int POTIONS        =                           xy(1, 21);  //16 slots
 
@@ -335,6 +318,19 @@ public class ItemSpriteSheet {
 	public static final int ANCIENTKEY              = TELEPORTER + 7;
 	public static final int OTILUKES_JOURNAL        = TELEPORTER + 8;
 	public static final int SANCHIKARAH             = TELEPORTER + 9;
+	public static final int PAGE_0                  = TELEPORTER + 10;
+	public static final int PAGE_1                  = TELEPORTER + 11;
+	public static final int PAGE_2                  = TELEPORTER + 12;
+	public static final int PAGE_3                  = TELEPORTER + 13;
+	public static final int PAGE_4                  = TELEPORTER + 14;
+	public static final int PAGE_5                  = TELEPORTER + 15;
+	public static final int PAGE_6                  = TELEPORTER + 16;
+	public static final int PAGE_7                  = TELEPORTER + 17;
+	public static final int PAGE_8                  = TELEPORTER + 18;
+	public static final int PAGE_9                  = TELEPORTER + 19;
+	public static final int PAGE_10                 = TELEPORTER + 20;
+	public static final int PAGE_11                 = TELEPORTER + 21;
+
 
 	private static final int ARTIFACT_D        =                        xy(1, 31);  //16 slots
 

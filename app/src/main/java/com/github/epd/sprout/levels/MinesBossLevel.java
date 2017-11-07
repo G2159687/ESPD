@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -33,7 +16,6 @@ import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanCorner;
 import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanSwitch;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Palantir;
-import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.wands.WandOfFlock.Sheep;
 import com.github.epd.sprout.levels.features.Chasm;
@@ -62,9 +44,6 @@ public class MinesBossLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -102,11 +81,6 @@ public class MinesBossLevel extends Level {
 			Chasm.heroFall(cell);
 			return;
 		}
-
-		TimekeepersHourglass.timeFreeze timeFreeze = null;
-
-		if (ch != null)
-			timeFreeze = ch.buff(TimekeepersHourglass.timeFreeze.class);
 
 		boolean trap = false;
 
@@ -275,15 +249,15 @@ public class MinesBossLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 
 		map = Layouts.MINE_BOSS.clone();
-
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 
-		entrance = 17 + WIDTH * 44;
+		entrance = 17 + getWidth() * 44;
 		exit = 0;
 
 
@@ -291,30 +265,22 @@ public class MinesBossLevel extends Level {
 	}
 
 	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
-	@Override
 	protected void createMobs() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				MineSentinel npc = new MineSentinel();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				LitTower npc = new LitTower();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			}
 		}
 
 		Otiluke mob = new Otiluke();
 		mobs.add(mob);
-		mob.pos = 33 + WIDTH * 10;
-		Actor.occupyCell(mob);
+		mob.pos = 33 + getWidth() * 10;
 	}
 
 
@@ -344,8 +310,8 @@ public class MinesBossLevel extends Level {
 	@Override
 	protected void createItems() {
 
-		drop(new IronKey(Dungeon.depth), 30 + WIDTH * 44).type = Heap.Type.CHEST;
-		drop(new Palantir(), 14 + WIDTH * 10);
+		drop(new IronKey(Dungeon.depth), 30 + getWidth() * 44).type = Heap.Type.CHEST;
+		drop(new Palantir(), 14 + getWidth() * 10);
 
 	}
 

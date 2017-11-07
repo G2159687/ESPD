@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.windows.help;
 
 import com.github.epd.sprout.messages.Messages;
@@ -24,9 +8,8 @@ import com.github.epd.sprout.ui.RenderedTextMultiline;
 import com.github.epd.sprout.ui.Window;
 import com.github.epd.sprout.windows.WndMessage;
 import com.watabou.gltextures.TextureCache;
+import com.watabou.noosa.Game;
 import com.watabou.utils.FileOperations;
-
-import java.io.IOException;
 
 public class WndRecoverSave extends Window {
 
@@ -55,11 +38,11 @@ public class WndRecoverSave extends Window {
 				FileOperations.delete(TextureCache.context.getFilesDir());
 				try {
 					FileOperations.copyDirectiory(TextureCache.context.getExternalFilesDir(null).getAbsolutePath(), TextureCache.context.getFilesDir().getAbsolutePath());
-				} catch (IOException e) {
+				} catch (Exception e) {
 					parent.add(new WndMessage(Messages.get(WndRecoverSave.class, "fail")));
 					return;
 				}
-				parent.add(new WndMessage(Messages.get(WndRecoverSave.class, "success")));
+				Game.instance.finish();
 			}
 		};
 		btnYes.setRect(0, message.top() + message.height() + GAP, WIDTH,

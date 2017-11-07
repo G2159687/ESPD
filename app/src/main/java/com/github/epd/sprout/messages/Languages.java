@@ -1,10 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015  Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2016 Evan Debenham
- */
+
 package com.github.epd.sprout.messages;
 
 import java.util.Locale;

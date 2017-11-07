@@ -1,23 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.sprites;
 
 import com.github.epd.sprout.Assets;
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.effects.EmoIcon;
@@ -101,7 +86,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 		ch.sprite = this;
 
 		place(ch.pos);
-		turnTo(ch.pos, Random.Int(Level.getLength()));
+		turnTo(ch.pos, Random.Int(Dungeon.level.getLength()));
 
 		ch.updateSpriteState();
 	}
@@ -110,8 +95,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 
 		final int csize = DungeonTilemap.SIZE;
 
-		return new PointF(((cell % Level.getWidth()) + 0.5f) * csize - width * 0.5f,
-				((cell / Level.getWidth()) + 1.0f) * csize - height);
+		return new PointF(((cell % Dungeon.level.getWidth()) + 0.5f) * csize - width * 0.5f,
+				((cell / Dungeon.level.getWidth()) + 1.0f) * csize - height);
 	}
 
 	public void place(int cell) {
@@ -182,8 +167,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 	}
 
 	public void turnTo(int from, int to) {
-		int fx = from % Level.getWidth();
-		int tx = to % Level.getWidth();
+		int fx = from % Dungeon.level.getWidth();
+		int tx = to % Dungeon.level.getWidth();
 		if (tx > fx) {
 			flipHorizontal = false;
 		} else if (tx < fx) {
@@ -194,7 +179,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener,
 	public void jump(int from, int to, Callback callback) {
 		jumpCallback = callback;
 
-		int distance = Level.distance(from, to);
+		int distance = Dungeon.level.distance(from, to);
 		jumpTweener = new JumpTweener(this, worldToCamera(to), distance * 4,
 				distance * 0.1f);
 		jumpTweener.listener = this;

@@ -11,7 +11,6 @@ import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.effects.particles.SnowParticle;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.scrolls.Scroll;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -99,7 +98,7 @@ public class RingOfFrost extends Artifact {
 	public void blast(int cell) {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (mob.hostile) {
-				int dist = Level.distance(cell, mob.pos);
+				int dist = Dungeon.level.distance(cell, mob.pos);
 				if (dist <= distance()) {
 					mob.damage(Random.Int(level(), (level() * level()) / 10 + 1), this);
 					Buff.prolong(mob, Frost.class, Frost.duration(mob) * Random.Float(1f * level(), 1.5f * level()));

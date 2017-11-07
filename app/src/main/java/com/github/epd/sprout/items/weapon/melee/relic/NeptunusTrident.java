@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items.weapon.melee.relic;
 
 import com.github.epd.sprout.Dungeon;
@@ -68,10 +52,10 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 		charge = 0;
 		ArrayList<Integer> affected = new ArrayList<Integer>();
 
-		int length = Level.getLength();
-		int width = Level.getWidth();
+		int length = Dungeon.level.getLength();
+		int width = Dungeon.level.getWidth();
 		for (int i = width; i < length - width; i++) {
-			int dist = Level.distance(hero.pos, i);
+			int dist = Dungeon.level.distance(hero.pos, i);
 			if (dist < distance) {
 				//GLog.i("TRI2 %s", dist);
 				if (checkFloodable(i)) {
@@ -114,7 +98,6 @@ public class NeptunusTrident extends RelicMeleeWeapon {
 				Dungeon.level.map[cell] == Terrain.HIGH_GRASS ||
 				Dungeon.level.map[cell] == Terrain.EMBERS ||
 				Dungeon.level.map[cell] == Terrain.EMPTY_DECO ||
-				Dungeon.level.map[cell] == Terrain.SIGN ||
 				Dungeon.level.map[cell] == Terrain.SHRUB ||
 				Dungeon.level.map[cell] == Terrain.STATUE ||
 				Dungeon.level.map[cell] == Terrain.SECRET ||

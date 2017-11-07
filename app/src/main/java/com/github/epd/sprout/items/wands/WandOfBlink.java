@@ -1,24 +1,9 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items.wands;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.actors.hero.Hero;
@@ -54,7 +39,13 @@ public class WandOfBlink extends Wand {
 		}
 
 		curUser.sprite.visible = true;
-		appear(Dungeon.hero, bolt.path.get(bolt.dist));
+		if (bolt.dist > 1) {
+			if (Actor.findChar(bolt.collisionPos) == null) {
+				appear(Dungeon.hero, bolt.path.get(bolt.collisionPos));
+			} else {
+				appear(Dungeon.hero, bolt.path.get(bolt.dist - 1));
+			}
+		} else appear(Dungeon.hero, Dungeon.hero.pos);
 
 		Dungeon.observe();
 		GameScene.updateFog();
@@ -93,9 +84,9 @@ public class WandOfBlink extends Wand {
 	}
 
 	@Override
-	public int reachFactor(Hero hero){
+	public int reachFactor(Hero hero) {
 		int reach = super.reachFactor(hero);
-		if (hero.subClass == HeroSubClass.BATTLEMAGE){
+		if (hero.subClass == HeroSubClass.BATTLEMAGE) {
 			reach++;
 		}
 		return reach;

@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -32,14 +16,14 @@ import com.github.epd.sprout.actors.mobs.npcs.OtilukeNPC;
 import com.github.epd.sprout.actors.mobs.npcs.Shopkeeper;
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer4;
 import com.github.epd.sprout.actors.mobs.npcs.Tinkerer5;
-import com.github.epd.sprout.items.ActiveMrDestructo;
-import com.github.epd.sprout.items.ActiveMrDestructo2;
+import com.github.epd.sprout.items.bombs.ActiveMrDestructo;
+import com.github.epd.sprout.items.bombs.ActiveMrDestructo2;
 import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.SeekingClusterBombItem;
+import com.github.epd.sprout.items.bombs.SeekingClusterBombItem;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.potions.PotionOfHealing;
 import com.github.epd.sprout.items.potions.PotionOfOverHealing;
@@ -72,9 +56,6 @@ public class TownLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 		special = false;
 	}
 
@@ -125,22 +106,22 @@ public class TownLevel extends Level {
 	public void storeStock() {
 
 
-		if (Actor.findChar(13 + WIDTH * 10) == null) {
+		if (Actor.findChar(13 + getWidth() * 10) == null) {
 			Mob shopkeeper = new Shopkeeper();
-			shopkeeper.pos = 13 + WIDTH * 10;
+			shopkeeper.pos = 13 + getWidth() * 10;
 			mobs.add(shopkeeper);
 		}
-		if (Actor.findChar(8 + WIDTH * 23) == null) {
+		if (Actor.findChar(8 + getWidth() * 23) == null) {
 			Mob shopkeeper2 = new Shopkeeper();
-			shopkeeper2.pos = 8 + WIDTH * 23;
+			shopkeeper2.pos = 8 + getWidth() * 23;
 			mobs.add(shopkeeper2);
 
 		}
 
 		if (Badges.checkOtilukeRescued() && !checkOtiluke()) {
-			if (Actor.findChar(32 + WIDTH * 15) == null) {
+			if (Actor.findChar(32 + getWidth() * 15) == null) {
 				Mob otiluke = new OtilukeNPC();
-				otiluke.pos = 32 + WIDTH * 15;
+				otiluke.pos = 32 + getWidth() * 15;
 				mobs.add(otiluke);
 			}
 
@@ -218,111 +199,104 @@ public class TownLevel extends Level {
 
 
 	@Override
-	public void create() {
-
-		super.create();
-	}
-
-
-	@Override
 	protected void createItems() {
 
-		/* 6 + WIDTH * 25	to    10 + WIDTH *25  Magic
-		 * 4 + WIDTH * 27   to    4 + WIDTH * 22
+		/* 6 + getWidth() * 25	to    10 + getWidth() *25  Magic
+		 * 4 + getWidth() * 27   to    4 + getWidth() * 22
 		 * 
-		 * 7 + WIDTH * 10	to    7 + WIDTH * 7		Normal
-		 * 12 + WIDTH * 13	to    12 + WIDTH * 8	
+		 * 7 + getWidth() * 10	to    7 + getWidth() * 7		Normal
+		 * 12 + getWidth() * 13	to    12 + getWidth() * 8	
 		 */
-		//drop(new PotionOfLiquidFlame(), 9 + WIDTH * 24).type = Heap.Type.FOR_SALE;
+		//drop(new PotionOfLiquidFlame(), 9 + getWidth() * 24).type = Heap.Type.FOR_SALE;
 
 		Mob shopkeeper = new Shopkeeper();
-		shopkeeper.pos = 13 + WIDTH * 10;
+		shopkeeper.pos = 13 + getWidth() * 10;
 		mobs.add(shopkeeper);
 
 		Mob shopkeeper2 = new Shopkeeper();
-		shopkeeper2.pos = 8 + WIDTH * 23;
+		shopkeeper2.pos = 8 + getWidth() * 23;
 		mobs.add(shopkeeper2);
 	  /*
       Mob shopkeeper3 =  new Shopkeeper();
-      shopkeeper3.pos = 22 + WIDTH * 8;
+      shopkeeper3.pos = 22 + getWidth() * 8;
       mobs.add(shopkeeper3);
       */
 
 		Mob bluecat = new BlueCat();
-		bluecat.pos = 35 + WIDTH * 5;
+		bluecat.pos = 35 + getWidth() * 5;
 		mobs.add(bluecat);
 
 
 		Mob tinkerer1 = new Tinkerer4();
-		tinkerer1.pos = 31 + WIDTH * 20;
+		tinkerer1.pos = 31 + getWidth() * 20;
 		mobs.add(tinkerer1);
 
 		Mob tinkerer2 = new Tinkerer5();
-		tinkerer2.pos = 14 + WIDTH * 33;
+		tinkerer2.pos = 14 + getWidth() * 33;
 		mobs.add(tinkerer2);
 
 
 		scrollspots = new int[11];
-		scrollspots[0] = 4 + WIDTH * 27;
-		scrollspots[1] = 4 + WIDTH * 26;
-		scrollspots[2] = 4 + WIDTH * 25;
-		scrollspots[3] = 4 + WIDTH * 24;
-		scrollspots[4] = 4 + WIDTH * 23;
-		scrollspots[5] = 4 + WIDTH * 22;
+		scrollspots[0] = 4 + getWidth() * 27;
+		scrollspots[1] = 4 + getWidth() * 26;
+		scrollspots[2] = 4 + getWidth() * 25;
+		scrollspots[3] = 4 + getWidth() * 24;
+		scrollspots[4] = 4 + getWidth() * 23;
+		scrollspots[5] = 4 + getWidth() * 22;
 
-		scrollspots[6] = 6 + WIDTH * 25;
-		scrollspots[7] = 7 + WIDTH * 25;
-		scrollspots[8] = 8 + WIDTH * 25;
-		scrollspots[9] = 9 + WIDTH * 25;
-		scrollspots[10] = 10 + WIDTH * 25;
+		scrollspots[6] = 6 + getWidth() * 25;
+		scrollspots[7] = 7 + getWidth() * 25;
+		scrollspots[8] = 8 + getWidth() * 25;
+		scrollspots[9] = 9 + getWidth() * 25;
+		scrollspots[10] = 10 + getWidth() * 25;
 
 		storespots = new int[9];
-		storespots[0] = 7 + WIDTH * 10;
-		storespots[1] = 7 + WIDTH * 9;
-		storespots[2] = 7 + WIDTH * 8;
-		storespots[3] = 7 + WIDTH * 7;
+		storespots[0] = 7 + getWidth() * 10;
+		storespots[1] = 7 + getWidth() * 9;
+		storespots[2] = 7 + getWidth() * 8;
+		storespots[3] = 7 + getWidth() * 7;
 
-		storespots[4] = 12 + WIDTH * 13;
-		storespots[5] = 12 + WIDTH * 12;
-		storespots[6] = 12 + WIDTH * 11;
-		storespots[7] = 12 + WIDTH * 10;
-		storespots[8] = 12 + WIDTH * 9;
+		storespots[4] = 12 + getWidth() * 13;
+		storespots[5] = 12 + getWidth() * 12;
+		storespots[6] = 12 + getWidth() * 11;
+		storespots[7] = 12 + getWidth() * 10;
+		storespots[8] = 12 + getWidth() * 9;
 
      /*
       potionspots = new int[10];
-      potionspots[0] =  20 + WIDTH * 6;
-      potionspots[1] =  20 + WIDTH * 7;
-      potionspots[2] =  20 + WIDTH * 8;
-      potionspots[3] =  20 + WIDTH * 9;
+      potionspots[0] =  20 + getWidth() * 6;
+      potionspots[1] =  20 + getWidth() * 7;
+      potionspots[2] =  20 + getWidth() * 8;
+      potionspots[3] =  20 + getWidth() * 9;
 
-      potionspots[4] =  20 + WIDTH * 10;
-      potionspots[5] =  20 + WIDTH * 11;
-      potionspots[6] =  21 + WIDTH * 6;
-      potionspots[7] =  22 + WIDTH * 6;
-      potionspots[8] =  23 + WIDTH * 6;
-      potionspots[9] =  24 + WIDTH * 6;
+      potionspots[4] =  20 + getWidth() * 10;
+      potionspots[5] =  20 + getWidth() * 11;
+      potionspots[6] =  21 + getWidth() * 6;
+      potionspots[7] =  22 + getWidth() * 6;
+      potionspots[8] =  23 + getWidth() * 6;
+      potionspots[9] =  24 + getWidth() * 6;
         */
 
 		storeStock();
 
 		Alter alter = new Alter();
-		alter.seed(33 + WIDTH * 32, 1);
+		alter.seed(this, 33 + getWidth() * 32, 1);
 		blobs.put(Alter.class, alter);
 
-		addChest(39 + WIDTH * 4);
-		addChest(40 + WIDTH * 4);
-		addChest(41 + WIDTH * 4);
-		addChest(42 + WIDTH * 4);
+		addChest(39 + getWidth() * 4);
+		addChest(40 + getWidth() * 4);
+		addChest(41 + getWidth() * 4);
+		addChest(42 + getWidth() * 4);
 
-		addChest(41 + WIDTH * 18);
-		addChest(42 + WIDTH * 18);
+		addChest(41 + getWidth() * 18);
+		addChest(42 + getWidth() * 18);
 
-		addChest(7 + WIDTH * 5);
-		addChest(8 + WIDTH * 5);
-		addChest(9 + WIDTH * 5);
+		addChest(7 + getWidth() * 5);
+		addChest(8 + getWidth() * 5);
+		addChest(9 + getWidth() * 5);
 
-		addChest(27 + WIDTH * 11);
-		addChest(27 + WIDTH * 12);
+		addChest(27 + getWidth() * 11);
+		addChest(27 + getWidth() * 12);
 
 		//Activate Bunny Rancher Mode
       /*
@@ -526,37 +500,23 @@ public class TownLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		map = TownLayouts.TOWN_LAYOUT.clone();
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 
-		entrance = 25 + WIDTH * 21;
-		exit = 5 + WIDTH * 40;
+		entrance = 25 + getWidth() * 21;
+		exit = 5 + getWidth() * 40;
 
 
 		return true;
 	}
 
 	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
-	@Override
 	protected void createMobs() {
-		/*
-		    SokobanSentinel mob = new SokobanSentinel();
-			mob.pos = 38 + WIDTH * 21;
-			mobs.add(mob);
-			Actor.occupyCell(mob);
-			
-			SokobanSentinel mob2 = new SokobanSentinel();
-			mob2.pos = 25 + WIDTH * 36;
-			mobs.add(mob2);
-			Actor.occupyCell(mob2);		
-			*/
+
 	}
 
 

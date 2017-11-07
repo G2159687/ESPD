@@ -1,34 +1,19 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.npcs.Ghost;
 import com.github.epd.sprout.actors.mobs.npcs.Ghost.GnollArcher;
-import com.github.epd.sprout.items.Bomb;
+import com.github.epd.sprout.items.bombs.Bomb;
 import com.github.epd.sprout.items.food.Blackberry;
 import com.github.epd.sprout.items.food.Blueberry;
 import com.github.epd.sprout.items.food.Cloudberry;
 import com.github.epd.sprout.items.food.Moonberry;
+import com.github.epd.sprout.levels.painters.Painter;
+import com.github.epd.sprout.levels.painters.SewerPainter;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.watabou.noosa.Game;
@@ -47,6 +32,25 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	@Override
+	protected int standardRooms() {
+		//5 to 7, average 5.57
+		return 5+Random.chances(new float[]{4, 2, 1});
+	}
+
+	@Override
+	protected int specialRooms() {
+		//1 to 3, average 1.67
+		return 1+Random.chances(new float[]{4, 4, 2});
+	}
+
+	@Override
+	protected Painter painter() {
+		return new SewerPainter()
+				.setWater(feeling == Feeling.WATER ? 0.85f : 0.30f, 5)
+				.setGrass(feeling == Feeling.GRASS ? 0.80f : 0.20f, 4);
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_SEWERS;
 	}
@@ -58,64 +62,8 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	@Override
-	protected boolean[] water() {
-		return Patch.generate(feeling == Feeling.WATER ? 0.60f : 0.45f, 5);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 4);
-	}
-
-	@Override
 	protected void setPar() {
 		Dungeon.pars[Dungeon.depth] = 500 + (Dungeon.depth * 50) + (secretDoors * 50);
-	}
-
-	@Override
-	protected void decorate() {
-
-		for (int i = 0; i < getWidth(); i++) {
-			if (map[i] == Terrain.WALL && map[i + getWidth()] == Terrain.WATER
-					&& Random.Int(4) == 0) {
-
-				map[i] = Terrain.WALL_DECO;
-			}
-		}
-
-		for (int i = getWidth(); i < getLength() - getWidth(); i++) {
-			if (map[i] == Terrain.WALL && map[i - getWidth()] == Terrain.WALL
-					&& map[i + getWidth()] == Terrain.WATER && Random.Int(2) == 0) {
-
-				map[i] = Terrain.WALL_DECO;
-			}
-		}
-
-		for (int i = getWidth() + 1; i < getLength() - getWidth() - 1; i++) {
-			if (map[i] == Terrain.EMPTY) {
-
-				int count = (map[i + 1] == Terrain.WALL ? 1 : 0)
-						+ (map[i - 1] == Terrain.WALL ? 1 : 0)
-						+ (map[i + getWidth()] == Terrain.WALL ? 1 : 0)
-						+ (map[i - getWidth()] == Terrain.WALL ? 1 : 0);
-
-				if (Random.Int(16) < count * count) {
-					map[i] = Terrain.EMPTY_DECO;
-				}
-			}
-		}
-
-		while (true) {
-			int pos = roomEntrance.random();
-			if (pos != entrance) {
-				map[pos] = Terrain.SIGN;
-				break;
-			}
-		}
-
-		setPar();
-
-
 	}
 
 	@Override
@@ -144,7 +92,6 @@ public class SewerLevel extends RegularLevel {
 				gnoll.pos = level.randomRespawnCell();
 			} while (gnoll.pos == -1);
 			level.mobs.add(gnoll);
-			Actor.occupyCell(gnoll);
 		}
 	}
 
@@ -156,7 +103,7 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	public static void addVisuals(Level level, Scene scene) {
-		for (int i = 0; i < getLength(); i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (level.map[i] == Terrain.WALL_DECO) {
 				scene.add(new Sink(i));
 			}
@@ -218,7 +165,7 @@ public class SewerLevel extends RegularLevel {
 				super.update();
 
 				if ((rippleDelay -= Game.elapsed) <= 0) {
-					GameScene.ripple(pos + getWidth()).y -= DungeonTilemap.SIZE / 2;
+					GameScene.ripple(pos + Dungeon.level.getWidth()).y -= DungeonTilemap.SIZE / 2;
 					rippleDelay = Random.Float(0.4f, 0.6f);
 				}
 			}

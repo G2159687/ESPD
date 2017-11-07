@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs.pets;
 
 import com.github.epd.sprout.Dungeon;
@@ -148,7 +132,7 @@ public abstract class PET extends Mob {
 	public int defenseProc(Char enemy, int damage) {
 		//if attacked by something else than current target, and that thing is closer, switch targets
 		if (this.enemy == null
-				|| (enemy != this.enemy && (Level.distance(pos, enemy.pos) < Level.distance(pos, this.enemy.pos)))) {
+				|| (enemy != this.enemy && (Dungeon.level.distance(pos, enemy.pos) < Dungeon.level.distance(pos, this.enemy.pos)))) {
 			aggro(enemy);
 			target = enemy.pos;
 		}
@@ -220,7 +204,7 @@ public abstract class PET extends Mob {
 			Char closest = null;
 			for (Char curr : enemies) {
 				if (closest == null
-						|| Level.distance(pos, curr.pos) < Level.distance(pos, closest.pos)) {
+						|| Dungeon.level.distance(pos, curr.pos) < Dungeon.level.distance(pos, closest.pos)) {
 					closest = curr;
 				}
 			}
@@ -253,7 +237,7 @@ public abstract class PET extends Mob {
 	}
 
 	protected boolean checkNearbyHero() {
-		return Level.adjacent(pos, Dungeon.hero.pos);
+		return Dungeon.level.adjacent(pos, Dungeon.hero.pos);
 	}
 
 	public int wanderLocation() {

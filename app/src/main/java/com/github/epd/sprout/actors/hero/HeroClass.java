@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.hero;
 
 import com.github.epd.sprout.Assets;
@@ -22,9 +6,8 @@ import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ShatteredPixelDungeon;
-import com.github.epd.sprout.items.Bomb;
+import com.github.epd.sprout.items.bombs.Bomb;
 import com.github.epd.sprout.items.DewVial;
-import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.TomeOfMastery;
 import com.github.epd.sprout.items.armor.ClothArmor;
 import com.github.epd.sprout.items.artifacts.CloakOfShadows;
@@ -44,8 +27,20 @@ import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.scrolls.ScrollOfRemoveCurse;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.epd.sprout.items.teleporter.AncientCoin;
+import com.github.epd.sprout.items.teleporter.Bone;
+import com.github.epd.sprout.items.teleporter.CavesKey;
+import com.github.epd.sprout.items.teleporter.CityKey;
+import com.github.epd.sprout.items.teleporter.ConchShell;
+import com.github.epd.sprout.items.teleporter.HallsKey;
+import com.github.epd.sprout.items.teleporter.OtilukesJournal;
+import com.github.epd.sprout.items.teleporter.PrisonKey;
+import com.github.epd.sprout.items.teleporter.SewersKey;
+import com.github.epd.sprout.items.teleporter.TenguKey;
+import com.github.epd.sprout.items.teleporter.Town;
 import com.github.epd.sprout.items.wands.WandOfMagicMissile;
 import com.github.epd.sprout.items.weapon.melee.Dagger;
+import com.github.epd.sprout.items.weapon.melee.Glaive;
 import com.github.epd.sprout.items.weapon.melee.Knuckles;
 import com.github.epd.sprout.items.weapon.melee.ShortSword;
 import com.github.epd.sprout.items.weapon.missiles.Boomerang;
@@ -64,7 +59,19 @@ public enum HeroClass {
 		this.title = title;
 	}
 
+	// TODO: Remove these things
 	private static void initDebug() {
+		new Glaive().reinforce().upgrade(300).collect();
+		new Town().collect();
+		new SewersKey().collect();
+		new PrisonKey().collect();
+		new CavesKey().collect();
+		new CityKey().collect();
+		new HallsKey().collect();
+		new AncientCoin().collect();
+		new Bone().collect();
+		new ConchShell().collect();
+		new TenguKey().collect();
 	}
 
 	public void initHero(Hero hero) {
@@ -133,12 +140,12 @@ public enum HeroClass {
 			hero.STR = hero.STR + 1;
 		}
 		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
-			hero.HT = hero.HT + 100;
+			hero.HT = hero.HT + 1000;
 			hero.HP = hero.HT;
 		}
 		if (Dungeon.isChallenged(Challenges.NO_HEALING)) {
-			hero.attackSkill = hero.attackSkill + 100;
-			hero.defenseSkill = hero.defenseSkill + 100;
+			hero.attackSkill = hero.attackSkill + 1000;
+			hero.defenseSkill = hero.defenseSkill + 1000;
 		}
 
 

@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout;
 
 import android.content.Context;
@@ -63,7 +47,6 @@ import com.github.epd.sprout.levels.MineLevel;
 import com.github.epd.sprout.levels.MinesBossLevel;
 import com.github.epd.sprout.levels.PrisonBossLevel;
 import com.github.epd.sprout.levels.PrisonLevel;
-import com.github.epd.sprout.levels.Room;
 import com.github.epd.sprout.levels.SafeLevel;
 import com.github.epd.sprout.levels.SewerBossLevel;
 import com.github.epd.sprout.levels.SewerLevel;
@@ -79,6 +62,7 @@ import com.github.epd.sprout.levels.ThiefCatchLevel;
 import com.github.epd.sprout.levels.TownLevel;
 import com.github.epd.sprout.levels.VaultLevel;
 import com.github.epd.sprout.levels.ZotBossLevel;
+import com.github.epd.sprout.levels.rooms.special.SpecialRoom;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
 import com.github.epd.sprout.scenes.StartScene;
@@ -100,13 +84,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 
 public class Dungeon {
-
-	public static int transmutation; // depth number for a well of transmutation
 
 	// enum of items which have limited spawns, records how many have spawned
 	// could all be their own separate numbers, but this allows iterating, much
@@ -120,7 +101,7 @@ public class Dungeon {
 
 		// doesn't use Generator, so we have to enforce one armband drop here
 		armband, spork, royalspork, vaultpage, caveskey,
-		conchshell, ancientcoin, tengukey, bone, journal, safespotpage, dragoncave;
+		conchshell, ancientcoin, tengukey, bone, safespotpage, dragoncave;
 
 		public int count = 0;
 
@@ -167,7 +148,7 @@ public class Dungeon {
 	public static HashSet<Integer> chapters;
 
 	// Hero's field of view
-	public static boolean[] visible = new boolean[Level.getLength()];
+	public static boolean[] visible;
 
 	public static SparseArray<ArrayList<Item>> droppedItems;
 
@@ -179,8 +160,6 @@ public class Dungeon {
 
 		Actor.clear();
 		Actor.resetNextID();
-
-		PathFinder.setMapSize(Level.getWidth(), Level.HEIGHT);
 
 		Scroll.initLabels();
 		Potion.initColors();
@@ -200,8 +179,6 @@ public class Dungeon {
 		for (limitedDrops a : limitedDrops.values())
 			a.count = 0;
 
-		transmutation = Random.IntRange(6, 14);
-
 		chapters = new HashSet<>();
 
 		Ghost.Quest.reset();
@@ -209,7 +186,7 @@ public class Dungeon {
 		Blacksmith.Quest.reset();
 		Imp.Quest.reset();
 
-		Room.shuffleTypes();
+		SpecialRoom.initForRun();
 
 		Generator.initArtifacts();
 
@@ -251,10 +228,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new FieldLevel();
+
 
 		level.create();
 
@@ -270,10 +246,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new BattleLevel();
+
 
 		level.create();
 
@@ -289,10 +264,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new FishingLevel();
+
 
 		level.create();
 
@@ -308,10 +282,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new VaultLevel();
+
 
 		level.create();
 
@@ -328,10 +301,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new HallsBossLevel();
+
 
 		level.create();
 
@@ -349,10 +321,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new CatacombLevel();
+
 
 		level.create();
 
@@ -370,10 +341,9 @@ public class Dungeon {
 
 		Dungeon.dewWater = true;
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new FortressLevel();
+
 
 		level.create();
 
@@ -389,10 +359,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new ChasmLevel();
+
 
 		level.create();
 
@@ -408,10 +377,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new InfestBossLevel();
+
 
 		level.create();
 
@@ -432,10 +400,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new TenguDenLevel();
+
 
 		level.create();
 
@@ -451,10 +418,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new SkeletonBossLevel();
+
 
 		level.create();
 
@@ -470,10 +436,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new CrabBossLevel();
+
 
 		level.create();
 
@@ -489,10 +454,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new ThiefBossLevel();
+
 
 		level.create();
 
@@ -508,10 +472,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new MinesBossLevel();
+
 
 		level.create();
 
@@ -527,10 +490,9 @@ public class Dungeon {
 			Statistics.realdeepestFloor = depth;
 		}
 
-		Arrays.fill(visible, false);
-
 		Level level;
 		level = new ZotBossLevel();
+
 
 		level.create();
 
@@ -555,8 +517,6 @@ public class Dungeon {
 		if (depth > Statistics.realdeepestFloor && depth < 68) {
 			Statistics.realdeepestFloor = depth;
 		}
-
-		Arrays.fill(visible, false);
 
 		Level level;
 		switch (page) {
@@ -588,6 +548,7 @@ public class Dungeon {
 				level = Dungeon.newLevel();
 		}
 
+
 		Level.first = first;
 		level.create();
 
@@ -608,8 +569,6 @@ public class Dungeon {
 		if (depth > Statistics.deepestFloor && depth < 27) {
 			Statistics.deepestFloor = depth;
 		}
-
-		Arrays.fill(visible, false);
 
 		Level level;
 		switch (depth) {
@@ -701,6 +660,7 @@ public class Dungeon {
 				}
 		}
 
+
 		level.create();
 
 		if (depth < 25 && depth != 21 && !Dungeon.bossLevel(depth)) {
@@ -714,8 +674,6 @@ public class Dungeon {
 	public static void resetLevel() {
 
 		Actor.clear();
-
-		Arrays.fill(visible, false);
 
 		level.reset();
 		switchLevel(level, level.entrance);
@@ -766,8 +724,12 @@ public class Dungeon {
 	@SuppressWarnings("deprecation")
 	public static void switchLevel(final Level level, int pos) {
 
+		PathFinder.setMapSize(level.getWidth(), level.getHeight());
+
 		Dungeon.level = level;
 		Actor.init();
+
+		visible = new boolean[level.getLength()];
 
 		Actor respawner = level.respawner();
 		if (respawner != null) {
@@ -795,11 +757,13 @@ public class Dungeon {
 			Actor.add(level.respawnerPet());
 		}
 
+		hero.curAction = hero.lastAction = null;
+
 		observe();
 		try {
 			saveAll();
 		} catch (IOException e) {
-	        /*
+		    /*
              * This only catches IO errors. Yes, this means things can go wrong,
 			 * and they can go wrong catastrophically. But when they do the user
 			 * will get a nice 'report this issue' dialogue, and I can fix the
@@ -866,7 +830,6 @@ public class Dungeon {
 	private static final String DROPPED = "dropped%d";
 	private static final String LEVEL = "level";
 	private static final String LIMDROPS = "limiteddrops";
-	private static final String WT = "transmutation";
 	private static final String CHAPTERS = "chapters";
 	private static final String QUESTS = "quests";
 	private static final String BADGES = "badges";
@@ -951,8 +914,6 @@ public class Dungeon {
 
 			quickslot.storePlaceholders(bundle);
 
-			bundle.put(WT, transmutation);
-
 			int[] dropValues = new int[limitedDrops.values().length];
 			for (limitedDrops value : limitedDrops.values())
 				dropValues[value.ordinal()] = value.count;
@@ -972,7 +933,7 @@ public class Dungeon {
 			Imp.Quest.storeInBundle(quests);
 			bundle.put(QUESTS, quests);
 
-			Room.storeRoomsInBundle(bundle);
+			SpecialRoom.storeRoomsInBundle(bundle);
 
 			Statistics.storeInBundle(bundle);
 			Journal.storeInBundle(bundle);
@@ -1060,10 +1021,6 @@ public class Dungeon {
 		Dungeon.level = null;
 		Dungeon.depth = -1;
 
-		if (fullLoad) {
-			PathFinder.setMapSize(Level.getWidth(), Level.HEIGHT);
-		}
-
 		Scroll.restore(bundle);
 		Potion.restore(bundle);
 		Ring.restore(bundle);
@@ -1071,7 +1028,6 @@ public class Dungeon {
 		quickslot.restorePlaceholders(bundle);
 
 		if (fullLoad) {
-			transmutation = bundle.getInt(WT);
 
 			if (bundle.contains(LIMDROPS)) {
 				int[] dropValues = bundle.getIntArray(LIMDROPS);
@@ -1107,7 +1063,7 @@ public class Dungeon {
 				Imp.Quest.reset();
 			}
 
-			Room.restoreRoomsFromBundle(bundle);
+			SpecialRoom.restoreRoomsFromBundle(bundle);
 		}
 
 		Bundle badges = bundle.getBundle(BADGES);
@@ -1213,7 +1169,10 @@ public class Dungeon {
 		if (hero.belongings.getItem(Ankh.class) == null) {
 			Rankings.INSTANCE.submit(false);
 		}
-		try {saveAll();} catch (Exception e){}
+		try {
+			saveAll();
+		} catch (Exception e) {
+		}
 	}
 
 	public static void win(String desc) {
@@ -1236,17 +1195,17 @@ public class Dungeon {
 
 		level.updateFieldOfView(hero, visible);
 
-		int cx = hero.pos % Level.WIDTH;
-		int cy = hero.pos / Level.WIDTH;
+		int cx = hero.pos % Dungeon.level.getWidth();
+		int cy = hero.pos / Dungeon.level.getWidth();
 
 		int ax = Math.max(0, cx - dist);
-		int bx = Math.min(cx + dist, Level.WIDTH - 1);
+		int bx = Math.min(cx + dist, Dungeon.level.getWidth() - 1);
 		int ay = Math.max(0, cy - dist);
-		int by = Math.min(cy + dist, Level.HEIGHT - 1);
+		int by = Math.min(cy + dist, Dungeon.level.getHeight() - 1);
 
 		int len = bx - ax + 1;
-		int pos = ax + ay * Level.WIDTH;
-		for (int y = ay; y <= by; y++, pos += Level.WIDTH) {
+		int pos = ax + ay * Dungeon.level.getWidth();
+		for (int y = ay; y <= by; y++, pos += Dungeon.level.getWidth()) {
 			BArray.or(level.visited, visible, pos, len, level.visited);
 		}
 		if (hero.buff(MindVision.class) != null || hero.buff(Awareness.class) != null
@@ -1261,8 +1220,8 @@ public class Dungeon {
 	private static boolean[] passable;
 
 	private static void setupPassable() {
-		if (passable == null || passable.length != Level.LENGTH)
-			passable = new boolean[Level.LENGTH];
+		if (passable == null || passable.length != Dungeon.level.getLength())
+			passable = new boolean[Dungeon.level.getLength()];
 		else
 			BArray.setFalse(passable);
 	}
@@ -1273,15 +1232,12 @@ public class Dungeon {
 		if (ch.flying || ch.buff(Amok.class) != null) {
 			BArray.or(pass, Level.avoid, passable);
 		} else {
-			System.arraycopy(pass, 0, passable, 0, Level.LENGTH);
+			System.arraycopy(pass, 0, passable, 0, Dungeon.level.getLength());
 		}
 
-		for (Actor actor : Actor.all()) {
-			if (actor instanceof Char) {
-				int pos = ((Char) actor).pos;
-				if (visible[pos]) {
-					passable[pos] = false;
-				}
+		for (Char c : Actor.chars()) {
+			if (visible[c.pos]) {
+				passable[c.pos] = false;
 			}
 		}
 
@@ -1291,24 +1247,20 @@ public class Dungeon {
 
 	public static int findStep(Char ch, int from, int to, boolean pass[], boolean[] visible) {
 
-		if (Level.adjacent(from, to)) {
-			return Actor.findChar(to) == null && (pass[to] || Level.avoid[to]) ? to
-					: -1;
+		if (level.adjacent(from, to)) {
+			return Actor.findChar(to) == null && (pass[to] || Level.avoid[to]) ? to : -1;
 		}
 
 		setupPassable();
 		if (ch.flying || ch.buff(Amok.class) != null) {
 			BArray.or(pass, Level.avoid, passable);
 		} else {
-			System.arraycopy(pass, 0, passable, 0, Level.getLength());
+			System.arraycopy(pass, 0, passable, 0, Dungeon.level.getLength());
 		}
 
-		for (Actor actor : Actor.all()) {
-			if (actor instanceof Char) {
-				int pos = ((Char) actor).pos;
-				if (visible[pos]) {
-					passable[pos] = false;
-				}
+		for (Char c : Actor.chars()) {
+			if (visible[c.pos]) {
+				passable[c.pos] = false;
 			}
 		}
 
@@ -1316,22 +1268,18 @@ public class Dungeon {
 
 	}
 
-	public static int flee(Char ch, int cur, int from, boolean pass[],
-	                       boolean[] visible) {
+	public static int flee(Char ch, int cur, int from, boolean pass[], boolean[] visible) {
 
 		setupPassable();
 		if (ch.flying) {
 			BArray.or(pass, Level.avoid, passable);
 		} else {
-			System.arraycopy(pass, 0, passable, 0, Level.getLength());
+			System.arraycopy(pass, 0, passable, 0, Dungeon.level.getLength());
 		}
 
-		for (Actor actor : Actor.all()) {
-			if (actor instanceof Char) {
-				int pos = ((Char) actor).pos;
-				if (visible[pos]) {
-					passable[pos] = false;
-				}
+		for (Char c : Actor.chars()) {
+			if (visible[c.pos]) {
+				passable[c.pos] = false;
 			}
 		}
 		passable[cur] = true;

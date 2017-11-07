@@ -1,23 +1,5 @@
-/*
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
 
 package com.watabou.utils;
-
-import com.github.epd.sprout.levels.Level;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -31,8 +13,10 @@ public class PathFinder {
 	private static int[] queue;
 
 	private static int size = 0;
+	private static int width = 0;
 
 	private static int[] dir;
+	private static int[] dirLR;
 
 	public static int[] NEIGHBOURS4;
 	public static int[] NEIGHBOURS8;
@@ -44,9 +28,9 @@ public class PathFinder {
 
 	public static void setMapSize(int width, int height) {
 
-		int size = width * height;
+		PathFinder.width = width;
+		PathFinder.size = width * height;
 
-		PathFinder.size = size;
 		distance = new int[size];
 		goals = new boolean[size];
 		queue = new int[size];
@@ -55,29 +39,30 @@ public class PathFinder {
 		Arrays.fill(maxVal, Integer.MAX_VALUE);
 
 		dir = new int[]{-1, +1, -width, +width, -width - 1, -width + 1, +width - 1, +width + 1};
+		dirLR = new int[]{-1-width, -1, -1+width, -width, +width, +1-width, +1, +1+width};
 
-		NEIGHBOURS4 = new int[]{-Level.WIDTH, +1, +Level.WIDTH, -1};
-		NEIGHBOURS8 = new int[]{+1, -1, +Level.WIDTH, -Level.WIDTH,
-				+1 + Level.WIDTH, +1 - Level.WIDTH, -1 + Level.WIDTH, -1 - Level.WIDTH};
-		NEIGHBOURS9 = new int[]{0, +1, -1, +Level.WIDTH, -Level.WIDTH,
-				+1 + Level.WIDTH, +1 - Level.WIDTH, -1 + Level.WIDTH, -1 - Level.WIDTH};
+		NEIGHBOURS4 = new int[]{-width, +1, +width, -1};
+		NEIGHBOURS8 = new int[]{+1, -1, +width, -width,
+				+1 + width, +1 - width, -1 + width, -1 - width};
+		NEIGHBOURS9 = new int[]{0, +1, -1, +width, -width,
+				+1 + width, +1 - width, -1 + width, -1 - width};
 
 		// Note that use of these without checking values is unsafe, mobs can be
 		// within 2 tiles of the
 		// edge of the map, unsafe use in that case will cause an array out of
 		// bounds exception.
-		NEIGHBOURS8DIST2 = new int[]{+2 + 2 * Level.WIDTH,
-				+1 + 2 * Level.WIDTH, 2 * Level.WIDTH, -1 + 2 * Level.WIDTH, -2 + 2 * Level.WIDTH,
-				+2 + Level.WIDTH, +1 + Level.WIDTH, +Level.WIDTH, -1 + Level.WIDTH, -2 + Level.WIDTH, +2, +1, -1,
-				-2, +2 - Level.WIDTH, +1 - Level.WIDTH, -Level.WIDTH, -1 - Level.WIDTH, -2 - Level.WIDTH,
-				+2 - 2 * Level.WIDTH, +1 - 2 * Level.WIDTH, -2 * Level.WIDTH, -1 - 2 * Level.WIDTH,
-				-2 - 2 * Level.WIDTH};
-		NEIGHBOURS9DIST2 = new int[]{+2 + 2 * Level.WIDTH,
-				+1 + 2 * Level.WIDTH, 2 * Level.WIDTH, -1 + 2 * Level.WIDTH, -2 + 2 * Level.WIDTH,
-				+2 + Level.WIDTH, +1 + Level.WIDTH, +Level.WIDTH, -1 + Level.WIDTH, -2 + Level.WIDTH, +2, +1, 0,
-				-1, -2, +2 - Level.WIDTH, +1 - Level.WIDTH, -Level.WIDTH, -1 - Level.WIDTH, -2 - Level.WIDTH,
-				+2 - 2 * Level.WIDTH, +1 - 2 * Level.WIDTH, -2 * Level.WIDTH, -1 - 2 * Level.WIDTH,
-				-2 - 2 * Level.WIDTH};
+		NEIGHBOURS8DIST2 = new int[]{+2 + 2 * width,
+				+1 + 2 * width, 2 * width, -1 + 2 * width, -2 + 2 * width,
+				+2 + width, +1 + width, +width, -1 + width, -2 + width, +2, +1, -1,
+				-2, +2 - width, +1 - width, -width, -1 - width, -2 - width,
+				+2 - 2 * width, +1 - 2 * width, -2 * width, -1 - 2 * width,
+				-2 - 2 * width};
+		NEIGHBOURS9DIST2 = new int[]{+2 + 2 * width,
+				+1 + 2 * width, 2 * width, -1 + 2 * width, -2 + 2 * width,
+				+2 + width, +1 + width, +width, -1 + width, -2 + width, +2, +1, 0,
+				-1, -2, +2 - width, +1 - width, -width, -1 - width, -2 - width,
+				+2 - 2 * width, +1 - 2 * width, -2 * width, -1 - 2 * width,
+				-2 - 2 * width};
 
 		CIRCLE = new int[]{-width - 1, -width, -width + 1, +1, +width + 1, +width, +width - 1, -1};
 	}
@@ -194,9 +179,11 @@ public class PathFinder {
 			}
 			int nextDistance = distance[step] + 1;
 
-			for (int i = 0; i < dir.length; i++) {
+			int start = (step % width == 0 ? 3 : 0);
+			int end   = ((step+1) % width == 0 ? 3 : 0);
+			for (int i = start; i < dirLR.length - end; i++) {
 
-				int n = step + dir[i];
+				int n = step + dirLR[i];
 				if (n == from || (n >= 0 && n < size && passable[n] && (distance[n] > nextDistance))) {
 					// Add to queue
 					queue[tail++] = n;
@@ -230,9 +217,11 @@ public class PathFinder {
 				return;
 			}
 
-			for (int i = 0; i < dir.length; i++) {
+			int start = (step % width == 0 ? 3 : 0);
+			int end   = ((step+1) % width == 0 ? 3 : 0);
+			for (int i = start; i < dirLR.length - end; i++) {
 
-				int n = step + dir[i];
+				int n = step + dirLR[i];
 				if (n >= 0 && n < size && passable[n] && (distance[n] > nextDistance)) {
 					// Add to queue
 					queue[tail++] = n;
@@ -274,9 +263,11 @@ public class PathFinder {
 			}
 			int nextDistance = distance[step] + 1;
 
-			for (int i = 0; i < dir.length; i++) {
+			int start = (step % width == 0 ? 3 : 0);
+			int end   = ((step+1) % width == 0 ? 3 : 0);
+			for (int i = start; i < dirLR.length - end; i++) {
 
-				int n = step + dir[i];
+				int n = step + dirLR[i];
 				if (n == from || (n >= 0 && n < size && passable[n] && (distance[n] > nextDistance))) {
 					// Add to queue
 					queue[tail++] = n;
@@ -320,9 +311,11 @@ public class PathFinder {
 
 			int nextDistance = dist + 1;
 
-			for (int i = 0; i < dir.length; i++) {
+			int start = (step % width == 0 ? 3 : 0);
+			int end   = ((step+1) % width == 0 ? 3 : 0);
+			for (int i = start; i < dirLR.length - end; i++) {
 
-				int n = step + dir[i];
+				int n = step + dirLR[i];
 				if (n >= 0 && n < size && passable[n] && distance[n] > nextDistance) {
 					// Add to queue
 					queue[tail++] = n;
@@ -335,8 +328,7 @@ public class PathFinder {
 		return dist;
 	}
 
-	@SuppressWarnings("unused")
-	private static void buildDistanceMap(int to, boolean[] passable) {
+	public static void buildDistanceMap( int to, boolean[] passable ) {
 
 		System.arraycopy(maxVal, 0, distance, 0, maxVal.length);
 
@@ -353,9 +345,11 @@ public class PathFinder {
 			int step = queue[head++];
 			int nextDistance = distance[step] + 1;
 
-			for (int i = 0; i < dir.length; i++) {
+			int start = (step % width == 0 ? 3 : 0);
+			int end   = ((step+1) % width == 0 ? 3 : 0);
+			for (int i = start; i < dirLR.length - end; i++) {
 
-				int n = step + dir[i];
+				int n = step + dirLR[i];
 				if (n >= 0 && n < size && passable[n] && (distance[n] > nextDistance)) {
 					// Add to queue
 					queue[tail++] = n;

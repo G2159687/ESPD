@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -68,9 +51,6 @@ public class SokobanVaultLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 		cleared = true;
 	}
 
@@ -499,22 +479,23 @@ public class SokobanVaultLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 39);
+
 		map = SokobanLayouts2.SOKOBAN_VAULT_LEVEL.clone();
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
 
-		entrance = 8 + WIDTH * 5;
+		entrance = 8 + getWidth() * 5;
 		exit = 0;
 
+		decorate();
 
 		return true;
 	}
 
-	@Override
 	protected void decorate() {
 		for (int i = 0; i < getLength(); i++) {
 
@@ -534,12 +515,12 @@ public class SokobanVaultLevel extends Level {
 	protected void createMobs() {
 		/*
 		    SokobanSentinel mob = new SokobanSentinel();
-			mob.pos = 38 + WIDTH * 21;
+			mob.pos = 38 + getWidth() * 21;
 			mobs.add(mob);
 			Actor.occupyCell(mob);
 			
 			SokobanSentinel mob2 = new SokobanSentinel();
-			mob2.pos = 25 + WIDTH * 36;
+			mob2.pos = 25 + getWidth() * 36;
 			mobs.add(mob2);
 			Actor.occupyCell(mob2);		
 			*/
@@ -547,27 +528,23 @@ public class SokobanVaultLevel extends Level {
 
 
 	protected void createSheep() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				SheepSokoban npc = new SheepSokoban();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				SheepSokobanCorner npc = new SheepSokobanCorner();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
 				SheepSokobanSwitch npc = new SheepSokobanSwitch();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
 				SheepSokobanBlack npc = new SheepSokobanBlack();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.PORT_WELL) {
 				
 					/*
@@ -609,7 +586,7 @@ public class SokobanVaultLevel extends Level {
 			goldmin = 300;
 			goldmax = 500;
 		}
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.EMPTY && heaps.get(i) == null && Random.Int(100) > 70) {
 				if (first && !ringDrop && !Dungeon.limitedDrops.armband.dropped()) {
 					drop(new MasterThievesArmband().identify(), i).type = Heap.Type.CHEST;

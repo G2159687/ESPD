@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -47,10 +31,10 @@ public class InfestBossLevel extends Level {
 		viewDistance = 6;
 	}
 
-	private static final int ROOM_LEFT = getWidth() / 2 - 2;
-	private static final int ROOM_RIGHT = getWidth() / 2 + 2;
-	private static final int ROOM_TOP = HEIGHT / 2 - 2;
-	private static final int ROOM_BOTTOM = HEIGHT / 2 + 2;
+	private static final int ROOM_LEFT = 48 / 2 - 2;
+	private static final int ROOM_RIGHT = 48 / 2 + 2;
+	private static final int ROOM_TOP = 48 / 2 - 2;
+	private static final int ROOM_BOTTOM = 48 / 2 + 2;
 
 	private int arenaDoor;
 	private boolean enteredArena = false;
@@ -91,6 +75,8 @@ public class InfestBossLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		int topMost = Integer.MAX_VALUE;
 
 		for (int i = 0; i < 8; i++) {
@@ -107,7 +93,7 @@ public class InfestBossLevel extends Level {
 				bottom = ROOM_BOTTOM + 3;
 			} else {
 				top = ROOM_LEFT - 3;
-				bottom = Random.Int(ROOM_TOP + 3, HEIGHT - 1);
+				bottom = Random.Int(ROOM_TOP + 3, getHeight() - 1);
 			}
 
 			Painter.fill(this, left, top, right - left + 1, bottom - top + 1,
@@ -142,11 +128,11 @@ public class InfestBossLevel extends Level {
 		entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1)
 				+ Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * getWidth();
 		map[entrance] = Terrain.ENTRANCE;
+		decorate();
 
 		return true;
 	}
 
-	@Override
 	protected void decorate() {
 
 		for (int i = getWidth() + 1; i < getLength() - getWidth(); i++) {
@@ -181,23 +167,9 @@ public class InfestBossLevel extends Level {
 
 	}
 
-	//@Override
-	//protected void createMobs() {
-	//}
-
-	//@Override
-	//public Actor respawner() {
-	//	return null;
-	//}
-
 	@Override
 	protected void createItems() {
 	}
-
-	//@Override
-	//public int randomRespawnCell() {
-	//	return -1;
-	//}
 
 	@Override
 	public void press(int cell, Char hero) {
@@ -366,7 +338,6 @@ public class InfestBossLevel extends Level {
 				mob.pos = randomRespawnCellMob();
 			} while (mob.pos == -1);
 			mobs.add(mob);
-			Actor.occupyCell(mob);
 		}
 	}
 

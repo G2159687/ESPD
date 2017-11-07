@@ -1,29 +1,18 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.hero.HeroClass;
-import com.github.epd.sprout.items.Bomb;
-import com.github.epd.sprout.levels.Room.Type;
+import com.github.epd.sprout.items.bombs.Bomb;
+import com.github.epd.sprout.levels.builders.BranchesBuilder;
+import com.github.epd.sprout.levels.builders.Builder;
+import com.github.epd.sprout.levels.painters.CavesPainter;
 import com.github.epd.sprout.levels.painters.Painter;
+import com.github.epd.sprout.levels.rooms.Room;
+import com.github.epd.sprout.levels.rooms.connection.TunnelRoom;
+import com.github.epd.sprout.levels.rooms.standard.StandardRoom;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -43,6 +32,29 @@ public class MineLevel extends RegularLevel {
 	}
 
 	@Override
+	protected int standardRooms() {
+		//6 to 9, average 7.333
+		return 10+Random.chances(new float[]{2, 3, 3, 1});
+	}
+
+	@Override
+	protected int specialRooms() {
+		//1 to 3, average 2.2
+		return 1+Random.chances(new float[]{2, 4, 4});
+	}
+
+	@Override
+	protected Painter painter() {
+		return new CavesPainter()
+				.setWater(feeling == Feeling.WATER ? 0.85f : 0.30f, 6)
+				.setGrass(feeling == Feeling.GRASS ? 0.65f : 0.15f, 3);
+	}
+
+	protected Builder builder(){
+		return new BranchesBuilder();
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_CAVES;
 	}
@@ -53,16 +65,6 @@ public class MineLevel extends RegularLevel {
 	}
 
 	@Override
-	protected boolean[] water() {
-		return Patch.generate(feeling == Feeling.WATER ? 0.60f : 0.45f, 6);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(feeling == Feeling.GRASS ? 0.55f : 0.35f, 3);
-	}
-
-	@Override
 	protected void setPar() {
 		Dungeon.pars[Dungeon.depth] = 400 + (Dungeon.depth * 50) + (secretDoors * 20);
 	}
@@ -70,19 +72,18 @@ public class MineLevel extends RegularLevel {
 	@Override
 	protected void createItems() {
 
-
 		if (Dungeon.hero.heroClass == HeroClass.ROGUE && Random.Int(3) == 0) {
 			addItemToSpawn(new Bomb());
 		}
+
+		decorate();
 		super.createItems();
 	}
 
-
-	@Override
 	protected void decorate() {
 
 		for (Room room : rooms) {
-			if (room.type != Room.Type.STANDARD) {
+			if (!(room instanceof StandardRoom)) {
 				continue;
 			}
 
@@ -90,75 +91,19 @@ public class MineLevel extends RegularLevel {
 				continue;
 			}
 
-			int s = room.square();
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.left + 1) + (room.top + 1) * getWidth();
-				if (map[corner - 1] == Terrain.WALL
-						&& map[corner - getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.right - 1) + (room.top + 1) * getWidth();
-				if (map[corner + 1] == Terrain.WALL
-						&& map[corner - getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.left + 1) + (room.bottom - 1) * getWidth();
-				if (map[corner - 1] == Terrain.WALL
-						&& map[corner + getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
-			if (Random.Int(s) > 8) {
-				int corner = (room.right - 1) + (room.bottom - 1) * getWidth();
-				if (map[corner + 1] == Terrain.WALL
-						&& map[corner + getWidth()] == Terrain.WALL) {
-					map[corner] = Terrain.WALL;
-				}
-			}
-
 			for (Room n : room.connected.keySet()) {
-				if ((n.type == Room.Type.STANDARD || n.type == Room.Type.TUNNEL)
+				if ((n instanceof StandardRoom|| n instanceof TunnelRoom)
 						&& Random.Int(3) == 0) {
 					Painter.set(this, room.connected.get(n), Terrain.EMPTY_DECO);
 				}
 			}
 		}
 
-		for (int i = getWidth() + 1; i < getLength() - getWidth(); i++) {
-			if (map[i] == Terrain.EMPTY) {
-				int n = 0;
-				if (map[i + 1] == Terrain.WALL) {
-					n++;
-				}
-				if (map[i - 1] == Terrain.WALL) {
-					n++;
-				}
-				if (map[i + getWidth()] == Terrain.WALL) {
-					n++;
-				}
-				if (map[i - getWidth()] == Terrain.WALL) {
-					n++;
-				}
-				if (Random.Int(6) <= n) {
-					map[i] = Terrain.EMPTY_DECO;
-				}
-			}
-		}
-
 		for (int i = 0; i < getLength(); i++) {
-			if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
+			if (map[i] == Terrain.WALL && Random.Int(3) == 0) {
 				map[i] = Terrain.WALL_DECO;
 			}
 		}
-
 
 		setPar();
 
@@ -167,9 +112,9 @@ public class MineLevel extends RegularLevel {
 		}
 
 		for (Room r : rooms) {
-			if (r.type == Type.STANDARD) {
+			if (r instanceof StandardRoom) {
 				for (Room n : r.neigbours) {
-					if (n.type == Type.STANDARD && !r.connected.containsKey(n)) {
+					if (n instanceof StandardRoom && !r.connected.containsKey(n)) {
 						Rect w = r.intersect(n);
 						if (w.left == w.right && w.bottom - w.top >= 5) {
 
@@ -195,7 +140,6 @@ public class MineLevel extends RegularLevel {
 				}
 			}
 		}
-
 
 	}
 
@@ -238,7 +182,7 @@ public class MineLevel extends RegularLevel {
 	}
 
 	public static void addVisuals(Level level, Scene scene) {
-		for (int i = 0; i < getLength(); i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (level.map[i] == Terrain.WALL_DECO) {
 				scene.add(new Vein(i));
 			}

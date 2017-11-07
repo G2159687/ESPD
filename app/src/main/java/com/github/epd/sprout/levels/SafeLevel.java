@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -70,9 +53,6 @@ public class SafeLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -333,14 +313,6 @@ public class SafeLevel extends Level {
 				if (mob instanceof SheepSokoban || mob instanceof SheepSokobanSwitch || mob instanceof SheepSokobanCorner || mob instanceof SheepSokobanBlack || mob instanceof Sheep) {
 					ActivatePortalTrap.trigger(cell, mob);
 
-				/*
-				public int[] teleportspots; location of teleports
-				public int[] portswitchspots; location of switches
-				public int[] teleportassign; assignment of teleports to switches
-				public int[] destinationspots; current assignment of destination spots to teleports
-				public int[] destinationassign; assignemnt of destination spots to switches
-				*/
-
 					int arraypos = -1; //position in array of teleport switch
 					int portpos = -1; //position on map of teleporter
 					int portarray = -1; //position in array of teleporter
@@ -450,40 +422,24 @@ public class SafeLevel extends Level {
 	@Override
 	protected boolean build() {
 
-		map = Layouts.SAFE_ROOM_DEFAULT.clone();
+		setSize(15, 7);
 
-		decorate();
+		map = Layouts.SAFE_ROOM_DEFAULT.clone();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
 
-		entrance = 23 + WIDTH * 15;
+		entrance = 7 + getWidth() * 3;
 		exit = 0;
-
 
 		return true;
 	}
 
 	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
-	@Override
 	protected void createMobs() {
-		/*
-		    SokobanSentinel mob = new SokobanSentinel();
-			mob.pos = 38 + WIDTH * 21;
-			mobs.add(mob);
-			Actor.occupyCell(mob);
-			
-			SokobanSentinel mob2 = new SokobanSentinel();
-			mob2.pos = 25 + WIDTH * 36;
-			mobs.add(mob2);
-			Actor.occupyCell(mob2);		
-			*/
+
 	}
 
 
@@ -511,27 +467,23 @@ public class SafeLevel extends Level {
 
 
 	protected void createSheep() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				SheepSokoban npc = new SheepSokoban();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				SheepSokobanCorner npc = new SheepSokobanCorner();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
 				SheepSokobanSwitch npc = new SheepSokobanSwitch();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
 				SheepSokobanBlack npc = new SheepSokobanBlack();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.PORT_WELL) {
 				
 					/*
@@ -547,27 +499,12 @@ public class SafeLevel extends Level {
 
 	protected void createSwitches() {
 
-		//spots where your portal switches are
-
-
-		//spots where your portals are
-
-
-		//assign each switch to a portal
-
-
-		//assign each switch to a destination spot
-
-
-		//set the original destination of portals
-
-
 	}
 
 
 	@Override
 	protected void createItems() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (first && map[i] == Terrain.SOKOBAN_HEAP) {
 				if (Random.Int(5) == 0) {
 					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
@@ -577,15 +514,10 @@ public class SafeLevel extends Level {
 			}
 		}
 		if (first) {
-			addItemToGen(new IronKey(Dungeon.depth), 0, 23 + WIDTH * 17);
+			addItemToGen(new IronKey(Dungeon.depth), 0, 23 + getWidth() * 17);
 		} else {
-			addItemToGen(new Food(), 0, 23 + WIDTH * 17);
+			addItemToGen(new Food(), 0, 23 + getWidth() * 17);
 		}
-		 /*
-		 if (first){
-		 addItemToGen(new ScrollOfMagicalInfusion(), 4, 11+10*WIDTH);
-		 }
-		 */
 
 	}
 

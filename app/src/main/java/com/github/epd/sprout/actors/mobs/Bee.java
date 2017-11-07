@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Dungeon;
@@ -120,14 +104,14 @@ public class Bee extends Mob {
 			// near the pot, keeping targeting it.
 			if (enemy != null && enemy.isAlive()
 					&& Level.fieldOfView[enemy.pos] && enemy.invisible == 0
-					&& Level.distance(enemy.pos, potPos) <= 3)
+					&& Dungeon.level.distance(enemy.pos, potPos) <= 3)
 				return enemy;
 
 			// find all mobs near the pot
 			HashSet<Char> enemies = new HashSet<Char>();
 			for (Mob mob : Dungeon.level.mobs)
 				if (!(mob instanceof Bee)
-						&& Level.distance(mob.pos, potPos) <= 3
+						&& Dungeon.level.distance(mob.pos, potPos) <= 3
 						&& (mob.hostile || mob.ally))
 					enemies.add(mob);
 
@@ -136,7 +120,7 @@ public class Bee extends Mob {
 			if (enemies.size() > 0)
 				return Random.element(enemies);
 			else
-				return (Level.distance(Dungeon.hero.pos, potPos) <= 3) ? Dungeon.hero
+				return (Dungeon.level.distance(Dungeon.hero.pos, potPos) <= 3) ? Dungeon.hero
 						: null;
 		}
 	}
@@ -146,7 +130,7 @@ public class Bee extends Mob {
 		if (enemy != null && Actor.findById(potHolder) == enemy) {
 			target = enemy.pos;
 		} else if (potPos != -1
-				&& (state == WANDERING || Level.distance(target, potPos) > 3))
+				&& (state == WANDERING || Dungeon.level.distance(target, potPos) > 3))
 			this.target = target = potPos;
 		return super.getCloser(target);
 	}

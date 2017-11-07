@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -62,7 +46,6 @@ import com.github.epd.sprout.items.Torch;
 import com.github.epd.sprout.items.artifacts.AlchemistsToolkit;
 import com.github.epd.sprout.items.artifacts.DriedRose;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
-import com.github.epd.sprout.items.artifacts.TalismanOfForesight;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.food.Blandfruit;
 import com.github.epd.sprout.items.potions.PotionOfMight;
@@ -96,6 +79,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
 
@@ -107,8 +91,6 @@ import java.util.HashSet;
 
 public abstract class Level implements Bundlable {
 
-	// TODO: Add more room types
-
 	public enum Feeling {
 		NONE, CHASM, WATER, GRASS, DARK
 	}
@@ -119,10 +101,9 @@ public abstract class Level implements Bundlable {
 	 * 
 	 */
 
-	//TODO: Change some levels' width & height, add rooms
-	public static int WIDTH = 48;
-	public static int HEIGHT = 48;
-	public static int LENGTH = WIDTH * HEIGHT;
+	protected int WIDTH;
+	protected int HEIGHT;
+	protected int LENGTH = WIDTH * HEIGHT;
 
 	protected static final float TIME_TO_RESPAWN = 50;
 	protected static final int REGROW_TIMER = 10;
@@ -130,10 +111,7 @@ public abstract class Level implements Bundlable {
 	protected static final int PET_TICK = 1;
 
 	private static final String TXT_HIDDEN_PLATE_CLICKS = Messages.get(Level.class, "hidden_plate");
-
-	public static boolean resizingNeeded;
 	public static boolean first;
-	public static int loadedMapSize;
 
 	public int[] map;
 	public boolean[] visited;
@@ -145,25 +123,24 @@ public abstract class Level implements Bundlable {
 
 	public int viewDistance = 8;
 
-	public static boolean[] fieldOfView = new boolean[getLength()];
+	public static boolean[] fieldOfView;
 
-	public static boolean[] passable = new boolean[getLength()];
-	public static boolean[] losBlocking = new boolean[getLength()];
-	public static boolean[] flamable = new boolean[getLength()];
-	public static boolean[] secret = new boolean[getLength()];
-	public static boolean[] solid = new boolean[getLength()];
-	public static boolean[] avoid = new boolean[getLength()];
-	public static boolean[] water = new boolean[getLength()];
-	public static boolean[] pit = new boolean[getLength()];
+	public static boolean[] passable;
+	public static boolean[] losBlocking;
+	public static boolean[] flamable;
+	public static boolean[] secret;
+	public static boolean[] solid;
+	public static boolean[] avoid;
+	public static boolean[] water;
+	public static boolean[] pit;
 
-	public static boolean[] discoverable = new boolean[getLength()];
+	public static boolean[] discoverable;
 
 	public Feeling feeling = Feeling.NONE;
 
 
 	public int entrance;
 	public int exit;
-	public int pitSign;
 
 	// when a boss level has become locked.
 	public boolean locked = false;
@@ -182,8 +159,8 @@ public abstract class Level implements Bundlable {
 	public int color1 = 0x004400;
 	public int color2 = 0x88CC44;
 
-	protected static boolean pitRoomNeeded = false;
-	protected static boolean weakFloorCreated = false;
+	public static boolean pitRoomNeeded = false;
+	public static boolean weakFloorCreated = false;
 	public boolean reset = false;
 
 	private static final String MAP = "map";
@@ -204,17 +181,10 @@ public abstract class Level implements Bundlable {
 	private static final String FORCEDONE = "forcedone";
 	private static final String GENPETNEXT = "genpetnext";
 	private static final String SEALEDLEVEL = "sealedlevel";
+	private static final String VIEW = "viewdistance";
 
 
 	public void create() {
-
-		resizingNeeded = false;
-
-		map = new int[getLength()];
-		visited = new boolean[getLength()];
-		Arrays.fill(visited, false);
-		mapped = new boolean[getLength()];
-		Arrays.fill(mapped, false);
 
 		if (!Dungeon.bossLevel()) {
 			addItemToSpawn(Generator.random(Generator.Category.FOOD));
@@ -339,8 +309,6 @@ public abstract class Level implements Bundlable {
 		boolean pitNeeded = Dungeon.depth > 1 && weakFloorCreated;
 
 		do {
-			Arrays.fill(map, feeling == Feeling.CHASM ? Terrain.CHASM
-					: Terrain.WALL);
 
 			pitRoomNeeded = pitNeeded;
 			weakFloorCreated = false;
@@ -351,13 +319,40 @@ public abstract class Level implements Bundlable {
 			plants = new SparseArray<>();
 
 		} while (!build());
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 
 		createMobs();
 		createItems();
+	}
+
+	public void setSize(int w, int h){
+
+		WIDTH = w;
+		HEIGHT = h;
+		LENGTH = w * h;
+
+		map = new int[getLength()];
+		Arrays.fill( map, Terrain.WALL );
+		Arrays.fill( map, feeling == Level.Feeling.CHASM ? Terrain.CHASM : Terrain.WALL );
+
+		visited = new boolean[getLength()];
+		mapped = new boolean[getLength()];
+		Dungeon.visible = new boolean[getLength()];
+
+		fieldOfView = new boolean[getLength()];
+
+		passable	= new boolean[getLength()];
+		losBlocking	= new boolean[getLength()];
+		flamable	= new boolean[getLength()];
+		secret		= new boolean[getLength()];
+		solid		= new boolean[getLength()];
+		avoid		= new boolean[getLength()];
+		water		= new boolean[getLength()];
+		pit			= new boolean[getLength()];
+
+		PathFinder.setMapSize(w, h);
 	}
 
 	public void reset() {
@@ -374,6 +369,11 @@ public abstract class Level implements Bundlable {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 
+		if (bundle.contains("width") && bundle.contains("height")){
+			setSize( bundle.getInt("width"), bundle.getInt("height"));
+		} else
+			setSize( 32, 32);
+
 		mobs = new HashSet<Mob>();
 		heaps = new SparseArray<Heap>();
 		blobs = new HashMap<Class<? extends Blob>, Blob>();
@@ -385,7 +385,6 @@ public abstract class Level implements Bundlable {
 
 		entrance = bundle.getInt(ENTRANCE);
 		exit = bundle.getInt(EXIT);
-		pitSign = bundle.getInt(PITSIGN);
 		currentmoves = bundle.getInt(MOVES);
 
 		locked = bundle.getBoolean(LOCKED);
@@ -395,17 +394,13 @@ public abstract class Level implements Bundlable {
 		forcedone = bundle.getBoolean(FORCEDONE);
 		genpetnext = bundle.getBoolean(GENPETNEXT);
 		sealedlevel = bundle.getBoolean(SEALEDLEVEL);
+		viewDistance = bundle.getInt(VIEW);
 
 		weakFloorCreated = false;
-
-		adjustMapSize();
 
 		Collection<Bundlable> collection = bundle.getCollection(HEAPS);
 		for (Bundlable h : collection) {
 			Heap heap = (Heap) h;
-			if (resizingNeeded) {
-				heap.pos = adjustPos(heap.pos);
-			}
 			if (!heap.isEmpty())
 				heaps.put(heap.pos, heap);
 		}
@@ -413,9 +408,6 @@ public abstract class Level implements Bundlable {
 		collection = bundle.getCollection(PLANTS);
 		for (Bundlable p : collection) {
 			Plant plant = (Plant) p;
-			if (resizingNeeded) {
-				plant.pos = adjustPos(plant.pos);
-			}
 			plants.put(plant.pos, plant);
 		}
 
@@ -423,9 +415,6 @@ public abstract class Level implements Bundlable {
 		for (Bundlable m : collection) {
 			Mob mob = (Mob) m;
 			if (mob != null) {
-				if (resizingNeeded) {
-					mob.pos = adjustPos(mob.pos);
-				}
 				mobs.add(mob);
 			}
 		}
@@ -446,6 +435,8 @@ public abstract class Level implements Bundlable {
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
+		bundle.put( "width", WIDTH );
+		bundle.put( "height", HEIGHT );
 		bundle.put(MAP, map);
 		bundle.put(VISITED, visited);
 		bundle.put(MAPPED, mapped);
@@ -457,59 +448,17 @@ public abstract class Level implements Bundlable {
 		bundle.put(MOBS, mobs);
 		bundle.put(BLOBS, blobs.values());
 		bundle.put(FEELING, feeling);
-		bundle.put(PITSIGN, pitSign);
 		bundle.put(MOVES, currentmoves);
 		bundle.put(CLEARED, cleared);
 		bundle.put(RESET, reset);
 		bundle.put(FORCEDONE, forcedone);
 		bundle.put(GENPETNEXT, genpetnext);
 		bundle.put(SEALEDLEVEL, sealedlevel);
+		bundle.put(VIEW, viewDistance);
 	}
 
 	public int tunnelTile() {
 		return feeling == Feeling.CHASM ? Terrain.EMPTY_SP : Terrain.EMPTY;
-	}
-
-	private void adjustMapSize() {
-		// For levels saved before 1.6.3
-		// Seeing as shattered started on 1.7.1 this is never used, but the code
-		// may be resused in future.
-		if (map.length < getLength()) {
-
-			resizingNeeded = true;
-			loadedMapSize = (int) Math.sqrt(map.length);
-
-			int[] map = new int[getLength()];
-			Arrays.fill(map, Terrain.WALL);
-
-			boolean[] visited = new boolean[getLength()];
-			Arrays.fill(visited, false);
-
-			boolean[] mapped = new boolean[getLength()];
-			Arrays.fill(mapped, false);
-
-			for (int i = 0; i < loadedMapSize; i++) {
-				System.arraycopy(this.map, i * loadedMapSize, map, i * getWidth(),
-						loadedMapSize);
-				System.arraycopy(this.visited, i * loadedMapSize, visited, i
-						* getWidth(), loadedMapSize);
-				System.arraycopy(this.mapped, i * loadedMapSize, mapped, i
-						* getWidth(), loadedMapSize);
-			}
-
-			this.map = map;
-			this.visited = visited;
-			this.mapped = mapped;
-
-			entrance = adjustPos(entrance);
-			exit = adjustPos(exit);
-		} else {
-			resizingNeeded = false;
-		}
-	}
-
-	public int adjustPos(int pos) {
-		return (pos / loadedMapSize) * getWidth() + (pos % loadedMapSize);
 	}
 
 	public String tilesTex() {
@@ -521,8 +470,6 @@ public abstract class Level implements Bundlable {
 	}
 
 	abstract protected boolean build();
-
-	abstract protected void decorate();
 
 	abstract protected void createMobs();
 
@@ -949,6 +896,8 @@ public abstract class Level implements Bundlable {
 	private static int[] N4Indicies = new int[]{0, 2, 3, 1};
 
 	protected void cleanWalls() {
+		discoverable = new boolean[getLength()];
+
 		for (int i = 0; i < getLength(); i++) {
 
 			boolean d = false;
@@ -1373,77 +1322,73 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
-	public void updateFieldOfView(Char c, boolean[] fieldOfView) {
+	public void updateFieldOfView( Char c, boolean[] fieldOfView ) {
 
 		int cx = c.pos % getWidth();
 		int cy = c.pos / getWidth();
 
-		boolean sighted = c.buff(Blindness.class) == null
-				&& c.buff(Shadows.class) == null
-				&& c.buff(TimekeepersHourglass.timeStasis.class) == null
-				&& c.isAlive();
+		boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null
+				&& c.buff( TimekeepersHourglass.timeStasis.class ) == null && c.isAlive();
 		if (sighted) {
-			ShadowCaster.castShadow(cx, cy, fieldOfView, c.viewDistance);
+			ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
 		} else {
 			BArray.setFalse(fieldOfView);
 		}
 
 		int sense = 1;
+		//Currently only the hero can get mind vision
 		if (c.isAlive() && c == Dungeon.hero) {
-			for (Buff b : c.buffs(MindVision.class)) {
-				sense = Math.max(((MindVision) b).distance, sense);
-			}
-			if (c.buff(TalismanOfForesight.Foresight.class) != null) {
-				if (c.buff(TalismanOfForesight.Foresight.class).level() > 35)
-					sense = (c.buff(TalismanOfForesight.Foresight.class).level() < 48) ? 2 : 3;
+			for (Buff b : c.buffs( MindVision.class )) {
+				sense = Math.max( ((MindVision)b).distance, sense );
 			}
 		}
 
-		if (!sighted || sense > 1) {
+		if ((sighted && sense > 1) || !sighted) {
 
-			int ax = Math.max(0, cx - sense);
-			int bx = Math.min(cx + sense, getWidth() - 1);
-			int ay = Math.max(0, cy - sense);
-			int by = Math.min(cy + sense, HEIGHT - 1);
+			int ax = Math.max( 0, cx - sense );
+			int bx = Math.min( cx + sense, getWidth() - 1 );
+			int ay = Math.max( 0, cy - sense );
+			int by = Math.min( cy + sense, getHeight() - 1 );
 
 			int len = bx - ax + 1;
 			int pos = ax + ay * getWidth();
-			for (int y = ay; y <= by; y++, pos += getWidth()) {
+			for (int y = ay; y <= by; y++, pos+=getWidth()) {
 				System.arraycopy(discoverable, pos, fieldOfView, pos, len);
 			}
 		}
 
+		//Currently only the hero can get mind vision or awareness
 		if (c.isAlive() && c == Dungeon.hero) {
 			Dungeon.hero.mindVisionEnemies.clear();
-			if (c.buff(MindVision.class) != null) {
+			if (c.buff( MindVision.class ) != null) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
 
-					if (!fieldOfView[p]) {
+					if (!fieldOfView[p]){
 						Dungeon.hero.mindVisionEnemies.add(mob);
 					}
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p + i] = true;
+						fieldOfView[p+i] = true;
 
 				}
-			} else if (((Hero) c).heroClass == HeroClass.HUNTRESS) {
+			} else if (((Hero)c).heroClass == HeroClass.HUNTRESS) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
-					if (distance(c.pos, p) == 2) {
+					if (distance( c.pos, p) == 2) {
 
-						if (!fieldOfView[p]) {
+						if (!fieldOfView[p]){
 							Dungeon.hero.mindVisionEnemies.add(mob);
 						}
 						for (int i : PathFinder.NEIGHBOURS9)
-							fieldOfView[p + i] = true;
+							fieldOfView[p+i] = true;
 					}
 				}
 			}
-			if (c.buff(Awareness.class) != null) {
+			if (c.buff( Awareness.class ) != null) {
 				for (Heap heap : heaps.values()) {
 					int p = heap.pos;
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p + i] = true;
+						fieldOfView[p+i] = true;
 				}
 			}
 		}
@@ -1453,9 +1398,10 @@ public abstract class Level implements Bundlable {
 				if (!heap.seen && fieldOfView[heap.pos])
 					heap.seen = true;
 		}
+
 	}
 
-	public static int distance(int a, int b) {
+	public int distance(int a, int b) {
 		int ax = a % getWidth();
 		int ay = a / getWidth();
 		int bx = b % getWidth();
@@ -1463,18 +1409,16 @@ public abstract class Level implements Bundlable {
 		return Math.max(Math.abs(ax - bx), Math.abs(ay - by));
 	}
 
-	public static boolean adjacent(int a, int b) {
-		int diff = Math.abs(a - b);
-		return diff == 1 || diff == getWidth() || diff == getWidth() + 1
-				|| diff == getWidth() - 1;
+	public boolean adjacent( int a, int b ) {
+		return distance( a, b ) == 1;
 	}
 
 	//returns true if the input is a valid tile within the level
 	public boolean insideMap(int tile) {
 		//top and bottom row and beyond
-		return !((tile < WIDTH || tile >= LENGTH - WIDTH) ||
+		return !((tile < getWidth() || tile >= getLength() - getWidth()) ||
 				//left and right column
-				(tile % WIDTH == 0 || tile % WIDTH == WIDTH - 1));
+				(tile % getWidth() == 0 || tile % getWidth() == getWidth() - 1));
 	}
 
 	public boolean insideMapPermissive(int tile) {
@@ -1536,8 +1480,6 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "locked_exit_name");
 			case Terrain.UNLOCKED_EXIT:
 				return Messages.get(Level.class, "unlocked_exit_name");
-			case Terrain.SIGN:
-				return Messages.get(Level.class, "sign_name");
 			case Terrain.WELL:
 				return Messages.get(Level.class, "well_name");
 			case Terrain.EMPTY_WELL:
@@ -1551,18 +1493,6 @@ public abstract class Level implements Bundlable {
 				return Messages.get(FireTrap.class, "name");
 			case Terrain.PARALYTIC_TRAP:
 				return Messages.get(ParalyticTrap.class, "name");
-			//case Terrain.WOOL_RUG:
-			//return "Wool rug";
-			//case Terrain.FLEECING_TRAP:
-			//return "Fleecing trap";
-			//case Terrain.CHANGE_SHEEP_TRAP:
-			//return "Change sheep trap";
-			//case Terrain.SOKOBAN_ITEM_REVEAL:
-			//return "Item creation switch";
-			//case Terrain.SOKOBAN_PORT_SWITCH:
-			//return "Portal switch";
-			//case Terrain.PORT_WELL:
-			//return "Portal";
 			case Terrain.POISON_TRAP:
 				return Messages.get(PoisonTrap.class, "name");
 			case Terrain.ALARM_TRAP:
@@ -1610,8 +1540,6 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "locked_exit_desc");
 			case Terrain.BARRICADE:
 				return Messages.get(Level.class, "barricade_desc");
-			case Terrain.SIGN:
-				return Messages.get(Level.class, "sign_desc");
 			case Terrain.TOXIC_TRAP:
 			case Terrain.FIRE_TRAP:
 			case Terrain.PARALYTIC_TRAP:
@@ -1621,16 +1549,6 @@ public abstract class Level implements Bundlable {
 			case Terrain.GRIPPING_TRAP:
 			case Terrain.SUMMONING_TRAP:
 				return Messages.get(Level.class, "actrap_desc");
-			//case Terrain.FLEECING_TRAP:
-			//return "Stepping onto a fleecing trap will destroy your armor or eject you from the level.";
-			//case Terrain.CHANGE_SHEEP_TRAP:
-			//return "This trap will change the form of any sheep.";
-			//case Terrain.SOKOBAN_ITEM_REVEAL:
-			//return "This switch creates an item somewhere on the level.";
-			//case Terrain.SOKOBAN_PORT_SWITCH:
-			//return "This switch turns on and off a portal somewhere.";
-			//case Terrain.PORT_WELL:
-			//return "This is a portal to another location on this level.";
 			case Terrain.INACTIVE_TRAP:
 				return Messages.get(Level.class, "inactive_trap_desc");
 			case Terrain.STATUE:
@@ -1640,14 +1558,7 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "alchemy_desc");
 			case Terrain.EMPTY_WELL:
 				return Messages.get(Level.class, "empty_well_desc");
-			//case Terrain.WOOL_RUG:
-			//return "A plush wool rug. Very nice!";
 			default:
-			/*
-			if(tile >= Terrain.WOOL_RUG){
-				return "???";
-			}
-			*/
 				if (tile >= Terrain.WATER_TILES) {
 					return tileDesc(Terrain.WATER);
 				}
@@ -1657,28 +1568,33 @@ public abstract class Level implements Bundlable {
 				return "";
 		}
 	}
-	
-	/*
 
-public static final int FLEECING_TRAP = 65;
-	public static final int WOOL_RUG = 66;
-	public static final int SOKOBAN_SHEEP = 67;
-	public static final int CORNER_SOKOBAN_SHEEP = 68;
-	public static final int SWITCH_SOKOBAN_SHEEP = 69;
-	public static final int CHANGE_SHEEP_TRAP = 70;
-	public static final int SOKOBAN_ITEM_REVEAL = 71;
-	public static final int SOKOBAN_HEAP = 72;
-	public static final int BLACK_SOKOBAN_SHEEP = 73;
-	public static final int SOKOBAN_PORT_SWITCH = 75;
-	public static final int PORT_WELL = 74;
-*/
-
-
-	public static int getWidth() {
+	public int getWidth() {
 		return WIDTH;
 	}
 
-	public static int getLength() {
-		return LENGTH;
+	public int getHeight(){
+		return HEIGHT;
+	}
+
+	public int getLength() {
+		return WIDTH * HEIGHT;
+	}
+
+	public Point cellToPoint(int cell ){
+		return new Point(cell % getWidth(), cell / getWidth());
+	}
+
+	public int pointToCell( Point p ){
+		return p.x + p.y*getWidth();
+	}
+
+	public Mob findMob( int pos ){
+		for (Mob mob : mobs){
+			if (mob.pos == pos){
+				return mob;
+			}
+		}
+		return null;
 	}
 }

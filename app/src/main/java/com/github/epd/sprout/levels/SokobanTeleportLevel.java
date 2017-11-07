@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -75,9 +58,6 @@ public class SokobanTeleportLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -569,15 +549,16 @@ public class SokobanTeleportLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		map = SokobanLayouts.SOKOBAN_TELEPORT_LEVEL.clone();
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
 
-		entrance = 8 + WIDTH * 16;
+		entrance = 8 + getWidth() * 16;
 		exit = 0;
 
 
@@ -585,49 +566,38 @@ public class SokobanTeleportLevel extends Level {
 	}
 
 	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
-	@Override
 	protected void createMobs() {
 
 
 		SokobanSentinel mob = new SokobanSentinel();
-		mob.pos = 21 + WIDTH * 25;
+		mob.pos = 21 + getWidth() * 25;
 		mobs.add(mob);
-		Actor.occupyCell(mob);
 
 		SokobanSentinel mob2 = new SokobanSentinel();
-		mob2.pos = 42 + WIDTH * 42;
+		mob2.pos = 42 + getWidth() * 42;
 		mobs.add(mob2);
-		Actor.occupyCell(mob2);
 
 	}
 
 
 	protected void createSheep() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				SheepSokoban npc = new SheepSokoban();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				SheepSokobanCorner npc = new SheepSokobanCorner();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
 				SheepSokobanSwitch npc = new SheepSokobanSwitch();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
 				SheepSokobanBlack npc = new SheepSokobanBlack();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.PORT_WELL) {
 				/*
 					Portal portal = new Portal();
@@ -643,90 +613,90 @@ public class SokobanTeleportLevel extends Level {
 	protected void createSwitches() {
 
 		//spots where your portals are
-		teleportspots[0] = 4 + WIDTH * 2;
-		teleportspots[1] = 16 + WIDTH * 5;
-		teleportspots[2] = 23 + WIDTH * 5;
-		teleportspots[3] = 32 + WIDTH * 5;
-		teleportspots[4] = 4 + WIDTH * 6;
-		teleportspots[5] = 25 + WIDTH * 7;
-		teleportspots[6] = 42 + WIDTH * 8;
-		teleportspots[7] = 10 + WIDTH * 9;
-		teleportspots[8] = 2 + WIDTH * 10;
-		teleportspots[9] = 3 + WIDTH * 17;
-		teleportspots[10] = 8 + WIDTH * 17;
-		teleportspots[11] = 17 + WIDTH * 17;
-		teleportspots[12] = 37 + WIDTH * 17;
-		teleportspots[13] = 40 + WIDTH * 17;
-		teleportspots[14] = 37 + WIDTH * 20;
-		teleportspots[15] = 40 + WIDTH * 20;
-		teleportspots[16] = 21 + WIDTH * 21;
-		teleportspots[17] = 25 + WIDTH * 22;
-		teleportspots[18] = 15 + WIDTH * 24;
-		teleportspots[19] = 6 + WIDTH * 44;
-		teleportspots[20] = 23 + WIDTH * 44;
-		teleportspots[21] = 44 + WIDTH * 28;
+		teleportspots[0] = 4 + getWidth() * 2;
+		teleportspots[1] = 16 + getWidth() * 5;
+		teleportspots[2] = 23 + getWidth() * 5;
+		teleportspots[3] = 32 + getWidth() * 5;
+		teleportspots[4] = 4 + getWidth() * 6;
+		teleportspots[5] = 25 + getWidth() * 7;
+		teleportspots[6] = 42 + getWidth() * 8;
+		teleportspots[7] = 10 + getWidth() * 9;
+		teleportspots[8] = 2 + getWidth() * 10;
+		teleportspots[9] = 3 + getWidth() * 17;
+		teleportspots[10] = 8 + getWidth() * 17;
+		teleportspots[11] = 17 + getWidth() * 17;
+		teleportspots[12] = 37 + getWidth() * 17;
+		teleportspots[13] = 40 + getWidth() * 17;
+		teleportspots[14] = 37 + getWidth() * 20;
+		teleportspots[15] = 40 + getWidth() * 20;
+		teleportspots[16] = 21 + getWidth() * 21;
+		teleportspots[17] = 25 + getWidth() * 22;
+		teleportspots[18] = 15 + getWidth() * 24;
+		teleportspots[19] = 6 + getWidth() * 44;
+		teleportspots[20] = 23 + getWidth() * 44;
+		teleportspots[21] = 44 + getWidth() * 28;
 
 
 		//spots where your portal switches are
-		portswitchspots[0] = 30 + WIDTH * 14;
-		portswitchspots[1] = 35 + WIDTH * 16;
-		portswitchspots[2] = 42 + WIDTH * 16;
-		portswitchspots[3] = 35 + WIDTH * 21;
-		portswitchspots[4] = 42 + WIDTH * 21;
-		portswitchspots[5] = 30 + WIDTH * 36;
-		portswitchspots[6] = 32 + WIDTH * 36;
-		portswitchspots[7] = 35 + WIDTH * 36;
-		portswitchspots[8] = 37 + WIDTH * 36;
-		portswitchspots[9] = 27 + WIDTH * 41;
+		portswitchspots[0] = 30 + getWidth() * 14;
+		portswitchspots[1] = 35 + getWidth() * 16;
+		portswitchspots[2] = 42 + getWidth() * 16;
+		portswitchspots[3] = 35 + getWidth() * 21;
+		portswitchspots[4] = 42 + getWidth() * 21;
+		portswitchspots[5] = 30 + getWidth() * 36;
+		portswitchspots[6] = 32 + getWidth() * 36;
+		portswitchspots[7] = 35 + getWidth() * 36;
+		portswitchspots[8] = 37 + getWidth() * 36;
+		portswitchspots[9] = 27 + getWidth() * 41;
 
 
 		//assign each switch to a portal
-		teleportassign[0] = 8 + WIDTH * 17;
-		teleportassign[1] = 44 + WIDTH * 28;
-		teleportassign[2] = 40 + WIDTH * 17;
-		teleportassign[3] = 40 + WIDTH * 17;
-		teleportassign[4] = 8 + WIDTH * 17;
-		teleportassign[5] = 40 + WIDTH * 20;
-		teleportassign[6] = 15 + WIDTH * 24;
-		teleportassign[7] = 8 + WIDTH * 17;
-		teleportassign[8] = 23 + WIDTH * 44;
-		teleportassign[9] = 6 + WIDTH * 44;
+		teleportassign[0] = 8 + getWidth() * 17;
+		teleportassign[1] = 44 + getWidth() * 28;
+		teleportassign[2] = 40 + getWidth() * 17;
+		teleportassign[3] = 40 + getWidth() * 17;
+		teleportassign[4] = 8 + getWidth() * 17;
+		teleportassign[5] = 40 + getWidth() * 20;
+		teleportassign[6] = 15 + getWidth() * 24;
+		teleportassign[7] = 8 + getWidth() * 17;
+		teleportassign[8] = 23 + getWidth() * 44;
+		teleportassign[9] = 6 + getWidth() * 44;
 
 
 		//assign each switch to a destination spot
-		destinationassign[0] = 9 + WIDTH * 9;
-		destinationassign[1] = 25 + WIDTH * 44;
-		destinationassign[2] = 36 + WIDTH * 20;
-		destinationassign[3] = 41 + WIDTH * 20;
-		destinationassign[4] = 2 + WIDTH * 17;
-		destinationassign[5] = 22 + WIDTH * 21;
-		destinationassign[6] = 16 + WIDTH * 17;
-		destinationassign[7] = 13 + WIDTH * 24;
+		destinationassign[0] = 9 + getWidth() * 9;
+		destinationassign[1] = 25 + getWidth() * 44;
+		destinationassign[2] = 36 + getWidth() * 20;
+		destinationassign[3] = 41 + getWidth() * 20;
+		destinationassign[4] = 2 + getWidth() * 17;
+		destinationassign[5] = 22 + getWidth() * 21;
+		destinationassign[6] = 16 + getWidth() * 17;
+		destinationassign[7] = 13 + getWidth() * 24;
 		destinationassign[8] = 0;
-		destinationassign[9] = 42 + WIDTH * 7;
+		destinationassign[9] = 42 + getWidth() * 7;
 
 		//set the original destination of portals
-		destinationspots[0] = 2 + WIDTH * 9;
-		destinationspots[1] = 24 + WIDTH * 8;
-		destinationspots[2] = 8 + WIDTH * 44;
-		destinationspots[3] = 37 + WIDTH * 16;
-		destinationspots[4] = 31 + WIDTH * 5;
-		destinationspots[5] = 9 + WIDTH * 16;
-		destinationspots[6] = 9 + WIDTH * 16;
-		destinationspots[7] = 5 + WIDTH * 2;
-		destinationspots[8] = 9 + WIDTH * 16;
-		destinationspots[9] = 9 + WIDTH * 16;
+		destinationspots[0] = 2 + getWidth() * 9;
+		destinationspots[1] = 24 + getWidth() * 8;
+		destinationspots[2] = 8 + getWidth() * 44;
+		destinationspots[3] = 37 + getWidth() * 16;
+		destinationspots[4] = 31 + getWidth() * 5;
+		destinationspots[5] = 9 + getWidth() * 16;
+		destinationspots[6] = 9 + getWidth() * 16;
+		destinationspots[7] = 5 + getWidth() * 2;
+		destinationspots[8] = 9 + getWidth() * 16;
+		destinationspots[9] = 9 + getWidth() * 16;
 		destinationspots[10] = 0;
-		destinationspots[11] = 9 + WIDTH * 16;
-		destinationspots[12] = 40 + WIDTH * 16;
-		destinationspots[13] = 36 + WIDTH * 20;
-		destinationspots[14] = 36 + WIDTH * 17;
-		destinationspots[15] = 24 + WIDTH * 23;
-		destinationspots[16] = 18 + WIDTH * 5;
-		destinationspots[17] = 9 + WIDTH * 16;
-		destinationspots[18] = 9 + WIDTH * 16;
-		destinationspots[19] = 9 + WIDTH * 16;
-		destinationspots[20] = 9 + WIDTH * 16;
+		destinationspots[11] = 9 + getWidth() * 16;
+		destinationspots[12] = 40 + getWidth() * 16;
+		destinationspots[13] = 36 + getWidth() * 20;
+		destinationspots[14] = 36 + getWidth() * 17;
+		destinationspots[15] = 24 + getWidth() * 23;
+		destinationspots[16] = 18 + getWidth() * 5;
+		destinationspots[17] = 9 + getWidth() * 16;
+		destinationspots[18] = 9 + getWidth() * 16;
+		destinationspots[19] = 9 + getWidth() * 16;
+		destinationspots[20] = 9 + getWidth() * 16;
 		destinationspots[21] = 0;
 
 
@@ -741,7 +711,7 @@ public class SokobanTeleportLevel extends Level {
 			goldmin = 300;
 			goldmax = 500;
 		}
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_HEAP) {
 				if (first && Random.Int(5) == 0) {
 					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
@@ -751,25 +721,25 @@ public class SokobanTeleportLevel extends Level {
 			}
 		}
 
-		addItemToGen(new IronKey(Dungeon.depth), 0, 8 + WIDTH * 18);
-		addItemToGen(new IronKey(Dungeon.depth), 1, 8 + WIDTH * 18);
-		addItemToGen(new IronKey(Dungeon.depth), 2, 8 + WIDTH * 18);
-		addItemToGen(new IronKey(Dungeon.depth), 3, 8 + WIDTH * 18);
-		addItemToGen(new IronKey(Dungeon.depth), 4, 8 + WIDTH * 18);
-		addItemToGen(new IronKey(Dungeon.depth), 5, 8 + WIDTH * 18);
+		addItemToGen(new IronKey(Dungeon.depth), 0, 8 + getWidth() * 18);
+		addItemToGen(new IronKey(Dungeon.depth), 1, 8 + getWidth() * 18);
+		addItemToGen(new IronKey(Dungeon.depth), 2, 8 + getWidth() * 18);
+		addItemToGen(new IronKey(Dungeon.depth), 3, 8 + getWidth() * 18);
+		addItemToGen(new IronKey(Dungeon.depth), 4, 8 + getWidth() * 18);
+		addItemToGen(new IronKey(Dungeon.depth), 5, 8 + getWidth() * 18);
 
 
 		//	if (first){
-		addItemToGen(new Phaseshift.Seed(), 6, 36 + WIDTH * 28);
-		addItemToGen(new Starflower.Seed(), 7, 36 + WIDTH * 28);
-		addItemToGen(new AutoPotion(), 8, 36 + WIDTH * 28);
-		addItemToGen(new ScrollOfMagicalInfusion(), 9, 36 + WIDTH * 28);
-		addItemToGen(new ScrollOfMagicalInfusion(), 10, 36 + WIDTH * 28);
-		addItemToGen(new ScrollOfRegrowth(), 11, 36 + WIDTH * 28);
-		addItemToGen(new Starflower.Seed(), 12, 36 + WIDTH * 28);
+		addItemToGen(new Phaseshift.Seed(), 6, 36 + getWidth() * 28);
+		addItemToGen(new Starflower.Seed(), 7, 36 + getWidth() * 28);
+		addItemToGen(new AutoPotion(), 8, 36 + getWidth() * 28);
+		addItemToGen(new ScrollOfMagicalInfusion(), 9, 36 + getWidth() * 28);
+		addItemToGen(new ScrollOfMagicalInfusion(), 10, 36 + getWidth() * 28);
+		addItemToGen(new ScrollOfRegrowth(), 11, 36 + getWidth() * 28);
+		addItemToGen(new Starflower.Seed(), 12, 36 + getWidth() * 28);
 		//	}
 
-		//drop(new PotionOfLiquidFlame(), 9 + WIDTH * 24).type = Heap.Type.CHEST;
+		//drop(new PotionOfLiquidFlame(), 9 + getWidth() * 24).type = Heap.Type.CHEST;
 	}
 
 	@Override

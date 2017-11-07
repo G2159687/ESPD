@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -22,13 +6,18 @@ import com.github.epd.sprout.Bones;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.levels.Room.Type;
+import com.github.epd.sprout.levels.builders.Builder;
+import com.github.epd.sprout.levels.builders.LineBuilder;
+import com.github.epd.sprout.levels.painters.CityPainter;
+import com.github.epd.sprout.levels.painters.Painter;
+import com.github.epd.sprout.levels.rooms.Room;
+import com.github.epd.sprout.levels.rooms.standard.EntranceRoom;
+import com.github.epd.sprout.levels.rooms.standard.ExitRoom;
+import com.github.epd.sprout.levels.rooms.standard.ImpShopRoom;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Scene;
-import com.watabou.utils.Graph;
-import com.watabou.utils.Random;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class LastShopLevel extends RegularLevel {
 
@@ -49,113 +38,45 @@ public class LastShopLevel extends RegularLevel {
 
 	@Override
 	protected boolean build() {
-
 		feeling = Feeling.CHASM;
-		viewDistance = 4;
+		if (super.build()){
 
-		initRooms();
-
-		int distance;
-		int retry = 0;
-		int minDistance = (int) Math.sqrt(rooms.size());
-		do {
-			int innerRetry = 0;
-			do {
-				if (innerRetry++ > 10) {
-					return false;
-				}
-				roomEntrance = Random.element(rooms);
-			} while (roomEntrance.width() < 4 || roomEntrance.height() < 4);
-
-			innerRetry = 0;
-			do {
-				if (innerRetry++ > 10) {
-					return false;
-				}
-				roomExit = Random.element(rooms);
-			} while (roomExit == roomEntrance || roomExit.width() < 6
-					|| roomExit.height() < 6 || roomExit.top == 0);
-
-			Graph.buildDistanceMap(rooms, roomExit);
-			distance = Graph.buildPath(rooms, roomEntrance, roomExit).size();
-
-			if (retry++ > 10) {
-				return false;
-			}
-
-		} while (distance < minDistance);
-
-		roomEntrance.type = Type.ENTRANCE;
-		roomExit.type = Type.EXIT;
-
-		Graph.buildDistanceMap(rooms, roomExit);
-		List<Room> path = Graph.buildPath(rooms, roomEntrance, roomExit);
-
-		Graph.setPrice(path, roomEntrance.distance);
-
-		Graph.buildDistanceMap(rooms, roomExit);
-		path = Graph.buildPath(rooms, roomEntrance, roomExit);
-
-		Room room = roomEntrance;
-		for (Room next : path) {
-			room.connect(next);
-			room = next;
-		}
-
-		Room roomShop = null;
-		int shopSquare = 0;
-		for (Room r : rooms) {
-			if (r.type == Type.NULL && r.connected.size() > 0) {
-				r.type = Type.PASSAGE;
-				if (r.square() > shopSquare) {
-					roomShop = r;
-					shopSquare = r.square();
+			for (int i=0; i < getLength(); i++) {
+				if (map[i] == Terrain.SECRET_DOOR) {
+					map[i] = Terrain.DOOR;
 				}
 			}
-		}
 
-		if (roomShop == null || shopSquare < 54) {
-			return false;
+			return true;
 		} else {
-			roomShop.type = Room.Type.SHOP;
+			return false;
 		}
-
-		paint();
-
-		paintWater();
-		paintGrass();
-
-		return true;
 	}
 
 	@Override
-	protected void decorate() {
+	protected ArrayList<Room> initRooms() {
+		ArrayList<Room> rooms = new ArrayList<>();
 
-		for (int i = 0; i < getLength(); i++) {
-			if (map[i] == Terrain.EMPTY && Random.Int(10) == 0) {
+		rooms.add ( roomEntrance = new EntranceRoom());
+		rooms.add( new ImpShopRoom() );
+		rooms.add( roomExit = new ExitRoom());
 
-				map[i] = Terrain.EMPTY_DECO;
+		return rooms;
+	}
 
-			} else if (map[i] == Terrain.WALL && Random.Int(8) == 0) {
+	@Override
+	protected Builder builder() {
+		return new LineBuilder()
+				.setPathVariance(0f)
+				.setPathLength(1f, new float[]{1})
+				.setTunnelLength(new float[]{0, 0, 1}, new float[]{1});
+	}
 
-				map[i] = Terrain.WALL_DECO;
-
-			} else if (map[i] == Terrain.SECRET_DOOR) {
-
-				map[i] = Terrain.DOOR;
-
-			}
-		}
-
-
-		while (true) {
-			int pos = roomEntrance.random();
-			if (pos != entrance) {
-				map[pos] = Terrain.SIGN;
-				break;
-			}
-		}
-
+	@Override
+	protected Painter painter() {
+		return new CityPainter()
+				.setWater( 0.10f, 4 )
+				.setGrass( 0.10f, 3 );
 	}
 
 	@Override
@@ -173,8 +94,8 @@ public class LastShopLevel extends RegularLevel {
 		if (item != null) {
 			int pos;
 			do {
-				pos = roomEntrance.random();
-			} while (pos == entrance || map[pos] == Terrain.SIGN);
+				pos = pointToCell(roomEntrance.random());
+			} while (pos == entrance);
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
 	}
@@ -211,16 +132,6 @@ public class LastShopLevel extends RegularLevel {
 			default:
 				return super.tileDesc(tile);
 		}
-	}
-
-	@Override
-	protected boolean[] water() {
-		return Patch.generate(0.35f, 4);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(0.30f, 3);
 	}
 
 	@Override

@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
@@ -30,8 +14,8 @@ import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ElmoParticle;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.LloydsBeacon;
-import com.github.epd.sprout.items.journalpages.Sokoban4;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
+import com.github.epd.sprout.items.teleporter.Sokoban4;
 import com.github.epd.sprout.items.wands.WandOfBlink;
 import com.github.epd.sprout.items.wands.WandOfDisintegration;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
@@ -116,7 +100,7 @@ public class King extends Mob {
 	@Override
 	protected boolean canAttack(Char enemy) {
 		return canTryToSummon() ? pos == CityBossLevel.pedestal(nextPedestal)
-				: Level.adjacent(pos, enemy.pos);
+				: Dungeon.level.adjacent(pos, enemy.pos);
 	}
 
 	private boolean canTryToSummon() {
@@ -195,10 +179,8 @@ public class King extends Mob {
 		Sample.INSTANCE.play(Assets.SND_CHALLENGE);
 
 		boolean[] passable = Level.passable.clone();
-		for (Actor actor : Actor.all()) {
-			if (actor instanceof Char) {
-				passable[((Char) actor).pos] = false;
-			}
+		for (Char c : Actor.chars()) {
+			passable[c.pos] = false;
 		}
 
 		int undeadsToSummon = maxArmySize() - Undead.count;
@@ -210,7 +192,7 @@ public class King extends Mob {
 		undeadLabel:
 		for (int i = 0; i < undeadsToSummon; i++) {
 			do {
-				for (int j = 0; j < Level.getLength(); j++) {
+				for (int j = 0; j < Dungeon.level.getLength(); j++) {
 					if (PathFinder.distance[j] == dist) {
 
 						Undead undead = new Undead();

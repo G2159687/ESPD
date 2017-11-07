@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.blobs;
 
 import com.github.epd.sprout.Dungeon;
@@ -25,17 +9,11 @@ import com.github.epd.sprout.levels.Level;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Rect;
 
-import java.util.Arrays;
-
 public class Blob extends Actor {
 
 	{
 		actPriority = 1; //take prioerity over mobs, but not the hero
 	}
-
-	public static final int WIDTH = Level.getWidth();
-	public static final int HEIGHT = Level.HEIGHT;
-	public static final int LENGTH = Level.getLength();
 
 	public int volume = 0;
 
@@ -46,16 +24,9 @@ public class Blob extends Actor {
 
 	public Rect area = new Rect();
 
-	protected Blob() {
-
-		cur = new int[LENGTH];
-		off = new int[LENGTH];
-
-		volume = 0;
-	}
-
 	private static final String CUR = "cur";
 	private static final String START = "start";
+	private static final String LENGTH	= "length";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -64,19 +35,20 @@ public class Blob extends Actor {
 		if (volume > 0) {
 
 			int start;
-			for (start = 0; start < LENGTH; start++) {
+			for (start = 0; start < Dungeon.level.getLength(); start++) {
 				if (cur[start] > 0) {
 					break;
 				}
 			}
 			int end;
-			for (end = LENGTH - 1; end > start; end--) {
+			for (end = Dungeon.level.getLength() - 1; end > start; end--) {
 				if (cur[end] > 0) {
 					break;
 				}
 			}
 
 			bundle.put(START, start);
+			bundle.put( LENGTH, cur.length );
 			bundle.put(CUR, trim(start, end + 1));
 
 		}
@@ -90,30 +62,27 @@ public class Blob extends Actor {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle ) {
 
-		super.restoreFromBundle(bundle);
+		super.restoreFromBundle( bundle );
 
-		int[] data = bundle.getIntArray(CUR);
-		if (data != null) {
+		if (bundle.contains( CUR )) {
+
+			if (bundle.contains(LENGTH)) {
+				cur = new int[bundle.getInt(LENGTH)];
+			} else {
+				//compatability with pre-0.4.2
+				cur = new int[1024];
+			}
+			off = new int[cur.length];
+
+			int[] data = bundle.getIntArray(CUR);
 			int start = bundle.getInt(START);
 			for (int i = 0; i < data.length; i++) {
 				cur[i + start] = data[i];
 				volume += data[i];
 			}
-		}
 
-		if (Level.resizingNeeded) {
-			int[] cur = new int[Level.getLength()];
-			Arrays.fill(cur, 0);
-
-			int loadedMapSize = Level.loadedMapSize;
-			for (int i = 0; i < loadedMapSize; i++) {
-				System.arraycopy(this.cur, i * loadedMapSize, cur, i
-						* Level.getWidth(), loadedMapSize);
-			}
-
-			this.cur = cur;
 		}
 	}
 
@@ -144,7 +113,7 @@ public class Blob extends Actor {
 	public void setupArea() {
 		for (int cell = 0; cell < cur.length; cell++) {
 			if (cur[cell] != 0) {
-				area.union(cell % Level.WIDTH, cell / Level.WIDTH);
+				area.union(cell % Dungeon.level.getWidth(), cell / Dungeon.level.getWidth());
 			}
 		}
 	}
@@ -159,7 +128,7 @@ public class Blob extends Actor {
 		int cell;
 		for (int i = area.top - 1; i <= area.bottom; i++) {
 			for (int j = area.left - 1; j <= area.right; j++) {
-				cell = j + i * WIDTH;
+				cell = j + i * Dungeon.level.getWidth();
 				if (Dungeon.level.insideMap(cell)) {
 					if (!blocking[cell]) {
 
@@ -174,12 +143,12 @@ public class Blob extends Actor {
 							sum += cur[cell + 1];
 							count++;
 						}
-						if (i > area.top && !blocking[cell - WIDTH]) {
-							sum += cur[cell - WIDTH];
+						if (i > area.top && !blocking[cell - Dungeon.level.getWidth()]) {
+							sum += cur[cell - Dungeon.level.getWidth()];
 							count++;
 						}
-						if (i < area.bottom && !blocking[cell + WIDTH]) {
-							sum += cur[cell + WIDTH];
+						if (i < area.bottom && !blocking[cell + Dungeon.level.getWidth()]) {
+							sum += cur[cell + Dungeon.level.getWidth()];
 							count++;
 						}
 
@@ -206,14 +175,18 @@ public class Blob extends Actor {
 		}
 	}
 
-	public void seed(int cell, int amount) {
+	public void seed( Level level, int cell, int amount ) {
+		if (cur == null) cur = new int[level.getLength()];
+		if (off == null) off = new int[cur.length];
+
 		cur[cell] += amount;
 		volume += amount;
 
-		area.union(cell % WIDTH, cell / WIDTH);
+		area.union(cell%level.getWidth(), cell/level.getWidth());
 	}
 
-	public void clear(int cell) {
+	public void clear( int cell ) {
+		if (volume == 0) return;
 		volume -= cur[cell];
 		cur[cell] = 0;
 	}
@@ -232,7 +205,7 @@ public class Blob extends Actor {
 				Dungeon.level.blobs.put(type, gas);
 			}
 
-			gas.seed(cell, amount);
+			gas.seed(Dungeon.level, cell, amount);
 
 			return gas;
 
@@ -244,7 +217,7 @@ public class Blob extends Actor {
 
 	public static int volumeAt( int cell, Class<? extends Blob> type){
 		Blob gas = Dungeon.level.blobs.get( type );
-		if (gas == null) {
+		if (gas == null || gas.volume == 0) {
 			return 0;
 		} else {
 			return gas.cur[cell];

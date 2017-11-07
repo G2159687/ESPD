@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items.potions;
 
 import com.github.epd.sprout.Assets;
@@ -24,6 +8,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Fire;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Burning;
+import com.github.epd.sprout.actors.buffs.Ooze;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.Splash;
 import com.github.epd.sprout.items.Item;
@@ -244,6 +229,7 @@ public class Potion extends Item {
 		if (!ownedByFruit) {
 			if (!isKnown()) {
 				handler.know(this);
+				updateQuickslot();
 			}
 		}
 	}
@@ -300,8 +286,10 @@ public class Potion extends Item {
 			fire.clear(cell);
 
 		Char ch = Actor.findChar(cell);
-		if (ch != null)
+		if (ch != null) {
 			Buff.detach(ch, Burning.class);
+			Buff.detach(ch, Ooze.class);
+		}
 	}
 
 	@Override

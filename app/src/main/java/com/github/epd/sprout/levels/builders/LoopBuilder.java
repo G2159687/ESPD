@@ -1,0 +1,140 @@
+package com.github.epd.sprout.levels.builders;
+
+import com.github.epd.sprout.levels.rooms.Room;
+import com.github.epd.sprout.levels.rooms.connection.ConnectionRoom;
+import com.watabou.utils.Random;
+
+import java.util.ArrayList;
+
+//A builder with one core loop as its primary element
+public class LoopBuilder extends RegularBuilder {
+
+	//These methods allow for the adjusting of the shape of the loop
+	//by default the loop is a perfect circle, but it can be adjusted
+
+	//increasing the exponent will increase the the curvature, making the loop more oval shaped.
+	private int curveExponent = 0;
+
+	//This is a percentage (range 0-1) of the intensity of the curve function
+	// 0 makes for a perfect linear curve (circle)
+	// 1 means the curve is completely determined by the curve exponent
+	private float curveIntensity = 1;
+
+	//Adjusts the starting point along the loop.
+	// a common example, setting to 0.25 will make for a short fat oval instead of a long one.
+	private float curveOffset = 0;
+
+	public LoopBuilder setLoopShape(int exponent, float intensity, float offset){
+		this.curveExponent = Math.abs(exponent);
+		curveIntensity = intensity % 1f;
+		curveOffset = offset % 0.5f;
+		return this;
+	}
+
+	private float targetAngle( float percentAlong ){
+		percentAlong += curveOffset;
+		return 360f * (float)(
+				curveIntensity * curveEquation(percentAlong)
+						+ (1-curveIntensity)*(percentAlong)
+						- curveOffset);
+	}
+
+	private double curveEquation( double x ){
+		return Math.pow(4, 2*curveExponent)
+				*(Math.pow((x % 0.5f )-0.25, 2*curveExponent + 1))
+				+ 0.25 + 0.5*Math.floor(2*x);
+	}
+
+	@Override
+	public ArrayList<Room> build(ArrayList<Room> rooms) {
+
+		setupRooms(rooms);
+
+		if (entrance == null){
+			return null;
+		}
+
+		entrance.setSize();
+		entrance.setPos(0, 0);
+
+		float startAngle = Random.Float(0, 360);
+
+		ArrayList<Room> loop = new ArrayList<>();
+		int roomsOnLoop = (int)(multiConnections.size()*pathLength) + Random.chances(pathLenJitterChances);
+		roomsOnLoop = Math.min(roomsOnLoop, multiConnections.size());
+		roomsOnLoop++;
+
+		for (int i = 0; i < roomsOnLoop; i++){
+			if (i == 0)
+				loop.add(entrance);
+			else
+				loop.add(multiConnections.remove(0));
+
+			int tunnels = Random.chances(pathTunnelChances);
+			for (int j = 0; j < tunnels; j++){
+				loop.add(ConnectionRoom.createRoom());
+			}
+		}
+
+		if (exit != null) loop.add((loop.size()+1)/2, exit);
+
+		Room prev = entrance;
+		float targetAngle;
+		for (int i = 1; i < loop.size(); i++){
+			Room r = loop.get(i);
+			targetAngle = startAngle + targetAngle( i / (float)loop.size());
+			if (placeRoom(rooms, prev, r, targetAngle) != -1) {
+				prev = r;
+				if (!rooms.contains(prev))
+					rooms.add(prev);
+			} else {
+				//FIXME this is lazy, there are ways to do this without relying on chance
+				return null;
+			}
+		}
+
+		//FIXME this is still fairly chance reliant
+		// should just write a general function for stitching two rooms together in builder
+		while (!prev.connect(entrance)){
+
+			ConnectionRoom c = ConnectionRoom.createRoom();
+			if (placeRoom(loop, prev, c, angleBetweenRooms(prev, entrance)) == -1){
+				return null;
+			}
+			loop.add(c);
+			rooms.add(c);
+			prev = c;
+		}
+
+		if (shop != null) {
+			float angle;
+			int tries = 10;
+			do {
+				angle = placeRoom(loop, entrance, shop, Random.Float(360f));
+				tries--;
+			} while (angle == -1 && tries >= 0);
+			if (angle == -1) return null;
+		}
+
+		ArrayList<Room> branchable = new ArrayList<>(loop);
+
+		ArrayList<Room> roomsToBranch = new ArrayList<>();
+		roomsToBranch.addAll(multiConnections);
+		roomsToBranch.addAll(singleConnections);
+		weightRooms(branchable);
+		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances);
+
+		findNeighbours(rooms);
+
+		for (Room r : rooms){
+			for (Room n : r.neigbours){
+				if (!n.connected.containsKey(r)
+						&& Random.Float() < extraConnectionChance){
+					r.connect(n);
+				}
+			}
+		}
+
+		return rooms;
+	}
+}

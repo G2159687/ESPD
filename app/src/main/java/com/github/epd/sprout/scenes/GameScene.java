@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.scenes;
 
 import android.opengl.GLES20;
@@ -45,7 +29,6 @@ import com.github.epd.sprout.items.bags.SeedPouch;
 import com.github.epd.sprout.items.bags.WandHolster;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.wands.WandOfBlink;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.RegularLevel;
 import com.github.epd.sprout.levels.features.Chasm;
 import com.github.epd.sprout.messages.Messages;
@@ -151,8 +134,8 @@ public class GameScene extends PixelScene {
 		terrain = new Group();
 		add(terrain);
 
-		water = new SkinnedBlock(Level.getWidth() * DungeonTilemap.SIZE,
-				Level.HEIGHT * DungeonTilemap.SIZE, Dungeon.level.waterTex()) {
+		water = new SkinnedBlock(Dungeon.level.getWidth() * DungeonTilemap.SIZE,
+				Dungeon.level.getHeight() * DungeonTilemap.SIZE, Dungeon.level.waterTex()) {
 			@Override
 			protected NoosaScript script() {
 				return NoosaScriptNoLighting.get();
@@ -216,7 +199,7 @@ public class GameScene extends PixelScene {
 			addBlobSprite(blob);
 		}
 
-		fog = new FogOfWar(Level.getWidth(), Level.HEIGHT);
+		fog = new FogOfWar(Dungeon.level.getWidth(), Dungeon.level.getHeight());
 		add(fog);
 
 		spells = new Group();
@@ -625,14 +608,12 @@ public class GameScene extends PixelScene {
 	public static void add(Mob mob) {
 		Dungeon.level.mobs.add(mob);
 		Actor.add(mob);
-		Actor.occupyCell(mob);
 		scene.addMobSprite(mob);
 	}
 
 	public static void add(Mob mob, float delay) {
 		Dungeon.level.mobs.add(mob);
 		Actor.addDelayed(mob, delay);
-		Actor.occupyCell(mob);
 		scene.addMobSprite(mob);
 	}
 

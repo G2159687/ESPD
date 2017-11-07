@@ -1,25 +1,8 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Alchemy;
 import com.github.epd.sprout.actors.blobs.WellWater;
@@ -33,7 +16,7 @@ import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.Whistle;
+import com.github.epd.sprout.items.misc.Whistle;
 import com.github.epd.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.potions.PotionOfLiquidFlame;
@@ -77,9 +60,6 @@ public class SokobanPuzzlesLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
-		WIDTH = 48;
-		HEIGHT = 48;
-		LENGTH = HEIGHT * WIDTH;
 	}
 
 
@@ -567,15 +547,16 @@ public class SokobanPuzzlesLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		map = SokobanLayouts.SOKOBAN_PUZZLE_LEVEL.clone();
-		decorate();
 
 		buildFlagMaps();
 		cleanWalls();
 		createSwitches();
 		createSheep();
 
-		entrance = 15 + WIDTH * 11;
+		entrance = 15 + getWidth() * 11;
 		exit = 0;
 
 
@@ -583,26 +564,20 @@ public class SokobanPuzzlesLevel extends Level {
 	}
 
 	@Override
-	protected void decorate() {
-		//do nothing, all decorations are hard-coded.
-	}
-
-	@Override
 	protected void createMobs() {
 		
 		/*
 		    SokobanSentinel mob = new SokobanSentinel();
-			mob.pos = 38 + WIDTH * 21;
+			mob.pos = 38 + getWidth() * 21;
 			mobs.add(mob);
 			Actor.occupyCell(mob);
 		*/
 		SokobanSentinel mob2 = new SokobanSentinel();
-		mob2.pos = 33 + WIDTH * 30;
+		mob2.pos = 33 + getWidth() * 30;
 		mobs.add(mob2);
-		Actor.occupyCell(mob2);
 		/*	
 		    SokobanSentinel mob3 = new SokobanSentinel();
-			mob3.pos = 2 + WIDTH * 43;
+			mob3.pos = 2 + getWidth() * 43;
 			mobs.add(mob3);
 			Actor.occupyCell(mob3);	
 		*/
@@ -610,27 +585,23 @@ public class SokobanPuzzlesLevel extends Level {
 
 
 	protected void createSheep() {
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_SHEEP) {
 				SheepSokoban npc = new SheepSokoban();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.CORNER_SOKOBAN_SHEEP) {
 				SheepSokobanCorner npc = new SheepSokobanCorner();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.SWITCH_SOKOBAN_SHEEP) {
 				SheepSokobanSwitch npc = new SheepSokobanSwitch();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.BLACK_SOKOBAN_SHEEP) {
 				SheepSokobanBlack npc = new SheepSokobanBlack();
 				mobs.add(npc);
 				npc.pos = i;
-				Actor.occupyCell(npc);
 			} else if (map[i] == Terrain.PORT_WELL) {
 				/*
 					Portal portal = new Portal();
@@ -646,43 +617,43 @@ public class SokobanPuzzlesLevel extends Level {
 	protected void createSwitches() {
 
 		//spots where your portals are
-		teleportspots[0] = 11 + WIDTH * 10;
-		teleportspots[1] = 32 + WIDTH * 15;
-		teleportspots[2] = 25 + WIDTH * 40;
-		teleportspots[3] = 37 + WIDTH * 18;
-		teleportspots[4] = 45 + WIDTH * 33;
-		teleportspots[5] = 37 + WIDTH * 3;
-		teleportspots[6] = 43 + WIDTH * 2;
+		teleportspots[0] = 11 + getWidth() * 10;
+		teleportspots[1] = 32 + getWidth() * 15;
+		teleportspots[2] = 25 + getWidth() * 40;
+		teleportspots[3] = 37 + getWidth() * 18;
+		teleportspots[4] = 45 + getWidth() * 33;
+		teleportspots[5] = 37 + getWidth() * 3;
+		teleportspots[6] = 43 + getWidth() * 2;
 
 		//spots where your portal switches are
-		portswitchspots[0] = 19 + WIDTH * 10;
-		portswitchspots[1] = 19 + WIDTH * 6;
-		portswitchspots[2] = 9 + WIDTH * 8;
-		portswitchspots[3] = 16 + WIDTH * 37;
+		portswitchspots[0] = 19 + getWidth() * 10;
+		portswitchspots[1] = 19 + getWidth() * 6;
+		portswitchspots[2] = 9 + getWidth() * 8;
+		portswitchspots[3] = 16 + getWidth() * 37;
 
 
 		//assign each switch to a portal
-		teleportassign[0] = 11 + WIDTH * 10;
-		teleportassign[1] = 11 + WIDTH * 10;
-		teleportassign[2] = 15 + WIDTH * 32;
-		teleportassign[3] = 37 + WIDTH * 3;
+		teleportassign[0] = 11 + getWidth() * 10;
+		teleportassign[1] = 11 + getWidth() * 10;
+		teleportassign[2] = 15 + getWidth() * 32;
+		teleportassign[3] = 37 + getWidth() * 3;
 
 
 		//assign each switch to a destination spot
-		destinationassign[0] = 30 + WIDTH * 16;
-		destinationassign[1] = 23 + WIDTH * 40;
-		destinationassign[2] = 37 + WIDTH * 16;
-		destinationassign[3] = 42 + WIDTH * 2;
+		destinationassign[0] = 30 + getWidth() * 16;
+		destinationassign[1] = 23 + getWidth() * 40;
+		destinationassign[2] = 37 + getWidth() * 16;
+		destinationassign[3] = 42 + getWidth() * 2;
 
 
 		//set the original destination of portals
 		destinationspots[0] = 0;
-		destinationspots[1] = 23 + WIDTH * 8;
-		destinationspots[2] = 23 + WIDTH * 8;
-		destinationspots[3] = 23 + WIDTH * 8;
-		destinationspots[4] = 34 + WIDTH * 6;
-		destinationspots[5] = 23 + WIDTH * 8;
-		destinationspots[6] = 23 + WIDTH * 8;
+		destinationspots[1] = 23 + getWidth() * 8;
+		destinationspots[2] = 23 + getWidth() * 8;
+		destinationspots[3] = 23 + getWidth() * 8;
+		destinationspots[4] = 34 + getWidth() * 6;
+		destinationspots[5] = 23 + getWidth() * 8;
+		destinationspots[6] = 23 + getWidth() * 8;
 
 
 	}
@@ -696,7 +667,7 @@ public class SokobanPuzzlesLevel extends Level {
 			goldmin = 300;
 			goldmax = 500;
 		}
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.SOKOBAN_HEAP) {
 				if (first && Random.Int(5) == 0) {
 					drop(new ScrollOfUpgrade(), i).type = Heap.Type.CHEST;
@@ -706,27 +677,27 @@ public class SokobanPuzzlesLevel extends Level {
 			}
 		}
 
-		addItemToGen(new IronKey(Dungeon.depth), 0, 15 + WIDTH * 11);
-		addItemToGen(new IronKey(Dungeon.depth), 1, 16 + WIDTH * 17);
-		addItemToGen(new IronKey(Dungeon.depth), 2, 16 + WIDTH * 35);
-		addItemToGen(new IronKey(Dungeon.depth), 3, 20 + WIDTH * 38);
-		addItemToGen(new IronKey(Dungeon.depth), 4, 27 + WIDTH * 35);
-		addItemToGen(new IronKey(Dungeon.depth), 5, 33 + WIDTH * 31);
+		addItemToGen(new IronKey(Dungeon.depth), 0, 15 + getWidth() * 11);
+		addItemToGen(new IronKey(Dungeon.depth), 1, 16 + getWidth() * 17);
+		addItemToGen(new IronKey(Dungeon.depth), 2, 16 + getWidth() * 35);
+		addItemToGen(new IronKey(Dungeon.depth), 3, 20 + getWidth() * 38);
+		addItemToGen(new IronKey(Dungeon.depth), 4, 27 + getWidth() * 35);
+		addItemToGen(new IronKey(Dungeon.depth), 5, 33 + getWidth() * 31);
 
 
 		//	if (first){
-		addItemToGen(new ScrollOfMagicalInfusion(), 6, 11 + WIDTH * 10);
-		addItemToGen(new ScrollOfMagicalInfusion(), 7, 41 + WIDTH * 2);
-		addItemToGen(new Egg(), 8, 41 + WIDTH * 2);
-		addItemToGen(new Phaseshift.Seed(), 9, 41 + WIDTH * 2);
-		addItemToGen(new Starflower.Seed(), 10, 41 + WIDTH * 2);
-		addItemToGen(new Flytrap.Seed(), 11, 41 + WIDTH * 2);
-		addItemToGen(new Phaseshift.Seed(), 12, 41 + WIDTH * 2);
-		addItemToGen(new Flytrap.Seed(), 13, 41 + WIDTH * 2);
-		addItemToGen(new Whistle(), 14, 41 + WIDTH * 2);
+		addItemToGen(new ScrollOfMagicalInfusion(), 6, 11 + getWidth() * 10);
+		addItemToGen(new ScrollOfMagicalInfusion(), 7, 41 + getWidth() * 2);
+		addItemToGen(new Egg(), 8, 41 + getWidth() * 2);
+		addItemToGen(new Phaseshift.Seed(), 9, 41 + getWidth() * 2);
+		addItemToGen(new Starflower.Seed(), 10, 41 + getWidth() * 2);
+		addItemToGen(new Flytrap.Seed(), 11, 41 + getWidth() * 2);
+		addItemToGen(new Phaseshift.Seed(), 12, 41 + getWidth() * 2);
+		addItemToGen(new Flytrap.Seed(), 13, 41 + getWidth() * 2);
+		addItemToGen(new Whistle(), 14, 41 + getWidth() * 2);
 		//	}
 
-		drop(new PotionOfLiquidFlame(), 9 + WIDTH * 24).type = Heap.Type.CHEST;
+		drop(new PotionOfLiquidFlame(), 9 + getWidth() * 24).type = Heap.Type.CHEST;
 	}
 
 	@Override

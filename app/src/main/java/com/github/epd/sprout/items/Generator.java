@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items;
 
 import com.github.epd.sprout.Challenges;
@@ -165,13 +149,14 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Generator {
 
 	public enum Category {
 		WEAPON(150, Weapon.class), ARMOR(100, Armor.class), POTION(500, Potion.class),
 		SCROLL(400, Scroll.class), WAND(60, Wand.class), RING(30, Ring.class),
-		ARTIFACT(40, Artifact.class), SEED(0, Plant.Seed.class),
+		ARTIFACT(40, Artifact.class), SEED(0, Plant.Seed.class), REALSEED(0, Plant.Seed.class),
 		SEED2(0, Plant.Seed.class), SEEDRICH(0, Plant.Seed.class),
 		FOOD(0, Food.class), GOLD(500, Gold.class), BERRY(50, Food.class), MUSHROOM(0, Food.class),
 		NORNSTONE(0, NornStone.class), NORNSTONE2(0, NornStone.class), SCROLL2(0, Scroll.class);
@@ -199,7 +184,7 @@ public class Generator {
 		}
 	}
 
-	private static HashMap<Category, Float> categoryProbs = new HashMap<Generator.Category, Float>();
+	private static HashMap<Category,Float> categoryProbs = new LinkedHashMap<>();
 
 	private static final float[] INITIAL_ARTIFACT_PROBS = new float[]{0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0};
 
@@ -329,6 +314,15 @@ public class Generator {
 				12, 12, 0, 2, 12,
 				12, 48, 20, 4, 16,
 				2, 1, 1, 4, (Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 12 : 8)};
+
+		Category.REALSEED.classes = new Class<?>[]{
+				Firebloom.Seed.class, Icecap.Seed.class, Sorrowmoss.Seed.class, Blindweed.Seed.class, Sungrass.Seed.class,
+				Earthroot.Seed.class, Fadeleaf.Seed.class, Rotberry.Seed.class, BlandfruitBush.Seed.class, Dreamfoil.Seed.class,
+				Stormvine.Seed.class, Starflower.Seed.class, Dewcatcher.Seed.class};
+
+		Category.REALSEED.probs = new float[]{12, 12, 12, 12, 12,
+				12, 12, 0, 2, 12,
+				12, 1, (Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 12 : 8)};
 
 
 		Category.SEED2.classes = new Class<?>[]{Firebloom.Seed.class,

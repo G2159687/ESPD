@@ -1,8 +1,8 @@
 package com.github.epd.sprout.sprites;
 
 import com.github.epd.sprout.Assets;
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.items.weapon.missiles.Dart;
-import com.github.epd.sprout.levels.Level;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Callback;
 
@@ -36,7 +36,7 @@ public class GnollArcherSprite extends MobSprite {
 
 	@Override
 	public void attack(int cell) {
-		if (!Level.adjacent(cell, ch.pos)) {
+		if (!Dungeon.level.adjacent(cell, ch.pos)) {
 
 			((MissileSprite) parent.recycle(MissileSprite.class)).reset(ch.pos,
 					cell, new Dart(), new Callback() {

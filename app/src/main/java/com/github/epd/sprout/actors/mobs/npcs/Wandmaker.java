@@ -1,27 +1,10 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs.npcs;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Journal;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.Blob;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
@@ -38,8 +21,7 @@ import com.github.epd.sprout.items.potions.PotionOfStrength;
 import com.github.epd.sprout.items.quest.CorpseDust;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.levels.PrisonLevel;
-import com.github.epd.sprout.levels.Room;
-import com.github.epd.sprout.levels.Terrain;
+import com.github.epd.sprout.levels.rooms.Room;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Plant;
 import com.github.epd.sprout.scenes.GameScene;
@@ -205,11 +187,9 @@ public class Wandmaker extends NPC {
 
 				Wandmaker npc = new Wandmaker();
 				do {
-					npc.pos = room.random();
-				} while (level.map[npc.pos] == Terrain.ENTRANCE
-						|| level.map[npc.pos] == Terrain.SIGN);
+					npc.pos = level.pointToCell(room.random());
+				} while (npc.pos == level.entrance);
 				level.mobs.add(npc);
-				Actor.occupyCell(npc);
 
 				spawned = true;
 

@@ -1,26 +1,9 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs.npcs;
 
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Journal;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.mobs.Golem;
@@ -210,7 +193,6 @@ public class Imp extends NPC {
 					npc.pos = level.randomRespawnCell();
 				} while (npc.pos == -1 || level.heaps.get(npc.pos) != null);
 				level.mobs.add(npc);
-				Actor.occupyCell(npc);
 
 				spawned = true;
 				alternative = Random.Int(2) == 0;

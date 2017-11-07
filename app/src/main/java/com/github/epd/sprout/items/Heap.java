@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.items;
 
 import com.github.epd.sprout.Assets;
@@ -34,6 +18,19 @@ import com.github.epd.sprout.effects.particles.FlameParticle;
 import com.github.epd.sprout.effects.particles.ShadowParticle;
 import com.github.epd.sprout.items.artifacts.AlchemistsToolkit;
 import com.github.epd.sprout.items.artifacts.Artifact;
+import com.github.epd.sprout.items.artifacts.DriedRose;
+import com.github.epd.sprout.items.bombs.ActiveMrDestructo;
+import com.github.epd.sprout.items.bombs.ActiveMrDestructo2;
+import com.github.epd.sprout.items.bombs.Bomb;
+import com.github.epd.sprout.items.bombs.ClusterBomb;
+import com.github.epd.sprout.items.bombs.DizzyBomb;
+import com.github.epd.sprout.items.bombs.DumplingBomb;
+import com.github.epd.sprout.items.bombs.HolyHandGrenade;
+import com.github.epd.sprout.items.bombs.InactiveMrDestructo;
+import com.github.epd.sprout.items.bombs.InactiveMrDestructo2;
+import com.github.epd.sprout.items.bombs.SeekingBombItem;
+import com.github.epd.sprout.items.bombs.SeekingClusterBombItem;
+import com.github.epd.sprout.items.bombs.SmartBomb;
 import com.github.epd.sprout.items.food.Blandfruit;
 import com.github.epd.sprout.items.food.ChargrilledMeat;
 import com.github.epd.sprout.items.food.FrozenCarpaccio;
@@ -219,7 +216,7 @@ public class Heap implements Bundlable {
 
 		}
 
-		if (item instanceof Dewdrop) {
+		if ((item instanceof Dewdrop || item instanceof DriedRose.Petal) && type != Type.FOR_SALE) {
 			items.add(item);
 		} else {
 			items.addFirst(item);
@@ -386,22 +383,6 @@ public class Heap implements Bundlable {
 				destroy();
 		}
 	}
-
-	/*
-	public void dewcollect() {
-
-		
-			for (Item item : items.toArray(new Item[0])) {
-
-				if (item instanceof Dewdrop ||
-					item instanceof YellowDewdrop ||
-					item instanceof RedDewdrop) {
-					
-					item.doPickUp(Dungeon.hero);
-				}
-		}
-	}
-	*/
 
 	// Note: should not be called to initiate an explosion, but rather by an
 	// explosion that is happening.
@@ -752,7 +733,6 @@ public class Heap implements Bundlable {
 			sprite.kill();
 		}
 		items.clear();
-		items = null;
 	}
 
 	@Override

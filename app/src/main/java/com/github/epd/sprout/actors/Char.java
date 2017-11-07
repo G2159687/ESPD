@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors;
 
 import com.github.epd.sprout.Assets;
@@ -318,7 +302,6 @@ public abstract class Char extends Actor {
 	public void destroy() {
 		HP = 0;
 		Actor.remove(this);
-		Actor.freeCell(pos);
 	}
 
 	public void die(Object src) {
@@ -520,7 +503,7 @@ public abstract class Char extends Actor {
 
 	public void move(int step) {
 
-		if (Level.adjacent(step, pos) && buff(Vertigo.class) != null) {
+		if (Dungeon.level.adjacent(step, pos) && buff(Vertigo.class) != null) {
 			sprite.interruptMotion();
 			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
 			if (!(Level.passable[newPos] || Level.avoid[newPos]) || Actor.findChar(newPos) != null)
@@ -547,7 +530,7 @@ public abstract class Char extends Actor {
 	}
 
 	public int distance(Char other) {
-		return Level.distance(pos, other.pos);
+		return Dungeon.level.distance(pos, other.pos);
 	}
 
 	public void onMotionComplete() {

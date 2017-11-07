@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -50,7 +34,7 @@ public class CityBossLevel extends Level {
 	private static final int HALL_HEIGHT = 15;
 	private static final int CHAMBER_HEIGHT = 3;
 
-	private static final int LEFT = (getWidth() - HALL_WIDTH) / 2;
+	private static final int LEFT = (48 - HALL_WIDTH) / 2;
 	private static final int CENTER = LEFT + HALL_WIDTH / 2;
 
 	private int arenaDoor;
@@ -90,6 +74,8 @@ public class CityBossLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		Painter.fill(this, LEFT, TOP, HALL_WIDTH, HALL_HEIGHT, Terrain.EMPTY);
 		Painter.fill(this, CENTER, TOP, 1, HALL_HEIGHT, Terrain.EMPTY_SP);
 
@@ -124,12 +110,6 @@ public class CityBossLevel extends Level {
 				* getWidth() + LEFT + (/* 1 + */Random.Int(HALL_WIDTH - 2));
 		map[entrance] = Terrain.ENTRANCE;
 
-		return true;
-	}
-
-	@Override
-	protected void decorate() {
-
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.EMPTY && Random.Int(10) == 0) {
 				map[i] = Terrain.EMPTY_DECO;
@@ -138,15 +118,14 @@ public class CityBossLevel extends Level {
 			}
 		}
 
-		int sign = arenaDoor + getWidth() + 1;
-		map[sign] = Terrain.SIGN;
+		return true;
 	}
 
 	public static int pedestal(boolean left) {
 		if (left) {
-			return (TOP + HALL_HEIGHT / 2) * getWidth() + CENTER - 2;
+			return (TOP + HALL_HEIGHT / 2) * 48 + CENTER - 2;
 		} else {
-			return (TOP + HALL_HEIGHT / 2) * getWidth() + CENTER + 2;
+			return (TOP + HALL_HEIGHT / 2) * 48 + CENTER + 2;
 		}
 	}
 
@@ -168,7 +147,7 @@ public class CityBossLevel extends Level {
 				pos = Random.IntRange(LEFT + 1, LEFT + HALL_WIDTH - 2)
 						+ Random.IntRange(TOP + HALL_HEIGHT + 1, TOP
 						+ HALL_HEIGHT + CHAMBER_HEIGHT) * getWidth();
-			} while (pos == entrance || map[pos] == Terrain.SIGN);
+			} while (pos == entrance);
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
 	}

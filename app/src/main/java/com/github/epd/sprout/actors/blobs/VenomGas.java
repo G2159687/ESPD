@@ -1,5 +1,6 @@
 package com.github.epd.sprout.actors.blobs;
 
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
@@ -15,7 +16,7 @@ public class VenomGas extends Blob {
 		super.evolve();
 
 		Char ch;
-		for (int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (cur[i] > 0 && (ch = Actor.findChar(i)) != null) {
 				if (!ch.immunities().contains(this.getClass()))
 					Buff.affect(ch, Venom.class).set(2f);

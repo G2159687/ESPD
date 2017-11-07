@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
@@ -56,7 +40,7 @@ import java.util.HashSet;
 
 public class Zot extends Mob {
 
-	private static final int JUMP_DELAY = 5;
+	private static final int JUMP_DELAY = 10;
 
 	{
 		name = Messages.get(this, "name");
@@ -118,14 +102,14 @@ public class Zot extends Mob {
 
 			if (HP < HT) {
 				sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				HP = HP + 200;
+				HP = HP + 100;
 			}
 		}
 
 
 		boolean result = super.act();
 
-		int regen = Dungeon.hero.buff(AutoHealPotion.class) != null ? 1 : Random.Int(50, 100);
+		int regen = Dungeon.hero.buff(AutoHealPotion.class) != null ? 1 : Random.Int(25, 50);
 
 
 		if (HP < HT) {
@@ -173,7 +157,7 @@ public class Zot extends Mob {
 	@Override
 	protected boolean doAttack(Char enemy) {
 		timeToJump--;
-		if (timeToJump <= 0 && Level.adjacent(pos, enemy.pos)) {
+		if (timeToJump <= 0 && Dungeon.level.adjacent(pos, enemy.pos)) {
 			jump();
 			return true;
 		} else {
@@ -206,9 +190,9 @@ public class Zot extends Mob {
 
 		int newPos;
 		do {
-			newPos = Random.Int(Level.getLength());
+			newPos = Random.Int(Dungeon.level.getLength());
 		} while (!Level.fieldOfView[newPos] || !Level.passable[newPos]
-				|| Level.adjacent(newPos, enemy.pos)
+				|| Dungeon.level.adjacent(newPos, enemy.pos)
 				|| Actor.findChar(newPos) != null);
 
 		sprite.move(pos, newPos);

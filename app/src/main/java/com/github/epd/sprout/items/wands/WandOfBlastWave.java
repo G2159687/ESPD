@@ -10,7 +10,6 @@ import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.effects.Effects;
 import com.github.epd.sprout.effects.MagicMissile;
 import com.github.epd.sprout.effects.Pushing;
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -138,8 +137,8 @@ public class WandOfBlastWave extends Wand {
 		public void reset(int pos) {
 			revive();
 
-			x = (pos % Level.WIDTH) * DungeonTilemap.SIZE + (DungeonTilemap.SIZE - width) / 2;
-			y = (pos / Level.WIDTH) * DungeonTilemap.SIZE + (DungeonTilemap.SIZE - height) / 2;
+			x = (pos % Dungeon.level.getWidth()) * DungeonTilemap.SIZE + (DungeonTilemap.SIZE - width) / 2;
+			y = (pos / Dungeon.level.getWidth()) * DungeonTilemap.SIZE + (DungeonTilemap.SIZE - height) / 2;
 
 			time = TIME_TO_FADE;
 		}

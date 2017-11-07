@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.hero;
 
 import com.github.epd.sprout.Assets;
@@ -34,7 +18,6 @@ import com.github.epd.sprout.actors.buffs.Burning;
 import com.github.epd.sprout.actors.buffs.Charm;
 import com.github.epd.sprout.actors.buffs.Combo;
 import com.github.epd.sprout.actors.buffs.Cripple;
-import com.github.epd.sprout.actors.buffs.Dewcharge;
 import com.github.epd.sprout.actors.buffs.Drowsy;
 import com.github.epd.sprout.actors.buffs.Fury;
 import com.github.epd.sprout.actors.buffs.Hunger;
@@ -59,7 +42,7 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.CheckedCell;
 import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.effects.Speck;
-import com.github.epd.sprout.items.Amulet;
+import com.github.epd.sprout.items.quest.Amulet;
 import com.github.epd.sprout.items.Ankh;
 import com.github.epd.sprout.items.Dewdrop;
 import com.github.epd.sprout.items.EasterEgg;
@@ -68,7 +51,6 @@ import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Heap.Type;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.KindOfWeapon;
-import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.ShadowDragonEgg;
 import com.github.epd.sprout.items.armor.glyphs.Viscosity;
 import com.github.epd.sprout.items.artifacts.CapeOfThorns;
@@ -107,7 +89,6 @@ import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.levels.features.AlchemyPot;
 import com.github.epd.sprout.levels.features.Chasm;
-import com.github.epd.sprout.levels.features.Sign;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.plants.Earthroot;
 import com.github.epd.sprout.plants.Sungrass;
@@ -133,6 +114,7 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -322,7 +304,7 @@ public class Hero extends Char {
 	@Override
 	public int attackSkill(Char target) {
 		float accuracy = 1;
-		if (rangedWeapon != null && Level.distance(pos, target.pos) == 1) {
+		if (rangedWeapon != null && Dungeon.level.distance(pos, target.pos) == 1) {
 			accuracy *= 0.5f;
 		}
 
@@ -515,23 +497,6 @@ public class Hero extends Char {
 			egg3.moves++;
 		}
 
-		OtilukesJournal journal = belongings.getItem(OtilukesJournal.class);
-		if (journal != null && (Dungeon.depth < 26 || Dungeon.depth == 55)
-				&& (journal.level > 1 || journal.rooms[0])
-				&& journal.charge < journal.fullCharge) {
-			journal.charge++;
-			if (journal.charge >= journal.fullCharge) {
-				GLog.p(Messages.get(this, "otiluke"));
-			}
-		}
-
-		/*
-		Heap heap = Dungeon.level.heaps.get(pos);
-		if (heap != null){
-			heap.dewcollect();
-		}
-		*/
-
 		checkVisibleMobs();
 		if (!resting || buff(MindVision.class) != null || buff(Awareness.class) != null) {
 			Dungeon.observe();
@@ -620,8 +585,9 @@ public class Hero extends Char {
 	}
 
 	public void interrupt() {
-		if (isAlive() && curAction != null
-				&& curAction instanceof HeroAction.Move && curAction.dst != pos) {
+		if (isAlive() && curAction != null &&
+				((curAction instanceof HeroAction.Move && curAction.dst != pos) ||
+						(curAction instanceof HeroAction.Ascend || curAction instanceof HeroAction.Descend))) {
 			lastAction = curAction;
 		}
 		curAction = null;
@@ -638,17 +604,9 @@ public class Hero extends Char {
 	private boolean actMove(HeroAction.Move action) {
 
 		if (getCloser(action.dst)) {
-
 			return true;
-
 		} else {
-			if (Dungeon.level.map[pos] == Terrain.SIGN && pos != Dungeon.level.pitSign) {
-				Sign.read(pos);
-			} else if (Dungeon.level.map[pos] == Terrain.SIGN && pos == Dungeon.level.pitSign) {
-				Sign.readPit(pos);
-			}
 			ready();
-
 			return false;
 		}
 	}
@@ -657,7 +615,7 @@ public class Hero extends Char {
 
 		NPC npc = action.npc;
 
-		if (Level.adjacent(pos, npc.pos)) {
+		if (Dungeon.level.adjacent(pos, npc.pos)) {
 
 			ready();
 			sprite.turnTo(pos, npc.pos);
@@ -681,7 +639,7 @@ public class Hero extends Char {
 
 		PET pet = action.pet;
 
-		if (Level.adjacent(pos, pet.pos)) {
+		if (Dungeon.level.adjacent(pos, pet.pos)) {
 
 			ready();
 			sprite.turnTo(pos, pet.pos);
@@ -703,7 +661,7 @@ public class Hero extends Char {
 
 	private boolean actBuy(HeroAction.Buy action) {
 		int dst = action.dst;
-		if (pos == dst || Level.adjacent(pos, dst)) {
+		if (pos == dst || Dungeon.level.adjacent(pos, dst)) {
 
 			ready();
 
@@ -795,7 +753,7 @@ public class Hero extends Char {
 
 	private boolean actOpenChest(HeroAction.OpenChest action) {
 		int dst = action.dst;
-		if (Level.adjacent(pos, dst) || pos == dst) {
+		if (Dungeon.level.adjacent(pos, dst) || pos == dst) {
 
 			Heap heap = Dungeon.level.heaps.get(dst);
 			if (heap != null
@@ -854,7 +812,7 @@ public class Hero extends Char {
 
 	private boolean actUnlock(HeroAction.Unlock action) {
 		int doorCell = action.dst;
-		if (Level.adjacent(pos, doorCell)) {
+		if (Dungeon.level.adjacent(pos, doorCell)) {
 
 			theKey = null;
 			int door = Dungeon.level.map[doorCell];
@@ -914,14 +872,6 @@ public class Hero extends Char {
 
 	private boolean actDescend(HeroAction.Descend action) {
 		int stairs = action.dst;
-
-		if (!Dungeon.level.forcedone && (Dungeon.level.checkdew() > 0
-				|| Dungeon.hero.buff(Dewcharge.class) != null)) {
-
-			GameScene.show(new WndDescend());
-			ready();
-			return false;
-		}
 
 		if (!Dungeon.level.forcedone && !Dungeon.level.cleared
 				&& !Dungeon.notClearableLevel(Dungeon.depth)) {
@@ -1034,6 +984,10 @@ public class Hero extends Char {
 					if (mob instanceof DriedRose.GhostHero)
 						mob.destroy();
 
+				try {
+					Dungeon.saveAll();
+				} catch (IOException e) {
+				}
 				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
 				Game.switchScene(InterlevelScene.class);
 
@@ -1072,6 +1026,10 @@ public class Hero extends Char {
 					if (mob instanceof DriedRose.GhostHero)
 						mob.destroy();
 
+				try {
+					Dungeon.saveAll();
+				} catch (IOException e) {
+				}
 				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
 				Game.switchScene(InterlevelScene.class);
 
@@ -1116,6 +1074,10 @@ public class Hero extends Char {
 					if (mob instanceof DriedRose.GhostHero)
 						mob.destroy();
 
+				try {
+					Dungeon.saveAll();
+				} catch (IOException e) {
+				}
 				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
 				Game.switchScene(InterlevelScene.class);
 			}
@@ -1137,8 +1099,8 @@ public class Hero extends Char {
 		enemy = action.target;
 
 		boolean inRange = belongings.weapon != null ?
-				Level.distance(pos, enemy.pos) <= belongings.weapon.reachFactor(this)
-				: Level.adjacent(pos, enemy.pos);
+				Dungeon.level.distance(pos, enemy.pos) <= belongings.weapon.reachFactor(this)
+				: Dungeon.level.adjacent(pos, enemy.pos);
 
 		if (inRange && enemy.isAlive() && !isCharmedBy(enemy)) {
 
@@ -1270,11 +1232,6 @@ public class Hero extends Char {
 			PotionOfHealing pot = Dungeon.hero.belongings.getItem(PotionOfHealing.class);
 			if (pot != null) {
 				pot.detach(Dungeon.hero.belongings.backpack, 1);
-				/*
-				if(!(Dungeon.hero.belongings.getItem(PotionOfHealing.class).quantity() > 0)){
-					pot.detachAll(Dungeon.hero.belongings.backpack);
-				}
-				*/
 				GLog.w(Messages.get(this, "autopotion"));
 				pot.apply(this);
 			} else if (pot == null) {
@@ -1341,7 +1298,7 @@ public class Hero extends Char {
 
 		int step = -1;
 
-		if (Level.adjacent(pos, target)) {
+		if (Dungeon.level.adjacent(pos, target)) {
 
 			path = null;
 
@@ -1363,7 +1320,7 @@ public class Hero extends Char {
 		} else {
 
 			boolean newPath = false;
-			if (path == null || path.isEmpty() || !Level.adjacent(pos, path.getFirst()))
+			if (path == null || path.isEmpty() || !Dungeon.level.adjacent(pos, path.getFirst()))
 				newPath = true;
 			else if (path.getLast() != target)
 				newPath = true;
@@ -1382,7 +1339,7 @@ public class Hero extends Char {
 
 			if (newPath) {
 
-				int len = Level.LENGTH;
+				int len = Dungeon.level.getLength();
 				boolean[] p = Level.passable;
 				boolean[] v = Dungeon.level.visited;
 				boolean[] m = Dungeon.level.mapped;
@@ -1688,7 +1645,7 @@ public class Hero extends Char {
 
 	public static void reallyDie(Object cause) {
 
-		int length = Level.getLength();
+		int length = Dungeon.level.getLength();
 		int[] map = Dungeon.level.map;
 		boolean[] visited = Dungeon.level.visited;
 		boolean[] discoverable = Level.discoverable;
@@ -1835,23 +1792,23 @@ public class Hero extends Char {
 			distance = 1;
 		}
 
-		int cx = pos % Level.getWidth();
-		int cy = pos / Level.getWidth();
+		int cx = pos % Dungeon.level.getWidth();
+		int cy = pos / Dungeon.level.getWidth();
 		int ax = cx - distance;
 		if (ax < 0) {
 			ax = 0;
 		}
 		int bx = cx + distance;
-		if (bx >= Level.getWidth()) {
-			bx = Level.getWidth() - 1;
+		if (bx >= Dungeon.level.getWidth()) {
+			bx = Dungeon.level.getWidth() - 1;
 		}
 		int ay = cy - distance;
 		if (ay < 0) {
 			ay = 0;
 		}
 		int by = cy + distance;
-		if (by >= Level.HEIGHT) {
-			by = Level.HEIGHT - 1;
+		if (by >= Dungeon.level.getHeight()) {
+			by = Dungeon.level.getHeight() - 1;
 		}
 
 		TalismanOfForesight.Foresight foresight = buff(TalismanOfForesight.Foresight.class);
@@ -1863,7 +1820,7 @@ public class Hero extends Char {
 		}
 
 		for (int y = ay; y <= by; y++) {
-			for (int x = ax, p = ax + y * Level.getWidth(); x <= bx; x++, p++) {
+			for (int x = ax, p = ax + y * Dungeon.level.getWidth(); x <= bx; x++, p++) {
 
 				if (Dungeon.visible[p] && p != pos) {
 

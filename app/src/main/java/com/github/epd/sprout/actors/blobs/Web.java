@@ -1,28 +1,14 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.blobs;
 
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Roots;
 import com.github.epd.sprout.effects.BlobEmitter;
 import com.github.epd.sprout.effects.particles.WebParticle;
+import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.messages.Messages;
 
 public class Web extends Blob {
@@ -34,7 +20,7 @@ public class Web extends Blob {
 
 		for (int i = area.left; i < area.right; i++) {
 			for (int j = area.top; j < area.bottom; j++) {
-				cell = i + j * WIDTH;
+				cell = i + j * Dungeon.level.getWidth();
 				off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
 
 				if (off[cell] > 0) {
@@ -55,6 +41,16 @@ public class Web extends Blob {
 		super.use(emitter);
 
 		emitter.pour(WebParticle.FACTORY, 0.4f);
+	}
+
+	public void seed(Level level, int cell, int amount ) {
+		if (cur == null) cur = new int[level.getLength()];
+		if (off == null) off = new int[cur.length];
+		int diff = amount - cur[cell];
+		if (diff > 0) {
+			cur[cell] = amount;
+			volume += diff;
+		}
 	}
 
 	@Override

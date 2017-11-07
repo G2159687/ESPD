@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.windows;
 
 import android.graphics.RectF;
@@ -26,17 +10,16 @@ import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.hero.Belongings;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroClass;
-import com.github.epd.sprout.items.AdamantArmor;
-import com.github.epd.sprout.items.AdamantRing;
-import com.github.epd.sprout.items.AdamantWand;
-import com.github.epd.sprout.items.AdamantWeapon;
+import com.github.epd.sprout.items.consumables.AdamantArmor;
+import com.github.epd.sprout.items.consumables.AdamantRing;
+import com.github.epd.sprout.items.consumables.AdamantWand;
+import com.github.epd.sprout.items.consumables.AdamantWeapon;
 import com.github.epd.sprout.items.BookOfDead;
 import com.github.epd.sprout.items.BookOfLife;
 import com.github.epd.sprout.items.BookOfTranscendence;
 import com.github.epd.sprout.items.EquipableItem;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.OtilukesJournal;
 import com.github.epd.sprout.items.armor.Armor;
 import com.github.epd.sprout.items.artifacts.Artifact;
 import com.github.epd.sprout.items.bags.AnkhChain;
@@ -47,9 +30,10 @@ import com.github.epd.sprout.items.bags.ScrollHolder;
 import com.github.epd.sprout.items.bags.SeedPouch;
 import com.github.epd.sprout.items.bags.WandHolster;
 import com.github.epd.sprout.items.food.Food;
-import com.github.epd.sprout.items.journalpages.JournalPage;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.scrolls.Scroll;
+import com.github.epd.sprout.items.teleporter.JournalPage;
+import com.github.epd.sprout.items.teleporter.OtilukesJournal;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.melee.MeleeWeapon;
 import com.github.epd.sprout.items.weapon.missiles.Boomerang;
@@ -68,6 +52,7 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.audio.Sample;
 
+// TODO: 1 commits in SPD remaining
 public class WndBag extends WndTabbed {
 
 	public enum Mode {

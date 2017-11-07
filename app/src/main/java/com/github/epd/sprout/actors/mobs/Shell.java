@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Dungeon;
@@ -117,7 +101,7 @@ public class Shell extends Mob implements Callback {
 	@Override
 	protected boolean doAttack(Char enemy) {
 
-		if (Level.distance(pos, enemy.pos) <= 1) {
+		if (Dungeon.level.distance(pos, enemy.pos) <= 1) {
 
 			return super.doAttack(enemy);
 
@@ -163,7 +147,7 @@ public class Shell extends Mob implements Callback {
 	}
 
 
-	public void zapAll(int dmg) {
+	public synchronized void zapAll(int dmg) {
 
 		yell(Messages.get(this, "zap"));
 
@@ -173,7 +157,7 @@ public class Shell extends Mob implements Callback {
 		for (Mob mob : Dungeon.level.mobs) {
 
 
-			if (Level.distance(pos, mob.pos) > 1 && mob.isAlive()) {
+			if (Dungeon.level.distance(pos, mob.pos) > 1 && mob.isAlive()) {
 				boolean visible = Level.fieldOfView[pos]
 						|| Level.fieldOfView[mob.pos];
 
@@ -199,7 +183,7 @@ public class Shell extends Mob implements Callback {
 
 			Char hero = Dungeon.hero;
 
-			if (Level.distance(pos, hero.pos) > 1) {
+			if (Dungeon.level.distance(pos, hero.pos) > 1) {
 
 				boolean visibleHero = Level.fieldOfView[pos]
 						|| Level.fieldOfView[hero.pos];

@@ -67,7 +67,7 @@ public class TalismanOfForesight extends Artifact {
 				hero.busy();
 				Sample.INSTANCE.play(Assets.SND_BEACON);
 				charge = 0;
-				for (int i = 0; i < Level.getLength(); i++) {
+				for (int i = 0; i < Dungeon.level.getLength(); i++) {
 					int terr = Dungeon.level.map[i];
 					if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
 						GameScene.updateMap(i);
@@ -78,7 +78,7 @@ public class TalismanOfForesight extends Artifact {
 				}
 				if (level > 10 && Dungeon.depth <= 50) {
 					//Magic mapping normal
-					int length = Level.LENGTH;
+					int length = Dungeon.level.getLength();
 					int[] map = Dungeon.level.map;
 					boolean[] mapped = Dungeon.level.mapped;
 					boolean[] discoverable = Level.discoverable;
@@ -103,7 +103,7 @@ public class TalismanOfForesight extends Artifact {
 				}
 				if (level > 48 && Dungeon.depth > 50) {
 					//Magic mapping with sokoban
-					int length = Level.LENGTH;
+					int length = Dungeon.level.getLength();
 					int[] map = Dungeon.level.map;
 					boolean[] mapped = Dungeon.level.mapped;
 					boolean[] discoverable = Level.discoverable;
@@ -165,27 +165,27 @@ public class TalismanOfForesight extends Artifact {
 
 			int distance = 3;
 
-			int cx = target.pos % Level.getWidth();
-			int cy = target.pos / Level.getWidth();
+			int cx = target.pos % Dungeon.level.getWidth();
+			int cy = target.pos / Dungeon.level.getWidth();
 			int ax = cx - distance;
 			if (ax < 0) {
 				ax = 0;
 			}
 			int bx = cx + distance;
-			if (bx >= Level.getWidth()) {
-				bx = Level.getWidth() - 1;
+			if (bx >= Dungeon.level.getWidth()) {
+				bx = Dungeon.level.getWidth() - 1;
 			}
 			int ay = cy - distance;
 			if (ay < 0) {
 				ay = 0;
 			}
 			int by = cy + distance;
-			if (by >= Level.HEIGHT) {
-				by = Level.HEIGHT - 1;
+			if (by >= Dungeon.level.getHeight()) {
+				by = Dungeon.level.getHeight() - 1;
 			}
 
 			for (int y = ay; y <= by; y++) {
-				for (int x = ax, p = ax + y * Level.getWidth(); x <= bx; x++, p++) {
+				for (int x = ax, p = ax + y * Dungeon.level.getWidth(); x <= bx; x++, p++) {
 					if (Dungeon.visible[p] && Level.secret[p])
 						smthFound = true;
 				}

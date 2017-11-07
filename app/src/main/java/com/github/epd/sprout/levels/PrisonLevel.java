@@ -1,33 +1,17 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.actors.mobs.MossySkeleton;
 import com.github.epd.sprout.actors.mobs.npcs.Wandmaker;
 import com.github.epd.sprout.effects.Halo;
 import com.github.epd.sprout.effects.particles.FlameParticle;
-import com.github.epd.sprout.items.Bomb;
-import com.github.epd.sprout.levels.Room.Type;
+import com.github.epd.sprout.items.bombs.Bomb;
+import com.github.epd.sprout.levels.painters.Painter;
+import com.github.epd.sprout.levels.painters.PrisonPainter;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.noosa.Scene;
 import com.watabou.noosa.particles.Emitter;
@@ -42,6 +26,25 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	@Override
+	protected int standardRooms() {
+		//6 to 8, average 6.66
+		return 6+Random.chances(new float[]{4, 2, 2});
+	}
+
+	@Override
+	protected int specialRooms() {
+		//1 to 3, average 1.83
+		return 1+Random.chances(new float[]{3, 4, 3});
+	}
+
+	@Override
+	protected Painter painter() {
+		return new PrisonPainter()
+				.setWater(feeling == Feeling.WATER ? 0.90f : 0.30f, 4)
+				.setGrass(feeling == Feeling.GRASS ? 0.80f : 0.20f, 3);
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_PRISON;
 	}
@@ -49,29 +52,6 @@ public class PrisonLevel extends RegularLevel {
 	@Override
 	public String waterTex() {
 		return Assets.WATER_PRISON;
-	}
-
-	@Override
-	protected boolean[] water() {
-		return Patch.generate(feeling == Feeling.WATER ? 0.65f : 0.45f, 4);
-	}
-
-	@Override
-	protected boolean[] grass() {
-		return Patch.generate(feeling == Feeling.GRASS ? 0.60f : 0.40f, 3);
-	}
-
-	@Override
-	protected boolean assignRoomType() {
-		super.assignRoomType();
-
-		for (Room r : rooms) {
-			if (r.type == Type.TUNNEL) {
-				r.type = Type.PASSAGE;
-			}
-		}
-
-		return true;
 	}
 
 	@Override
@@ -99,69 +79,7 @@ public class PrisonLevel extends RegularLevel {
 				skeleton.pos = level.randomRespawnCell();
 			} while (skeleton.pos == -1);
 			level.mobs.add(skeleton);
-			Actor.occupyCell(skeleton);
 		}
-	}
-
-
-	@Override
-	protected void decorate() {
-
-		for (int i = getWidth() + 1; i < getLength() - getWidth() - 1; i++) {
-			if (map[i] == Terrain.EMPTY) {
-
-				float c = 0.05f;
-				if (map[i + 1] == Terrain.WALL
-						&& map[i + getWidth()] == Terrain.WALL) {
-					c += 0.2f;
-				}
-				if (map[i - 1] == Terrain.WALL
-						&& map[i + getWidth()] == Terrain.WALL) {
-					c += 0.2f;
-				}
-				if (map[i + 1] == Terrain.WALL
-						&& map[i - getWidth()] == Terrain.WALL) {
-					c += 0.2f;
-				}
-				if (map[i - 1] == Terrain.WALL
-						&& map[i - getWidth()] == Terrain.WALL) {
-					c += 0.2f;
-				}
-
-				if (Random.Float() < c) {
-					map[i] = Terrain.EMPTY_DECO;
-				}
-			}
-		}
-
-		for (int i = 0; i < getWidth(); i++) {
-			if (map[i] == Terrain.WALL
-					&& (map[i + getWidth()] == Terrain.EMPTY || map[i + getWidth()] == Terrain.EMPTY_SP)
-					&& Random.Int(6) == 0) {
-
-				map[i] = Terrain.WALL_DECO;
-			}
-		}
-
-		for (int i = getWidth(); i < getLength() - getWidth(); i++) {
-			if (map[i] == Terrain.WALL
-					&& map[i - getWidth()] == Terrain.WALL
-					&& (map[i + getWidth()] == Terrain.EMPTY || map[i + getWidth()] == Terrain.EMPTY_SP)
-					&& Random.Int(3) == 0) {
-
-				map[i] = Terrain.WALL_DECO;
-			}
-		}
-
-		while (true) {
-			int pos = roomEntrance.random();
-			if (pos != entrance) {
-				map[pos] = Terrain.SIGN;
-				break;
-			}
-		}
-
-		setPar();
 	}
 
 	@Override
@@ -193,7 +111,7 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	public static void addVisuals(Level level, Scene scene) {
-		for (int i = 0; i < getLength(); i++) {
+		for (int i = 0; i < Dungeon.level.getLength(); i++) {
 			if (level.map[i] == Terrain.WALL_DECO) {
 				scene.add(new Torch(i));
 			}

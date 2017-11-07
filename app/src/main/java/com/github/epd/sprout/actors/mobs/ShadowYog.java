@@ -1,26 +1,9 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.Statistics;
-import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.buffs.Amok;
@@ -32,7 +15,7 @@ import com.github.epd.sprout.actors.buffs.Vertigo;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.OrbOfZot;
+import com.github.epd.sprout.items.bombs.OrbOfZot;
 import com.github.epd.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.levels.Level;
@@ -98,7 +81,7 @@ public class ShadowYog extends Mob {
 		for (int i = 0; i < 4; i++) {
 			int trapPos;
 			do {
-				trapPos = Random.Int(Level.getLength());
+				trapPos = Random.Int(Dungeon.level.getLength());
 			} while (!Level.fieldOfView[trapPos] || !Level.passable[trapPos]);
 
 			if (Dungeon.level.map[trapPos] == Terrain.INACTIVE_TRAP) {
@@ -116,7 +99,6 @@ public class ShadowYog extends Mob {
 				}
 			}
 			if (newPos != -1) {
-				Actor.freeCell(pos);
 				CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 				pos = newPos;
 				sprite.place(pos);

@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
@@ -44,10 +28,10 @@ public class HallsBossLevel extends Level {
 		viewDistance = 3;
 	}
 
-	private static final int ROOM_LEFT = getWidth() / 2 - 1;
-	private static final int ROOM_RIGHT = getWidth() / 2 + 1;
-	private static final int ROOM_TOP = HEIGHT / 2 - 1;
-	private static final int ROOM_BOTTOM = HEIGHT / 2 + 1;
+	private static final int ROOM_LEFT = 48 / 2 - 1;
+	private static final int ROOM_RIGHT = 48 / 2 + 1;
+	private static final int ROOM_TOP = 48 / 2 - 1;
+	private static final int ROOM_BOTTOM = 48 / 2 + 1;
 
 	private int stairs = -1;
 	private boolean enteredArena = false;
@@ -86,6 +70,8 @@ public class HallsBossLevel extends Level {
 	@Override
 	protected boolean build() {
 
+		setSize(48, 48);
+
 		for (int i = 0; i < 5; i++) {
 
 			int top = Random.IntRange(2, ROOM_TOP - 1);
@@ -117,18 +103,12 @@ public class HallsBossLevel extends Level {
 				+ Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * getWidth();
 		map[entrance] = Terrain.PEDESTAL;
 
-		boolean[] patch = Patch.generate(0.45f, 6);
+		boolean[] patch = Patch.generate( getWidth(), getHeight(), 0.30f, 6, true );
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.EMPTY && patch[i]) {
 				map[i] = Terrain.WATER;
 			}
 		}
-
-		return true;
-	}
-
-	@Override
-	protected void decorate() {
 
 		for (int i = 0; i < getLength(); i++) {
 			if (map[i] == Terrain.EMPTY && Random.Int(10) == 0) {
@@ -141,7 +121,7 @@ public class HallsBossLevel extends Level {
 
 		sealedlevel = false;
 
-
+		return true;
 	}
 
 	@Override
@@ -161,7 +141,7 @@ public class HallsBossLevel extends Level {
 			do {
 				pos = Random.IntRange(ROOM_LEFT, ROOM_RIGHT)
 						+ Random.IntRange(ROOM_TOP + 1, ROOM_BOTTOM) * getWidth();
-			} while (pos == entrance || map[pos] == Terrain.SIGN);
+			} while (pos == entrance);
 			drop(item, pos).type = Heap.Type.REMAINS;
 		}
 	}

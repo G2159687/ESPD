@@ -1,23 +1,6 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout;
 
-import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
@@ -35,7 +18,7 @@ public class DungeonTilemap extends Tilemap {
 	public DungeonTilemap() {
 		super(Dungeon.level.tilesTex(), new TextureFilm(
 				Dungeon.level.tilesTex(), SIZE, SIZE));
-		map(Dungeon.level.map, Level.getWidth());
+		map(Dungeon.level.map, Dungeon.level.getWidth());
 
 		instance = this;
 	}
@@ -43,8 +26,8 @@ public class DungeonTilemap extends Tilemap {
 	public int screenToTile(int x, int y) {
 		Point p = camera().screenToCamera(x, y).offset(this.point().negate())
 				.invScale(SIZE).floor();
-		return p.x >= 0 && p.x < Level.getWidth() && p.y >= 0 && p.y < Level.HEIGHT ? p.x
-				+ p.y * Level.getWidth()
+		return p.x >= 0 && p.x < Dungeon.level.getWidth() && p.y >= 0 && p.y < Dungeon.level.getHeight() ? p.x
+				+ p.y * Dungeon.level.getWidth()
 				: -1;
 	}
 
@@ -73,12 +56,12 @@ public class DungeonTilemap extends Tilemap {
 	}
 
 	public static PointF tileToWorld(int pos) {
-		return new PointF(pos % Level.getWidth(), pos / Level.getWidth()).scale(SIZE);
+		return new PointF(pos % Dungeon.level.getWidth(), pos / Dungeon.level.getWidth()).scale(SIZE);
 	}
 
 	public static PointF tileCenterToWorld(int pos) {
-		return new PointF((pos % Level.getWidth() + 0.5f) * SIZE,
-				(pos / Level.getWidth() + 0.5f) * SIZE);
+		return new PointF((pos % Dungeon.level.getWidth() + 0.5f) * SIZE,
+				(pos / Dungeon.level.getWidth() + 0.5f) * SIZE);
 	}
 
 	public static Image tile(int index) {
@@ -94,6 +77,6 @@ public class DungeonTilemap extends Tilemap {
 
 	@Override
 	protected boolean needsRender(int pos) {
-		return (Level.discoverable[pos] || Dungeon.level.map[pos] == Terrain.CHASM) && Dungeon.level.map[pos] != Terrain.WATER;
+		return (Dungeon.level.discoverable[pos] || Dungeon.level.map[pos] == Terrain.CHASM) && Dungeon.level.map[pos] != Terrain.WATER;
 	}
 }

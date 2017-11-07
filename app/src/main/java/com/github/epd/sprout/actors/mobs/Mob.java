@@ -1,20 +1,4 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 package com.github.epd.sprout.actors.mobs;
 
 import com.github.epd.sprout.Assets;
@@ -32,6 +16,7 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.hero.HeroSubClass;
 import com.github.epd.sprout.actors.mobs.npcs.NPC;
+import com.github.epd.sprout.actors.mobs.npcs.Shopkeeper;
 import com.github.epd.sprout.effects.Surprise;
 import com.github.epd.sprout.effects.Wound;
 import com.github.epd.sprout.items.DewVial;
@@ -259,8 +244,8 @@ public abstract class Mob extends Char {
 				Char closest = null;
 				for (Char curr : enemies) {
 					if (closest == null
-							|| Level.distance(pos, curr.pos) < Level.distance(pos, closest.pos)
-							|| Level.distance(pos, curr.pos) == Level.distance(pos, closest.pos) && curr == Dungeon.hero) {
+							|| Dungeon.level.distance(pos, curr.pos) < Dungeon.level.distance(pos, closest.pos)
+							|| Dungeon.level.distance(pos, curr.pos) == Dungeon.level.distance(pos, closest.pos) && curr == Dungeon.hero) {
 						closest = curr;
 					}
 				}
@@ -311,7 +296,7 @@ public abstract class Mob extends Char {
 	}
 
 	protected boolean canAttack(Char enemy) {
-		return Level.adjacent(pos, enemy.pos);
+		return Dungeon.level.adjacent(pos, enemy.pos);
 	}
 
 	protected boolean getCloser(int target) {
@@ -322,7 +307,7 @@ public abstract class Mob extends Char {
 
 		int step = -1;
 
-		if (Level.adjacent(pos, target)) {
+		if (Dungeon.level.adjacent(pos, target)) {
 
 			path = null;
 
@@ -334,20 +319,20 @@ public abstract class Mob extends Char {
 
 			boolean newPath = false;
 			if (path == null || path.isEmpty()
-					|| !Level.adjacent(pos, path.getFirst())
-					|| path.size() > 2 * Level.distance(pos, target))
+					|| !Dungeon.level.adjacent(pos, path.getFirst())
+					|| path.size() > 2 * Dungeon.level.distance(pos, target))
 				newPath = true;
 			else if (path.getLast() != target) {
 				//if the new target is adjacent to the end of the path, adjust for that
 				//rather than scrapping the whole path. Unless the path is very long,
 				//in which case re-checking will likely result in a much better path
-				if (Level.adjacent(target, path.getLast()) && path.size() < Level.distance(pos, target)) {
+				if (Dungeon.level.adjacent(target, path.getLast()) && path.size() < Dungeon.level.distance(pos, target)) {
 					int last = path.removeLast();
 
 					if (path.isEmpty()) {
 
 						//shorten for a closer one
-						if (Level.adjacent(target, pos)) {
+						if (Dungeon.level.adjacent(target, pos)) {
 							path.add(target);
 							//extend the path for a further target
 						} else {
@@ -360,7 +345,7 @@ public abstract class Mob extends Char {
 						if (path.getLast() == target) {
 
 							//if the new target is closer/same, need to modify end of path
-						} else if (Level.adjacent(target, path.getLast())) {
+						} else if (Dungeon.level.adjacent(target, path.getLast())) {
 							path.add(target);
 
 							//if the new target is further away, need to extend the path
@@ -396,7 +381,7 @@ public abstract class Mob extends Char {
 			}
 
 			if (path == null ||
-					(state == HUNTING && path.size() > Math.max(9, 2 * Level.distance(pos, target)))) {
+					(state == HUNTING && path.size() > Math.max(9, 2 * Dungeon.level.distance(pos, target)))) {
 				return false;
 			}
 
@@ -496,7 +481,7 @@ public abstract class Mob extends Char {
 
 		//if attacked by something else than current target, and that thing is closer, switch targets
 		if (this.enemy == null
-				|| (enemy != this.enemy && (Level.distance(pos, enemy.pos) < Level.distance(pos, this.enemy.pos)))) {
+				|| (enemy != this.enemy && (Dungeon.level.distance(pos, enemy.pos) < Dungeon.level.distance(pos, this.enemy.pos)))) {
 			aggro(enemy);
 			target = enemy.pos;
 		}
@@ -571,7 +556,7 @@ public abstract class Mob extends Char {
 
 	public boolean checkOriginalGenMobs() {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (mob.originalgen) {
+			if (mob.originalgen && !(mob instanceof Shopkeeper)) {
 				return true;
 			}
 		}
@@ -743,7 +728,7 @@ public abstract class Mob extends Char {
 
 		for (int n : PathFinder.NEIGHBOURS9) {
 			int c = cell + n;
-			if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+			if (c >= 0 && c < Dungeon.level.getLength() && Level.passable[c]) {
 				if (Random.Int(10) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (!vial.isFull()) {
@@ -779,7 +764,7 @@ public abstract class Mob extends Char {
 
 		for (int n : PathFinder.NEIGHBOURS9) {
 			int c = cell + n;
-			if (c >= 0 && c < Level.getLength() && Level.passable[c]) {
+			if (c >= 0 && c < Dungeon.level.getLength() && Level.passable[c]) {
 				if (Random.Int(8) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
