@@ -23,6 +23,9 @@ import com.github.epd.sprout.items.food.GoldenNut;
 import com.github.epd.sprout.items.food.Moonberry;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.keys.SkeletonKey;
+import com.github.epd.sprout.items.quest.SanChikarahDeath;
+import com.github.epd.sprout.items.quest.SanChikarahLife;
+import com.github.epd.sprout.items.quest.SanChikarahTranscend;
 import com.github.epd.sprout.items.weapon.missiles.ForestDart;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -52,8 +55,8 @@ public class OtilukesJournal extends Item {
 	public int returnDepth = -1;
 	public int returnPos;
 
-	public boolean[] rooms = new boolean[20];
-	public boolean[] firsts = new boolean[20];
+	public boolean[] rooms = new boolean[22];
+	public boolean[] firsts = new boolean[22];
 
 	{
 		name = Messages.get(this, "name");
@@ -96,13 +99,10 @@ public class OtilukesJournal extends Item {
 				&& Dungeon.depth > 49 && !hero.petfollow) {
 			actions.add(AC_RETURN);
 		}
-		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth >= 27 && Dungeon.depth <= 30)) {
+		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth >= 27 && Dungeon.depth <= 40)) {
 			actions.add(AC_RETURN);
 		}
 		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth == 25)) {
-			actions.add(AC_RETURN);
-		}
-		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth >= 36 && Dungeon.depth <= 40)){
 			actions.add(AC_RETURN);
 		}
 		if (Dungeon.depth < 26 && !hero.petfollow && !Dungeon.bossLevel()) {
@@ -141,6 +141,7 @@ public class OtilukesJournal extends Item {
 						ForestDart newdart = new ForestDart(30);
 						newdart.doPickUp(Dungeon.hero);
 					}
+					Statistics.archersKilled = 0;
 					break;
 				}
 
@@ -157,6 +158,7 @@ public class OtilukesJournal extends Item {
 						FullMoonberry berry = new FullMoonberry();
 						berry.doPickUp(Dungeon.hero);
 					}
+					Statistics.skeletonsKilled = 0;
 					break;
 				}
 
@@ -180,6 +182,7 @@ public class OtilukesJournal extends Item {
 							berry.doPickUp(Dungeon.hero);
 						}
 					}
+					Statistics.albinoPiranhasKilled = 0;
 					break;
 				}
 
@@ -239,6 +242,49 @@ public class OtilukesJournal extends Item {
 						return;
 					} else {
 						rooms[16] = false;
+					}
+					break;
+				}
+
+				case 31: {
+					SanChikarahDeath sdeath = hero.belongings.getItem(SanChikarahDeath.class);
+					if (sdeath == null){
+						GLog.w(Messages.get(BookOfDead.class,"prevent"));
+						return;
+					} else {
+						rooms[17] = false;
+					}
+					break;
+				}
+
+				case 32: {
+					SanChikarahLife slife = hero.belongings.getItem(SanChikarahLife.class);
+					if (slife == null){
+						GLog.w(Messages.get(BookOfLife.class,"prevent"));
+						return;
+					} else {
+						rooms[18] = false;
+					}
+					break;
+				}
+
+				case 33: {
+					SanChikarahTranscend stra = hero.belongings.getItem(SanChikarahTranscend.class);
+					if (stra == null){
+						GLog.w(Messages.get(BookOfTranscendence.class,"prevent"));
+						return;
+					} else {
+						rooms[19] = false;
+					}
+					break;
+				}
+
+				case 35: {
+					if (!Dungeon.shadowyogkilled){
+						GLog.w(Messages.get(SanChikarah.class,"prevent"));
+						return;
+					} else {
+						rooms[20] = false;
 					}
 					break;
 				}

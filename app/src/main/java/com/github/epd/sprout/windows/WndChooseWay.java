@@ -2,7 +2,7 @@
 package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.actors.hero.HeroSubClass;
-import com.github.epd.sprout.items.TomeOfMastery;
+import com.github.epd.sprout.items.consumables.TomeOfMastery;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;

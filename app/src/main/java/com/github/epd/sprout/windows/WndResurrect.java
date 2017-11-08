@@ -4,7 +4,7 @@ package com.github.epd.sprout.windows;
 import com.github.epd.sprout.Rankings;
 import com.github.epd.sprout.Statistics;
 import com.github.epd.sprout.actors.hero.Hero;
-import com.github.epd.sprout.items.Ankh;
+import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.scenes.InterlevelScene;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;

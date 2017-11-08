@@ -2,7 +2,7 @@
 package com.github.epd.sprout.levels.rooms.special;
 
 import com.github.epd.sprout.items.Generator;
-import com.github.epd.sprout.items.Honeypot;
+import com.github.epd.sprout.items.consumables.Honeypot;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.potions.PotionOfLiquidFlame;
 import com.github.epd.sprout.levels.Level;

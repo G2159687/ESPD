@@ -17,7 +17,7 @@ import com.github.epd.sprout.actors.mobs.npcs.Blacksmith;
 import com.github.epd.sprout.actors.mobs.npcs.Ghost;
 import com.github.epd.sprout.actors.mobs.npcs.Imp;
 import com.github.epd.sprout.actors.mobs.npcs.Wandmaker;
-import com.github.epd.sprout.items.Ankh;
+import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.TalismanOfForesight;

@@ -38,7 +38,7 @@ import com.github.epd.sprout.items.food.Meat;
 import com.github.epd.sprout.items.food.MysteryMeat;
 import com.github.epd.sprout.items.food.Nut;
 import com.github.epd.sprout.items.food.ToastedNut;
-import com.github.epd.sprout.items.nornstone.NornStone;
+import com.github.epd.sprout.items.quest.NornStone;
 import com.github.epd.sprout.items.potions.Potion;
 import com.github.epd.sprout.items.potions.PotionOfExperience;
 import com.github.epd.sprout.items.scrolls.Scroll;

@@ -10,7 +10,7 @@ import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanBlack;
 import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanCorner;
 import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanSwitch;
 import com.github.epd.sprout.effects.particles.ShadowParticle;
-import com.github.epd.sprout.items.Ankh;
+import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.bags.Bag;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;

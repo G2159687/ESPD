@@ -4,7 +4,7 @@ package com.github.epd.sprout.levels;
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.actors.mobs.Sentinel;
 import com.github.epd.sprout.items.Generator;
-import com.github.epd.sprout.items.SanChikarahTranscend;
+import com.github.epd.sprout.items.quest.SanChikarahTranscend;
 import com.github.epd.sprout.items.food.PotionOfConstitution;
 import com.github.epd.sprout.levels.builders.Builder;
 import com.github.epd.sprout.levels.builders.LineBuilder;

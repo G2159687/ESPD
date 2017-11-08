@@ -2,7 +2,7 @@
 package com.github.epd.sprout.items.bags;
 
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.Rice;
+import com.github.epd.sprout.items.misc.Rice;
 import com.github.epd.sprout.items.food.Blackberry;
 import com.github.epd.sprout.items.food.Blueberry;
 import com.github.epd.sprout.items.food.Cloudberry;

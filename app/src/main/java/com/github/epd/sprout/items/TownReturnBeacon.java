@@ -24,7 +24,6 @@ public class TownReturnBeacon extends Item {
 
 
 	private static final String TXT_INFO = Messages.get(ReturnBeacon.class, "desc");
-	private static final String TXT_CREATURES = Messages.get(ReturnBeacon.class, "creatures");
 
 	public static final float TIME_TO_USE = 1;
 
@@ -84,13 +83,6 @@ public class TownReturnBeacon extends Item {
 				hero.spend(TIME_TO_USE);
 				GLog.w(FAIL);
 				return;
-			}
-
-			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-				if (Actor.findChar(hero.pos + PathFinder.NEIGHBOURS8[i]) != null) {
-					GLog.w(TXT_CREATURES);
-					return;
-				}
 			}
 
 		}

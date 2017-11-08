@@ -8,7 +8,7 @@ import com.github.epd.sprout.actors.buffs.Terror;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Gold;
-import com.github.epd.sprout.items.Honeypot;
+import com.github.epd.sprout.items.consumables.Honeypot;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.messages.Messages;

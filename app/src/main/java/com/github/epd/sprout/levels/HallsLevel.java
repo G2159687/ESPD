@@ -8,7 +8,7 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.DungeonTilemap;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.items.bombs.Bomb;
-import com.github.epd.sprout.items.Torch;
+import com.github.epd.sprout.items.consumables.Torch;
 import com.github.epd.sprout.levels.painters.HallsPainter;
 import com.github.epd.sprout.levels.painters.Painter;
 import com.github.epd.sprout.messages.Messages;

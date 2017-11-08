@@ -3,9 +3,9 @@ package com.github.epd.sprout.levels.rooms.special;
 
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.blobs.Foliage;
-import com.github.epd.sprout.items.Ankh;
-import com.github.epd.sprout.items.Honeypot;
-import com.github.epd.sprout.items.SteelHoneypot;
+import com.github.epd.sprout.items.consumables.Ankh;
+import com.github.epd.sprout.items.consumables.Honeypot;
+import com.github.epd.sprout.items.consumables.SteelHoneypot;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.levels.painters.Painter;

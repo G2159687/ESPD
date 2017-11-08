@@ -45,23 +45,17 @@ public class RandomWand extends Wand {
 
 	@Override
 	protected void onZap(Ballistica bolt) {
-		float COMMON_CHANCE = 0.6f;
-		float UNCOMMON_CHANCE = 0.3f;
-		float RARE_CHANCE = 0.09f;
-		float VERY_RARE_CHANCE = 0.01f;
-		switch (Random.chances(new float[]{COMMON_CHANCE, UNCOMMON_CHANCE, RARE_CHANCE, VERY_RARE_CHANCE})) {
+		float COMMON_CHANCE = 0.5f;
+		float UNCOMMON_CHANCE = 0.5f;
+		//float RARE_CHANCE = 0.09f;
+		//float VERY_RARE_CHANCE = 0.01f;
+		switch (2) {
 			case 0:
 			default:
 				commonEffect(bolt);
 				break;
 			case 1:
 				uncommonEffect(bolt);
-				break;
-			case 2:
-				rareEffect(bolt);
-				break;
-			case 3:
-				veryRareEffect(bolt);
 				break;
 		}
 	}
@@ -79,7 +73,7 @@ public class RandomWand extends Wand {
 
 
 	private void commonEffect(Ballistica bolt) {
-		switch (Random.Int(4)) {
+		switch (Random.Int(3)) {
 
 			//anti-entropy
 			case 0:
@@ -112,7 +106,7 @@ public class RandomWand extends Wand {
 				break;
 
 			//random teleportation
-			case 2:
+			/*case 2:
 				switch (Random.Int(2)) {
 					case 0:
 						ScrollOfTeleportation.teleportHero(Dungeon.hero);
@@ -140,10 +134,10 @@ public class RandomWand extends Wand {
 
 						break;
 				}
-				break;
+				break;*/
 
 			//random gas at location
-			case 3:
+			case 2:
 
 				switch (Random.Int(5)) {
 					case 0:

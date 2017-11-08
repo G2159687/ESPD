@@ -5,7 +5,7 @@ import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Bones;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.SanChikarahDeath;
+import com.github.epd.sprout.items.quest.SanChikarahDeath;
 import com.github.epd.sprout.levels.builders.BranchesBuilder;
 import com.github.epd.sprout.levels.builders.Builder;
 import com.github.epd.sprout.levels.painters.Painter;

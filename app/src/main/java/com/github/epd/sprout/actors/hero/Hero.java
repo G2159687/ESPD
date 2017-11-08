@@ -43,7 +43,7 @@ import com.github.epd.sprout.effects.CheckedCell;
 import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.quest.Amulet;
-import com.github.epd.sprout.items.Ankh;
+import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.items.Dewdrop;
 import com.github.epd.sprout.items.EasterEgg;
 import com.github.epd.sprout.items.Egg;

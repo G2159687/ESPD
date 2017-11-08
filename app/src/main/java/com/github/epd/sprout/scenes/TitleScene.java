@@ -8,6 +8,7 @@ import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.effects.BannerSprites;
 import com.github.epd.sprout.effects.Fireball;
+import com.github.epd.sprout.messages.Languages;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.Archs;
 import com.github.epd.sprout.ui.DonateButton;
@@ -182,14 +183,17 @@ public class TitleScene extends PixelScene {
 
 		HelpButton btnHelp = new HelpButton();
 		btnHelp.setPos(w / 4 - (btnHelp.width() / 2), (5 * h) / 6);
+		if (Messages.lang() == Languages.CHINESE)
 		add(btnHelp);
 
 		DonateButton btnDonate = new DonateButton();
 		btnDonate.setPos(w / 2 - (btnDonate.width() / 2), (5 * h) / 6);
+		if (Messages.lang() == Languages.CHINESE)
 		add(btnDonate);
 
 		TroubleshootingButton btnTs = new TroubleshootingButton();
 		btnTs.setPos((3 * w) / 4 - (btnTs.width() / 2), (5 * h) / 6);
+		if (Messages.lang() == Languages.CHINESE)
 		add(btnTs);
 
 		fadeIn();

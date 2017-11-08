@@ -2,7 +2,7 @@
 package com.github.epd.sprout.items.bags;
 
 import com.github.epd.sprout.items.consumables.AdamantRing;
-import com.github.epd.sprout.items.Ankh;
+import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.artifacts.RingOfDisintegration;
 import com.github.epd.sprout.items.artifacts.RingOfFrost;

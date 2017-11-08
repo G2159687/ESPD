@@ -8,7 +8,7 @@ public class ConchShell extends JournalPage {
 
 	{
 		name = Messages.get(this, "name");
-		image = ItemSpriteSheet.PAGE_0;
+		image = ItemSpriteSheet.PAGE_15;
 		room = 15;
 	}
 

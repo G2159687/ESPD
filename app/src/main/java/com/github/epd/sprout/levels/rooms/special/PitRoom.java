@@ -1,7 +1,7 @@
 
 package com.github.epd.sprout.levels.rooms.special;
 
-import com.github.epd.sprout.items.Ankh;
+import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;

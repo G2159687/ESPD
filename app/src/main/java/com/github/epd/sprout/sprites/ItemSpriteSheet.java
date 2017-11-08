@@ -330,6 +330,16 @@ public class ItemSpriteSheet {
 	public static final int PAGE_9                  = TELEPORTER + 19;
 	public static final int PAGE_10                 = TELEPORTER + 20;
 	public static final int PAGE_11                 = TELEPORTER + 21;
+	public static final int PAGE_12                 = TELEPORTER + 22;
+	public static final int PAGE_13                 = TELEPORTER + 23;
+	public static final int PAGE_14                 = TELEPORTER + 24;
+	public static final int PAGE_15                 = TELEPORTER + 25;
+	public static final int PAGE_16                 = TELEPORTER + 26;
+	public static final int PAGE_17                 = TELEPORTER + 27;
+	public static final int PAGE_18                 = TELEPORTER + 28;
+	public static final int PAGE_19                 = TELEPORTER + 29;
+	public static final int PAGE_20                 = TELEPORTER + 30;
+	public static final int PAGE_21                 = TELEPORTER + 31;
 
 
 	private static final int ARTIFACT_D        =                        xy(1, 31);  //16 slots

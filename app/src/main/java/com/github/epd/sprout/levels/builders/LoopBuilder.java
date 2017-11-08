@@ -88,13 +88,10 @@ public class LoopBuilder extends RegularBuilder {
 				if (!rooms.contains(prev))
 					rooms.add(prev);
 			} else {
-				//FIXME this is lazy, there are ways to do this without relying on chance
 				return null;
 			}
 		}
 
-		//FIXME this is still fairly chance reliant
-		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(entrance)){
 
 			ConnectionRoom c = ConnectionRoom.createRoom();

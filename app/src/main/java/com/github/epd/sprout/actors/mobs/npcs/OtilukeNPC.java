@@ -106,19 +106,19 @@ public class OtilukeNPC extends NPC {
 		if (Badges.checkOtilukeRescued()) {
 			tell(TXT_DUNGEON4);
 			if (!Statistics.orbObtained)
-				Item.autocollect(new Amulet(), Dungeon.hero.pos);
+				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos);
 		} else if (first && beacon == null) {
 			Badges.validateOtilukeRescued();
 			first = false;
 			tell(TXT_DUNGEON2);
-			Item.autocollect(new TownReturnBeacon(), Dungeon.hero.pos);
+			Dungeon.level.drop(new TownReturnBeacon(), Dungeon.hero.pos);
 			if (!Statistics.orbObtained)
 				Item.autocollect(new Amulet(), Dungeon.hero.pos);
 		} else {
 			Badges.validateOtilukeRescued();
 			tell(TXT_DUNGEON);
 			if (!Statistics.orbObtained)
-				Item.autocollect(new Amulet(), Dungeon.hero.pos);
+				Dungeon.level.drop(new Amulet(), Dungeon.hero.pos);
 		}
 
 		Statistics.orbObtained = true;

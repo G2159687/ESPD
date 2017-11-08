@@ -8,7 +8,7 @@ public class TenguKey extends JournalPage {
 
 	{
 		name = Messages.get(this, "name");
-		image = ItemSpriteSheet.PAGE_0;
+		image = ItemSpriteSheet.PAGE_16;
 		room = 16;
 	}
 

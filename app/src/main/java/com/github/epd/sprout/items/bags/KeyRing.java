@@ -2,9 +2,9 @@
 package com.github.epd.sprout.items.bags;
 
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.SanChikarahDeath;
-import com.github.epd.sprout.items.SanChikarahLife;
-import com.github.epd.sprout.items.SanChikarahTranscend;
+import com.github.epd.sprout.items.quest.SanChikarahDeath;
+import com.github.epd.sprout.items.quest.SanChikarahLife;
+import com.github.epd.sprout.items.quest.SanChikarahTranscend;
 import com.github.epd.sprout.items.keys.Key;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;

@@ -8,7 +8,7 @@ public class HallsKey extends JournalPage {
 
 	{
 		name = Messages.get(this, "name");
-		image = ItemSpriteSheet.PAGE_0;
+		image = ItemSpriteSheet.PAGE_12;
 		room = 12;
 	}
 

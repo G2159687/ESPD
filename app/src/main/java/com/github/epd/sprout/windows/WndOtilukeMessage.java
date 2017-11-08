@@ -1,7 +1,7 @@
 
 package com.github.epd.sprout.windows;
 
-import com.github.epd.sprout.items.Palantir;
+import com.github.epd.sprout.items.teleporter.Palantir;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.PixelScene;
 import com.github.epd.sprout.sprites.ItemSprite;

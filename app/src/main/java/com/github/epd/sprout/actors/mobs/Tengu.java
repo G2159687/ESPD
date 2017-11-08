@@ -13,7 +13,7 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.Egg;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.TomeOfMastery;
+import com.github.epd.sprout.items.consumables.TomeOfMastery;
 import com.github.epd.sprout.items.artifacts.LloydsBeacon;
 import com.github.epd.sprout.items.keys.SkeletonKey;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicMapping;

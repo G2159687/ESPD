@@ -31,7 +31,7 @@ public class WndOtiluke extends Window {
 
 	public static final float TIME_TO_USE = 1;
 
-	private static final int PAGES = 20;
+	private static final int PAGES = 22;
 	private static final int WIDTH = 60;
 	private static final int WIDTH2 = 120;
 	private static final int BTN_HEIGHT = 18;
@@ -59,6 +59,11 @@ public class WndOtiluke extends Window {
 		roomNames[14] = Messages.get(WndOtiluke.class, "s14");
 		roomNames[15] = Messages.get(WndOtiluke.class, "s15");
 		roomNames[16] = Messages.get(WndOtiluke.class, "s16");
+		roomNames[17] = Messages.get(WndOtiluke.class, "s17");
+		roomNames[18] = Messages.get(WndOtiluke.class, "s18");
+		roomNames[19] = Messages.get(WndOtiluke.class, "s19");
+		roomNames[20] = Messages.get(WndOtiluke.class, "s20");
+		roomNames[21] = Messages.get(WndOtiluke.class, "s21");
 
 		RenderedTextMultiline message = PixelScene.renderMultiline(Messages.get(WndOtiluke.class, "where"), 6);
 		message.maxWidth(WIDTH2);
@@ -353,7 +358,88 @@ public class WndOtiluke extends Window {
 			add(btn17);
 		}
 
-		resize(WIDTH2, (int)btn17.bottom());
+		NewRedButton btn18 = new NewRedButton(roomNames[17]) {
+			@Override
+			protected void onClick() {
+				item.returnDepth = Dungeon.depth;
+				item.returnPos = Dungeon.hero.pos;
+				port(17, item.firsts[17]);
+				if (!Dungeon.playtest) {
+					item.firsts[17] = false;
+				}
+			}
+		};
+		btn18.setRect(WIDTH + 1, message.top() + message.height() + GAP * 9 + BTN_HEIGHT * 8, WIDTH - 1, BTN_HEIGHT);
+		if (rooms[17]) {
+			add(btn18);
+		}
+
+		NewRedButton btn19 = new NewRedButton(roomNames[18]) {
+			@Override
+			protected void onClick() {
+				item.returnDepth = Dungeon.depth;
+				item.returnPos = Dungeon.hero.pos;
+				port(18, item.firsts[18]);
+				if (!Dungeon.playtest) {
+					item.firsts[18] = false;
+				}
+			}
+		};
+		btn19.setRect(0, message.top() + message.height() + GAP * 10 + BTN_HEIGHT * 9, WIDTH - 1, BTN_HEIGHT);
+		if (rooms[18]) {
+			add(btn19);
+		}
+
+		NewRedButton btn20 = new NewRedButton(roomNames[19]) {
+			@Override
+			protected void onClick() {
+				item.returnDepth = Dungeon.depth;
+				item.returnPos = Dungeon.hero.pos;
+				port(19, item.firsts[19]);
+				if (!Dungeon.playtest) {
+					item.firsts[19] = false;
+				}
+			}
+		};
+		btn20.setRect(WIDTH + 1, message.top() + message.height() + GAP * 10 + BTN_HEIGHT * 9, WIDTH - 1, BTN_HEIGHT);
+		if (rooms[19]) {
+			add(btn20);
+		}
+
+		NewRedButton btn21 = new NewRedButton(roomNames[20]) {
+			@Override
+			protected void onClick() {
+				item.returnDepth = Dungeon.depth;
+				item.returnPos = Dungeon.hero.pos;
+				port(20, item.firsts[20]);
+				if (!Dungeon.playtest) {
+					item.firsts[20] = false;
+				}
+			}
+		};
+		btn21.setRect(0, message.top() + message.height() + GAP * 11 + BTN_HEIGHT * 10, WIDTH - 1, BTN_HEIGHT);
+		if (rooms[20]) {
+			add(btn21);
+		}
+
+		NewRedButton btn22 = new NewRedButton(roomNames[21]) {
+			@Override
+			protected void onClick() {
+				item.returnDepth = Dungeon.depth;
+				item.returnPos = Dungeon.hero.pos;
+				port(21, item.firsts[21]);
+				if (!Dungeon.playtest) {
+					item.firsts[21] = false;
+					item.rooms[21] = false;
+				}
+			}
+		};
+		btn22.setRect(WIDTH + 1, message.top() + message.height() + GAP * 11 + BTN_HEIGHT * 10, WIDTH - 1, BTN_HEIGHT);
+		if (rooms[21]) {
+			add(btn22);
+		}
+
+		resize(WIDTH2, (int)btn22.bottom());
 	}
 
 
@@ -382,7 +468,7 @@ public class WndOtiluke extends Window {
 				mob.destroy();
 
 		switch (room){
-			case 1:case 2:case 3:case 4:case 5:case 6:case 7:
+			case 0:case 1:case 2:case 3:case 4:case 5:case 6:case 7:
 				InterlevelScene.mode = InterlevelScene.Mode.JOURNAL;
 				break;
 			case 8:
@@ -411,6 +497,21 @@ public class WndOtiluke extends Window {
 				break;
 			case 16:
 				InterlevelScene.mode = InterlevelScene.Mode.PORTTENGU;
+				break;
+			case 17:
+				InterlevelScene.mode = InterlevelScene.Mode.PORT1;
+				break;
+			case 18:
+				InterlevelScene.mode = InterlevelScene.Mode.PORT2;
+				break;
+			case 19:
+				InterlevelScene.mode = InterlevelScene.Mode.PORT3;
+				break;
+			case 20:
+				InterlevelScene.mode = InterlevelScene.Mode.PORT4;
+				break;
+			case 21:
+				InterlevelScene.mode = InterlevelScene.Mode.PALANTIR;
 				break;
 		}
 

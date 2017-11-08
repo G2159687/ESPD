@@ -15,7 +15,7 @@ import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanBlack;
 import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanCorner;
 import com.github.epd.sprout.actors.mobs.npcs.SheepSokobanSwitch;
 import com.github.epd.sprout.items.Heap;
-import com.github.epd.sprout.items.Palantir;
+import com.github.epd.sprout.items.teleporter.Palantir;
 import com.github.epd.sprout.items.keys.IronKey;
 import com.github.epd.sprout.items.wands.WandOfFlock.Sheep;
 import com.github.epd.sprout.levels.features.Chasm;

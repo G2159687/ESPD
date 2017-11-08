@@ -21,7 +21,7 @@ import com.github.epd.sprout.effects.FloatingText;
 import com.github.epd.sprout.effects.Ripple;
 import com.github.epd.sprout.effects.SpellSprite;
 import com.github.epd.sprout.items.Heap;
-import com.github.epd.sprout.items.Honeypot;
+import com.github.epd.sprout.items.consumables.Honeypot;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.bags.PotionBandolier;
 import com.github.epd.sprout.items.bags.ScrollHolder;

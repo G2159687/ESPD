@@ -6,9 +6,10 @@ import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ShatteredPixelDungeon;
+import com.github.epd.sprout.items.teleporter.BookOfTranscendence;
 import com.github.epd.sprout.items.bombs.Bomb;
 import com.github.epd.sprout.items.DewVial;
-import com.github.epd.sprout.items.TomeOfMastery;
+import com.github.epd.sprout.items.consumables.TomeOfMastery;
 import com.github.epd.sprout.items.armor.ClothArmor;
 import com.github.epd.sprout.items.artifacts.CloakOfShadows;
 import com.github.epd.sprout.items.bags.AnkhChain;
@@ -29,12 +30,16 @@ import com.github.epd.sprout.items.scrolls.ScrollOfRemoveCurse;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
 import com.github.epd.sprout.items.teleporter.AncientCoin;
 import com.github.epd.sprout.items.teleporter.Bone;
+import com.github.epd.sprout.items.teleporter.BookOfDead;
+import com.github.epd.sprout.items.teleporter.BookOfLife;
 import com.github.epd.sprout.items.teleporter.CavesKey;
 import com.github.epd.sprout.items.teleporter.CityKey;
 import com.github.epd.sprout.items.teleporter.ConchShell;
 import com.github.epd.sprout.items.teleporter.HallsKey;
 import com.github.epd.sprout.items.teleporter.OtilukesJournal;
+import com.github.epd.sprout.items.teleporter.Palantir;
 import com.github.epd.sprout.items.teleporter.PrisonKey;
+import com.github.epd.sprout.items.teleporter.SanChikarah;
 import com.github.epd.sprout.items.teleporter.SewersKey;
 import com.github.epd.sprout.items.teleporter.TenguKey;
 import com.github.epd.sprout.items.teleporter.Town;
@@ -59,19 +64,8 @@ public enum HeroClass {
 		this.title = title;
 	}
 
-	// TODO: Remove these things
 	private static void initDebug() {
-		new Glaive().reinforce().upgrade(300).collect();
-		new Town().collect();
-		new SewersKey().collect();
-		new PrisonKey().collect();
-		new CavesKey().collect();
-		new CityKey().collect();
-		new HallsKey().collect();
-		new AncientCoin().collect();
-		new Bone().collect();
-		new ConchShell().collect();
-		new TenguKey().collect();
+
 	}
 
 	public void initHero(Hero hero) {
@@ -140,12 +134,12 @@ public enum HeroClass {
 			hero.STR = hero.STR + 1;
 		}
 		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
-			hero.HT = hero.HT + 1000;
+			hero.HT = hero.HT + 200;
 			hero.HP = hero.HT;
 		}
 		if (Dungeon.isChallenged(Challenges.NO_HEALING)) {
-			hero.attackSkill = hero.attackSkill + 1000;
-			hero.defenseSkill = hero.defenseSkill + 1000;
+			hero.attackSkill = hero.attackSkill + 100;
+			hero.defenseSkill = hero.defenseSkill + 100;
 		}
 
 

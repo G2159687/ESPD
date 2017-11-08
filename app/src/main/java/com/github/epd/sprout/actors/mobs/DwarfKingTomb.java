@@ -4,7 +4,7 @@ package com.github.epd.sprout.actors.mobs;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.actors.buffs.Buff;
-import com.github.epd.sprout.items.ArmorKit;
+import com.github.epd.sprout.items.consumables.ArmorKit;
 import com.github.epd.sprout.items.Gold;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.RedDewdrop;

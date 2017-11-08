@@ -10,7 +10,7 @@ import com.github.epd.sprout.actors.blobs.ToxicGas;
 import com.github.epd.sprout.actors.hero.HeroClass;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Item;
-import com.github.epd.sprout.items.StoneOre;
+import com.github.epd.sprout.items.quest.StoneOre;
 import com.github.epd.sprout.items.weapon.enchantments.Death;
 import com.github.epd.sprout.items.weapon.melee.relic.RelicMeleeWeapon;
 import com.github.epd.sprout.items.weapon.missiles.JupitersWraith;
