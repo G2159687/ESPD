@@ -30,6 +30,7 @@ enum Preferences {
 	public static final String KEY_CLASSICFONT = "classic_font";
 	public static final String KEY_AUTOCOLLECT = "auto_collect";
 	public static final String KEY_DEWMODE = "dew_mode";
+	public static final String KEY_MAPSIZE = "map_size";
 
 	private SharedPreferences prefs;
 

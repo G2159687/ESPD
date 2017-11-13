@@ -33,14 +33,30 @@ public class MineLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//6 to 9, average 7.333
-		return 10+Random.chances(new float[]{2, 3, 3, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 8 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 16 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 20 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
-		//1 to 3, average 2.2
-		return 1+Random.chances(new float[]{2, 4, 4});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 2 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 3 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 4 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 1 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override

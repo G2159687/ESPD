@@ -24,8 +24,6 @@ import javax.microedition.khronos.opengles.GL10;
 public class HallsLevel extends RegularLevel {
 
 	{
-		minRoomSize = 6;
-
 		viewDistance = Math.max(25 - Dungeon.depth, 1);
 
 		color1 = 0x801500;
@@ -34,14 +32,30 @@ public class HallsLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//8 to 10, average 8.67
-		return 8+Random.chances(new float[]{3, 2, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 8 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 18 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 22 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
-		//2 to 3, average 2.5
-		return 2 + Random.chances(new float[]{1, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 2 + Random.chances(new float[]{1, 1});
+			case 2:
+				return 3 + Random.chances(new float[]{1, 1});
+			case 3:
+				return 4 + Random.chances(new float[]{1, 1});
+			default:
+				return 1 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
@@ -62,7 +76,7 @@ public class HallsLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = 300 + (Dungeon.depth * 50) + (secretDoors * 20);
+		Dungeon.pars[Dungeon.depth] = (300 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override

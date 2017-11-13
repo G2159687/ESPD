@@ -102,7 +102,7 @@ public class OtilukesJournal extends Item {
 		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth >= 27 && Dungeon.depth <= 40)) {
 			actions.add(AC_RETURN);
 		}
-		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth == 25)) {
+		if (returnDepth > 0 && !hero.petfollow && (Dungeon.depth == 25 || Dungeon.depth == 26)) {
 			actions.add(AC_RETURN);
 		}
 		if (Dungeon.depth < 26 && !hero.petfollow && !Dungeon.bossLevel()) {
@@ -196,6 +196,17 @@ public class OtilukesJournal extends Item {
 				}
 
 				case 25: {
+					if (Statistics.amuletObtained) {
+						rooms[12] = false;
+					}
+					SkeletonKey key = Dungeon.hero.belongings.getItem(SkeletonKey.class);
+					if (key != null) {
+						key.detachAll(Dungeon.hero.belongings.backpack);
+					}
+					break;
+				}
+
+				case 26: {
 					if (Statistics.amuletObtained) {
 						rooms[12] = false;
 					}

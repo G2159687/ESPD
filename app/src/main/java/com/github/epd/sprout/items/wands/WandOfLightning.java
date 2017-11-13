@@ -8,6 +8,7 @@ import com.github.epd.sprout.actors.Char;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Lightning;
 import com.github.epd.sprout.effects.particles.SparkParticle;
+import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.levels.Level;
 import com.github.epd.sprout.levels.traps.LightningTrap;
 import com.github.epd.sprout.mechanics.Ballistica;
@@ -51,6 +52,11 @@ public class WandOfLightning extends Wand {
 			if (ch == Dungeon.hero) Camera.main.shake(2, 0.3f);
 			ch.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 			ch.sprite.flash();
+		}
+
+		Heap heap = Dungeon.level.heaps.get(bolt.collisionPos);
+		if (heap != null) {
+			heap.lit();
 		}
 
 		if (!curUser.isAlive()) {

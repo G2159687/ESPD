@@ -146,16 +146,15 @@ public class Shell extends Mob implements Callback {
 		}
 	}
 
-
-	public synchronized void zapAll(int dmg) {
+	@SuppressWarnings("unchecked")
+	public void zapAll(int dmg) {
 
 		yell(Messages.get(this, "zap"));
 
 		int heroDmg = 0;
 		int mobDmg = Random.Int(1, 2 + Math.round(dmg / 4));
 
-		for (Mob mob : Dungeon.level.mobs) {
-
+		for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
 
 			if (Dungeon.level.distance(pos, mob.pos) > 1 && mob.isAlive()) {
 				boolean visible = Level.fieldOfView[pos]

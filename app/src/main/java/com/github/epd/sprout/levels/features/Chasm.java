@@ -35,6 +35,7 @@ public class Chasm {
 	private static final String TXT_NO = Messages.get(Chasm.class, "no");
 	private static final String TXT_JUMP = Messages.get(Chasm.class, "jump");
 	private static final String TXT_JUMPDANGER = Messages.get(Chasm.class, "jumpdanger");
+	private static final String TXT_JUMPDANGER2 = Messages.get(Chasm.class, "jumpdanger2");
 
 	public static boolean jumpConfirmed = false;
 
@@ -54,12 +55,23 @@ public class Chasm {
 				@Override
 				protected void onSelect(int index) {
 					if (index == 0) {
-						jumpConfirmed = true;
-						hero.resume();
+						confirmChasmLevel(hero);
 					}
 				}
 			});
 		}
+	}
+
+	private static void confirmChasmLevel(final Hero hero){
+		GameScene.show(new WndOptions(TXT_CHASM, TXT_JUMPDANGER2, TXT_YES, TXT_NO) {
+			@Override
+			protected void onSelect(int index) {
+				if (index == 0) {
+					jumpConfirmed = true;
+					hero.resume();
+				}
+			}
+		});
 	}
 
 

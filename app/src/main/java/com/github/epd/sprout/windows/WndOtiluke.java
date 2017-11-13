@@ -2,6 +2,7 @@
 package com.github.epd.sprout.windows;
 
 import com.github.epd.sprout.Dungeon;
+import com.github.epd.sprout.ShatteredPixelDungeon;
 import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Invisibility;
 import com.github.epd.sprout.actors.buffs.Levitation;
@@ -36,6 +37,11 @@ public class WndOtiluke extends Window {
 	private static final int WIDTH2 = 120;
 	private static final int BTN_HEIGHT = 18;
 	private static final float GAP = 2;
+	private static final int WIDTH_L = 246;
+	private static final int LX_1 = 0;
+	private static final int LX_2 = 62;
+	private static final int LX_3 = 124;
+	private static final int LX_4 = 186;
 
 	public WndOtiluke(final boolean[] rooms, final OtilukesJournal item) {
 
@@ -81,7 +87,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn1.setRect(0, message.top() + message.height() + GAP, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn1.setRect(0, message.top() + message.height() + GAP, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn1.setRect(LX_1, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[0]) {
 			add(btn1);
 		}
@@ -101,7 +111,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn2.setRect(WIDTH + 1, message.top() + message.height() + GAP, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn2.setRect(WIDTH + 1, message.top() + message.height() + GAP, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn2.setRect(LX_2, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[1]) {
 			add(btn2);
 		}
@@ -121,7 +135,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn3.setRect(0, message.top() + message.height() + GAP * 2 + BTN_HEIGHT, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn3.setRect(0, message.top() + message.height() + GAP * 2 + BTN_HEIGHT, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn3.setRect(LX_3, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[2]) {
 			add(btn3);
 		}
@@ -141,7 +159,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn4.setRect(WIDTH + 1, message.top() + message.height() + GAP * 2 + BTN_HEIGHT, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn4.setRect(WIDTH + 1, message.top() + message.height() + GAP * 2 + BTN_HEIGHT, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn4.setRect(LX_4, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[3]) {
 			add(btn4);
 		}
@@ -161,7 +183,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn5.setRect(0, message.top() + message.height() + GAP * 3 + BTN_HEIGHT * 2, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn5.setRect(0, message.top() + message.height() + GAP * 3 + BTN_HEIGHT * 2, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn5.setRect(LX_1, btn4.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[4]) {
 			add(btn5);
 		}
@@ -177,7 +203,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn6.setRect(WIDTH + 1, message.top() + message.height() + GAP * 3 + BTN_HEIGHT * 2, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn6.setRect(WIDTH + 1, message.top() + message.height() + GAP * 3 + BTN_HEIGHT * 2, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn6.setRect(LX_2, btn4.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[5]) {
 			add(btn6);
 		}
@@ -193,7 +223,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn7.setRect(0, message.top() + message.height() + GAP * 4 + BTN_HEIGHT * 3, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn7.setRect(0, message.top() + message.height() + GAP * 4 + BTN_HEIGHT * 3, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn7.setRect(LX_3, btn4.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[6]) {
 			add(btn7);
 		}
@@ -209,7 +243,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn8.setRect(WIDTH + 1, message.top() + message.height() + GAP * 4 + BTN_HEIGHT * 3, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn8.setRect(WIDTH + 1, message.top() + message.height() + GAP * 4 + BTN_HEIGHT * 3, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn8.setRect(LX_4, btn4.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[7]) {
 			add(btn8);
 		}
@@ -225,7 +263,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn9.setRect(0, message.top() + message.height() + GAP * 5 + BTN_HEIGHT * 4, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn9.setRect(0, message.top() + message.height() + GAP * 5 + BTN_HEIGHT * 4, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn9.setRect(LX_1, btn8.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[8]) {
 			add(btn9);
 		}
@@ -241,7 +283,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn10.setRect(WIDTH + 1, message.top() + message.height() + GAP * 5 + BTN_HEIGHT * 4, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn10.setRect(WIDTH + 1, message.top() + message.height() + GAP * 5 + BTN_HEIGHT * 4, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn10.setRect(LX_2, btn8.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[9]) {
 			add(btn10);
 		}
@@ -257,7 +303,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn11.setRect(0, message.top() + message.height() + GAP * 6 + BTN_HEIGHT * 5, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn11.setRect(0, message.top() + message.height() + GAP * 6 + BTN_HEIGHT * 5, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn11.setRect(LX_3, btn8.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[10]) {
 			add(btn11);
 		}
@@ -273,7 +323,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn12.setRect(WIDTH + 1, message.top() + message.height() + GAP * 6 + BTN_HEIGHT * 5, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn12.setRect(WIDTH + 1, message.top() + message.height() + GAP * 6 + BTN_HEIGHT * 5, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn12.setRect(LX_4, btn8.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[11]) {
 			add(btn12);
 		}
@@ -289,7 +343,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn13.setRect(0, message.top() + message.height() + GAP * 7 + BTN_HEIGHT * 6, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn13.setRect(0, message.top() + message.height() + GAP * 7 + BTN_HEIGHT * 6, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn13.setRect(LX_1, btn12.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[12]) {
 			add(btn13);
 		}
@@ -305,7 +363,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn14.setRect(WIDTH + 1, message.top() + message.height() + GAP * 7 + BTN_HEIGHT * 6, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn14.setRect(WIDTH + 1, message.top() + message.height() + GAP * 7 + BTN_HEIGHT * 6, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn14.setRect(LX_2, btn12.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[13]) {
 			add(btn14);
 		}
@@ -321,7 +383,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn15.setRect(0, message.top() + message.height() + GAP * 8 + BTN_HEIGHT * 7, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn15.setRect(0, message.top() + message.height() + GAP * 8 + BTN_HEIGHT * 7, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn15.setRect(LX_3, btn12.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[14]) {
 			add(btn15);
 		}
@@ -337,7 +403,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn16.setRect(WIDTH + 1, message.top() + message.height() + GAP * 8 + BTN_HEIGHT * 7, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn16.setRect(WIDTH + 1, message.top() + message.height() + GAP * 8 + BTN_HEIGHT * 7, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn16.setRect(LX_4, btn12.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[15]) {
 			add(btn16);
 		}
@@ -353,7 +423,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn17.setRect(0, message.top() + message.height() + GAP * 9 + BTN_HEIGHT * 8, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn17.setRect(0, message.top() + message.height() + GAP * 9 + BTN_HEIGHT * 8, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn17.setRect(LX_1, btn16.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[16]) {
 			add(btn17);
 		}
@@ -369,7 +443,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn18.setRect(WIDTH + 1, message.top() + message.height() + GAP * 9 + BTN_HEIGHT * 8, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn18.setRect(WIDTH + 1, message.top() + message.height() + GAP * 9 + BTN_HEIGHT * 8, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn18.setRect(LX_2, btn16.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[17]) {
 			add(btn18);
 		}
@@ -385,7 +463,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn19.setRect(0, message.top() + message.height() + GAP * 10 + BTN_HEIGHT * 9, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn19.setRect(0, message.top() + message.height() + GAP * 10 + BTN_HEIGHT * 9, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn19.setRect(LX_3, btn16.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[18]) {
 			add(btn19);
 		}
@@ -401,7 +483,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn20.setRect(WIDTH + 1, message.top() + message.height() + GAP * 10 + BTN_HEIGHT * 9, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn20.setRect(WIDTH + 1, message.top() + message.height() + GAP * 10 + BTN_HEIGHT * 9, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn20.setRect(LX_4, btn16.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[19]) {
 			add(btn20);
 		}
@@ -417,7 +503,11 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn21.setRect(0, message.top() + message.height() + GAP * 11 + BTN_HEIGHT * 10, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn21.setRect(0, message.top() + message.height() + GAP * 11 + BTN_HEIGHT * 10, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn21.setRect(LX_1, btn20.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[20]) {
 			add(btn21);
 		}
@@ -434,12 +524,20 @@ public class WndOtiluke extends Window {
 				}
 			}
 		};
-		btn22.setRect(WIDTH + 1, message.top() + message.height() + GAP * 11 + BTN_HEIGHT * 10, WIDTH - 1, BTN_HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			btn22.setRect(WIDTH + 1, message.top() + message.height() + GAP * 11 + BTN_HEIGHT * 10, WIDTH - 1, BTN_HEIGHT);
+		} else {
+			btn22.setRect(LX_2, btn20.bottom() + GAP, WIDTH, BTN_HEIGHT);
+		}
 		if (rooms[21]) {
 			add(btn22);
 		}
 
-		resize(WIDTH2, (int)btn22.bottom());
+		if (!ShatteredPixelDungeon.landscape()) {
+			resize(WIDTH2, (int) btn22.bottom());
+		} else {
+			resize(WIDTH_L, (int) btn22.bottom());
+		}
 	}
 
 

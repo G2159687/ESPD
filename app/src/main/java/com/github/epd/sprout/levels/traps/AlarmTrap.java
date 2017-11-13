@@ -17,7 +17,7 @@ public class AlarmTrap {
 
 	public static void trigger(int pos, Char ch) {
 
-		for (Mob mob : Dungeon.level.mobs) {
+		for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
 			if (mob != ch) {
 				mob.beckon(pos);
 			}

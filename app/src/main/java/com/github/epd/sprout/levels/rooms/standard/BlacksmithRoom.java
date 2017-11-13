@@ -54,7 +54,7 @@ public class BlacksmithRoom extends StandardRoom {
 		Blacksmith2 npc2 = new Blacksmith2();
 		do {
 			npc2.pos = level.pointToCell(random(2));
-		} while (level.heaps.get(npc2.pos) != null || Actor.findChar(npc2.pos) != null);
+		} while (level.heaps.get(npc2.pos) != null || Actor.findChar(npc2.pos) != null || npc2.pos == npc.pos);
 		level.mobs.add(npc2);
 
 	}

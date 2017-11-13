@@ -129,6 +129,7 @@ public class Dungeon {
 	public static boolean dewWater = false;
 
 	public static int challenges;
+	public static int mapSize;
 
 	public static int ratChests = 0;
 	public static int petHasteLevel = 0;
@@ -157,6 +158,7 @@ public class Dungeon {
 	public static void init() {
 
 		challenges = ShatteredPixelDungeon.challenges();
+		mapSize = ShatteredPixelDungeon.mapSize();
 
 		Actor.clear();
 		Actor.resetNextID();
@@ -338,8 +340,6 @@ public class Dungeon {
 		if (depth > Statistics.realdeepestFloor) {
 			Statistics.realdeepestFloor = depth;
 		}
-
-		Dungeon.dewWater = true;
 
 		Level level;
 		level = new FortressLevel();
@@ -582,19 +582,13 @@ public class Dungeon {
 				break;
 			case 3:
 			case 4:
-				//level = new CavesLevel();
 				level = new SewerLevel();
-				//hero.HT=999;
-				//hero.HP=hero.HT;
 				break;
 			case 5:
 				level = new SewerBossLevel();
 				break;
 			case 6:
-				//level = new HallsLevel();
-				//hero.HT=999;
-				//hero.HP=hero.HT;
-				//break;
+
 			case 7:
 			case 8:
 			case 9:
@@ -633,6 +627,7 @@ public class Dungeon {
 				level = new HallsBossLevel();
 				break;
 			case 26:
+				Dungeon.dewWater = true;
 				level = new LastLevel();
 				break;
 			case 41:
@@ -824,6 +819,7 @@ public class Dungeon {
 
 	private static final String VERSION = "version";
 	private static final String CHALLENGES = "challenges";
+	private static final String MAPSIZE = "mapsize";
 	private static final String HERO = "hero";
 	private static final String GOLD = "gold";
 	private static final String DEPTH = "depth";
@@ -889,6 +885,7 @@ public class Dungeon {
 
 			bundle.put(VERSION, Game.versionCode);
 			bundle.put(CHALLENGES, challenges);
+			bundle.put(MAPSIZE, mapSize);
 			bundle.put(HERO, hero);
 			bundle.put(GOLD, gold);
 			bundle.put(DEPTH, depth);
@@ -1017,6 +1014,11 @@ public class Dungeon {
 		QuickSlotButton.reset();
 
 		Dungeon.challenges = bundle.getInt(CHALLENGES);
+		if (bundle.contains(MAPSIZE)) { // TODO: Remove this
+			Dungeon.mapSize = bundle.getInt(MAPSIZE);
+		} else {
+			Dungeon.mapSize = 1;
+		}
 
 		Dungeon.level = null;
 		Dungeon.depth = -1;

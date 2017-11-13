@@ -215,6 +215,14 @@ public class ShatteredPixelDungeon extends Game {
 		return Preferences.INSTANCE.getInt(Preferences.KEY_BRIGHTNESS, 2, -2, 2);
 	}
 
+	public static void mapSize(int value) {
+		Preferences.INSTANCE.put(Preferences.KEY_MAPSIZE, value);
+	}
+
+	public static int mapSize() {
+		return Preferences.INSTANCE.getInt(Preferences.KEY_MAPSIZE, 1, 1, 3);
+	}
+
 	public static void dewmode(int value) {
 		Preferences.INSTANCE.put(Preferences.KEY_DEWMODE, value);
 	}

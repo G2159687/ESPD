@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.github.epd.sprout.test"
-          android:versionCode="1711082"
-          android:versionName="171108"
+          android:versionCode="1711131"
+          android:versionName="171113"
           android:installLocation="auto">
 
     <uses-feature
@@ -12,7 +12,6 @@
         android:smallScreens="false"
         android:normalScreens="true"
         android:largeScreens="true"/>
-    <!--android:xlargeScreens="true"-->
 
     <application
         android:icon="@drawable/ic_launcher"

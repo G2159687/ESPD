@@ -38,14 +38,31 @@ public class CavesLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//6 to 9, average 7.333
-		return 6+Random.chances(new float[]{2, 3, 3, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 6 + Random.chances(new float[]{2, 3, 3, 1});
+			case 2:
+				return 14 + Random.chances(new float[]{2, 3, 3, 1});
+			case 3:
+				return 19 + Random.chances(new float[]{2, 3, 3, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
 		//1 to 3, average 2.2
-		return 1+Random.chances(new float[]{2, 4, 4});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 2 + Random.chances(new float[]{2, 4, 4});
+			case 2:
+				return 3 + Random.chances(new float[]{2, 4, 4});
+			case 3:
+				return 4 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 1 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
@@ -67,7 +84,7 @@ public class CavesLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = 400 + (Dungeon.depth * 50) + (secretDoors * 20);
+		Dungeon.pars[Dungeon.depth] = (400 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override

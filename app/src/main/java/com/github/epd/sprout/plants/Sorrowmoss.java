@@ -7,6 +7,7 @@ import com.github.epd.sprout.actors.buffs.Buff;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.particles.PoisonParticle;
+import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.potions.PotionOfToxicGas;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
@@ -31,6 +32,10 @@ public class Sorrowmoss extends Plant {
 
 		if (Dungeon.visible[pos]) {
 			CellEmitter.center(pos).burst(PoisonParticle.SPLASH, 3);
+		}
+		Heap heap = Dungeon.level.heaps.get(pos);
+		if (heap != null) {
+			heap.poison();
 		}
 	}
 

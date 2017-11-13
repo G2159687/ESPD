@@ -174,7 +174,6 @@ public abstract class Level implements Bundlable {
 	private static final String MOBS = "mobs";
 	private static final String BLOBS = "blobs";
 	private static final String FEELING = "feeling";
-	private static final String PITSIGN = "pitSign";
 	private static final String MOVES = "currentmoves";
 	private static final String CLEARED = "cleared";
 	private static final String RESET = "reset";
@@ -187,8 +186,13 @@ public abstract class Level implements Bundlable {
 	public void create() {
 
 		if (!Dungeon.bossLevel()) {
+
 			addItemToSpawn(Generator.random(Generator.Category.FOOD));
-			addItemToSpawn(Generator.random(Generator.Category.FOOD));
+
+			if (Dungeon.mapSize >= 2)
+				addItemToSpawn(Generator.random(Generator.Category.FOOD));
+			if (Dungeon.mapSize == 3)
+				addItemToSpawn(Generator.random(Generator.Category.FOOD));
 			if (Dungeon.posNeeded()) {
 				addItemToSpawn(new PotionOfStrength());
 				Dungeon.limitedDrops.strengthPotions.count++;
@@ -204,7 +208,7 @@ public abstract class Level implements Bundlable {
 
 			int bonus = 0;
 			for (Buff buff : Dungeon.hero.buffs(MasterThievesArmband.Thievery.class)) {
-				bonus += ((MasterThievesArmband.Thievery)buff).level();
+				bonus += ((MasterThievesArmband.Thievery) buff).level();
 			}
 			if (Random.Float() > Math.pow(0.99, bonus)) {
 				if (Random.Int(2) == 0)
@@ -286,6 +290,10 @@ public abstract class Level implements Bundlable {
 				addItemToSpawn(new Torch());
 				addItemToSpawn(new Torch());
 				addItemToSpawn(new Torch());
+				if (Dungeon.mapSize >= 2){
+					addItemToSpawn(new Torch());
+					addItemToSpawn(new Torch());
+				}
 				viewDistance = (int) Math.ceil(viewDistance / 3f);
 			} else if (Dungeon.depth > 55) {
 				addItemToSpawn(new StoneOre());
@@ -297,6 +305,10 @@ public abstract class Level implements Bundlable {
 				addItemToSpawn(new StoneOre());
 				addItemToSpawn(new StoneOre());
 				addItemToSpawn(new StoneOre());
+				if (Dungeon.mapSize >= 2){
+					if (Random.Int(2) == 0)
+					addItemToSpawn(Generator.random(Generator.Category.NORNSTONE));
+				}
 				viewDistance = (int) Math.ceil(viewDistance / 3f);
 			} else if (Dungeon.depth == 32) {
 				feeling = Feeling.WATER;
@@ -320,6 +332,14 @@ public abstract class Level implements Bundlable {
 
 		} while (!build());
 
+		if (Dungeon.bossLevel(Dungeon.depth + 1)) {
+			for (int i = 0; i < getLength(); i++) {
+				if (map[i] == Terrain.CHASM) {
+					map[i] = Terrain.EMPTY;
+				}
+			}
+		}
+
 		buildFlagMaps();
 		cleanWalls();
 
@@ -327,15 +347,15 @@ public abstract class Level implements Bundlable {
 		createItems();
 	}
 
-	public void setSize(int w, int h){
+	public void setSize(int w, int h) {
 
 		WIDTH = w;
 		HEIGHT = h;
 		LENGTH = w * h;
 
 		map = new int[getLength()];
-		Arrays.fill( map, Terrain.WALL );
-		Arrays.fill( map, feeling == Level.Feeling.CHASM ? Terrain.CHASM : Terrain.WALL );
+		Arrays.fill(map, Terrain.WALL);
+		Arrays.fill(map, feeling == Level.Feeling.CHASM ? Terrain.CHASM : Terrain.WALL);
 
 		visited = new boolean[getLength()];
 		mapped = new boolean[getLength()];
@@ -343,14 +363,14 @@ public abstract class Level implements Bundlable {
 
 		fieldOfView = new boolean[getLength()];
 
-		passable	= new boolean[getLength()];
-		losBlocking	= new boolean[getLength()];
-		flamable	= new boolean[getLength()];
-		secret		= new boolean[getLength()];
-		solid		= new boolean[getLength()];
-		avoid		= new boolean[getLength()];
-		water		= new boolean[getLength()];
-		pit			= new boolean[getLength()];
+		passable = new boolean[getLength()];
+		losBlocking = new boolean[getLength()];
+		flamable = new boolean[getLength()];
+		secret = new boolean[getLength()];
+		solid = new boolean[getLength()];
+		avoid = new boolean[getLength()];
+		water = new boolean[getLength()];
+		pit = new boolean[getLength()];
 
 		PathFinder.setMapSize(w, h);
 	}
@@ -369,10 +389,10 @@ public abstract class Level implements Bundlable {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 
-		if (bundle.contains("width") && bundle.contains("height")){
-			setSize( bundle.getInt("width"), bundle.getInt("height"));
+		if (bundle.contains("width") && bundle.contains("height")) {
+			setSize(bundle.getInt("width"), bundle.getInt("height"));
 		} else
-			setSize( 32, 32);
+			setSize(32, 32);
 
 		mobs = new HashSet<Mob>();
 		heaps = new SparseArray<Heap>();
@@ -435,8 +455,8 @@ public abstract class Level implements Bundlable {
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
-		bundle.put( "width", WIDTH );
-		bundle.put( "height", HEIGHT );
+		bundle.put("width", WIDTH);
+		bundle.put("height", HEIGHT);
 		bundle.put(MAP, map);
 		bundle.put(VISITED, visited);
 		bundle.put(MAPPED, mapped);
@@ -893,8 +913,6 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
-	private static int[] N4Indicies = new int[]{0, 2, 3, 1};
-
 	protected void cleanWalls() {
 		discoverable = new boolean[getLength()];
 
@@ -986,7 +1004,7 @@ public abstract class Level implements Bundlable {
 
 		} else if (heap.type == Heap.Type.LOCKED_CHEST
 				|| heap.type == Heap.Type.CRYSTAL_CHEST
-				|| heap.type == Heap.Type.HARD_TOMB){
+				|| heap.type == Heap.Type.HARD_TOMB) {
 
 			int n;
 			do {
@@ -1322,15 +1340,15 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
-	public void updateFieldOfView( Char c, boolean[] fieldOfView ) {
+	public void updateFieldOfView(Char c, boolean[] fieldOfView) {
 
 		int cx = c.pos % getWidth();
 		int cy = c.pos / getWidth();
 
-		boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null
-				&& c.buff( TimekeepersHourglass.timeStasis.class ) == null && c.isAlive();
+		boolean sighted = c.buff(Blindness.class) == null && c.buff(Shadows.class) == null
+				&& c.buff(TimekeepersHourglass.timeStasis.class) == null && c.isAlive();
 		if (sighted) {
-			ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
+			ShadowCaster.castShadow(cx, cy, fieldOfView, c.viewDistance);
 		} else {
 			BArray.setFalse(fieldOfView);
 		}
@@ -1338,21 +1356,21 @@ public abstract class Level implements Bundlable {
 		int sense = 1;
 		//Currently only the hero can get mind vision
 		if (c.isAlive() && c == Dungeon.hero) {
-			for (Buff b : c.buffs( MindVision.class )) {
-				sense = Math.max( ((MindVision)b).distance, sense );
+			for (Buff b : c.buffs(MindVision.class)) {
+				sense = Math.max(((MindVision) b).distance, sense);
 			}
 		}
 
-		if ((sighted && sense > 1) || !sighted) {
+		if (!sighted || sense > 1) {
 
-			int ax = Math.max( 0, cx - sense );
-			int bx = Math.min( cx + sense, getWidth() - 1 );
-			int ay = Math.max( 0, cy - sense );
-			int by = Math.min( cy + sense, getHeight() - 1 );
+			int ax = Math.max(0, cx - sense);
+			int bx = Math.min(cx + sense, getWidth() - 1);
+			int ay = Math.max(0, cy - sense);
+			int by = Math.min(cy + sense, getHeight() - 1);
 
 			int len = bx - ax + 1;
 			int pos = ax + ay * getWidth();
-			for (int y = ay; y <= by; y++, pos+=getWidth()) {
+			for (int y = ay; y <= by; y++, pos += getWidth()) {
 				System.arraycopy(discoverable, pos, fieldOfView, pos, len);
 			}
 		}
@@ -1360,35 +1378,35 @@ public abstract class Level implements Bundlable {
 		//Currently only the hero can get mind vision or awareness
 		if (c.isAlive() && c == Dungeon.hero) {
 			Dungeon.hero.mindVisionEnemies.clear();
-			if (c.buff( MindVision.class ) != null) {
+			if (c.buff(MindVision.class) != null) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
 
-					if (!fieldOfView[p]){
+					if (!fieldOfView[p]) {
 						Dungeon.hero.mindVisionEnemies.add(mob);
 					}
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p+i] = true;
+						fieldOfView[p + i] = true;
 
 				}
-			} else if (((Hero)c).heroClass == HeroClass.HUNTRESS) {
+			} else if (((Hero) c).heroClass == HeroClass.HUNTRESS) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
-					if (distance( c.pos, p) == 2) {
+					if (distance(c.pos, p) == 2) {
 
-						if (!fieldOfView[p]){
+						if (!fieldOfView[p]) {
 							Dungeon.hero.mindVisionEnemies.add(mob);
 						}
 						for (int i : PathFinder.NEIGHBOURS9)
-							fieldOfView[p+i] = true;
+							fieldOfView[p + i] = true;
 					}
 				}
 			}
-			if (c.buff( Awareness.class ) != null) {
+			if (c.buff(Awareness.class) != null) {
 				for (Heap heap : heaps.values()) {
 					int p = heap.pos;
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p+i] = true;
+						fieldOfView[p + i] = true;
 				}
 			}
 		}
@@ -1409,8 +1427,8 @@ public abstract class Level implements Bundlable {
 		return Math.max(Math.abs(ax - bx), Math.abs(ay - by));
 	}
 
-	public boolean adjacent( int a, int b ) {
-		return distance( a, b ) == 1;
+	public boolean adjacent(int a, int b) {
+		return distance(a, b) == 1;
 	}
 
 	//returns true if the input is a valid tile within the level
@@ -1573,7 +1591,7 @@ public abstract class Level implements Bundlable {
 		return WIDTH;
 	}
 
-	public int getHeight(){
+	public int getHeight() {
 		return HEIGHT;
 	}
 
@@ -1581,17 +1599,17 @@ public abstract class Level implements Bundlable {
 		return WIDTH * HEIGHT;
 	}
 
-	public Point cellToPoint(int cell ){
+	public Point cellToPoint(int cell) {
 		return new Point(cell % getWidth(), cell / getWidth());
 	}
 
-	public int pointToCell( Point p ){
-		return p.x + p.y*getWidth();
+	public int pointToCell(Point p) {
+		return p.x + p.y * getWidth();
 	}
 
-	public Mob findMob( int pos ){
-		for (Mob mob : mobs){
-			if (mob.pos == pos){
+	public Mob findMob(int pos) {
+		for (Mob mob : mobs) {
+			if (mob.pos == pos) {
 				return mob;
 			}
 		}

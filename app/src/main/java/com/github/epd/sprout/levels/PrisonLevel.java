@@ -27,14 +27,30 @@ public class PrisonLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//6 to 8, average 6.66
-		return 6+Random.chances(new float[]{4, 2, 2});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 6 + Random.chances(new float[]{4, 2, 2});
+			case 2:
+				return 12 + Random.chances(new float[]{4, 2, 2});
+			case 3:
+				return 17 + Random.chances(new float[]{4, 2, 2});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 2});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
-		//1 to 3, average 1.83
-		return 1+Random.chances(new float[]{3, 4, 3});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 1 + Random.chances(new float[]{3, 4, 3});
+			case 2:
+				return 2 + Random.chances(new float[]{3, 4, 3});
+			case 3:
+				return 3 + Random.chances(new float[]{3, 4, 3});
+			default:
+				return 1 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
@@ -56,7 +72,7 @@ public class PrisonLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = 500 + (Dungeon.depth * 50) + (secretDoors * 20);
+		Dungeon.pars[Dungeon.depth] = (500 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override

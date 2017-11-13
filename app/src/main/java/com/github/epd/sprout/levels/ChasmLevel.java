@@ -12,6 +12,7 @@ import com.github.epd.sprout.levels.painters.Painter;
 import com.github.epd.sprout.levels.painters.PrisonPainter;
 import com.github.epd.sprout.levels.rooms.Room;
 import com.github.epd.sprout.levels.rooms.special.MagicWellRoom;
+import com.github.epd.sprout.levels.rooms.special.StatueRoom;
 import com.github.epd.sprout.levels.rooms.standard.EmptyRoom;
 import com.github.epd.sprout.levels.rooms.standard.EntranceRoom;
 import com.github.epd.sprout.levels.rooms.standard.ExitRoom;
@@ -48,7 +49,7 @@ public class ChasmLevel extends RegularLevel {
 
 	@Override
 	protected int specialRooms() {
-		return 3;
+		return 7;
 	}
 
 	@Override
@@ -72,20 +73,23 @@ public class ChasmLevel extends RegularLevel {
 	protected ArrayList<Room> initRooms() {
 
 		ArrayList<Room> initRooms = new ArrayList<>();
-		initRooms.add(new EntranceRoom());
-		initRooms.add(new ExitRoom());
-		initRooms.add(new MagicWellRoom());
-		initRooms.add(new MagicWellRoom());
-		initRooms.add(new MagicWellRoom());
+		initRooms.add(roomEntrance = new EntranceRoom());
+		initRooms.add(roomExit = new ExitRoom());
 
-		for (int i = 0; i < 10; i++) {
-			if (Random.Int(10) < 5)
-				initRooms.add(new EmptyRoom());
+		int standards = standardRooms();
+		for (int i = 0; i < standards; i++) {
+			if (Random.Float() < 0.3f)
+				initRooms.add(new StudyRoom());
+			else initRooms.add(new EmptyRoom());
 		}
 
-		for (int i = 0; i < 5; i++) {
-			if (Random.Int(10) < 7)
-				initRooms.add(new StudyRoom());
+		int specials = specialRooms();
+		for (int i = 0; i < specials; i++) {
+			if (Random.Int(2) == 0) {
+				initRooms.add(new MagicWellRoom());
+			} else {
+				initRooms.add(new StatueRoom());
+			}
 		}
 
 		return initRooms;
@@ -93,7 +97,7 @@ public class ChasmLevel extends RegularLevel {
 
 	@Override
 	protected Builder builder() {
-		return new LineBuilder().setPathVariance(90f);
+		return new LineBuilder();
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class Blindweed extends Plant {
 
 	{
 		image = 3;
-		plantName = Messages.get(Messages.get(this, "name"));
+		plantName = Messages.get(this, "name");
 	}
 
 	@Override

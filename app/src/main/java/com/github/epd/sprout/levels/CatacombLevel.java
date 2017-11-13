@@ -3,6 +3,7 @@ package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Bones;
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.quest.SanChikarahDeath;
@@ -39,8 +40,16 @@ public class CatacombLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//2 to 4, average 3
-		return 25 + 3 * Random.chances(new float[]{1, 1, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 20 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 25 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 30 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override

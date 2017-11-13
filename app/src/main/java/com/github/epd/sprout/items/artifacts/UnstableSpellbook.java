@@ -37,7 +37,7 @@ public class UnstableSpellbook extends Artifact {
 		level = 0;
 		levelCap = 10;
 
-		// TODO: Change max charge & charge rate of this book
+		// TODO: Change max charge & charge rate of this book, add more effects to scrolls
 
 		charge = (level / 2) + 3;
 		partialCharge = 0;

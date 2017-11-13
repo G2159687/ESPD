@@ -26,14 +26,30 @@ public class CityLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//7 to 10, average 7.9
-		return 7+Random.chances(new float[]{4, 3, 2, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 7 + Random.chances(new float[]{4, 3, 2, 1});
+			case 2:
+				return 16 + Random.chances(new float[]{4, 3, 2, 1});
+			case 3:
+				return 20 + Random.chances(new float[]{4, 3, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
-		//2 to 3, average 2.33
-		return 2 + Random.chances(new float[]{2, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 2 + Random.chances(new float[]{2, 1});
+			case 2:
+				return 3 + Random.chances(new float[]{2, 1});
+			case 3:
+				return 4 + Random.chances(new float[]{2, 1});
+			default:
+				return 1 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
@@ -55,7 +71,7 @@ public class CityLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = 200 + (Dungeon.depth * 50) + (secretDoors * 20);
+		Dungeon.pars[Dungeon.depth] = (200 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override

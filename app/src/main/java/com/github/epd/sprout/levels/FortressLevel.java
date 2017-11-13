@@ -3,6 +3,7 @@ package com.github.epd.sprout.levels;
 
 import com.github.epd.sprout.Assets;
 import com.github.epd.sprout.Bones;
+import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.items.misc.Rice;
@@ -42,12 +43,30 @@ public class FortressLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		return 15 + 2 * Random.chances(new float[]{1, 1, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 10 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 15 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 20 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
-		return 8 + 3 * Random.chances(new float[]{1, 1, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 6 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 8 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 10 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override

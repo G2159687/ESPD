@@ -113,22 +113,6 @@ public abstract class RegularLevel extends Level {
 
 	protected abstract Painter painter();
 
-	protected float waterFill() {
-		return 0;
-	}
-
-	protected int waterSmoothing() {
-		return 0;
-	}
-
-	protected float grassFill() {
-		return 0;
-	}
-
-	protected int grassSmoothing() {
-		return 0;
-	}
-
 	protected void placeTraps() {
 
 		int nTraps = nTraps();
@@ -138,7 +122,7 @@ public abstract class RegularLevel extends Level {
 
 			int trapPos = Random.Int(getLength());
 
-			if (map[trapPos] == Terrain.EMPTY) {
+			if (map[trapPos] == Terrain.EMPTY || map[trapPos] == Terrain.WATER) {
 				switch (Random.chances(trapChances)) {
 					case 0:
 						map[trapPos] = Terrain.SECRET_TOXIC_TRAP;
@@ -165,21 +149,20 @@ public abstract class RegularLevel extends Level {
 						map[trapPos] = Terrain.SECRET_SUMMONING_TRAP;
 						break;
 				}
+			} else {
+				i--;
 			}
 		}
+		buildFlagMaps();
 	}
 
 	protected int nTraps() {
-		return Dungeon.depth <= 1 ? 0 : Random.Int(1, rooms.size()
-				+ Dungeon.depth);
+		return Random.Int(1, (rooms.size() + Dungeon.depth) / 3);
 	}
 
 	protected float[] trapChances() {
 		return new float[]{1, 1, 1, 1, 1, 1, 1, 1};
 	}
-
-	protected int minRoomSize = 8;
-	protected int maxRoomSize = 10;
 
 	protected void setPar() {
 		Dungeon.pars[Dungeon.depth] = 600;
@@ -188,11 +171,11 @@ public abstract class RegularLevel extends Level {
 	@Override
 	public int nMobs() {
 		if (Dungeon.depth < 5 && !Statistics.amuletObtained) {
-			return 10 + Dungeon.depth + Random.Int(3);
+			return (10 + Dungeon.depth + Random.Int(3)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 		} else if (!Statistics.amuletObtained) {
-			return 5 + Dungeon.depth % 5 + Random.Int(3);
+			return (5 + Dungeon.depth % 5 + Random.Int(3)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 		} else {
-			return 10 + (5 - Dungeon.depth % 5) + Random.Int(3);
+			return (10 + (5 - Dungeon.depth % 5) + Random.Int(3)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 		}
 	}
 
@@ -305,9 +288,15 @@ public abstract class RegularLevel extends Level {
 			nItems++;
 		}
 
+		if (Dungeon.mapSize == 2){
+			nItems = Math.round(1.7f * nItems);
+		} else if (Dungeon.mapSize == 3){
+			nItems = Math.round(2.5f * nItems);
+		}
+
 		for (int i = 0; i < nItems; i++) {
 			Heap.Type type = null;
-			switch (Random.Int(20)) {
+			switch (Random.Int(15)) {
 				case 0:
 					type = Heap.Type.SKELETON;
 					break;
@@ -341,6 +330,8 @@ public abstract class RegularLevel extends Level {
 		if (item != null) {
 			drop(item, randomDropCell()).type = Heap.Type.REMAINS;
 		}
+
+		placeTraps();
 	}
 
 	protected Room randomRoom(Class<? extends Room> type) {

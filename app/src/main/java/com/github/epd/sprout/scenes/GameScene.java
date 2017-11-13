@@ -250,6 +250,7 @@ public class GameScene extends PixelScene {
 
 		log = new GameLog();
 		log.camera = uiCamera;
+		log.newLine();
 		add(log);
 
 		layoutTags();

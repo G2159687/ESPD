@@ -21,6 +21,7 @@ public class PotionOfLevitation extends Potion {
 	}
 
 	private static final String TXT_PREVENTING = Messages.get(PotionOfLevitation.class, "prevent");
+	private static final String TXT_PREVENTING2 = Messages.get(PotionOfLevitation.class, "prevent2");
 
 	@Override
 	public void shatter(int cell) {
@@ -53,6 +54,9 @@ public class PotionOfLevitation extends Potion {
 
 			if (Dungeon.depth > 50) {
 				GLog.w(TXT_PREVENTING);
+				return;
+			} else if (Dungeon.depth == 33){
+				GLog.w(TXT_PREVENTING2);
 				return;
 			}
 		}

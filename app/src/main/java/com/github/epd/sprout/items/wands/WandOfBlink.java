@@ -39,12 +39,10 @@ public class WandOfBlink extends Wand {
 		}
 
 		curUser.sprite.visible = true;
-		if (bolt.dist > 1) {
-			if (Actor.findChar(bolt.collisionPos) == null) {
-				appear(Dungeon.hero, bolt.path.get(bolt.collisionPos));
-			} else {
-				appear(Dungeon.hero, bolt.path.get(bolt.dist - 1));
-			}
+		if (Actor.findChar(bolt.collisionPos) == null) {
+			appear(Dungeon.hero, bolt.collisionPos);
+		} else if (bolt.dist > 1) {
+			appear(Dungeon.hero, bolt.path.get(bolt.dist - 1));
 		} else appear(Dungeon.hero, Dungeon.hero.pos);
 
 		Dungeon.observe();

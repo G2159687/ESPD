@@ -33,8 +33,8 @@ public class CorruptGas extends Blob implements Hero.Doom {
 				cell = i + j * Dungeon.level.getWidth();
 				if (cur[cell] > 0 && (ch = Actor.findChar(cell)) != null) {
 
-					if (!ch.immunities().contains(ConfusionGas.class)) {
-						Buff.prolong(ch, Vertigo.class, 2);
+					if (!ch.immunities().contains(ConfusionGas.class) && Random.Int(3) == 0) {
+						Buff.prolong(ch, Vertigo.class, 1);
 					}
 
 					if (!ch.immunities().contains(this.getClass())) {

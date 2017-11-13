@@ -57,26 +57,6 @@ public class TenguDenLevel extends CavesLevel {
 	}
 
 	@Override
-	protected float waterFill() {
-		return 0.50f;
-	}
-
-	@Override
-	protected int waterSmoothing() {
-		return 5;
-	}
-
-	@Override
-	protected float grassFill() {
-		return 0.20f;
-	}
-
-	@Override
-	protected int grassSmoothing() {
-		return 4;
-	}
-
-	@Override
 	protected void createMobs() {
 		if (Dungeon.tengudenkilled) {
 			return;

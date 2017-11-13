@@ -103,7 +103,7 @@ public class Bestiary {
 				break;
 			case 9:
 				if (Dungeon.sporkAvail) {
-					chances = new float[]{1, 1, 0.06f};
+					chances = new float[]{1, 1, 0.5f};
 					classes = new Class<?>[]{Skeleton.class, Thief.class, BanditKing.class};
 				} else {
 					chances = new float[]{3, 1, 3, 1, 1, 3, 0.02f, 0.01f};

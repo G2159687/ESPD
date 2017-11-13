@@ -17,8 +17,6 @@ import java.util.HashSet;
 
 public class Brute extends Mob {
 
-	private static final String TXT_ENRAGED = Messages.get(Brute.class, "enrage");
-
 	{
 		name = Messages.get(this, "name");
 		spriteClass = BruteSprite.class;
@@ -72,7 +70,6 @@ public class Brute extends Mob {
 			enraged = true;
 			spend(TICK);
 			if (Dungeon.visible[pos]) {
-				GLog.w(TXT_ENRAGED, name);
 				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Brute.class, "enraged"));
 			}
 		}

@@ -476,11 +476,21 @@ public class Heap implements Bundlable {
 			} else if (item instanceof EasterEgg) {
 				((EasterEgg) item).lits++;
 			} else if (item instanceof InactiveMrDestructo) {
-				items.remove(item);
-				Dungeon.level.drop(new ActiveMrDestructo(), pos).sprite.drop();
+				if (item.quantity > 1){
+					item.quantity(item.quantity() - 1);
+					Dungeon.level.drop(new ActiveMrDestructo(), pos).sprite.drop();
+				} else {
+					items.remove(item);
+					Dungeon.level.drop(new ActiveMrDestructo(), pos).sprite.drop();
+				}
 			} else if (item instanceof InactiveMrDestructo2) {
-				items.remove(item);
-				Dungeon.level.drop(new ActiveMrDestructo2(), pos).sprite.drop();
+				if (item.quantity > 1){
+					item.quantity(item.quantity() - 1);
+					Dungeon.level.drop(new ActiveMrDestructo2(), pos).sprite.drop();
+				} else {
+					items.remove(item);
+					Dungeon.level.drop(new ActiveMrDestructo2(), pos).sprite.drop();
+				}
 			}
 		}
 	}

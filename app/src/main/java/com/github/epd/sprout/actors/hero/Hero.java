@@ -726,10 +726,6 @@ public class Hero extends Char {
 							GLog.i(Messages.get(this, "have"), item.name());
 						}
 					}
-
-					if (!heap.isEmpty()) {
-						GLog.i(Messages.get(this, "sthelse"));
-					}
 					curAction = null;
 				} else {
 					Dungeon.level.drop(item, pos).sprite.drop();

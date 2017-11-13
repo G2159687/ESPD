@@ -28,15 +28,14 @@ public class WndSettings extends WndTabbed {
 	private static final String TXT_SWITCH_LAND = Messages.get(WndSettings.class, "land");
 
 	private static final int WIDTH = 112;
+	private static final int WIDTH_L = 226;
 	private static final int BTN_HEIGHT = 20;
 	private static final int GAP = 2;
 	private static final int HEIGHT = 170;
+	private static final int HEIGHT_L = 120;
 	private static final int SLIDER_HEIGHT = 25;
 	private static final int GAP_SML = 2;
-	private static final int GAP_LRG = 10;
-
-	private NewRedButton btnZoomOut;
-	private NewRedButton btnZoomIn;
+	private static final int GAP_LRG = 5;
 
 	private GameTab game;
 	private GeneralTab gen;
@@ -72,7 +71,11 @@ public class WndSettings extends WndTabbed {
 			}
 		});
 
-		resize(WIDTH, HEIGHT);
+		if (!ShatteredPixelDungeon.landscape()) {
+			resize(WIDTH, HEIGHT);
+		} else {
+			resize(WIDTH_L, HEIGHT_L);
+		}
 
 		layoutTabs();
 
@@ -118,7 +121,11 @@ public class WndSettings extends WndTabbed {
 					ShatteredPixelDungeon.music(!checked());
 				}
 			};
-			musicMute.setRect(0, scale.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				musicMute.setRect(0, scale.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			} else {
+				musicMute.setRect(0, scale.bottom() + GAP, WIDTH_L / 2 - 1, BTN_HEIGHT);
+			}
 			musicMute.checked(!ShatteredPixelDungeon.music());
 			add(musicMute);
 
@@ -130,7 +137,11 @@ public class WndSettings extends WndTabbed {
 					Sample.INSTANCE.play(Assets.SND_CLICK);
 				}
 			};
-			btnSound.setRect(0, musicMute.bottom() + GAP_SML, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnSound.setRect(0, musicMute.bottom() + GAP_SML, WIDTH, BTN_HEIGHT);
+			} else {
+				btnSound.setRect(WIDTH_L / 2 + 1, scale.bottom() + GAP, WIDTH_L / 2 - 1, BTN_HEIGHT);
+			}
 			btnSound.checked(!ShatteredPixelDungeon.soundFx());
 			add(btnSound);
 
@@ -142,7 +153,11 @@ public class WndSettings extends WndTabbed {
 					Game.switchScene(TitleScene.class);
 				}
 			};
-			chkFont.setRect(0, btnSound.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				chkFont.setRect(0, btnSound.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			} else {
+				chkFont.setRect(0, btnSound.bottom() + GAP, WIDTH_L / 2 - 1, BTN_HEIGHT);
+			}
 			chkFont.checked(!ShatteredPixelDungeon.classicFont());
 			add(chkFont);
 
@@ -153,7 +168,11 @@ public class WndSettings extends WndTabbed {
 					ShatteredPixelDungeon.immerse(checked());
 				}
 			};
-			btnImmersive.setRect(0, chkFont.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnImmersive.setRect(0, chkFont.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			} else {
+				btnImmersive.setRect(WIDTH_L / 2 + 1, btnSound.bottom() + GAP, WIDTH_L / 2 - 1, BTN_HEIGHT);
+			}
 			btnImmersive.checked(ShatteredPixelDungeon.immersed());
 			btnImmersive.enable(android.os.Build.VERSION.SDK_INT >= 19);
 			add(btnImmersive);
@@ -164,7 +183,11 @@ public class WndSettings extends WndTabbed {
 					ShatteredPixelDungeon.landscape(!ShatteredPixelDungeon.landscape());
 				}
 			};
-			btnOrientation.setRect(0, btnImmersive.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnOrientation.setRect(0, btnImmersive.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			} else {
+				btnOrientation.setRect(0, btnImmersive.bottom() + GAP, WIDTH_L, BTN_HEIGHT);
+			}
 			add(btnOrientation);
 
 			OptionSlider brightness = new OptionSlider(Messages.get(WndSettings.class, "brightness"), "-2", "2", -2, 2) {
@@ -174,7 +197,11 @@ public class WndSettings extends WndTabbed {
 				}
 			};
 			brightness.setSelectedValue(ShatteredPixelDungeon.brightness());
-			brightness.setRect(0, btnOrientation.bottom() + GAP, WIDTH, SLIDER_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				brightness.setRect(0, btnOrientation.bottom() + GAP, WIDTH, SLIDER_HEIGHT);
+			} else {
+				brightness.setRect(0, btnOrientation.bottom() + GAP, WIDTH_L, SLIDER_HEIGHT);
+			}
 			add(brightness);
 		}
 
@@ -192,7 +219,11 @@ public class WndSettings extends WndTabbed {
 				}
 			};
 			slots.setSelectedValue(ShatteredPixelDungeon.quickSlots());
-			slots.setRect(0, 0, WIDTH, SLIDER_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				slots.setRect(0, 0, WIDTH, SLIDER_HEIGHT);
+			} else {
+				slots.setRect(0, 0, WIDTH_L / 2 - 1, SLIDER_HEIGHT);
+			}
 			add(slots);
 
 			CheckBox btnAuto = new CheckBox((Messages.get(WndSettings.class, "autocollect"))) {
@@ -202,46 +233,66 @@ public class WndSettings extends WndTabbed {
 					ShatteredPixelDungeon.autocollect(checked());
 				}
 			};
-			btnAuto.setRect(0, slots.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnAuto.setRect(0, slots.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			} else {
+				btnAuto.setRect(WIDTH_L / 2 + 1, 0, WIDTH_L / 2 - 1, SLIDER_HEIGHT);
+			}
 			btnAuto.checked(ShatteredPixelDungeon.autocollect());
 			add(btnAuto);
 
-			RenderedText barDesc = PixelScene.renderText(Messages.get(WndSettings.class,"toolbar_mode"), 9);
-			barDesc.x = (WIDTH - barDesc.width()) / 2;
+			RenderedText barDesc = PixelScene.renderText(Messages.get(WndSettings.class, "toolbar_mode"), 9);
+			if (!ShatteredPixelDungeon.landscape()) {
+				barDesc.x = (WIDTH - barDesc.width()) / 2;
+			} else {
+				barDesc.x = (WIDTH_L - barDesc.width()) / 2;
+			}
 			barDesc.y = btnAuto.bottom() + GAP_LRG;
 			add(barDesc);
 
-			NewRedButton btnSplit = new NewRedButton(Messages.get(WndSettings.class,"split")) {
+			NewRedButton btnSplit = new NewRedButton(Messages.get(WndSettings.class, "split")) {
 				@Override
 				protected void onClick() {
 					ShatteredPixelDungeon.toolbarMode(Toolbar.Mode.SPLIT.name());
 					Toolbar.updateLayout();
 				}
 			};
-			btnSplit.setRect(1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnSplit.setRect(1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
+			} else {
+				btnSplit.setRect(1, barDesc.y + barDesc.height(), 74, BTN_HEIGHT);
+			}
 			add(btnSplit);
 
-			NewRedButton btnGrouped = new NewRedButton(Messages.get(WndSettings.class,"group")) {
+			NewRedButton btnGrouped = new NewRedButton(Messages.get(WndSettings.class, "group")) {
 				@Override
 				protected void onClick() {
 					ShatteredPixelDungeon.toolbarMode(Toolbar.Mode.GROUP.name());
 					Toolbar.updateLayout();
 				}
 			};
-			btnGrouped.setRect(btnSplit.right() + 1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnGrouped.setRect(btnSplit.right() + 1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
+			} else {
+				btnGrouped.setRect(btnSplit.right() + 1, barDesc.y + barDesc.height(), 74, BTN_HEIGHT);
+			}
 			add(btnGrouped);
 
-			NewRedButton btnCentered = new NewRedButton(Messages.get(WndSettings.class,"center")) {
+			NewRedButton btnCentered = new NewRedButton(Messages.get(WndSettings.class, "center")) {
 				@Override
 				protected void onClick() {
 					ShatteredPixelDungeon.toolbarMode(Toolbar.Mode.CENTER.name());
 					Toolbar.updateLayout();
 				}
 			};
-			btnCentered.setRect(btnGrouped.right() + 1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				btnCentered.setRect(btnGrouped.right() + 1, barDesc.y + barDesc.height(), 36, BTN_HEIGHT);
+			} else {
+				btnCentered.setRect(btnGrouped.right() + 1, barDesc.y + barDesc.height(), 74, BTN_HEIGHT);
+			}
 			add(btnCentered);
 
-			CheckBox chkFlipToolbar = new CheckBox(Messages.get(WndSettings.class,"flip_toolbar")) {
+			CheckBox chkFlipToolbar = new CheckBox(Messages.get(WndSettings.class, "flip_toolbar")) {
 				@Override
 				protected void onClick() {
 					super.onClick();
@@ -249,11 +300,15 @@ public class WndSettings extends WndTabbed {
 					Toolbar.updateLayout();
 				}
 			};
-			chkFlipToolbar.setRect(0, btnCentered.bottom() + GAP_LRG, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				chkFlipToolbar.setRect(0, btnCentered.bottom() + GAP_LRG, WIDTH, BTN_HEIGHT);
+			} else {
+				chkFlipToolbar.setRect(0, btnCentered.bottom() + GAP_LRG, WIDTH_L / 2 - 1, BTN_HEIGHT);
+			}
 			chkFlipToolbar.checked(ShatteredPixelDungeon.flipToolbar());
 			add(chkFlipToolbar);
 
-			CheckBox chkFlipTags = new CheckBox(Messages.get(WndSettings.class,"flip_indicators")) {
+			CheckBox chkFlipTags = new CheckBox(Messages.get(WndSettings.class, "flip_indicators")) {
 				@Override
 				protected void onClick() {
 					super.onClick();
@@ -261,24 +316,29 @@ public class WndSettings extends WndTabbed {
 					GameScene.layoutTags();
 				}
 			};
-			chkFlipTags.setRect(0, chkFlipToolbar.bottom() + GAP_SML, WIDTH, BTN_HEIGHT);
+			if (!ShatteredPixelDungeon.landscape()) {
+				chkFlipTags.setRect(0, chkFlipToolbar.bottom() + GAP_SML, WIDTH, BTN_HEIGHT);
+			} else {
+				chkFlipTags.setRect(WIDTH_L / 2 + 1, btnCentered.bottom() + GAP_LRG, WIDTH_L / 2 - 1, BTN_HEIGHT);
+			}
 			chkFlipTags.checked(ShatteredPixelDungeon.flipTags());
 			add(chkFlipTags);
+
+			OptionSlider mapsize = new OptionSlider(Messages.get(WndSettings.class, "mapsize"),
+					Messages.get(WndSettings.class, "mapsize_s"), Messages.get(WndSettings.class, "mapsize_l"), 1, 3) {
+				@Override
+				protected void onChange() {
+					ShatteredPixelDungeon.mapSize(getSelectedValue());
+				}
+			};
+			mapsize.setSelectedValue(ShatteredPixelDungeon.mapSize());
+			if (!ShatteredPixelDungeon.landscape()) {
+				mapsize.setRect(0, chkFlipTags.bottom() + GAP, WIDTH, SLIDER_HEIGHT);
+			} else {
+				mapsize.setRect(0, chkFlipTags.bottom(), WIDTH_L, SLIDER_HEIGHT);
+			}
+			add(mapsize);
 		}
-	}
-
-	private void zoom(float value) {
-
-		Camera.main.zoom(value);
-		ShatteredPixelDungeon.zoom((int) (value - PixelScene.defaultZoom));
-
-		updateEnabled();
-	}
-
-	private void updateEnabled() {
-		float zoom = Camera.main.zoom;
-		btnZoomIn.enable(zoom < PixelScene.maxZoom);
-		btnZoomOut.enable(zoom > PixelScene.minZoom);
 	}
 
 	private String orientationText() {

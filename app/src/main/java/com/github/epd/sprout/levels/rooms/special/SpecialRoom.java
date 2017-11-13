@@ -80,16 +80,6 @@ public class SpecialRoom extends Room {
 	public static SpecialRoom createRoom(){
 		if (Dungeon.depth == pitNeededDepth){
 			pitNeededDepth = -1;
-
-			floorSpecials.remove( ArmoryRoom.class );
-			floorSpecials.remove( CryptRoom.class );
-			floorSpecials.remove( LaboratoryRoom.class );
-			floorSpecials.remove( LibraryRoom.class );
-			floorSpecials.remove( StatueRoom.class );
-			floorSpecials.remove( TreasuryRoom.class );
-			floorSpecials.remove( VaultRoom.class );
-			floorSpecials.remove( WeakFloorRoom.class );
-
 			return new PitRoom();
 
 		} else if (Dungeon.depth >= guaranteedWellDepth) {

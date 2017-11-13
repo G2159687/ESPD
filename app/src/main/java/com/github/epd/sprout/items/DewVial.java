@@ -19,6 +19,7 @@ import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.ShadowParticle;
 import com.github.epd.sprout.items.artifacts.Artifact;
 import com.github.epd.sprout.items.bags.Bag;
+import com.github.epd.sprout.items.potions.PotionOfLevitation;
 import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.scenes.GameScene;
@@ -282,7 +283,9 @@ public class DewVial extends Item {
 		} else if (action.equals(AC_SPLASH)) {
 			Buff.affect(hero, Haste.class, Haste.DURATION);
 			Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
-			if (Dungeon.dewWater && Dungeon.depth < 51) {
+			if (Dungeon.depth == 33){
+				GLog.w(Messages.get(PotionOfLevitation.class, "prevent2"));
+			} else if (Dungeon.dewWater && Dungeon.depth < 51) {
 				Buff.affect(hero, Levitation.class, Levitation.DURATION);
 				GLog.i(Messages.get(DewVial.class, "float"));
 			}

@@ -6,6 +6,7 @@ import com.github.epd.sprout.Badges;
 import com.github.epd.sprout.Challenges;
 import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.ShatteredPixelDungeon;
+import com.github.epd.sprout.items.artifacts.TalismanOfForesight;
 import com.github.epd.sprout.items.teleporter.BookOfTranscendence;
 import com.github.epd.sprout.items.bombs.Bomb;
 import com.github.epd.sprout.items.DewVial;
@@ -65,7 +66,7 @@ public enum HeroClass {
 	}
 
 	private static void initDebug() {
-
+		// TODO: Always keep this empty when posting releases
 	}
 
 	public void initHero(Hero hero) {

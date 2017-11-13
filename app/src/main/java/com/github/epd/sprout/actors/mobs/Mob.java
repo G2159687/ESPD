@@ -613,11 +613,11 @@ public abstract class Mob extends Char {
 				if (lootChance > 0.5f) {
 					lootChance = 0.5f;
 				}
-			}
 
-			lootChanceOther += 0.024f * bonus;
-			if (lootChanceOther > 1f) {
-				lootChanceOther = 1f;
+				lootChanceOther += 0.024f * bonus;
+				if (lootChanceOther > 1f) {
+					lootChanceOther = 1f;
+				}
 			}
 		}
 
@@ -702,19 +702,21 @@ public abstract class Mob extends Char {
 			item = (Item) lootOther;
 
 		}
-		if (ShatteredPixelDungeon.autocollect() && item != null) {
-			if (item instanceof Gold) {
-				Dungeon.gold += item.quantity;
+		if (item != null) {
+			if (ShatteredPixelDungeon.autocollect()) {
+				if (item instanceof Gold) {
+					Dungeon.gold += item.quantity;
 
-				MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
-				if (thievery != null)
-					thievery.collect(item.quantity);
-			} else {
-				if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop)) {
-					Item.autocollect(item, Dungeon.hero.pos);
+					MasterThievesArmband.Thievery thievery = hero.buff(MasterThievesArmband.Thievery.class);
+					if (thievery != null)
+						thievery.collect(item.quantity);
+				} else {
+					if (!(item instanceof Dewdrop) && !(item instanceof YellowDewdrop) && !(item instanceof RedDewdrop) && !(item instanceof VioletDewdrop)) {
+						Item.autocollect(item, Dungeon.hero.pos);
+					}
 				}
-			}
-		} else Dungeon.level.drop(item, pos).sprite.drop();
+			} else Dungeon.level.drop(item, pos).sprite.drop();
+		}
 
 		return item;
 	}

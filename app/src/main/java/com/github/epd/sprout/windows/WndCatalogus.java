@@ -147,7 +147,7 @@ public class WndCatalogus extends WndTabbed {
 					sprite.view(item.image(), null);
 					label.text(item.name());
 				} else {
-					sprite.view(127, null);
+					sprite.view(4, null);
 					label.text(item.trueName());
 					label.hardlight(0xCCCCCC);
 				}

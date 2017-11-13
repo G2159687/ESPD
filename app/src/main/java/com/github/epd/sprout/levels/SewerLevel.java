@@ -33,14 +33,30 @@ public class SewerLevel extends RegularLevel {
 
 	@Override
 	protected int standardRooms() {
-		//5 to 7, average 5.57
-		return 5+Random.chances(new float[]{4, 2, 1});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+			case 2:
+				return 10 + Random.chances(new float[]{4, 2, 1});
+			case 3:
+				return 15 + Random.chances(new float[]{4, 2, 1});
+			default:
+				return 5 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
 	protected int specialRooms() {
-		//1 to 3, average 1.67
-		return 1+Random.chances(new float[]{4, 4, 2});
+		switch (Dungeon.mapSize){
+			case 1:
+				return 1 + Random.chances(new float[]{4, 4, 2});
+			case 2:
+				return 2 + Random.chances(new float[]{4, 4, 2});
+			case 3:
+				return 3 + Random.chances(new float[]{4, 4, 2});
+			default:
+				return 1 + Random.chances(new float[]{4, 2, 1});
+		}
 	}
 
 	@Override
@@ -63,7 +79,7 @@ public class SewerLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = 500 + (Dungeon.depth * 50) + (secretDoors * 50);
+		Dungeon.pars[Dungeon.depth] = (500 + (Dungeon.depth * 50) + (secretDoors * 50)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override
