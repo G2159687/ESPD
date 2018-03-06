@@ -26,7 +26,7 @@ public class Rat extends Mob {
 		HP = HT = 10 + Dungeon.depth * Random.NormalIntRange(1, 3);
 		defenseSkill = 3 + (Math.round((Dungeon.depth) / 2));
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			loot = Generator.Category.MUSHROOM;
 			lootChance = 0.5f;
 

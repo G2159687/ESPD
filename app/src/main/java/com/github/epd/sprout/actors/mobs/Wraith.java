@@ -47,7 +47,7 @@ public class Wraith extends Mob {
 
 		flying = true;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			loot = new ScrollOfMagicalInfusion();
 			lootChance = 0.75f;
 

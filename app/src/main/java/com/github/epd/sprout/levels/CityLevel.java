@@ -71,7 +71,7 @@ public class CityLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = (200 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
+		Dungeon.pars[Dungeon.depth] = (150 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override

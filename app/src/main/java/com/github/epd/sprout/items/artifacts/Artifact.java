@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Artifact extends KindofMisc {
 
-	// TODO: Add cursed effects for sprouted's new artifact
+	// TODO: 为发芽新增的神器增加诅咒时的效果
 
 	private static final String TXT_TO_STRING = "%s";
 	private static final String TXT_TO_STRING_CHARGE = "%s (%d/%d)";

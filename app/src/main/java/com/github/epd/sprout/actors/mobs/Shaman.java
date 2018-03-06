@@ -39,14 +39,14 @@ public class Shaman extends Mob implements Callback {
 		maxLvl = 14;
 
 		loot = Generator.Category.SCROLL;
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			lootChance = 0.8f;
 		} else {
 			lootChance = 0.33f;
 		}
 
 		lootOther = new Meat();
-		lootChanceOther = Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 1f : 0.1f;
+		lootChanceOther = Dungeon.moreLoots ? 1f : 0.1f;
 	}
 
 	@Override

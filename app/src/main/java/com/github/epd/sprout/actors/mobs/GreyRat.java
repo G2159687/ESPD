@@ -36,7 +36,7 @@ public class GreyRat extends Mob {
 		HP = HT = 12 + (Dungeon.depth * Random.NormalIntRange(1, 3));
 		defenseSkill = 3 + (Math.round((Dungeon.depth) / 2));
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			loot = Generator.Category.SEED;
 			lootChance = 0.75f;
 

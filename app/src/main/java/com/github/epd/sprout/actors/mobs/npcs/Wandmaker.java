@@ -201,14 +201,14 @@ public class Wandmaker extends NPC {
 
 				wand1 = (Wand) Generator.random(Generator.Category.WAND);
 				wand1.random().upgrade();
-				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+				if (Dungeon.questTweaks) {
 					wand1.upgrade(30);
 				}
 				do {
 					wand2 = (Wand) Generator.random(Generator.Category.WAND);
 				} while (wand2.getClass().equals(wand1.getClass()));
 				wand2.random().upgrade();
-				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+				if (Dungeon.questTweaks) {
 					wand2.upgrade(30);
 				}
 			}

@@ -36,7 +36,7 @@ public class Swarm extends Mob {
 
 		flying = true;
 
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (!Dungeon.moreLoots) {
 			loot = new PotionOfMending();
 		} else {
 			loot = new PotionOfHealing();
@@ -129,7 +129,7 @@ public class Swarm extends Mob {
 	@Override
 	public void die(Object cause) {
 		// sets drop chance
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			lootChance = 1f;
 		} else {
 			lootChance = 0.5f / (5 / (generation + 1));

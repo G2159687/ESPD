@@ -140,8 +140,8 @@ public class FieldLevel extends Level {
 	@Override
 	public String tileName(int tile) {
 		switch (tile) {
-			case Terrain.WATER:
-				return Messages.get(SewerLevel.class, "water_name");
+			case Terrain.BARRICADE:
+				return Messages.get(FieldLevel.class, "barricade_name");
 			default:
 				return super.tileName(tile);
 		}
@@ -152,8 +152,10 @@ public class FieldLevel extends Level {
 		switch (tile) {
 			case Terrain.EMPTY_DECO:
 				return Messages.get(FieldLevel.class, "emptydeco_desc");
-			case Terrain.BOOKSHELF:
-				return Messages.get(SewerLevel.class, "bookshelf_desc");
+			case Terrain.BARRICADE:
+				return Messages.get(FieldLevel.class, "barricade_desc");
+			case Terrain.SHRUB:
+				return Messages.get(FieldLevel.class, "shrub_desc");
 			default:
 				return super.tileDesc(tile);
 		}

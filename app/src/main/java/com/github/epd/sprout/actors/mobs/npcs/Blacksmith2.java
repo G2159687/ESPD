@@ -49,9 +49,9 @@ public class Blacksmith2 extends NPC {
 		DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
 		if (!checkAdamant()) {
 			tell(Messages.get(Blacksmith2.class, "two"));
-		} else if (gold == null || gold.quantity() < (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 50)) {
+		} else if (gold == null || gold.quantity() < (Dungeon.questTweaks ? 1 : 50)) {
 			tell(Messages.get(Blacksmith2.class, "three"));
-		} else if (checkAdamant() && gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {
+		} else if (checkAdamant() && gold != null && gold.quantity() > (Dungeon.questTweaks ? 1 : 49)) {
 			GameScene.show(new WndBlacksmith2(this, Dungeon.hero));
 		} else {
 			tell(Messages.get(Blacksmith2.class, "two"));
@@ -112,14 +112,14 @@ public class Blacksmith2 extends NPC {
 	public static void upgrade(Item item1, Item item2) {
 
 		item1.reinforced = true;
-		if (!Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+		if (!Dungeon.questTweaks) {
 			item2.detach(Dungeon.hero.belongings.backpack);
 		} else {
 			GLog.h(Messages.get(Blacksmith2.class,"challenge"));
 		}
 		DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
-		if (gold != null && gold.quantity() > (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 49)) {
-			gold.detach(Dungeon.hero.belongings.backpack, (Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 1 : 50));
+		if (gold != null && gold.quantity() > (Dungeon.questTweaks ? 1 : 49)) {
+			gold.detach(Dungeon.hero.belongings.backpack, (Dungeon.questTweaks ? 1 : 50));
 			if (!(Dungeon.hero.belongings.getItem(DarkGold.class).quantity() > 0)) {
 				gold.detachAll(Dungeon.hero.belongings.backpack);
 			}

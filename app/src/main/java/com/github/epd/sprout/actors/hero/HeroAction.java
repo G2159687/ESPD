@@ -73,6 +73,12 @@ public class HeroAction {
 		}
 	}
 
+	public static class Collect extends HeroAction {
+		public Collect(int pos) {
+			this.dst = pos;
+		}
+	}
+
 	public static class Attack extends HeroAction {
 		public Char target;
 

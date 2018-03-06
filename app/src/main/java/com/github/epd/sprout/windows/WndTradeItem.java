@@ -253,7 +253,7 @@ public class WndTradeItem extends Window {
 	}
 
 	private int price(Item item) {
-		return Dungeon.isChallenged(Challenges.NO_ARMOR) ? 1 : item.price() * 5 * (Dungeon.depth / 5 + 1);
+		return Dungeon.shopCheaper ? 1 : item.price() * 5 * (Dungeon.depth / 5 + 1);
 	}
 
 	private void buy(Heap heap) {

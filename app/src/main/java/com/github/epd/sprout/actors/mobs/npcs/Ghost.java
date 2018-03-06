@@ -307,19 +307,19 @@ public class Ghost extends NPC {
 				depth = Dungeon.depth;
 
 				do {
-					weapon = Generator.randomWeapon(Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 18 : 10);
+					weapon = Generator.randomWeapon(Dungeon.questTweaks ? 18 : 10);
 				} while (weapon instanceof MissileWeapon);
-				armor = Generator.randomArmor(Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 18 : 10);
+				armor = Generator.randomArmor(Dungeon.questTweaks ? 18 : 10);
 
 				for (int i = 1; i <= 3; i++) {
 					Item another;
 					do {
-						another = Generator.randomWeapon(Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 18 : (10 + i));
+						another = Generator.randomWeapon(Dungeon.questTweaks ? 18 : (10 + i));
 					} while (another instanceof MissileWeapon);
 					if (another.level >= weapon.level) {
 						weapon = (Weapon) another;
 					}
-					another = Generator.randomArmor(Dungeon.isChallenged(Challenges.NO_SCROLLS) ? 18 : (10 + i));
+					another = Generator.randomArmor(Dungeon.questTweaks ? 18 : (10 + i));
 					if (another.level >= armor.level) {
 						armor = (Armor) another;
 					}
@@ -328,7 +328,7 @@ public class Ghost extends NPC {
 				weapon.identify();
 				armor.identify();
 
-				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+				if (Dungeon.questTweaks) {
 					weapon.upgrade(30);
 					armor.upgrade(30);
 				}

@@ -6,8 +6,10 @@ import com.github.epd.sprout.Dungeon;
 import com.github.epd.sprout.actors.Actor;
 import com.github.epd.sprout.actors.mobs.Bestiary;
 import com.github.epd.sprout.actors.mobs.Mob;
+import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.MasterThievesArmband;
 import com.github.epd.sprout.levels.builders.Builder;
 import com.github.epd.sprout.levels.builders.LoopBuilder;
 import com.github.epd.sprout.levels.rooms.Room;
@@ -71,14 +73,29 @@ public class ThiefCatchLevel extends CavesLevel {
 
 	@Override
 	protected void createItems() {
-		Item item = Bones.get();
-		if (item != null) {
-			int pos;
-			do {
-				pos = pointToCell(roomEntrance.random());
-			} while (pos == entrance || solid[pos]);
-			drop( item, pos ).type = Heap.Type.REMAINS;
+		addItemToSpawn(Generator.random(Generator.Category.ARTIFACT));
+		addItemToSpawn(Generator.random(Generator.Category.WAND));
+		addItemToSpawn(Generator.random(Generator.Category.RING));
+		addItemToSpawn(Generator.random(Generator.Category.SEEDRICH));
+		if (Random.Int(10) == 0 && !Dungeon.limitedDrops.armband.dropped()){
+			addItemToSpawn(new MasterThievesArmband());
+			Dungeon.limitedDrops.armband.drop();
 		}
+		for (int i = 0; i < 10; i++) {
+			if (Random.Int(5) == 0) {
+				switch (Random.Int(3)) {
+					case 0:
+						addItemToSpawn(Generator.random(Generator.Category.ARTIFACT));
+					case 1:
+						addItemToSpawn(Generator.random(Generator.Category.WAND));
+					case 2:
+						addItemToSpawn(Generator.random(Generator.Category.RING));
+					case 3:
+						addItemToSpawn(Generator.random(Generator.Category.SEEDRICH));
+				}
+			}
+		}
+		super.createItems();
 
 		map[exit] = Terrain.WALL;
 	}

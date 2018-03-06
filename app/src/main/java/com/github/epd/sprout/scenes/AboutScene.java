@@ -21,7 +21,6 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.TouchArea;
 
-//TODO:UPDATE ME BEFORE PUSHING TO REDDIT!
 public class AboutScene extends PixelScene {
 
 	private NewRedButton btn;
@@ -170,14 +169,9 @@ public class AboutScene extends PixelScene {
 			btn2 = new NewRedButton("制作者") {
 				@Override
 				protected void onClick() {
-					parent.add(new WndMessage("制作者联系方式：\nQQ：_3529858533_\n电子邮件：_3529858533@qq.com_\n\n" +
-							"错误报告/反馈请发送至_3529858533@qq.com_，并提示我查收。\n" +
-							"与此mod相关的QQ群：\n" +
-							"ESPD内部开发群。如果想加入，请向我发送邮件以获得相关信息。\n" +
+					parent.add(new WndMessage("制作者（请勿联系）：\nQQ：_3529858533_\n\n" +
 							"本应用遵守GPLv3并开源，源代码地址：" +
-							"\n\nhttps://github.com/G2159687/ESPD" +
-							"\n\n但是，尽管该应用是开源的，我仍然推荐从可信的渠道（如酷安以及由我组建的QQ群）下载" +
-							"以避免出现安全问题。"));
+							"\n\nhttps://gitlab.com/K.W.W.T/espd"));
 				}
 			};
 			btn2.setRect((colWidth - 80) / 2, title.y + title.height() + 12, 80, 18);
@@ -199,8 +193,7 @@ public class AboutScene extends PixelScene {
 							"\n_破碎_的像素地牢 作者：_00-Evan_\n联系方式：_Evan@ShatteredPixel.com_" +
 							"\n_像素地牢_作者：_watabou_\n联系方式：_pixeldungeon@watabou.ru_" +
 							"\n\n感谢_@笑看LZ撸管_制作的新法杖（如缓慢、狂乱等）贴图。" +
-							"\n\n同时感谢以下百度贴吧吧友的支持（排名不分先后）：\n" +
-							"@youxia5325，@雷暴jj怪，@as1169344561，@圣人川川摩羯，@zpjsunny，@远逝之光，@zhbom，@zhongzhengze，@屠城管，@fyf672，@如日飞仙"));
+							"\n\n感谢各位向我捐赠的网友，以及开发初期时百度贴吧吧友的支持。"));
 				}
 			};
 			btn.setRect((colWidth - 80) / 2, title.y + title.height() + 32, 80, 18);
@@ -218,19 +211,15 @@ public class AboutScene extends PixelScene {
 				}
 			};
 			btn3.setRect((colWidth - 80) / 2, title.y + title.height() + 52, 80, 18);
-			add(btn3);
+			//add(btn3);
 
 			btn4 = new NewRedButton("已知bug总览") {
 				@Override
 				protected void onClick() {
 					parent.add(new WndMessage("1、请_不要切换语言_！否则出现任何后果概不负责！！" +
-							"\n\n2、有一些_推羊_的关卡似乎还有闪退的情况。我没有时间来通关推羊关卡，所以只靠我自己的力量来修复比较困难。" +
-							"如果你愿意对此mod做出一些贡献，请将推羊关卡里会导致闪退的_详细步骤_告诉我（有_错误报告_更好），我会尝试修复。" +
-							"\n\n3、现有一小部分在游戏中突然无法进行任何操作的情况。遇到此类情况的，请退出游戏并重新进入，并向我反馈" +
-							"出现错误之前的操作以及出错的层数（基本上一个截图就能说明一切），我需要大量的信息来判断此错误的原因。" +
-							"\n\n4、现已知有一些与电击类攻击有关的闪退问题，包括电法杖、电附魔武器以及怪物放电。不过，由于没有人能提供" +
-							"任何有效的错误报告，我暂时无法修复。希望有好心人（我也不想这么说，真的很无奈）在出错时能提供一份有效的错误报告" +
-							"来帮助我修复此问题。"));
+							"\n\n2、有一些_推羊_的关卡似乎还有闪退的情况。" +
+							"\n\n3、可能有一些与电击类攻击有关的闪退问题，包括电法杖、电附魔武器以及怪物放电。" +
+							"\n\n4、在生成部分关卡时可能有卡死的现象。若发生此情况，请退出游戏并重新载入，有很大的机率能恢复。"));
 				}
 			};
 			btn4.setRect((colWidth - 80) / 2, title.y + title.height() + 72, 80, 18);

@@ -4,7 +4,6 @@ package com.github.epd.sprout;
 import com.github.epd.sprout.messages.Messages;
 
 public class Challenges {
-
 	public static final int NO_FOOD = 1;
 	public static final int NO_ARMOR = 2;
 	public static final int NO_HEALING = 4;

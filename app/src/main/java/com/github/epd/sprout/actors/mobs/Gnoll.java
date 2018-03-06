@@ -23,7 +23,7 @@ public class Gnoll extends Mob {
 		EXP = 2;
 		maxLvl = 8;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			loot = Generator.Category.SCROLL;
 			lootChance = 0.75f;
 

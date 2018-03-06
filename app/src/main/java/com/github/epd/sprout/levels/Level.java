@@ -40,6 +40,7 @@ import com.github.epd.sprout.effects.particles.WindParticle;
 import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
+import com.github.epd.sprout.items.artifacts.TalismanOfForesight;
 import com.github.epd.sprout.items.quest.StoneOre;
 import com.github.epd.sprout.items.consumables.Stylus;
 import com.github.epd.sprout.items.consumables.Torch;
@@ -332,7 +333,7 @@ public abstract class Level implements Bundlable {
 
 		} while (!build());
 
-		if (Dungeon.bossLevel(Dungeon.depth + 1)) {
+		if (Dungeon.bossLevel(Dungeon.depth + 1) || Dungeon.depth == 65) {
 			for (int i = 0; i < getLength(); i++) {
 				if (map[i] == Terrain.CHASM) {
 					map[i] = Terrain.EMPTY;
@@ -414,7 +415,9 @@ public abstract class Level implements Bundlable {
 		forcedone = bundle.getBoolean(FORCEDONE);
 		genpetnext = bundle.getBoolean(GENPETNEXT);
 		sealedlevel = bundle.getBoolean(SEALEDLEVEL);
-		viewDistance = bundle.getInt(VIEW);
+		if (!(Dungeon.depth >= 1 && Dungeon.depth <= 25)) {
+			viewDistance = bundle.getInt(VIEW);
+		}
 
 		weakFloorCreated = false;
 
@@ -474,7 +477,9 @@ public abstract class Level implements Bundlable {
 		bundle.put(FORCEDONE, forcedone);
 		bundle.put(GENPETNEXT, genpetnext);
 		bundle.put(SEALEDLEVEL, sealedlevel);
-		bundle.put(VIEW, viewDistance);
+		if (!(Dungeon.depth >= 1 && Dungeon.depth <= 25)) {
+			bundle.put(VIEW, viewDistance);
+		}
 	}
 
 	public int tunnelTile() {
@@ -1358,6 +1363,11 @@ public abstract class Level implements Bundlable {
 		if (c.isAlive() && c == Dungeon.hero) {
 			for (Buff b : c.buffs(MindVision.class)) {
 				sense = Math.max(((MindVision) b).distance, sense);
+			}
+
+			if (c.buff(TalismanOfForesight.Foresight.class) != null) {
+				if (c.buff(TalismanOfForesight.Foresight.class).level() > 35)
+					sense = (c.buff(TalismanOfForesight.Foresight.class).level() < 48) ? 2 : 3;
 			}
 		}
 

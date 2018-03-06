@@ -42,6 +42,8 @@ import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.CheckedCell;
 import com.github.epd.sprout.effects.Flare;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.Generator;
+import com.github.epd.sprout.items.misc.Spectacles;
 import com.github.epd.sprout.items.quest.Amulet;
 import com.github.epd.sprout.items.consumables.Ankh;
 import com.github.epd.sprout.items.Dewdrop;
@@ -82,6 +84,8 @@ import com.github.epd.sprout.items.scrolls.ScrollOfMagicMapping;
 import com.github.epd.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.epd.sprout.items.scrolls.ScrollOfRecharging;
 import com.github.epd.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.epd.sprout.items.teleporter.DragonCave;
+import com.github.epd.sprout.items.teleporter.Vault;
 import com.github.epd.sprout.items.wands.Wand;
 import com.github.epd.sprout.items.weapon.melee.MeleeWeapon;
 import com.github.epd.sprout.items.weapon.missiles.MissileWeapon;
@@ -563,6 +567,10 @@ public class Hero extends Char {
 
 				return actCook((HeroAction.Cook) curAction);
 
+			} else if (curAction instanceof HeroAction.Collect) {
+
+				return actCollect((HeroAction.Collect) curAction);
+
 			}
 		}
 
@@ -694,6 +702,61 @@ public class Hero extends Char {
 
 			return true;
 
+		} else {
+			ready();
+			return false;
+		}
+	}
+
+	private boolean actCollect(HeroAction.Collect action) {
+		int dst = action.dst;
+		if (Dungeon.level.adjacent(pos, dst)) {
+			int shrub = Dungeon.level.map[dst];
+			if (shrub == Terrain.SHRUB) {
+				spend(2f);
+				sprite.operate(dst);
+				Sample.INSTANCE.play(Assets.SND_EAT);
+				if (Random.Int(10) == 0){
+					Item.autocollect(Generator.random(Generator.Category.BERRY), pos);
+					Level.set(dst, Terrain.BARRICADE);
+					GameScene.updateMap(dst);
+				} else if (Random.Int(3) == 0){
+					Item.autocollect(Generator.random(Generator.Category.SEED), pos);
+					Level.set(dst, Terrain.BARRICADE);
+					GameScene.updateMap(dst);
+				} else {
+					GLog.i(Messages.get(Hero.class,"find_nothing"));
+					Level.set(dst, Terrain.BARRICADE);
+					GameScene.updateMap(dst);
+				}
+			} else if (shrub == Terrain.BOOKSHELF){
+				spend(2f);
+				sprite.operate(dst);
+				if (Random.Int(10) == 0){
+					Item.autocollect(Generator.random(Generator.Category.SCROLL), pos);
+					Level.set(dst, Terrain.BARRICADE);
+					GameScene.updateMap(dst);
+				} else {
+					GLog.i(Messages.get(Hero.class,"find_nothing"));
+					Level.set(dst, Terrain.BARRICADE);
+					GameScene.updateMap(dst);
+				}
+				if (Random.Int(25) == 0){
+					if (Dungeon.hero.buff(Spectacles.MagicSight.class) != null && !Dungeon.limitedDrops.vaultpage.dropped()) {
+						Item.autocollect(new Vault(), pos);
+						Dungeon.limitedDrops.vaultpage.drop();
+					}
+				}
+				if (Random.Int(25) == 0){
+					if (Dungeon.hero.buff(Spectacles.MagicSight.class) != null && !Dungeon.limitedDrops.dragoncave.dropped()) {
+						Item.autocollect(new DragonCave(), pos);
+						Dungeon.limitedDrops.dragoncave.drop();
+					}
+				}
+			}
+			return false;
+		} else if (getCloser(dst)) {
+			return true;
 		} else {
 			ready();
 			return false;
@@ -1424,6 +1487,11 @@ public class Hero extends Char {
 		} else if (cell == Dungeon.level.entrance) {
 
 			curAction = new HeroAction.Ascend(cell);
+
+		} else if ((Dungeon.level.map[cell] == Terrain.SHRUB && Dungeon.depth == 27)
+				|| Dungeon.level.map[cell] == Terrain.BOOKSHELF){
+
+			curAction = new HeroAction.Collect(cell);
 
 		} else {
 

@@ -94,7 +94,7 @@ public class HallsBossLevel extends Level {
 		map[exit] = Terrain.LOCKED_EXIT;
 
 		Painter.fill(this, ROOM_LEFT - 1, ROOM_TOP - 1, ROOM_RIGHT - ROOM_LEFT
-				+ 3, ROOM_BOTTOM - ROOM_TOP + 3, Terrain.WALL);
+				+ 3, ROOM_BOTTOM - ROOM_TOP + 3, Terrain.BARRICADE);
 
 		Painter.fill(this, ROOM_LEFT, ROOM_TOP, ROOM_RIGHT - ROOM_LEFT + 1,
 				ROOM_BOTTOM - ROOM_TOP + 1, Terrain.EMPTY);

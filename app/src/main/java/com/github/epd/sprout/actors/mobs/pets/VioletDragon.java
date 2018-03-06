@@ -8,6 +8,7 @@ import com.github.epd.sprout.actors.buffs.MagicalSleep;
 import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.actors.buffs.Poison;
 import com.github.epd.sprout.levels.Level;
+import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.CharSprite;
@@ -176,7 +177,7 @@ public class VioletDragon extends PET implements Callback {
 
 		int curPos = pos;
 
-		if (Level.passable[pos]) {
+		if (Level.passable[pos] && Dungeon.level.map[pos] != Terrain.CHASM) {
 
 			moveSprite(pos, Dungeon.hero.pos);
 			move(Dungeon.hero.pos);

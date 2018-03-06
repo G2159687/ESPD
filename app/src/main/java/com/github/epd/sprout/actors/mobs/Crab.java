@@ -23,7 +23,7 @@ public class Crab extends Mob {
 		EXP = 3;
 		maxLvl = 9;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			loot = new ScrollOfUpgrade();
 			lootChance = 0.5f;
 

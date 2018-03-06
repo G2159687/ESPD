@@ -118,6 +118,20 @@ public class Dungeon {
 
 	public static int[] pars;
 
+	/* Easy Settings */
+	public static boolean moreHeroHP = false;
+	public static boolean moreHeroATK = false;
+	public static boolean moreHeroDEF = false;
+	public static boolean moreHeroSTR = false;
+	public static boolean moreShops = false;
+	public static boolean shopCheaper = false;
+	public static boolean vialUnlimit = false;
+	public static boolean superDew = false;
+	public static boolean upgradeTweaks = false;
+	public static boolean moreLoots = false;
+	public static boolean questTweaks = false;
+
+
 	public static boolean playtest = false;
 	public static boolean sanchikarahtranscend = false;
 	public static boolean shadowyogkilled = false;
@@ -156,6 +170,19 @@ public class Dungeon {
 	public static int version;
 
 	public static void init() {
+
+		/* Easy Settings */
+		moreHeroHP = ShatteredPixelDungeon.moreHeroHP();
+		moreHeroHP = ShatteredPixelDungeon.moreHeroAtk();
+		moreHeroDEF = ShatteredPixelDungeon.moreHeroDef();
+		moreHeroSTR = ShatteredPixelDungeon.moreHeroStr();
+		moreShops = ShatteredPixelDungeon.moreShops();
+		shopCheaper = ShatteredPixelDungeon.ShopCheaper();
+		vialUnlimit = ShatteredPixelDungeon.VialUnLimit();
+		superDew = ShatteredPixelDungeon.SuperDew();
+		upgradeTweaks = ShatteredPixelDungeon.UpgradeTweaks();
+		moreLoots = ShatteredPixelDungeon.MoreLoots();
+		questTweaks = ShatteredPixelDungeon.QuestTweaks();
 
 		challenges = ShatteredPixelDungeon.challenges();
 		mapSize = ShatteredPixelDungeon.mapSize();
@@ -215,10 +242,6 @@ public class Dungeon {
 
 		pars = new int[100];
 
-	}
-
-	public static boolean isChallenged(int mask) {
-		return (challenges & mask) != 0;
 	}
 
 	public static Level newFieldLevel() {
@@ -675,7 +698,7 @@ public class Dungeon {
 	}
 
 	public static boolean shopOnLevel() {
-		if (Dungeon.isChallenged(Challenges.NO_ARMOR)) {
+		if (Dungeon.moreShops) {
 			return depth == 6 || depth == 11 || depth == 16 || depth == 1 || depth == 2 || depth == 3 || depth == 4 ||
 					depth == 7 || depth == 8 || depth == 9 || depth == 12 || depth == 13 || depth == 14 ||
 					depth == 17 || depth == 18 || depth == 19 || depth == 22 || depth == 23 || depth == 24;
@@ -696,7 +719,7 @@ public class Dungeon {
 
 	public static boolean notClearableLevel(int depth) {
 		return depth == 1 || depth == 2 || depth == 5 || depth == 10 || depth == 15 || depth == 20 || depth == 21
-				|| depth == 25 || depth > 25;
+				 || depth == 24 || depth == 25 || depth > 25;
 	}
 
 	public static boolean townCheck(int depth) {
@@ -853,6 +876,19 @@ public class Dungeon {
 	private static final String SOU = "scrollsOfEnhancement";
 	private static final String AS = "arcaneStyli";
 
+	/* Easy Settings */
+	private static final String MOREHEROHP = "moreherohp";
+	private static final String MOREHEROATK = "moreheroatk";
+	private static final String MOREHERODEF = "moreherodef";
+	private static final String MOREHEROSTR = "moreherostr";
+	private static final String MORESHOPS = "moreshops";
+	private static final String SHOPCHEAPER = "shopcheaper";
+	private static final String VIALUNLIMIT = "vialunlimit";
+	private static final String SUPERDEW = "superdew";
+	private static final String UPGRADETWEAKS = "upgradetweaks";
+	private static final String MORELOOTS = "moreloots";
+	private static final String QUESTTWEAKS = "questtweaks";
+
 	public static String gameFile(HeroClass cl) {
 		switch (cl) {
 			case WARRIOR:
@@ -884,6 +920,21 @@ public class Dungeon {
 			Bundle bundle = new Bundle();
 
 			bundle.put(VERSION, Game.versionCode);
+
+			/* Easy Settings */
+			bundle.put(MOREHEROHP, moreHeroHP);
+			bundle.put(MOREHEROATK, moreHeroATK);
+			bundle.put(MOREHERODEF, moreHeroDEF);
+			bundle.put(MOREHEROSTR, moreHeroSTR);
+			bundle.put(MORESHOPS, moreShops);
+			bundle.put(SHOPCHEAPER, shopCheaper);
+			bundle.put(VIALUNLIMIT, vialUnlimit);
+			bundle.put(SUPERDEW, superDew);
+			bundle.put(UPGRADETWEAKS, upgradeTweaks);
+			bundle.put(MORELOOTS, moreLoots);
+			bundle.put(QUESTTWEAKS, questTweaks);
+
+
 			bundle.put(CHALLENGES, challenges);
 			bundle.put(MAPSIZE, mapSize);
 			bundle.put(HERO, hero);
@@ -1014,7 +1065,7 @@ public class Dungeon {
 		QuickSlotButton.reset();
 
 		Dungeon.challenges = bundle.getInt(CHALLENGES);
-		if (bundle.contains(MAPSIZE)) { // TODO: Remove this
+		if (bundle.contains(MAPSIZE)) {
 			Dungeon.mapSize = bundle.getInt(MAPSIZE);
 		} else {
 			Dungeon.mapSize = 1;
@@ -1095,6 +1146,30 @@ public class Dungeon {
 		dewWater = bundle.getBoolean(DEWWATER);
 		playtest = bundle.getBoolean(PLAYTEST);
 		pars = bundle.getIntArray(PARS);
+
+		/* Easy Settings */
+			moreHeroHP = bundle.getBoolean(MOREHEROHP);
+
+			moreHeroATK = bundle.getBoolean(MOREHEROATK);
+
+			moreHeroDEF = bundle.getBoolean(MOREHERODEF);
+
+			moreHeroSTR = bundle.getBoolean(MOREHEROSTR);
+
+			moreShops = bundle.getBoolean(MORESHOPS);
+
+			shopCheaper = bundle.getBoolean(SHOPCHEAPER);
+
+			vialUnlimit = bundle.getBoolean(VIALUNLIMIT);
+
+			superDew = bundle.getBoolean(SUPERDEW);
+
+			upgradeTweaks = bundle.getBoolean(UPGRADETWEAKS);
+
+			moreLoots = bundle.getBoolean(MORELOOTS);
+
+			questTweaks = bundle.getBoolean(QUESTTWEAKS);
+
 
 		Statistics.restoreFromBundle(bundle);
 		Journal.restoreFromBundle(bundle);
@@ -1290,8 +1365,9 @@ public class Dungeon {
 
 	}
 
-	public static boolean checkNight() {
-		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		return (hour > 19 || hour < 7);
+	/* Easy Settings */
+	public static boolean easyEnabled() {
+		return moreHeroHP || moreHeroATK || moreHeroDEF || moreHeroSTR || moreShops || shopCheaper || vialUnlimit || superDew
+				|| upgradeTweaks || moreLoots || questTweaks;
 	}
 }

@@ -10,6 +10,7 @@ import com.github.epd.sprout.actors.buffs.SnipersMark;
 import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.items.bags.Bag;
+import com.github.epd.sprout.items.teleporter.OtilukesJournal;
 import com.github.epd.sprout.items.weapon.missiles.Boomerang;
 import com.github.epd.sprout.items.weapon.missiles.JupitersWraith;
 import com.github.epd.sprout.items.weapon.missiles.MissileWeapon;
@@ -80,8 +81,10 @@ public class Item implements Bundlable {
 
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = new ArrayList<String>();
-		actions.add(AC_DROP);
-		actions.add(AC_THROW);
+		if (!(this instanceof DewVial || this instanceof OtilukesJournal)) {
+			actions.add(AC_DROP);
+			actions.add(AC_THROW);
+		}
 		return actions;
 	}
 
@@ -235,8 +238,6 @@ public class Item implements Bundlable {
 	}
 
 	public final Item detach(Bag container, Integer quant) {
-
-		// TODO: Maybe optimize this method to prevent 0 quantity items
 
 		if (quantity <= 0) {
 

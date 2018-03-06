@@ -87,7 +87,7 @@ public class WndWandmaker extends Window {
 			}
 		}
 
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
+		if (Dungeon.questTweaks){
 			GLog.h(Messages.get(Ghost.class, "challenge"));
 		}
 

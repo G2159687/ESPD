@@ -68,7 +68,7 @@ public class WndImp extends Window {
 			Dungeon.level.drop(reward, imp.pos).sprite.drop();
 		}
 
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
+		if (Dungeon.questTweaks){
 			GLog.h(Messages.get(Ghost.class, "challenge"));
 		}
 

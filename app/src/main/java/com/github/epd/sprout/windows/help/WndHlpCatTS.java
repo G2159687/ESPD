@@ -1,5 +1,8 @@
 package com.github.epd.sprout.windows.help;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import com.github.epd.sprout.items.help.mechanics.BugSolve;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.ui.NewRedButton;
@@ -19,8 +22,8 @@ public class WndHlpCatTS extends Window {
 		addButton(new NewRedButton(Messages.get(WndHlpCatMec.class, "3")) {
 			@Override
 			protected void onClick() {
-				hide();
-				Game.scene().add(new WndHelp(new BugSolve()));
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/K.W.W.T/espd/tags"));
+				Game.instance.startActivity(intent);
 			}
 		});
 

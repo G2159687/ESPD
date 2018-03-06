@@ -10,6 +10,7 @@ import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.effects.particles.SparkParticle;
 import com.github.epd.sprout.levels.Level;
+import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.levels.traps.LightningTrap;
 import com.github.epd.sprout.mechanics.Ballistica;
 import com.github.epd.sprout.messages.Messages;
@@ -199,7 +200,7 @@ public class SugarplumFairy extends PET implements Callback {
 
 		int curPos = pos;
 
-		if (Level.passable[pos]) {
+		if (Level.passable[pos] && Dungeon.level.map[pos] != Terrain.CHASM) {
 
 			moveSprite(pos, Dungeon.hero.pos);
 			move(Dungeon.hero.pos);

@@ -26,7 +26,7 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-//TODO: implement feeding pet food method
+//TODO: 丰富宠物喂食系统，再次削弱宠物
 
 public abstract class PET extends Mob {
 

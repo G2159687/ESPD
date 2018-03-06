@@ -191,7 +191,7 @@ public class Imp extends NPC {
 				Imp npc = new Imp();
 				do {
 					npc.pos = level.randomRespawnCell();
-				} while (npc.pos == -1 || level.heaps.get(npc.pos) != null);
+				} while (npc.pos == -1);
 				level.mobs.add(npc);
 
 				spawned = true;
@@ -203,7 +203,7 @@ public class Imp extends NPC {
 					reward = (Ring) Generator.random(Generator.Category.RING);
 				} while (reward.cursed);
 				reward.upgrade(2);
-				if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+				if (Dungeon.questTweaks) {
 					reward.upgrade(30);
 				}
 				reward.cursed = true;

@@ -36,7 +36,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 			}
 		}
 
-		if (Dungeon.isChallenged(Challenges.DARKNESS)) {
+		if (Dungeon.upgradeTweaks) {
 			item.upgrade(10);
 		} else {
 			item.upgrade();

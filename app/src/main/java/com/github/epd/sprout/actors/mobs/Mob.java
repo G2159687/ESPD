@@ -734,7 +734,7 @@ public abstract class Mob extends Char {
 				if (Random.Int(10) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (!vial.isFull()) {
-							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
+							vial.volume = vial.volume + (Dungeon.superDew ? 50 : 5);
 							GLog.i(Messages.get(HighGrass.class, "red"));
 							if (vial.isFull()) {
 								vial.volume = DewVial.MAX_VOLUME();
@@ -745,7 +745,7 @@ public abstract class Mob extends Char {
 				} else if (Random.Int(3) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (!vial.isFull()) {
-							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 20 : 2);
+							vial.volume = vial.volume + (Dungeon.superDew ? 20 : 2);
 							GLog.i(Messages.get(HighGrass.class, "yellow"));
 							if (vial.isFull()) {
 								vial.volume = DewVial.MAX_VOLUME();
@@ -770,7 +770,7 @@ public abstract class Mob extends Char {
 				if (Random.Int(8) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (vial.volume <= (DewVial.MAX_VOLUME() - 45)) {
-							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 200 : 50);
+							vial.volume = vial.volume + (Dungeon.superDew ? 200 : 50);
 							GLog.i(Messages.get(HighGrass.class, "violet"));
 							if (vial.isFull()) {
 								vial.volume = DewVial.MAX_VOLUME();
@@ -781,7 +781,7 @@ public abstract class Mob extends Char {
 				} else if (Random.Int(2) == 1) {
 					if (ShatteredPixelDungeon.autocollect() && vial != null) {
 						if (!vial.isFull()) {
-							vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 50 : 5);
+							vial.volume = vial.volume + (Dungeon.superDew ? 50 : 5);
 							GLog.i(Messages.get(HighGrass.class, "red"));
 							if (vial.isFull()) {
 								vial.volume = DewVial.MAX_VOLUME();

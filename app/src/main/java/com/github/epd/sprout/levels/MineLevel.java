@@ -82,7 +82,7 @@ public class MineLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = 400 + (Dungeon.depth * 50) + (secretDoors * 20);
+		Dungeon.pars[Dungeon.depth] = 350 + (Dungeon.depth * 50) + (secretDoors * 20);
 	}
 
 	@Override

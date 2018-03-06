@@ -4,7 +4,7 @@ package com.github.epd.sprout.actors.hero;
 import com.github.epd.sprout.messages.Messages;
 import com.watabou.utils.Bundle;
 
-//TODO:Rework this
+//TODO: 重做职业专精
 public enum HeroSubClass {
 
 	NONE(null),

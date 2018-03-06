@@ -31,7 +31,7 @@ public class TreasuryRoom extends SpecialRoom {
 				pos = level.pointToCell(random());
 			} while (level.map[pos] != Terrain.EMPTY
 					|| level.heaps.get(pos) != null);
-			level.drop(Dungeon.isChallenged(Challenges.NO_ARMOR) ?
+			level.drop(Dungeon.shopCheaper ?
 					Generator.random(Random.oneOf(Generator.Category.POTION, Generator.Category.SCROLL, Generator.Category.FOOD, Generator.Category.BERRY, Generator.Category.MUSHROOM, Generator.Category.SEED))
 					: new Gold().random(), pos).type = (i == 0 && heapType == Heap.Type.CHEST ? Heap.Type.MIMIC : heapType);
 		}

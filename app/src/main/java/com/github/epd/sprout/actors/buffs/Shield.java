@@ -9,7 +9,7 @@ public class Shield extends Buff {
 
 	public static float LEVEL = 0.4f;
 
-	private int hits = (Dungeon.checkNight() ? Math.max(8, Math.round(Statistics.deepestFloor / 5) + 9) : Math.max(2, Math.round(Statistics.deepestFloor / 5) + 3));
+	private int hits = (Math.max(2, Math.round(Statistics.deepestFloor / 5) + 3));
 
 	//private int hits = Math.max(2, Math.round(Statistics.deepestFloor/5)+3);
 	@Override

@@ -66,7 +66,7 @@ public enum HeroClass {
 	}
 
 	private static void initDebug() {
-		// TODO: Always keep this empty when posting releases
+		// TODO: 在发布更新之前应保持此项方法为空
 	}
 
 	public void initHero(Hero hero) {
@@ -129,17 +129,19 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior(Hero hero) {
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroSTR) {
 			hero.STR = hero.STR + 10;
 		} else {
 			hero.STR = hero.STR + 1;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroHP) {
 			hero.HT = hero.HT + 200;
 			hero.HP = hero.HT;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)) {
+		if (Dungeon.moreHeroATK) {
 			hero.attackSkill = hero.attackSkill + 100;
+		}
+		if (Dungeon.moreHeroDEF) {
 			hero.defenseSkill = hero.defenseSkill + 100;
 		}
 
@@ -160,15 +162,17 @@ public enum HeroClass {
 
 	private static void initMage(Hero hero) {
 
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroSTR) {
 			hero.STR = hero.STR + 10;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroHP) {
 			hero.HT = hero.HT + 100;
 			hero.HP = hero.HT;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)) {
+		if (Dungeon.moreHeroATK) {
 			hero.attackSkill = hero.attackSkill + 100;
+		}
+		if (Dungeon.moreHeroDEF) {
 			hero.defenseSkill = hero.defenseSkill + 100;
 		}
 
@@ -189,15 +193,17 @@ public enum HeroClass {
 
 	private static void initRogue(Hero hero) {
 
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroSTR) {
 			hero.STR = hero.STR + 10;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroHP) {
 			hero.HT = hero.HT + 100;
 			hero.HP = hero.HT;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)) {
+		if (Dungeon.moreHeroATK) {
 			hero.attackSkill = hero.attackSkill + 100;
+		}
+		if (Dungeon.moreHeroDEF) {
 			hero.defenseSkill = hero.defenseSkill + 100;
 		}
 
@@ -224,20 +230,20 @@ public enum HeroClass {
 
 	private static void initHuntress(Hero hero) {
 
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroSTR) {
 			hero.STR = hero.STR + 10;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+		if (Dungeon.moreHeroHP) {
 			hero.HT = hero.HT + 100;
 			hero.HP = hero.HT;
 		}
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)) {
+		if (Dungeon.moreHeroATK) {
 			hero.attackSkill = hero.attackSkill + 100;
+		}
+		if (Dungeon.moreHeroDEF) {
 			hero.defenseSkill = hero.defenseSkill + 100;
 		}
 
-
-		//hero.HP = (hero.HT -= 5);
 
 		(hero.belongings.weapon = new Dagger()).identify();
 		Boomerang boomerang = new Boomerang();

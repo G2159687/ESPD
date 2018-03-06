@@ -8,7 +8,7 @@ import com.github.epd.sprout.levels.Level;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-// TODO: Add new quest which allows to transmute items
+// TODO: 增加一个允许进行批量转换物品的NPC（生命之书关卡）
 public abstract class NPC extends Mob {
 
 	{

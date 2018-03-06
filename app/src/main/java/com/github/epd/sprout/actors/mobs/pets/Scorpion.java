@@ -8,6 +8,7 @@ import com.github.epd.sprout.actors.buffs.MagicalSleep;
 import com.github.epd.sprout.actors.buffs.Paralysis;
 import com.github.epd.sprout.effects.Speck;
 import com.github.epd.sprout.levels.Level;
+import com.github.epd.sprout.levels.Terrain;
 import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.CharSprite;
 import com.github.epd.sprout.sprites.ScorpionSprite;
@@ -129,7 +130,7 @@ public class Scorpion extends PET {
 
 		int curPos = pos;
 
-		if (Level.passable[pos]) {
+		if (Level.passable[pos] && Dungeon.level.map[pos] != Terrain.CHASM) {
 
 			moveSprite(pos, Dungeon.hero.pos);
 			move(Dungeon.hero.pos);

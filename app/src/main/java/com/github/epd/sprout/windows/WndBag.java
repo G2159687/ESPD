@@ -51,8 +51,6 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.audio.Sample;
-
-// TODO: 1 commits in SPD remaining
 public class WndBag extends WndTabbed {
 
 	public enum Mode {

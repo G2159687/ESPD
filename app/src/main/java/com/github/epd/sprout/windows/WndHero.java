@@ -182,7 +182,7 @@ public class WndHero extends WndTabbed {
 			title.icon(HeroSprite.avatar(hero.heroClass, hero.tier()));
 			title.label(Utils.format(TXT_TITLE, hero.lvl, hero.className())
 					.toUpperCase(Locale.ENGLISH), 9);
-			title.color(Dungeon.challenges > 0 ? EASY_COLOR : Window.SHPX_COLOR);
+			title.color(Dungeon.easyEnabled() ? EASY_COLOR : Window.SHPX_COLOR);
 			title.setRect(0, 0, WIDTH, 0);
 			add(title);
 
@@ -441,7 +441,7 @@ public class WndHero extends WndTabbed {
 		public PetTab(final PET heropet) {
 
 			name = PixelScene.renderText(Utils.capitalize(heropet.name), 9);
-			name.hardlight(Dungeon.challenges > 0 ? EASY_COLOR : TITLE_COLOR);
+			name.hardlight(Dungeon.easyEnabled() ? EASY_COLOR : TITLE_COLOR);
 			//add(name);
 
 			image = heropet.sprite();

@@ -45,11 +45,11 @@ public class FortressLevel extends RegularLevel {
 	protected int standardRooms() {
 		switch (Dungeon.mapSize){
 			case 1:
-				return 10 + Random.chances(new float[]{4, 2, 1});
+				return 8 + Random.chances(new float[]{4, 2, 1});
 			case 2:
-				return 15 + Random.chances(new float[]{4, 2, 1});
+				return 12 + Random.chances(new float[]{4, 2, 1});
 			case 3:
-				return 20 + Random.chances(new float[]{4, 2, 1});
+				return 15 + Random.chances(new float[]{4, 2, 1});
 			default:
 				return 5 + Random.chances(new float[]{4, 2, 1});
 		}

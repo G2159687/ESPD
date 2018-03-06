@@ -329,4 +329,95 @@ public class ShatteredPixelDungeon extends Game {
 	public static void reportException(Throwable tr) {
 		Log.e("PD", Log.getStackTraceString(tr));
 	}
+
+
+	/* Easy Options */
+
+	public static void moreHeroHP(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_HEROHP, value);
+	}
+
+	public static boolean moreHeroHP() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_HEROHP, false);
+	}
+
+	public static void moreHeroAtk(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_HEROATK, value);
+	}
+
+	public static boolean moreHeroAtk() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_HEROATK, false);
+	}
+
+	public static void moreHeroDef(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_HERODEF, value);
+	}
+
+	public static boolean moreHeroDef() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_HERODEF, false);
+	}
+
+	public static void moreHeroStr(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_HEROSTR, value);
+	}
+
+	public static boolean moreHeroStr() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_HEROSTR, false);
+	}
+
+	public static void moreShops(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_MORESHOPS, value);
+	}
+
+	public static boolean moreShops() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_MORESHOPS, false);
+	}
+
+	public static void ShopCheaper(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_SHOPCHEAPER, value);
+	}
+
+	public static boolean ShopCheaper() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_SHOPCHEAPER, false);
+	}
+
+	public static void VialUnLimit(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_VIALUNLIMIT, value);
+	}
+
+	public static boolean VialUnLimit() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_VIALUNLIMIT, false);
+	}
+
+	public static void SuperDew(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_SUPERDEW, value);
+	}
+
+	public static boolean SuperDew() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_SUPERDEW, false);
+	}
+
+	public static void UpgradeTweaks(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_UPGRADETWEAKS, value);
+	}
+
+	public static boolean UpgradeTweaks() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_UPGRADETWEAKS, false);
+	}
+
+	public static void MoreLoots(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_MORELOOTS, value);
+	}
+
+	public static boolean MoreLoots() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_MORELOOTS, false);
+	}
+
+	public static void QuestTweaks(boolean value) {
+		Preferences.INSTANCE.put(Preferences.KEY_QUESTTWEAKS, value);
+	}
+
+	public static boolean QuestTweaks() {
+		return Preferences.INSTANCE.getBoolean(Preferences.KEY_QUESTTWEAKS, false);
+	}
 }

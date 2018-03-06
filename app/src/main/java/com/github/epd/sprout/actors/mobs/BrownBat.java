@@ -27,7 +27,7 @@ public class BrownBat extends Mob {
 
 		flying = true;
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			loot = Generator.Category.BERRY;
 			lootChance = 0.75f;
 

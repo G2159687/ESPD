@@ -152,21 +152,6 @@ public class WndRanking extends WndTabbed {
 
 			float pos = title.bottom();
 
-			if (Dungeon.challenges > 0) {
-				NewRedButton btnCatalogus = new NewRedButton(TXT_CHALLENGES) {
-					@Override
-					protected void onClick() {
-						Game.scene().add(
-								new WndChallenges(Dungeon.challenges, false));
-					}
-				};
-				btnCatalogus.setRect(0, pos + GAP, btnCatalogus.reqWidth() + 2,
-						btnCatalogus.reqHeight() + 2);
-				add(btnCatalogus);
-
-				pos = btnCatalogus.bottom();
-			}
-
 			pos += GAP + GAP;
 
 			pos = statSlot(this, TXT_STR, Integer.toString(Dungeon.hero.STR),

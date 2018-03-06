@@ -32,6 +32,20 @@ enum Preferences {
 	public static final String KEY_DEWMODE = "dew_mode";
 	public static final String KEY_MAPSIZE = "map_size";
 
+	/* Easy Settings */
+	public static final String KEY_HEROHP = "hero_hp";
+	public static final String KEY_HEROATK = "hero_atk";
+	public static final String KEY_HERODEF = "hero_def";
+	public static final String KEY_HEROSTR = "hero_str";
+	public static final String KEY_MORESHOPS = "more_shops";
+	public static final String KEY_SHOPCHEAPER = "shop_cheaper";
+	public static final String KEY_VIALUNLIMIT = "vial_unlimit";
+	public static final String KEY_SUPERDEW = "super_dew";
+	public static final String KEY_UPGRADETWEAKS = "upgrade_tweaks";
+	public static final String KEY_MORELOOTS = "more_loots";
+	public static final String KEY_QUESTTWEAKS = "more_loots";
+
+
 	private SharedPreferences prefs;
 
 	private SharedPreferences get() {

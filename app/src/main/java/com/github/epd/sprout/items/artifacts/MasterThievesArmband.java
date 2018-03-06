@@ -6,7 +6,7 @@ import com.github.epd.sprout.messages.Messages;
 import com.github.epd.sprout.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-// TODO: usage of wealth should cost charge; write descs
+// TODO: 在触发效果时应该消耗充能，应增加破碎地牢中的财富之戒的效果，更新说明
 
 public class MasterThievesArmband extends Artifact {
 
@@ -33,7 +33,6 @@ public class MasterThievesArmband extends Artifact {
 		return new Thievery();
 	}
 
-	// TODO: desc
 	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc");
@@ -45,8 +44,6 @@ public class MasterThievesArmband extends Artifact {
 	}
 
 	public class Thievery extends ArtifactBuff {
-
-		// TODO: Add effects in SPD
 
 		public void collect(int gold) {
 			charge += gold / 2;
@@ -75,7 +72,7 @@ public class MasterThievesArmband extends Artifact {
 					exp += value;
 				}
 			}
-			if (!Dungeon.isChallenged(Challenges.NO_ARMOR)){
+			if (!Dungeon.shopCheaper){
 				while (exp >= 600 && level < levelCap) {
 					exp -= 600;
 					upgrade();

@@ -8,6 +8,7 @@ import com.github.epd.sprout.actors.hero.Hero;
 import com.github.epd.sprout.actors.mobs.RedWraith;
 import com.github.epd.sprout.effects.CellEmitter;
 import com.github.epd.sprout.effects.Speck;
+import com.github.epd.sprout.items.Generator;
 import com.github.epd.sprout.items.Heap;
 import com.github.epd.sprout.items.Item;
 import com.github.epd.sprout.levels.Level;
@@ -23,8 +24,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
-
-//TODO: Optimize this
 
 public class Pickaxe extends Item {
 
@@ -53,7 +52,7 @@ public class Pickaxe extends Item {
 
 		if (action == AC_MINE) {
 
-			if (!(Dungeon.depth > 10 && Dungeon.depth < 16 || Dungeon.depth > 55 && Dungeon.depth < 66)){
+			if (!(Dungeon.depth > 10 && Dungeon.depth < 16 || Dungeon.depth > 55 && Dungeon.depth < 66 || Dungeon.depth == 27)){
 				GLog.w(TXT_NO_VEIN);
 				return;
 			}
@@ -80,11 +79,15 @@ public class Pickaxe extends Item {
 							GameScene.updateMap(pos);
 
 							DarkGold gold = new DarkGold();
-							if (gold.doPickUp(Dungeon.hero)) {
-								GLog.i(Messages.get(Hero.class, "have"), gold.name());
-							} else {
-								Dungeon.level.drop(gold, hero.pos).sprite
-										.drop();
+							if (Dungeon.depth > 10 && Dungeon.depth < 16 || Dungeon.depth > 55 && Dungeon.depth < 66) {
+								if (gold.doPickUp(Dungeon.hero)) {
+									GLog.i(Messages.get(Hero.class, "have"), gold.name());
+								} else {
+									Dungeon.level.drop(gold, hero.pos).sprite
+											.drop();
+								}
+							} else if (Dungeon.depth == 27){
+								Item.autocollect(Generator.random(Generator.Category.MUSHROOM), hero.pos);
 							}
 
 							Hunger hunger = hero.buff(Hunger.class);

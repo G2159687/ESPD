@@ -96,7 +96,7 @@ public class WndSadGhost extends Window {
 			Dungeon.level.drop(reward, ghost.pos).sprite.drop();
 		}
 
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
+		if (Dungeon.questTweaks){
 			GLog.h(Messages.get(Ghost.class, "challenge"));
 		}
 

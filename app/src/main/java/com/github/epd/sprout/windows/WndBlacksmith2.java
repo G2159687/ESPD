@@ -36,7 +36,6 @@ public class WndBlacksmith2 extends Window {
 	private static final String TXT_SELECT1 = Messages.get(WndBlacksmith2.class, "select1");
 	private static final String TXT_SELECT2 = Messages.get(WndBlacksmith2.class, "select2");
 	private static final String TXT_REFORGE = Messages.get(WndBlacksmith2.class, "reforge");
-	private static final String TXT_WORK = Messages.get(WndBlacksmith2.class, "work");
 
 	public WndBlacksmith2(Blacksmith2 troll, Hero hero) {
 
@@ -104,7 +103,6 @@ public class WndBlacksmith2 extends Window {
 						btnReforge.enable(false);
 					} else {
 						btnReforge.enable(true);
-						GameScene.show(new WndMessage(TXT_WORK));
 					}
 				}
 			}

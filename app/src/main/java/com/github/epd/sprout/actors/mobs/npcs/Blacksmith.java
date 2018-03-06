@@ -111,7 +111,7 @@ public class Blacksmith extends NPC {
 			Item.autocollect(new SanChikarah(), Dungeon.hero.pos);
 		} else if (!Quest.reforged) {
 			GameScene.show(new WndBlacksmith(this, Dungeon.hero));
-		} else if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+		} else if (Dungeon.questTweaks) {
 			GameScene.show(new WndBlacksmith(this, Dungeon.hero));
 		} else tell(Messages.get(Blacksmith.class, "lost"));
 
@@ -197,7 +197,7 @@ public class Blacksmith extends NPC {
 		}
 		Quest.reforged = true;
 
-		if (Dungeon.isChallenged(Challenges.NO_SCROLLS)) {
+		if (Dungeon.questTweaks) {
 			GLog.h(Messages.get(Blacksmith.class, "challenge"));
 		}
 

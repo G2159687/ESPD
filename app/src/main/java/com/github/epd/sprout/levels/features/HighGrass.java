@@ -120,7 +120,7 @@ public class HighGrass {
 				Item seed = Generator.random(Generator.Category.SEED);
 
 				if (seed instanceof Flytrap.Seed) {
-					if (Random.Int(Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 150 : 15)
+					if (Random.Int(Dungeon.moreLoots ? 150 : 15)
 							- Dungeon.limitedDrops.upgradeEaterSeed.count >= 0) {
 						dropItems(level, seed, pos);
 						Dungeon.limitedDrops.upgradeEaterSeed.count++;
@@ -169,7 +169,7 @@ public class HighGrass {
 		DewVial vial = Dungeon.hero.belongings.getItem(DewVial.class);
 		if (vial != null && ShatteredPixelDungeon.autocollect()) {
 			if (!vial.isFull()) {
-				vial.volume = vial.volume + (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? easy : normal);
+				vial.volume = vial.volume + (Dungeon.superDew ? easy : normal);
 				if (vial.isFull()) vial.volume = DewVial.MAX_VOLUME();
 				GLog.i(Messages.get(HighGrass.class, color));
 			} else {

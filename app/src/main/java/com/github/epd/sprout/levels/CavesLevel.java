@@ -84,7 +84,7 @@ public class CavesLevel extends RegularLevel {
 
 	@Override
 	protected void setPar() {
-		Dungeon.pars[Dungeon.depth] = (400 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
+		Dungeon.pars[Dungeon.depth] = (350 + (Dungeon.depth * 50) + (secretDoors * 20)) * Math.round(0.5f + 0.5f * Dungeon.mapSize);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class CavesLevel extends RegularLevel {
 			Tinkerer2 npc = new Tinkerer2();
 			do {
 				npc.pos = randomRespawnCell();
-			} while (npc.pos == -1 || heaps.get(npc.pos) != null);
+			} while (npc.pos == -1);
 			mobs.add(npc);
 		}
 

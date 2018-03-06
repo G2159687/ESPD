@@ -64,7 +64,7 @@ public class Gullin extends Mob {
 	@Override
 	public void die(Object cause) {
 
-		if (Dungeon.limitedDrops.nornstones.count < ((Dungeon.isChallenged(Challenges.NO_HERBALISM)) ? 50 : 5)
+		if (Dungeon.limitedDrops.nornstones.count < ((Dungeon.moreLoots) ? 50 : 5)
 				&& Random.Int(5) < 3
 				) {
 			if (Dungeon.hero.heroClass == HeroClass.HUNTRESS) {

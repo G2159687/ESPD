@@ -44,17 +44,6 @@ public class WndGame extends Window {
 			}
 		});
 
-		// Challenges window
-		if (Dungeon.challenges > 0) {
-			addButton(new NewRedButton(TXT_CHALLEGES) {
-				@Override
-				protected void onClick() {
-					hide();
-					GameScene.show(new WndChallenges(Dungeon.challenges, false));
-				}
-			});
-		}
-
 		// Restart
 		if (!Dungeon.hero.isAlive()) {
 

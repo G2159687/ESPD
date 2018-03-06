@@ -216,7 +216,8 @@ public class Heap implements Bundlable {
 
 		}
 
-		if ((item instanceof Dewdrop || item instanceof DriedRose.Petal) && type != Type.FOR_SALE) {
+		if ((item instanceof Dewdrop || item instanceof YellowDewdrop || item instanceof RedDewdrop
+				|| item instanceof VioletDewdrop || item instanceof DriedRose.Petal) && type != Type.FOR_SALE) {
 			items.add(item);
 		} else {
 			items.addFirst(item);

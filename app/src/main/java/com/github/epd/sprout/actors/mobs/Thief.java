@@ -38,7 +38,7 @@ public class Thief extends Mob {
 		EXP = 5;
 
 		loot = Generator.Category.BERRY;
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (!Dungeon.moreLoots) {
 			lootChance = 0.1f;
 		} else {
 			lootChance = 1f;
@@ -99,7 +99,7 @@ public class Thief extends Mob {
 		if (!Dungeon.limitedDrops.armband.dropped()) {
 			return super.createLoot();
 		} else {
-			if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+			if (!Dungeon.moreLoots) {
 				return new Gold(Random.NormalIntRange(100, 250));
 			} else {
 				return new Gold(Random.NormalIntRange(1000, 2000));

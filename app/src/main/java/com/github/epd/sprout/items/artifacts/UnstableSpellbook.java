@@ -37,7 +37,7 @@ public class UnstableSpellbook extends Artifact {
 		level = 0;
 		levelCap = 10;
 
-		// TODO: Change max charge & charge rate of this book, add more effects to scrolls
+		// TODO: 增加高级卷轴效果
 
 		charge = (level / 2) + 3;
 		partialCharge = 0;
@@ -233,7 +233,13 @@ public class UnstableSpellbook extends Artifact {
 		public boolean act() {
 			if (charge < chargeCap && !cursed) {
 
-				partialCharge += level < 10 ? (1 / (150f - level * 15f)) : 1 / 15f;
+				if (level < 10){
+					partialCharge += 1 / (150f - level * 10f);
+				} else if (level < 30){
+					partialCharge += 1 / 40f;
+				} else {
+					partialCharge += 1 / 30f;
+				}
 
 				if (partialCharge >= 1) {
 					partialCharge--;

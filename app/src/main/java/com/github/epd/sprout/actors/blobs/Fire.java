@@ -28,8 +28,6 @@ public class Fire extends Blob {
 		int cell;
 		int fire;
 
-		boolean shelf = false;
-
 		boolean observe = false;
 
 		for (int i = area.left - 1; i <= area.right; i++) {
@@ -42,40 +40,8 @@ public class Fire extends Blob {
 					fire = cur[cell] - 1;
 					if (fire <= 0 && flamable[cell]) {
 
-						if (Dungeon.level.map[cell] == Terrain.BOOKSHELF) {
-							shelf = true;
-						}
-
 						int oldTile = Dungeon.level.map[cell];
 						Level.set(cell, Terrain.EMBERS);
-
-
-						if (shelf && Random.Float() < .02 && Dungeon.hero.buff(MagicSight.class) != null) {
-
-							if (!Dungeon.limitedDrops.vaultpage.dropped()) {
-								Dungeon.level.drop(new Vault(), cell);
-								Dungeon.limitedDrops.vaultpage.drop();
-							}
-						}
-
-						if (shelf && Random.Float() < .02 && Dungeon.hero.buff(MagicSight.class) != null) {
-
-							if (!Dungeon.limitedDrops.dragoncave.dropped()) {
-								Dungeon.level.drop(new DragonCave(), cell);
-								Dungeon.limitedDrops.dragoncave.drop();
-							}
-						}
-
-                    /*
-                    if (shelf && Random.Float()<.02 && Dungeon.hero.buff(MagicSight.class) != null){
-
-							if (Dungeon.limitedDrops.vaultpage.dropped()) {
-								Dungeon.level.drop(new RoyalSpork(), pos);
-							}
-
-					}
-					*/
-
 
 						observe = true;
 						GameScene.updateMap(cell);

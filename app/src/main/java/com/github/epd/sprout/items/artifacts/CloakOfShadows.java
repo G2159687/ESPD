@@ -129,7 +129,7 @@ public class CloakOfShadows extends Artifact {
 		return true;
 	}
 
-	//TODO: desc
+	//TODO: 补全神器说明
 	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc1");

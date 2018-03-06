@@ -128,7 +128,7 @@ public class ShadowYog extends Mob {
 	public void die(Object cause) {
 		super.die(cause);
 
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+		if (Dungeon.moreLoots) {
 			Item.autocollect(new OrbOfZot(), pos);
 		}
 

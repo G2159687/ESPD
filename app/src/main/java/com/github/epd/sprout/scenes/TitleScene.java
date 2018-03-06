@@ -19,6 +19,7 @@ import com.github.epd.sprout.ui.PrefsButton;
 import com.github.epd.sprout.ui.RenderedTextMultiline;
 import com.github.epd.sprout.ui.TroubleshootingButton;
 import com.github.epd.sprout.windows.WndChallenges;
+import com.github.epd.sprout.windows.WndEasySettings;
 import com.watabou.input.Touchscreen;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
@@ -97,7 +98,7 @@ public class TitleScene extends PixelScene {
 		DashboardItem btnBadges = new DashboardItem(Messages.get(this, "badges"), 3) {
 			@Override
 			protected void onClick() {
-				parent.add(new WndChallenges(ShatteredPixelDungeon.challenges(), true));
+				parent.add(new WndEasySettings());
 			}
 		};
 		add(btnBadges);

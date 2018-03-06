@@ -37,13 +37,15 @@ import java.util.ArrayList;
 
 public class DewVial extends Item {
 
-	private static int MAX_VOLUME;
-	private static int EXT_VOLUME;
 	private static final int BLESS_VOLUME = 10;
 
 
 	public static int MAX_VOLUME() {
-		return Dungeon.dewWater ? EXT_VOLUME : MAX_VOLUME;
+		if (!Dungeon.vialUnlimit) {
+			return Dungeon.dewWater ? 300 : 100;
+		} else {
+			return 999999999;
+		}
 	}
 
 	private static final String AC_SIP = Messages.get(DewVial.class, "ac_sip");
@@ -55,7 +57,6 @@ public class DewVial extends Item {
 
 	private static final float TIME_TO_DRINK = 1f;
 	private static final float TIME_TO_WATER = 3f;
-	protected static final float TIME_TO_BLESS = 1f;
 
 	private static final String TXT_VALUE = Messages.get(DewVial.class, "value");
 	private static final String TXT_STATUS = "%d";
@@ -76,14 +77,6 @@ public class DewVial extends Item {
 		defaultAction = AC_CHOOSE;
 
 		unique = true;
-
-		if (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE)) {
-			MAX_VOLUME = 999999999;
-			EXT_VOLUME = 999999999;
-		} else {
-			MAX_VOLUME = 100;
-			EXT_VOLUME = 300;
-		}
 	}
 
 	public int volume = 0;
@@ -451,7 +444,7 @@ public class DewVial extends Item {
 	public void collectDew(Dewdrop dew) {
 
 		GLog.i(TXT_COLLECTED);
-		if (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE)) {
+		if (Dungeon.superDew) {
 			volume += (dew.quantity * 10);
 		} else {
 			volume += dew.quantity;
@@ -467,7 +460,7 @@ public class DewVial extends Item {
 	public void collectDew(RedDewdrop dew) {
 
 		GLog.i(TXT_COLLECTED);
-		if (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE)) {
+		if (Dungeon.superDew) {
 			volume += (dew.quantity * 50);
 		} else {
 			volume += (dew.quantity * 5);
@@ -483,7 +476,7 @@ public class DewVial extends Item {
 	public void collectDew(YellowDewdrop dew) {
 
 		GLog.i(TXT_COLLECTED);
-		if (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE)) {
+		if (Dungeon.superDew) {
 			volume += (dew.quantity * 20);
 		} else {
 			volume += (dew.quantity * 2);
@@ -499,7 +492,7 @@ public class DewVial extends Item {
 	public void collectDew(VioletDewdrop dew) {
 
 		GLog.i(TXT_COLLECTED);
-		if (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE)) {
+		if (Dungeon.superDew) {
 			volume += (dew.quantity * 200);
 		} else {
 			volume += (dew.quantity * 50);

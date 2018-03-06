@@ -116,7 +116,7 @@ public class GoldThief extends Mob {
 		}
 	}
 
-	// TODO: Add more loots when shop tweaks enabled
+	// TODO: 为启用商店修改的情况添加更多种类的掉落物
 	@Override
 	protected Item createLoot() {
 		Item item = new Gold(Random.NormalIntRange(goldtodrop + 50, goldtodrop + 100));

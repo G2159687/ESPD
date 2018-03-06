@@ -36,7 +36,6 @@ public class StudyRoom extends StandardRoom {
 			door.set( Door.Type.REGULAR );
 		}
 
-		//TODO add support for giant size as well
 		if (sizeCat == SizeCategory.LARGE){
 			int pillarW = (width()-7)/2;
 			int pillarH = (height()-7)/2;

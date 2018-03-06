@@ -40,6 +40,8 @@ import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 
+// TODO: 也许应该将所有的传送功能和钥匙保存移动至单独的位置，至少应该增加自动拾取书页的功能
+
 public class OtilukesJournal extends Item {
 
 	public final float TIME_TO_USE = 1;
@@ -154,7 +156,7 @@ public class OtilukesJournal extends Item {
 						HolyHandGrenade newbomb = new HolyHandGrenade(20);
 						newbomb.doPickUp(Dungeon.hero);
 					}
-					if (Statistics.skeletonsKilled > 79 && Dungeon.checkNight()) {
+					if (Statistics.skeletonsKilled > 79) {
 						FullMoonberry berry = new FullMoonberry();
 						berry.doPickUp(Dungeon.hero);
 					}
@@ -176,11 +178,9 @@ public class OtilukesJournal extends Item {
 						berry3.doPickUp(Dungeon.hero);
 						Blackberry berry4 = new Blackberry(10);
 						berry4.doPickUp(Dungeon.hero);
+						FullMoonberry berry = new FullMoonberry();
+						berry.doPickUp(Dungeon.hero);
 
-						if (Dungeon.checkNight()) {
-							FullMoonberry berry = new FullMoonberry();
-							berry.doPickUp(Dungeon.hero);
-						}
 					}
 					Statistics.albinoPiranhasKilled = 0;
 					break;

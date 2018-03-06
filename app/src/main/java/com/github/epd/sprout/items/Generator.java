@@ -155,11 +155,12 @@ public class Generator {
 
 	public enum Category {
 		WEAPON(150, Weapon.class), ARMOR(100, Armor.class), POTION(500, Potion.class),
-		SCROLL(400, Scroll.class), WAND(60, Wand.class), RING(30, Ring.class),
-		ARTIFACT(40, Artifact.class), SEED(0, Plant.Seed.class), REALSEED(0, Plant.Seed.class),
-		SEED2(0, Plant.Seed.class), SEEDRICH(0, Plant.Seed.class),
-		FOOD(0, Food.class), GOLD(500, Gold.class), BERRY(50, Food.class), MUSHROOM(0, Food.class),
-		NORNSTONE(0, NornStone.class), NORNSTONE2(0, NornStone.class), SCROLL2(0, Scroll.class);
+		SCROLL(500, Scroll.class), WAND(60, Wand.class), RING(30, Ring.class),
+		ARTIFACT(40, Artifact.class), SEED(0, Plant.Seed.class),
+		REALSEED(0, Plant.Seed.class), SEED2(0, Plant.Seed.class), SEEDRICH(0, Plant.Seed.class),
+		FOOD(0, Food.class), BERRY(50, Food.class), MUSHROOM(0, Food.class),
+		NORNSTONE(0, NornStone.class), NORNSTONE2(0, NornStone.class), SCROLL2(0, Scroll.class),
+		GOLD(500, Gold.class);
 
 		public Class<?>[] classes;
 		public float[] probs;
@@ -313,7 +314,7 @@ public class Generator {
 		Category.SEED.probs = new float[]{12, 12, 12, 12, 12,
 				12, 12, 0, 2, 12,
 				12, 48, 20, 4, 16,
-				2, 1, 1, 4, (Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 12 : 8)};
+				2, 1, 1, 4, (Dungeon.moreLoots ? 12 : 8)};
 
 		Category.REALSEED.classes = new Class<?>[]{
 				Firebloom.Seed.class, Icecap.Seed.class, Sorrowmoss.Seed.class, Blindweed.Seed.class, Sungrass.Seed.class,
@@ -322,7 +323,7 @@ public class Generator {
 
 		Category.REALSEED.probs = new float[]{12, 12, 12, 12, 12,
 				12, 12, 0, 2, 12,
-				12, 1, (Dungeon.isChallenged(Challenges.NO_HERBALISM) ? 12 : 8)};
+				12, 1, (Dungeon.moreLoots ? 12 : 8)};
 
 
 		Category.SEED2.classes = new Class<?>[]{Firebloom.Seed.class,
@@ -350,10 +351,10 @@ public class Generator {
 				Dewcatcher.Seed.class};
 
 		Category.SEEDRICH.probs = new float[]{1,
-				1, 1, 1,
-				2, 1, 1,
-				0, 4,
-				1, 1,
+				0, 0, 0,
+				0, 0, 0,
+				1, 4,
+				0, 0,
 				4, 4, 8,
 				6};
 
@@ -553,4 +554,4 @@ public class Generator {
 	}
 }
 
-// TODO: Make wands a bit "unique" like artifacts
+// TODO: 也许需要使法杖同神器一样具有独特性

@@ -66,7 +66,7 @@ public class PoolRoom extends SpecialRoom {
 	}
 
 
-	//TODO:Going to change this
+	//TODO: 更改此房间的奖励
 	private static Item prize(Level level) {
 
 		Item prize;
